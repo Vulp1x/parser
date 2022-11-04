@@ -78,7 +78,7 @@ func (c *Config) ParseConfiguration(configMode string) error {
 
 // Default sets default values in config variables.
 func (c *Config) Default() {
-	c.Listen = ServerConfig{BindIP: "0.0.0.0", Port: "8090"}
+	c.Listen = ServerConfig{BindIP: "0.0.0.0", Port: "9090"}
 	c.Logger.Default()
 	c.Postgres.Default()
 	c.Security.Default()

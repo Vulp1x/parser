@@ -22,7 +22,7 @@ COPY --from=builder /home/${GITHUB_PATH}/deploy ./deploy
 COPY --from=builder /home/${GITHUB_PATH}/gen/http ./gen/http
 COPY --from=builder /go/bin/dlv /
 
-EXPOSE 8090 40000
+EXPOSE 9090 40000
 
 ENV TZ=Europe/Moscow
 ENV CONFIG_MODE=${CONFIG_MODE}

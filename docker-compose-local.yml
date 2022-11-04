@@ -16,7 +16,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "8090:8090" # REST
+      - "9090:9090" # REST
       - "40000:40000"
     volumes:
       - ./tmp:/root/tmp

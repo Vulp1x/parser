@@ -5,7 +5,7 @@ services:
     image: 'ghcr.io/inst-api/parser:latest'
     restart: unless-stopped
     ports:
-      - "8090:8090" # REST
+      - "9090:9090" # REST
     #    healthcheck:
     #      test: ['CMD', 'curl', '-f', 'http://localhost:8000/live']
     #      interval: 1m
