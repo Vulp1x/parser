@@ -6,7 +6,7 @@ RUN apk add --no-cache  --update make git curl tzdata
 COPY . /home/${GITHUB_PATH}
 WORKDIR /home/${GITHUB_PATH}
 ENV GOPROXY=direct
-RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./bin/rest-api ./cmd/rest-api
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0  GOPROXY=https://proxy.golang.org go build -o ./bin/rest-api ./cmd/rest-api
 
 
 FROM alpine:latest as server

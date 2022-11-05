@@ -9,7 +9,7 @@ WORKDIR /home/${GITHUB_PATH}
 #ENV GOPROXY=direct
 RUN go mod download
 RUN go install github.com/go-delve/delve/cmd/dlv@v1.9.1
-RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -gcflags="all=-N -l" -o ./bin/rest-api ./cmd/rest-api
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 GOPROXY=https://proxy.golang.org go build -gcflags="all=-N -l" -o ./bin/rest-api ./cmd/rest-api
 
 FROM alpine:latest as server
 ARG CONFIG_MODE

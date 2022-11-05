@@ -13,8 +13,6 @@ services:
       - seccomp:unconfined
     cap_add:
       - SYS_PTRACE
-    depends_on:
-      - postgres
     ports:
       - "9090:9090" # REST
       - "40000:40000"
@@ -22,44 +20,7 @@ services:
       - ./tmp:/root/tmp
     networks:
       - ompnw
-  postgres:
-    image: postgres:14.5
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "insta_parser", "-U", "docker" ]
-      timeout: 45s
-      interval: 10s
-      retries: 10
-    restart: always
-    ports:
-      - "5435:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: insta_parser
-      APP_DB_USER: postgres
-      APP_DB_PASS: postgres
-      APP_DB_NAME: insta_parser
-    networks:
-      - ompnw
-    volumes:
-      - ./scripts/init-database-local.sql:/docker-entrypoint-initdb.d/database.sql
-      - ./pgdata:/var/lib/postgresql/data
-  api:
-    build:
-      context: ./instagrapi-rest
-      dockerfile: Dockerfile
-    stdin_open: true
-    tty: true
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./instagrapi-rest:/app
-    networks:
-      - ompnw
 
-volumes:
-  pgdata:
-    driver: local
 networks:
   ompnw:
     driver: bridge

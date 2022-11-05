@@ -97,7 +97,7 @@ build:
 .PHONY: gen
 gen:
 	$(LOCAL_BIN)/goa gen github.com/inst-api/parser/design
-	$(LOCAL_BIN)/goa example github.com/inst-api/parser/design -o internal/service
+	#$(LOCAL_BIN)/goa example github.com/inst-api/parser/design -o internal/service
 	$(LOCAL_BIN)/yq -i '.servers[0].url = "/"'  gen/http/openapi3.yaml
 	$(LOCAL_BIN)/yq -i '.host = "/"' gen/http/openapi.yaml
 	rm -rf ./internal/service/cmd
