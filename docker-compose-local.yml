@@ -22,5 +22,6 @@ services:
       - ompnw
 
 networks:
-  ompnw:
+  poster_ompnw:
     driver: bridge
+    external: true

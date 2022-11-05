@@ -19,5 +19,6 @@ services:
 
 
 networks:
-  ompnw:
+  poster_ompnw:
     driver: bridge
+    external: true
