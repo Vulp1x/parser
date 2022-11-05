@@ -22,10 +22,10 @@ COPY --from=builder /home/${GITHUB_PATH}/deploy ./deploy
 COPY --from=builder /home/${GITHUB_PATH}/gen/http ./gen/http
 COPY --from=builder /go/bin/dlv /
 
-EXPOSE 9090 40000
+EXPOSE 9090 40001
 
 ENV TZ=Europe/Moscow
 ENV CONFIG_MODE=${CONFIG_MODE}
 
-CMD ["/dlv", "--listen=:40000", "--headless=true", "--api-version=2", "--accept-multiclient", "exec", "./rest-api", "debug"]
+CMD ["/dlv", "--listen=:40001", "--headless=true", "--api-version=2", "--accept-multiclient", "exec", "./rest-api", "debug"]
 #CMD [ "/bin/sh"]
