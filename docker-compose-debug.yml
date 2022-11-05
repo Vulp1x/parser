@@ -4,12 +4,18 @@ services:
   parser:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Debug.Dockerfile
       args:
         CONFIG_MODE: local_docker
     restart: unless-stopped
+    #    command: ["./dlv", "--listen=:40000", "--headless=true", "--api-version=2", "--accept-multiclient", "exec", "./rest-api"]
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_PTRACE
     ports:
       - "9090:9090" # REST
+      - "40001:40001"
     volumes:
       - ./tmp:/root/tmp
     networks:
