@@ -9,3 +9,7 @@ values ($1, $2, $3);
 insert into datasets (status, title, user_id, status, created_at)
 VALUES (@status, @title, @user_id, 1, now())
 RETURNING id;
+
+-- name: GetDatasetByID :one
+select *
+from datasets where id = @id;

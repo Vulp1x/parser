@@ -2,9 +2,11 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"github.com/google/uuid"
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
+	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/sessions"
 	"github.com/inst-api/parser/internal/store/datasets"
 	"github.com/inst-api/parser/pkg/logger"
@@ -13,6 +15,7 @@ import (
 
 type datasetsStore interface {
 	CreateDraftDataset(ctx context.Context, userID uuid.UUID, title string) (uuid.UUID, error)
+	GetDataset(ctx context.Context, datasetID uuid.UUID) (dbmodel.Dataset, error)
 }
 
 // datasets_service service example implementation.
@@ -84,10 +87,29 @@ func (s *datasetsServicesrvc) ParseDataset(ctx context.Context, p *datasetsservi
 }
 
 // получить задачу по id
-func (s *datasetsServicesrvc) GetDataset(ctx context.Context, p *datasetsservice.GetDatasetPayload) (res *datasetsservice.Dataset, err error) {
-	res = &datasetsservice.Dataset{}
+func (s *datasetsServicesrvc) GetDataset(ctx context.Context, p *datasetsservice.GetDatasetPayload) (*datasetsservice.Dataset, error) {
 	logger.Info(ctx, "datasetsService.get dataset")
-	return
+
+	datasetID, err := uuid.Parse(p.DatasetID)
+	if err != nil {
+		logger.Error(ctx, err.Error())
+		return nil, datasetsservice.BadRequest(err.Error())
+	}
+
+	dataset, err := s.store.GetDataset(ctx, datasetID)
+	if err != nil {
+		logger.Errorf(ctx, "failed to find dataset by id: %v", err)
+
+		if errors.Is(err, datasets.ErrDatasetNotFound) {
+			return nil, datasetsservice.DatasetNotFound("")
+		}
+
+		return nil, datasetsservice.InternalError(err.Error())
+	}
+
+	return &datasetsservice.Dataset{
+		ID: dataset.ID.String(),
+	}, nil
 }
 
 // получить статус выполнения задачи по id

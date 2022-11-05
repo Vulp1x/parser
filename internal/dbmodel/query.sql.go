@@ -31,6 +31,29 @@ func (q *Queries) CreateDraftDataset(ctx context.Context, arg CreateDraftDataset
 	return id, err
 }
 
+const getDatasetByID = `-- name: GetDatasetByID :one
+select id, phone_code, status, title, user_id, created_at, started_at, stopped_at, updated_at, deleted_at
+from datasets where id = $1
+`
+
+func (q *Queries) GetDatasetByID(ctx context.Context, id uuid.UUID) (Dataset, error) {
+	row := q.db.QueryRow(ctx, getDatasetByID, id)
+	var i Dataset
+	err := row.Scan(
+		&i.ID,
+		&i.PhoneCode,
+		&i.Status,
+		&i.Title,
+		&i.UserID,
+		&i.CreatedAt,
+		&i.StartedAt,
+		&i.StoppedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
+}
+
 type SaveBotAccountsParams struct {
 	Username  string     `json:"username"`
 	SessionID string     `json:"session_id"`
