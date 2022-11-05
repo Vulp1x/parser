@@ -75,6 +75,11 @@ migrate-db:
 
 
 
+test-db-drop-create:
+	psql "postgres://postgres:postgres@0.0.0.0:5435/postgres?sslmode=disable" --command="DROP DATABASE IF EXISTS insta_parser;"
+	psql "postgres://postgres:postgres@0.0.0.0:5435/postgres?sslmode=disable" --command="CREATE DATABASE insta_parser WITH OWNER postgres ENCODING = 'UTF8';"
+	psql "postgres://postgres:postgres@0.0.0.0:5435/postgres?sslmode=disable" --command="GRANT ALL PRIVILEGES ON DATABASE insta_parser TO docker;"
+
 regenerate-db-drop-create:
 	psql "$(ROOT_PSQL_DSN)" --command="DROP DATABASE IF EXISTS insta_parser;"
 	psql "$(ROOT_PSQL_DSN)" --command="CREATE DATABASE insta_parser WITH OWNER postgres ENCODING = 'UTF8';"
