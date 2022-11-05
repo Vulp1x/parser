@@ -74,8 +74,6 @@ type CreateDatasetDraftPayload struct {
 	Token string
 	// название задачи
 	Title string
-	// имена аккаунтов, для которых ищем похожих
-	OriginalAccounts []string `json:"original_accounts"`
 }
 
 // Dataset is the result type of the datasets_service service update dataset
@@ -160,8 +158,6 @@ type FindSimilarPayload struct {
 	Token string
 	// id задачи
 	DatasetID string `json:"dataset_id"`
-	// код региона, фильтруем аккаунты по нему
-	FilterCode *int `json:"filter_code"`
 }
 
 // FindSimilarResult is the result type of the datasets_service service find
@@ -224,6 +220,10 @@ type UpdateDatasetPayload struct {
 	DatasetID string `json:"dataset_id"`
 	// имена аккаунтов, для которых ищем похожих
 	OriginalAccounts []string `json:"original_accounts"`
+	// код региона, по которому будем сортировать
+	PhoneCode *int `json:"phone_code"`
+	// название задачи
+	Title *string
 }
 
 // Invalid request

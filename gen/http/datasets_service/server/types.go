@@ -17,8 +17,6 @@ import (
 type CreateDatasetDraftRequestBody struct {
 	// название задачи
 	Title *string `form:"title,omitempty" json:"title,omitempty" xml:"title,omitempty"`
-	// имена аккаунтов, для которых ищем похожих
-	OriginalAccounts []string `json:"original_accounts"`
 }
 
 // UpdateDatasetRequestBody is the type of the "datasets_service" service
@@ -26,13 +24,10 @@ type CreateDatasetDraftRequestBody struct {
 type UpdateDatasetRequestBody struct {
 	// имена аккаунтов, для которых ищем похожих
 	OriginalAccounts []string `json:"original_accounts"`
-}
-
-// FindSimilarRequestBody is the type of the "datasets_service" service "find
-// similar" endpoint HTTP request body.
-type FindSimilarRequestBody struct {
-	// код региона, фильтруем аккаунты по нему
-	FilterCode *int `json:"filter_code"`
+	// код региона, по которому будем сортировать
+	PhoneCode *int `json:"phone_code"`
+	// название задачи
+	Title *string `form:"title,omitempty" json:"title,omitempty" xml:"title,omitempty"`
 }
 
 // UpdateDatasetOKResponseBody is the type of the "datasets_service" service
@@ -427,10 +422,6 @@ func NewCreateDatasetDraftPayload(body *CreateDatasetDraftRequestBody, token str
 	v := &datasetsservice.CreateDatasetDraftPayload{
 		Title: *body.Title,
 	}
-	v.OriginalAccounts = make([]string, len(body.OriginalAccounts))
-	for i, val := range body.OriginalAccounts {
-		v.OriginalAccounts[i] = val
-	}
 	v.Token = token
 
 	return v
@@ -439,7 +430,10 @@ func NewCreateDatasetDraftPayload(body *CreateDatasetDraftRequestBody, token str
 // NewUpdateDatasetPayload builds a datasets_service service update dataset
 // endpoint payload.
 func NewUpdateDatasetPayload(body *UpdateDatasetRequestBody, datasetID string, token string) *datasetsservice.UpdateDatasetPayload {
-	v := &datasetsservice.UpdateDatasetPayload{}
+	v := &datasetsservice.UpdateDatasetPayload{
+		PhoneCode: body.PhoneCode,
+		Title:     body.Title,
+	}
 	if body.OriginalAccounts != nil {
 		v.OriginalAccounts = make([]string, len(body.OriginalAccounts))
 		for i, val := range body.OriginalAccounts {
@@ -454,10 +448,8 @@ func NewUpdateDatasetPayload(body *UpdateDatasetRequestBody, datasetID string, t
 
 // NewFindSimilarPayload builds a datasets_service service find similar
 // endpoint payload.
-func NewFindSimilarPayload(body *FindSimilarRequestBody, datasetID string, token string) *datasetsservice.FindSimilarPayload {
-	v := &datasetsservice.FindSimilarPayload{
-		FilterCode: body.FilterCode,
-	}
+func NewFindSimilarPayload(datasetID string, token string) *datasetsservice.FindSimilarPayload {
+	v := &datasetsservice.FindSimilarPayload{}
 	v.DatasetID = datasetID
 	v.Token = token
 
@@ -508,9 +500,6 @@ func NewListDatasetsPayload(token string) *datasetsservice.ListDatasetsPayload {
 func ValidateCreateDatasetDraftRequestBody(body *CreateDatasetDraftRequestBody) (err error) {
 	if body.Title == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("title", "body"))
-	}
-	if body.OriginalAccounts == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("original_accounts", "body"))
 	}
 	return
 }

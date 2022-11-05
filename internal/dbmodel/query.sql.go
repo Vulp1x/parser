@@ -6,9 +6,30 @@
 package dbmodel
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"time"
 )
+
+const createDraftDataset = `-- name: CreateDraftDataset :one
+insert into datasets (status, title, user_id, status, created_at)
+VALUES ($1, $2, $3, 1, now())
+RETURNING id
+`
+
+type CreateDraftDatasetParams struct {
+	Status datasetStatus `json:"status"`
+	Title  string        `json:"title"`
+	UserID uuid.UUID     `json:"user_id"`
+}
+
+func (q *Queries) CreateDraftDataset(ctx context.Context, arg CreateDraftDatasetParams) (uuid.UUID, error) {
+	row := q.db.QueryRow(ctx, createDraftDataset, arg.Status, arg.Title, arg.UserID)
+	var id uuid.UUID
+	err := row.Scan(&id)
+	return id, err
+}
 
 type SaveBotAccountsParams struct {
 	Username  string     `json:"username"`

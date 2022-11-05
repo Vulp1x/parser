@@ -6,16 +6,16 @@ CREATE
 
 CREATE TABLE datasets
 (
-    id                uuid                     not null primary key default gen_random_uuid(),
-    text_template     text                     not null,
-    incoming_accounts text[]                   not null,
-    status            smallint                 not null,
-    title             text                     not null,
-    created_at        timestamp with time zone not null,
-    started_at        timestamp with time zone,
-    stopped_at        timestamp with time zone,
-    updated_at        timestamp with time zone,
-    deleted_at        timestamp with time zone
+    id         uuid                     not null primary key default gen_random_uuid(),
+    phone_code smallint,
+    status     smallint                 not null,
+    title      text                     not null,
+    user_id    uuid                     not null,
+    created_at timestamp with time zone not null,
+    started_at timestamp with time zone,
+    stopped_at timestamp with time zone,
+    updated_at timestamp with time zone,
+    deleted_at timestamp with time zone
 );
 
 CREATE TABLE bots
@@ -49,7 +49,7 @@ create table bloggers
 create table targets
 (
     id         uuid primary key   default gen_random_uuid(),
-    dataset_id    uuid      not null references datasets,
+    dataset_id uuid      not null references datasets,
     username   text      not null,
     user_id    bigint    not null,
     status     smallint  not null default 0, -- 0 - не показывали рекламу, 1 - пытались показать рекламу, но не получилось, 2-показали рекламу

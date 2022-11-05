@@ -72,10 +72,10 @@ CREATE TABLE public.bots (
 
 CREATE TABLE public.datasets (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
-    text_template text NOT NULL,
-    incoming_accounts text[] NOT NULL,
+    phone_code smallint,
     status smallint NOT NULL,
     title text NOT NULL,
+    user_id uuid NOT NULL,
     created_at timestamp with time zone NOT NULL,
     started_at timestamp with time zone,
     stopped_at timestamp with time zone,

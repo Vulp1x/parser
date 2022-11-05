@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"github.com/google/uuid"
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
 	"github.com/inst-api/parser/internal/sessions"
 	"github.com/inst-api/parser/internal/store/datasets"
@@ -10,10 +11,15 @@ import (
 	"goa.design/goa/v3/security"
 )
 
+type datasetsStore interface {
+	CreateDraftDataset(ctx context.Context, userID uuid.UUID, title string) (uuid.UUID, error)
+}
+
 // datasets_service service example implementation.
 // The example methods log the requests and return zero values.
 type datasetsServicesrvc struct {
-	auth *authService
+	auth  *authService
+	store datasetsStore
 }
 
 // NewDatasetsService returns the datasets_service service implementation.
@@ -34,10 +40,22 @@ func (s *datasetsServicesrvc) JWTAuth(ctx context.Context, token string, scheme 
 	return s.auth.JWTAuth(ctx, token, scheme)
 }
 
-// создать драфт задачи
-func (s *datasetsServicesrvc) CreateDatasetDraft(ctx context.Context, p *datasetsservice.CreateDatasetDraftPayload) (res string, err error) {
+// CreateDatasetDraft создать драфт задачи
+func (s *datasetsServicesrvc) CreateDatasetDraft(ctx context.Context, p *datasetsservice.CreateDatasetDraftPayload) (string, error) {
 	logger.Info(ctx, "datasetsService.create dataset draft")
-	return
+
+	userID, err := UserIDFromContext(ctx)
+	if err != nil {
+		logger.Errorf(ctx, "failed to get user id from context: %v", err)
+		return "", datasetsservice.InternalError(err.Error())
+	}
+
+	taskID, err := s.store.CreateDraftDataset(ctx, userID, p.Title)
+	if err != nil {
+		return "", datasetsservice.InternalError(err.Error())
+	}
+
+	return taskID.String(), nil
 }
 
 // UpdateDataset обновляет информацию о задаче. Не меняет статус задачи, можно вызывать
@@ -47,6 +65,7 @@ func (s *datasetsServicesrvc) CreateDatasetDraft(ctx context.Context, p *dataset
 func (s *datasetsServicesrvc) UpdateDataset(ctx context.Context, p *datasetsservice.UpdateDatasetPayload) (res *datasetsservice.Dataset, err error) {
 	res = &datasetsservice.Dataset{}
 	logger.Info(ctx, "datasetsService.update dataset")
+
 	return
 }
 

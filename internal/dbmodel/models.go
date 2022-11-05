@@ -35,16 +35,16 @@ type Bot struct {
 }
 
 type Dataset struct {
-	ID               uuid.UUID  `json:"id"`
-	TextTemplate     string     `json:"text_template"`
-	IncomingAccounts []string   `json:"incoming_accounts"`
-	Status           int16      `json:"status"`
-	Title            string     `json:"title"`
-	CreatedAt        time.Time  `json:"created_at"`
-	StartedAt        *time.Time `json:"started_at"`
-	StoppedAt        *time.Time `json:"stopped_at"`
-	UpdatedAt        *time.Time `json:"updated_at"`
-	DeletedAt        *time.Time `json:"deleted_at"`
+	ID        uuid.UUID     `json:"id"`
+	PhoneCode *int16        `json:"phone_code"`
+	Status    datasetStatus `json:"status"`
+	Title     string        `json:"title"`
+	UserID    uuid.UUID     `json:"user_id"`
+	CreatedAt time.Time     `json:"created_at"`
+	StartedAt *time.Time    `json:"started_at"`
+	StoppedAt *time.Time    `json:"stopped_at"`
+	UpdatedAt *time.Time    `json:"updated_at"`
+	DeletedAt *time.Time    `json:"deleted_at"`
 }
 
 type Target struct {

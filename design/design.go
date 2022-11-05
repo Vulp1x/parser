@@ -45,12 +45,7 @@ var _ = Service("datasets_service", func() {
 				Description("название задачи")
 			})
 
-			Attribute("original_accounts", ArrayOf(String), func() {
-				Description("имена аккаунтов, для которых ищем похожих")
-				Meta("struct:tag:json", "original_accounts")
-			})
-
-			Required("token", "title", "original_accounts")
+			Required("token", "title")
 		})
 
 		Result(String, func() {
@@ -88,6 +83,16 @@ var _ = Service("datasets_service", func() {
 				Meta("struct:tag:json", "original_accounts")
 			})
 
+			Attribute("phone_code", Int, func() {
+				Description("код региона, по которому будем сортировать")
+				Example(7)
+				Meta("struct:tag:json", "phone_code")
+			})
+
+			Attribute("title", String, func() {
+				Description("название задачи")
+			})
+
 			Required("token", "dataset_id")
 		})
 
@@ -115,12 +120,6 @@ var _ = Service("datasets_service", func() {
 			Attribute("dataset_id", String, func() {
 				Description("id задачи")
 				Meta("struct:tag:json", "dataset_id")
-			})
-
-			Attribute("filter_code", Int, func() {
-				Description("код региона, фильтруем аккаунты по нему")
-				Example(7)
-				Meta("struct:tag:json", "filter_code")
 			})
 
 			Required("token", "dataset_id")

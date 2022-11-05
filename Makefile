@@ -49,7 +49,7 @@ endif
 
 
 bin-deps:
-	GOBIN=$(LOCAL_BIN) go install goa.design/goa/v3/cmd/goa@v3 && \
+	GOBIN=$(LOCAL_BIN) GOPROXY=https://proxy.golang.org go install goa.design/goa/v3/cmd/goa@v3.9.1 && \
 	GOBIN=$(LOCAL_BIN) go install github.com/pressly/goose/v3/cmd/goose@v3.2.0 && \
 	GOBIN=$(LOCAL_BIN) go install github.com/kyleconroy/sqlc/cmd/sqlc@v1.15.0 && \
 	GOBIN=$(LOCAL_BIN) go install github.com/goresed/goresed/cmd/goresed@v0.2.3 && \
@@ -77,7 +77,7 @@ migrate-db:
 
 regenerate-db-drop-create:
 	psql "$(ROOT_PSQL_DSN)" --command="DROP DATABASE IF EXISTS insta_parser;"
-	psql "$(ROOT_PSQL_DSN)" --command="CREATE DATABASE parser WITH OWNER postgres ENCODING = 'UTF8';"
+	psql "$(ROOT_PSQL_DSN)" --command="CREATE DATABASE insta_parser WITH OWNER postgres ENCODING = 'UTF8';"
 
 
 regenerate-db: regenerate-db-drop-create migrate-db generate-db-structure generate-db-code
@@ -97,7 +97,8 @@ build:
 .PHONY: gen
 gen:
 	$(LOCAL_BIN)/goa gen github.com/inst-api/parser/design
-	#$(LOCAL_BIN)/goa example github.com/inst-api/parser/design -o internal/service
+	echo "generate succeeded"
+	# $(LOCAL_BIN)/goa example github.com/inst-api/parser/design -o internal/service
 	$(LOCAL_BIN)/yq -i '.servers[0].url = "/"'  gen/http/openapi3.yaml
 	$(LOCAL_BIN)/yq -i '.host = "/"' gen/http/openapi.yaml
 	rm -rf ./internal/service/cmd
@@ -106,6 +107,7 @@ gen:
 	rm -rf ./gen/http/*/client
 	rm -rf ./gen/*/client.go
 	rm -rf ./gen/http/cli
+	rm -rf ./goa*
 	#git restore ./gen/tasks_service/consts.go
 
 

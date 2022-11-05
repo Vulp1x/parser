@@ -238,20 +238,9 @@ func EncodeFindSimilarResponse(encoder func(context.Context, http.ResponseWriter
 func DecodeFindSimilarRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			body FindSimilarRequestBody
-			err  error
-		)
-		err = decoder(r).Decode(&body)
-		if err != nil {
-			if err == io.EOF {
-				return nil, goa.MissingPayloadError()
-			}
-			return nil, goa.DecodePayloadError(err.Error())
-		}
-
-		var (
 			datasetID string
 			token     string
+			err       error
 
 			params = mux.Vars(r)
 		)
@@ -263,7 +252,7 @@ func DecodeFindSimilarRequest(mux goahttp.Muxer, decoder func(*http.Request) goa
 		if err != nil {
 			return nil, err
 		}
-		payload := NewFindSimilarPayload(&body, datasetID, token)
+		payload := NewFindSimilarPayload(datasetID, token)
 		if strings.Contains(payload.Token, " ") {
 			// Remove authorization scheme prefix (e.g. "Bearer")
 			cred := strings.SplitN(payload.Token, " ", 2)[1]

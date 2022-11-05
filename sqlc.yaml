@@ -11,9 +11,9 @@ packages:
     emit_json_tags: true
 
 overrides:
-#  - column: "bloggers.headers"
-#    go_type:
-#      type: "Base"
+  - column: "datasets.status"
+    go_type:
+      type: "datasetStatus"
 #      import: "github.com/inst-api/parser/internal/headers"
 #
 
