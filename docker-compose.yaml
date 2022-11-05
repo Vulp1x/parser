@@ -15,7 +15,7 @@ services:
     volumes:
       - ./tmp:/root/tmp
     networks:
-      - ompnw
+      - poster_ompnw
 
 
 networks:
