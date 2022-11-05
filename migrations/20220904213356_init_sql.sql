@@ -23,7 +23,7 @@ CREATE TABLE bots
     id         uuid primary key     default gen_random_uuid(),
     username   text UNIQUE not null,
     session_id text        not null,
-    work_proxy jsonb,
+    proxy      jsonb       not null,
     is_blocked bool        not null,
     started_at timestamp,
     created_at timestamp   not null default now(),
@@ -40,7 +40,7 @@ create table bloggers
     followers_count bigint    not null default -1,
     is_initial      bool      not null, -- является ли блоггер
     created_at      timestamp not null default now(),
-    parsed_at       timestamp not null,
+    parsed_at       timestamp,
     updated_at      timestamp
 );
 

@@ -18,7 +18,7 @@ type Blogger struct {
 	FollowersCount int64      `json:"followers_count"`
 	IsInitial      bool       `json:"is_initial"`
 	CreatedAt      time.Time  `json:"created_at"`
-	ParsedAt       time.Time  `json:"parsed_at"`
+	ParsedAt       *time.Time `json:"parsed_at"`
 	UpdatedAt      *time.Time `json:"updated_at"`
 }
 
@@ -26,7 +26,7 @@ type Bot struct {
 	ID        uuid.UUID  `json:"id"`
 	Username  string     `json:"username"`
 	SessionID string     `json:"session_id"`
-	WorkProxy *string    `json:"work_proxy"`
+	Proxy     Proxy      `json:"proxy"`
 	IsBlocked bool       `json:"is_blocked"`
 	StartedAt *time.Time `json:"started_at"`
 	CreatedAt time.Time  `json:"created_at"`

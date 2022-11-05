@@ -33,52 +33,11 @@ type UpdateDatasetRequestBody struct {
 // UpdateDatasetOKResponseBody is the type of the "datasets_service" service
 // "update dataset" endpoint HTTP response body.
 type UpdateDatasetOKResponseBody struct {
-	ID string `form:"id" json:"id" xml:"id"`
-	// описание под постом
-	TextTemplate string `json:"text_template"`
-	// список base64 строк картинок
-	PostImages []string `json:"post_images"`
-	// имена аккаунтов, на которых ведем трафик
-	LandingAccounts []string `json:"landing_accounts"`
-	// имена для аккаунтов-ботов
-	BotNames []string `json:"bot_names"`
-	// фамилии для аккаунтов-ботов
-	BotLastNames []string `json:"bot_last_names"`
-	// аватарки для ботов
-	BotImages []string `json:"bot_images"`
-	// ссылки для описания у ботов
-	BotUrls []string `json:"bot_urls"`
-	Status  int      `form:"status" json:"status" xml:"status"`
+	ID       string                 `form:"id" json:"id" xml:"id"`
+	Bloggers []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Status   int                    `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
-	// количество ботов в задаче
-	BotsNum int `json:"bots_num"`
-	// количество резидентских прокси в задаче
-	ResidentialProxiesNum int `json:"residential_proxies_num"`
-	// количество дешёвых прокси в задаче
-	CheapProxiesNum int `json:"cheap_proxies_num"`
-	// количество целевых пользователей в задаче
-	TargetsNum int `json:"targets_num"`
-	// название файла, из которого брали ботов
-	BotsFilename *string `json:"bots_filename"`
-	// название файла, из которого брали резидентские прокси
-	ResidentialProxiesFilename *string `json:"residential_proxies_filename"`
-	// название файла, из которого брали дешёвые прокси
-	CheapProxiesFilename *string `json:"cheap_proxies_filename"`
-	// название файла, из которого брали целевых пользователей
-	TargetsFilename *string `json:"targets_filename"`
-	// нужно ли подписываться на аккаунты
-	FollowTargets bool `json:"follow_targets"`
-	// делать отметки на фотографии
-	NeedPhotoTags bool `json:"need_photo_tags"`
-	// делать отметки на фотографии
-	PerPostSleepSeconds uint `json:"per_post_sleep_seconds"`
-	// задержка перед проставлением отметок
-	PhotoTagsDelaySeconds uint `json:"photo_tags_delay_seconds"`
-	// количество постов для каждого бота
-	PostsPerBot uint `json:"posts_per_bot"`
-	// количество упоминаний под каждым постом
-	TargetsPerPost uint `json:"targets_per_post"`
 }
 
 // FindSimilarOKResponseBody is the type of the "datasets_service" service
@@ -101,52 +60,11 @@ type ParseDatasetOKResponseBody struct {
 // GetDatasetOKResponseBody is the type of the "datasets_service" service "get
 // dataset" endpoint HTTP response body.
 type GetDatasetOKResponseBody struct {
-	ID string `form:"id" json:"id" xml:"id"`
-	// описание под постом
-	TextTemplate string `json:"text_template"`
-	// список base64 строк картинок
-	PostImages []string `json:"post_images"`
-	// имена аккаунтов, на которых ведем трафик
-	LandingAccounts []string `json:"landing_accounts"`
-	// имена для аккаунтов-ботов
-	BotNames []string `json:"bot_names"`
-	// фамилии для аккаунтов-ботов
-	BotLastNames []string `json:"bot_last_names"`
-	// аватарки для ботов
-	BotImages []string `json:"bot_images"`
-	// ссылки для описания у ботов
-	BotUrls []string `json:"bot_urls"`
-	Status  int      `form:"status" json:"status" xml:"status"`
+	ID       string                 `form:"id" json:"id" xml:"id"`
+	Bloggers []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Status   int                    `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
-	// количество ботов в задаче
-	BotsNum int `json:"bots_num"`
-	// количество резидентских прокси в задаче
-	ResidentialProxiesNum int `json:"residential_proxies_num"`
-	// количество дешёвых прокси в задаче
-	CheapProxiesNum int `json:"cheap_proxies_num"`
-	// количество целевых пользователей в задаче
-	TargetsNum int `json:"targets_num"`
-	// название файла, из которого брали ботов
-	BotsFilename *string `json:"bots_filename"`
-	// название файла, из которого брали резидентские прокси
-	ResidentialProxiesFilename *string `json:"residential_proxies_filename"`
-	// название файла, из которого брали дешёвые прокси
-	CheapProxiesFilename *string `json:"cheap_proxies_filename"`
-	// название файла, из которого брали целевых пользователей
-	TargetsFilename *string `json:"targets_filename"`
-	// нужно ли подписываться на аккаунты
-	FollowTargets bool `json:"follow_targets"`
-	// делать отметки на фотографии
-	NeedPhotoTags bool `json:"need_photo_tags"`
-	// делать отметки на фотографии
-	PerPostSleepSeconds uint `json:"per_post_sleep_seconds"`
-	// задержка перед проставлением отметок
-	PhotoTagsDelaySeconds uint `json:"photo_tags_delay_seconds"`
-	// количество постов для каждого бота
-	PostsPerBot uint `json:"posts_per_bot"`
-	// количество упоминаний под каждым постом
-	TargetsPerPost uint `json:"targets_per_post"`
 }
 
 // GetProgressOKResponseBody is the type of the "datasets_service" service "get
@@ -171,10 +89,15 @@ type ListDatasetsResponseBody []*DatasetResponse
 
 // BloggerResponseBody is used to define fields on response body types.
 type BloggerResponseBody struct {
-	// логин блогера
-	Login string `form:"login" json:"login" xml:"login"`
-	// user_id блогера
-	UserID string `form:"user_id" json:"user_id" xml:"user_id"`
+	ID string `form:"id" json:"id" xml:"id"`
+	// имя аккаунта в инстаграме
+	Username string `form:"username" json:"username" xml:"username"`
+	// user_id в инстаграме, -1 если неизвестен
+	UserID int64 `json:"user_id"`
+	// айди датасета, к которому принадлежит блоггер
+	DatasetID string `json:"dataset_id"`
+	// является ли блоггер изначально в датасете или появился при парсинге
+	IsInitial bool `json:"is_initial"`
 }
 
 // BloggersProgressResponseBody is used to define fields on response body types.
@@ -189,111 +112,38 @@ type BloggersProgressResponseBody struct {
 
 // DatasetResponse is used to define fields on response body types.
 type DatasetResponse struct {
-	ID string `form:"id" json:"id" xml:"id"`
-	// описание под постом
-	TextTemplate string `json:"text_template"`
-	// список base64 строк картинок
-	PostImages []string `json:"post_images"`
-	// имена аккаунтов, на которых ведем трафик
-	LandingAccounts []string `json:"landing_accounts"`
-	// имена для аккаунтов-ботов
-	BotNames []string `json:"bot_names"`
-	// фамилии для аккаунтов-ботов
-	BotLastNames []string `json:"bot_last_names"`
-	// аватарки для ботов
-	BotImages []string `json:"bot_images"`
-	// ссылки для описания у ботов
-	BotUrls []string `json:"bot_urls"`
-	Status  int      `form:"status" json:"status" xml:"status"`
+	ID       string             `form:"id" json:"id" xml:"id"`
+	Bloggers []*BloggerResponse `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Status   int                `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
-	// количество ботов в задаче
-	BotsNum int `json:"bots_num"`
-	// количество резидентских прокси в задаче
-	ResidentialProxiesNum int `json:"residential_proxies_num"`
-	// количество дешёвых прокси в задаче
-	CheapProxiesNum int `json:"cheap_proxies_num"`
-	// количество целевых пользователей в задаче
-	TargetsNum int `json:"targets_num"`
-	// название файла, из которого брали ботов
-	BotsFilename *string `json:"bots_filename"`
-	// название файла, из которого брали резидентские прокси
-	ResidentialProxiesFilename *string `json:"residential_proxies_filename"`
-	// название файла, из которого брали дешёвые прокси
-	CheapProxiesFilename *string `json:"cheap_proxies_filename"`
-	// название файла, из которого брали целевых пользователей
-	TargetsFilename *string `json:"targets_filename"`
-	// нужно ли подписываться на аккаунты
-	FollowTargets bool `json:"follow_targets"`
-	// делать отметки на фотографии
-	NeedPhotoTags bool `json:"need_photo_tags"`
-	// делать отметки на фотографии
-	PerPostSleepSeconds uint `json:"per_post_sleep_seconds"`
-	// задержка перед проставлением отметок
-	PhotoTagsDelaySeconds uint `json:"photo_tags_delay_seconds"`
-	// количество постов для каждого бота
-	PostsPerBot uint `json:"posts_per_bot"`
-	// количество упоминаний под каждым постом
-	TargetsPerPost uint `json:"targets_per_post"`
+}
+
+// BloggerResponse is used to define fields on response body types.
+type BloggerResponse struct {
+	ID string `form:"id" json:"id" xml:"id"`
+	// имя аккаунта в инстаграме
+	Username string `form:"username" json:"username" xml:"username"`
+	// user_id в инстаграме, -1 если неизвестен
+	UserID int64 `json:"user_id"`
+	// айди датасета, к которому принадлежит блоггер
+	DatasetID string `json:"dataset_id"`
+	// является ли блоггер изначально в датасете или появился при парсинге
+	IsInitial bool `json:"is_initial"`
 }
 
 // NewUpdateDatasetOKResponseBody builds the HTTP response body from the result
 // of the "update dataset" endpoint of the "datasets_service" service.
 func NewUpdateDatasetOKResponseBody(res *datasetsservice.Dataset) *UpdateDatasetOKResponseBody {
 	body := &UpdateDatasetOKResponseBody{
-		ID:                         res.ID,
-		TextTemplate:               res.TextTemplate,
-		Status:                     int(res.Status),
-		Title:                      res.Title,
-		BotsNum:                    res.BotsNum,
-		ResidentialProxiesNum:      res.ResidentialProxiesNum,
-		CheapProxiesNum:            res.CheapProxiesNum,
-		TargetsNum:                 res.TargetsNum,
-		BotsFilename:               res.BotsFilename,
-		ResidentialProxiesFilename: res.ResidentialProxiesFilename,
-		CheapProxiesFilename:       res.CheapProxiesFilename,
-		TargetsFilename:            res.TargetsFilename,
-		FollowTargets:              res.FollowTargets,
-		NeedPhotoTags:              res.NeedPhotoTags,
-		PerPostSleepSeconds:        res.PerPostSleepSeconds,
-		PhotoTagsDelaySeconds:      res.PhotoTagsDelaySeconds,
-		PostsPerBot:                res.PostsPerBot,
-		TargetsPerPost:             res.TargetsPerPost,
+		ID:     res.ID,
+		Status: int(res.Status),
+		Title:  res.Title,
 	}
-	if res.PostImages != nil {
-		body.PostImages = make([]string, len(res.PostImages))
-		for i, val := range res.PostImages {
-			body.PostImages[i] = val
-		}
-	}
-	if res.LandingAccounts != nil {
-		body.LandingAccounts = make([]string, len(res.LandingAccounts))
-		for i, val := range res.LandingAccounts {
-			body.LandingAccounts[i] = val
-		}
-	}
-	if res.BotNames != nil {
-		body.BotNames = make([]string, len(res.BotNames))
-		for i, val := range res.BotNames {
-			body.BotNames[i] = val
-		}
-	}
-	if res.BotLastNames != nil {
-		body.BotLastNames = make([]string, len(res.BotLastNames))
-		for i, val := range res.BotLastNames {
-			body.BotLastNames[i] = val
-		}
-	}
-	if res.BotImages != nil {
-		body.BotImages = make([]string, len(res.BotImages))
-		for i, val := range res.BotImages {
-			body.BotImages[i] = val
-		}
-	}
-	if res.BotUrls != nil {
-		body.BotUrls = make([]string, len(res.BotUrls))
-		for i, val := range res.BotUrls {
-			body.BotUrls[i] = val
+	if res.Bloggers != nil {
+		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
+		for i, val := range res.Bloggers {
+			body.Bloggers[i] = marshalDatasetsserviceBloggerToBloggerResponseBody(val)
 		}
 	}
 	return body
@@ -329,59 +179,14 @@ func NewParseDatasetOKResponseBody(res *datasetsservice.ParseDatasetResult) *Par
 // the "get dataset" endpoint of the "datasets_service" service.
 func NewGetDatasetOKResponseBody(res *datasetsservice.Dataset) *GetDatasetOKResponseBody {
 	body := &GetDatasetOKResponseBody{
-		ID:                         res.ID,
-		TextTemplate:               res.TextTemplate,
-		Status:                     int(res.Status),
-		Title:                      res.Title,
-		BotsNum:                    res.BotsNum,
-		ResidentialProxiesNum:      res.ResidentialProxiesNum,
-		CheapProxiesNum:            res.CheapProxiesNum,
-		TargetsNum:                 res.TargetsNum,
-		BotsFilename:               res.BotsFilename,
-		ResidentialProxiesFilename: res.ResidentialProxiesFilename,
-		CheapProxiesFilename:       res.CheapProxiesFilename,
-		TargetsFilename:            res.TargetsFilename,
-		FollowTargets:              res.FollowTargets,
-		NeedPhotoTags:              res.NeedPhotoTags,
-		PerPostSleepSeconds:        res.PerPostSleepSeconds,
-		PhotoTagsDelaySeconds:      res.PhotoTagsDelaySeconds,
-		PostsPerBot:                res.PostsPerBot,
-		TargetsPerPost:             res.TargetsPerPost,
+		ID:     res.ID,
+		Status: int(res.Status),
+		Title:  res.Title,
 	}
-	if res.PostImages != nil {
-		body.PostImages = make([]string, len(res.PostImages))
-		for i, val := range res.PostImages {
-			body.PostImages[i] = val
-		}
-	}
-	if res.LandingAccounts != nil {
-		body.LandingAccounts = make([]string, len(res.LandingAccounts))
-		for i, val := range res.LandingAccounts {
-			body.LandingAccounts[i] = val
-		}
-	}
-	if res.BotNames != nil {
-		body.BotNames = make([]string, len(res.BotNames))
-		for i, val := range res.BotNames {
-			body.BotNames[i] = val
-		}
-	}
-	if res.BotLastNames != nil {
-		body.BotLastNames = make([]string, len(res.BotLastNames))
-		for i, val := range res.BotLastNames {
-			body.BotLastNames[i] = val
-		}
-	}
-	if res.BotImages != nil {
-		body.BotImages = make([]string, len(res.BotImages))
-		for i, val := range res.BotImages {
-			body.BotImages[i] = val
-		}
-	}
-	if res.BotUrls != nil {
-		body.BotUrls = make([]string, len(res.BotUrls))
-		for i, val := range res.BotUrls {
-			body.BotUrls[i] = val
+	if res.Bloggers != nil {
+		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
+		for i, val := range res.Bloggers {
+			body.Bloggers[i] = marshalDatasetsserviceBloggerToBloggerResponseBody(val)
 		}
 	}
 	return body

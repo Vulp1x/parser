@@ -16,6 +16,9 @@ overrides:
       type: "datasetStatus"
 #      import: "github.com/inst-api/parser/internal/headers"
 #
+  - column: "bots.proxy"
+    go_type:
+      type: "Proxy"
 
   - db_type: "pg_catalog.int2"
     nullable: true

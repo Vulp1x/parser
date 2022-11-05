@@ -24,110 +24,47 @@ var DatasetStatus = Type("DatasetStatus", Int, func() {
 	6 - задача завершена`)
 })
 
+// Blogger описывает блоггера, который используется при парсинге
+var Blogger = Type("Blogger", func() {
+	Attribute("id", String, "", func() {
+		Format(FormatUUID)
+	})
+
+	Attribute("username", String, func() {
+		Description("имя аккаунта в инстаграме")
+	})
+
+	Attribute("user_id", Int64, func() {
+		Description("user_id в инстаграме, -1 если неизвестен")
+		Meta("struct:tag:json", "user_id")
+	})
+
+	Attribute("dataset_id", String, func() {
+		Description("айди датасета, к которому принадлежит блоггер")
+		Meta("struct:tag:json", "dataset_id")
+		Format(FormatUUID)
+	})
+
+	Attribute("is_initial", Boolean, func() {
+		Description("является ли блоггер изначально в датасете или появился при парсинге")
+		Meta("struct:tag:json", "is_initial")
+	})
+
+	Required("id", "dataset_id", "username", "is_initial", "user_id")
+})
+
 // Dataset описывает рекламную кампанию
 var Dataset = Type("Dataset", func() {
 	Attribute("id", String, "", func() {
 		Format(FormatUUID)
 	})
 
-	Attribute("text_template", String, func() {
-		Meta("struct:tag:json", "text_template")
-		Description("описание под постом")
-	})
+	Attribute("bloggers", ArrayOf(Blogger))
 
-	Attribute("post_images", ArrayOf(String), "список base64 строк картинок", func() {
-		Meta("struct:tag:json", "post_images")
-	})
-
-	Attribute("landing_accounts", ArrayOf(String), func() {
-		Description("имена аккаунтов, на которых ведем трафик")
-		Meta("struct:tag:json", "landing_accounts")
-	})
-
-	Attribute("bot_names", ArrayOf(String), func() {
-		Description("имена для аккаунтов-ботов")
-		Meta("struct:tag:json", "bot_names")
-	})
-
-	Attribute("bot_last_names", ArrayOf(String), func() {
-		Description("фамилии для аккаунтов-ботов")
-		Meta("struct:tag:json", "bot_last_names")
-	})
-
-	Attribute("bot_images", ArrayOf(String), func() {
-		Description("аватарки для ботов")
-		Meta("struct:tag:json", "bot_images")
-	})
-
-	Attribute("bot_urls", ArrayOf(String), func() {
-		Description("ссылки для описания у ботов")
-		Meta("struct:tag:json", "bot_urls")
-	})
 	Attribute("status", DatasetStatus)
 	Attribute("title", String, "название задачи")
 
-	Attribute("bots_num", Int, "количество ботов в задаче", func() {
-		Meta("struct:tag:json", "bots_num")
-	})
-	Attribute("residential_proxies_num", Int, "количество резидентских прокси в задаче", func() {
-		Meta("struct:tag:json", "residential_proxies_num")
-	})
-	Attribute("cheap_proxies_num", Int, "количество дешёвых прокси в задаче", func() {
-		Meta("struct:tag:json", "cheap_proxies_num")
-	})
-
-	Attribute("targets_num", Int, "количество целевых пользователей в задаче", func() {
-		Meta("struct:tag:json", "targets_num")
-	})
-
-	Attribute("bots_filename", String, "название файла, из которого брали ботов", func() {
-		Meta("struct:tag:json", "bots_filename")
-	})
-	Attribute("residential_proxies_filename", String, "название файла, из которого брали резидентские прокси", func() {
-		Meta("struct:tag:json", "residential_proxies_filename")
-	})
-
-	Attribute("cheap_proxies_filename", String, "название файла, из которого брали дешёвые прокси", func() {
-		Meta("struct:tag:json", "cheap_proxies_filename")
-	})
-	Attribute("targets_filename", String, "название файла, из которого брали целевых пользователей", func() {
-		Meta("struct:tag:json", "targets_filename")
-	})
-
-	Attribute("follow_targets", Boolean, func() {
-		Description("нужно ли подписываться на аккаунты")
-		Meta("struct:tag:json", "follow_targets")
-	})
-
-	Attribute("need_photo_tags", Boolean, func() {
-		Description("делать отметки на фотографии")
-		Meta("struct:tag:json", "need_photo_tags")
-	})
-
-	Attribute("per_post_sleep_seconds", UInt, func() {
-		Description("делать отметки на фотографии")
-		Meta("struct:tag:json", "per_post_sleep_seconds")
-	})
-
-	Attribute("photo_tags_delay_seconds", UInt, func() {
-		Description("задержка перед проставлением отметок")
-		Meta("struct:tag:json", "photo_tags_delay_seconds")
-	})
-
-	Attribute("posts_per_bot", UInt, func() {
-		Description("количество постов для каждого бота")
-		Meta("struct:tag:json", "posts_per_bot")
-	})
-
-	Attribute("targets_per_post", UInt, func() {
-		Description("количество упоминаний под каждым постом")
-		Meta("struct:tag:json", "targets_per_post")
-	})
-
-	Required("id", "text_template", "post_images", "status", "title", "bots_num", "residential_proxies_num",
-		"cheap_proxies_num", "targets_num", "bot_images", "landing_accounts", "bot_names", "bot_last_names", "bot_urls",
-		"targets_per_post", "posts_per_bot", "photo_tags_delay_seconds", "per_post_sleep_seconds", "need_photo_tags", "follow_targets",
-	)
+	Required("id", "bloggers", "status", "title")
 })
 
 var DatasetFilenames = Type("DatasetFileNames", func() {
@@ -185,16 +122,4 @@ var DatasetProgress = Type("DatasetProgress", func() {
 
 	Required("bots_progresses", "targets_notified", "targets_failed", "targets_waiting", "done")
 
-})
-
-var Blogger = Type("Blogger", func() {
-	Attribute("login", String, func() {
-		Description("логин блогера")
-	})
-
-	Attribute("user_id", String, func() {
-		Description("user_id блогера")
-	})
-
-	Required("login", "user_id")
 })

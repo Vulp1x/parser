@@ -671,8 +671,11 @@ func EncodeListDatasetsError(encoder func(context.Context, http.ResponseWriter) 
 // *BloggerResponseBody from a value of type *datasetsservice.Blogger.
 func marshalDatasetsserviceBloggerToBloggerResponseBody(v *datasetsservice.Blogger) *BloggerResponseBody {
 	res := &BloggerResponseBody{
-		Login:  v.Login,
-		UserID: v.UserID,
+		ID:        v.ID,
+		Username:  v.Username,
+		UserID:    v.UserID,
+		DatasetID: v.DatasetID,
+		IsInitial: v.IsInitial,
 	}
 
 	return res
@@ -695,60 +698,29 @@ func marshalDatasetsserviceBloggersProgressToBloggersProgressResponseBody(v *dat
 // *DatasetResponse from a value of type *datasetsservice.Dataset.
 func marshalDatasetsserviceDatasetToDatasetResponse(v *datasetsservice.Dataset) *DatasetResponse {
 	res := &DatasetResponse{
-		ID:                         v.ID,
-		TextTemplate:               v.TextTemplate,
-		Status:                     int(v.Status),
-		Title:                      v.Title,
-		BotsNum:                    v.BotsNum,
-		ResidentialProxiesNum:      v.ResidentialProxiesNum,
-		CheapProxiesNum:            v.CheapProxiesNum,
-		TargetsNum:                 v.TargetsNum,
-		BotsFilename:               v.BotsFilename,
-		ResidentialProxiesFilename: v.ResidentialProxiesFilename,
-		CheapProxiesFilename:       v.CheapProxiesFilename,
-		TargetsFilename:            v.TargetsFilename,
-		FollowTargets:              v.FollowTargets,
-		NeedPhotoTags:              v.NeedPhotoTags,
-		PerPostSleepSeconds:        v.PerPostSleepSeconds,
-		PhotoTagsDelaySeconds:      v.PhotoTagsDelaySeconds,
-		PostsPerBot:                v.PostsPerBot,
-		TargetsPerPost:             v.TargetsPerPost,
+		ID:     v.ID,
+		Status: int(v.Status),
+		Title:  v.Title,
 	}
-	if v.PostImages != nil {
-		res.PostImages = make([]string, len(v.PostImages))
-		for i, val := range v.PostImages {
-			res.PostImages[i] = val
+	if v.Bloggers != nil {
+		res.Bloggers = make([]*BloggerResponse, len(v.Bloggers))
+		for i, val := range v.Bloggers {
+			res.Bloggers[i] = marshalDatasetsserviceBloggerToBloggerResponse(val)
 		}
 	}
-	if v.LandingAccounts != nil {
-		res.LandingAccounts = make([]string, len(v.LandingAccounts))
-		for i, val := range v.LandingAccounts {
-			res.LandingAccounts[i] = val
-		}
-	}
-	if v.BotNames != nil {
-		res.BotNames = make([]string, len(v.BotNames))
-		for i, val := range v.BotNames {
-			res.BotNames[i] = val
-		}
-	}
-	if v.BotLastNames != nil {
-		res.BotLastNames = make([]string, len(v.BotLastNames))
-		for i, val := range v.BotLastNames {
-			res.BotLastNames[i] = val
-		}
-	}
-	if v.BotImages != nil {
-		res.BotImages = make([]string, len(v.BotImages))
-		for i, val := range v.BotImages {
-			res.BotImages[i] = val
-		}
-	}
-	if v.BotUrls != nil {
-		res.BotUrls = make([]string, len(v.BotUrls))
-		for i, val := range v.BotUrls {
-			res.BotUrls[i] = val
-		}
+
+	return res
+}
+
+// marshalDatasetsserviceBloggerToBloggerResponse builds a value of type
+// *BloggerResponse from a value of type *datasetsservice.Blogger.
+func marshalDatasetsserviceBloggerToBloggerResponse(v *datasetsservice.Blogger) *BloggerResponse {
+	res := &BloggerResponse{
+		ID:        v.ID,
+		Username:  v.Username,
+		UserID:    v.UserID,
+		DatasetID: v.DatasetID,
+		IsInitial: v.IsInitial,
 	}
 
 	return res

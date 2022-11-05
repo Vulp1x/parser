@@ -9,6 +9,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgconn"
 	"time"
 )
 
@@ -31,9 +32,57 @@ func (q *Queries) CreateDraftDataset(ctx context.Context, arg CreateDraftDataset
 	return id, err
 }
 
+const deleteBloggersPerDataset = `-- name: DeleteBloggersPerDataset :execresult
+delete
+from bloggers
+where dataset_id = $1
+  and is_initial = true
+`
+
+func (q *Queries) DeleteBloggersPerDataset(ctx context.Context, datasetID uuid.UUID) (pgconn.CommandTag, error) {
+	return q.db.Exec(ctx, deleteBloggersPerDataset, datasetID)
+}
+
+const findBloggersForDataset = `-- name: FindBloggersForDataset :many
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at
+from bloggers
+where dataset_id = $1
+`
+
+func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUID) ([]Blogger, error) {
+	rows, err := q.db.Query(ctx, findBloggersForDataset, datasetID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Blogger
+	for rows.Next() {
+		var i Blogger
+		if err := rows.Scan(
+			&i.ID,
+			&i.DatasetID,
+			&i.Username,
+			&i.UserID,
+			&i.FollowersCount,
+			&i.IsInitial,
+			&i.CreatedAt,
+			&i.ParsedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getDatasetByID = `-- name: GetDatasetByID :one
 select id, phone_code, status, title, user_id, created_at, started_at, stopped_at, updated_at, deleted_at
-from datasets where id = $1
+from datasets
+where id = $1
 `
 
 func (q *Queries) GetDatasetByID(ctx context.Context, id uuid.UUID) (Dataset, error) {
@@ -54,10 +103,17 @@ func (q *Queries) GetDatasetByID(ctx context.Context, id uuid.UUID) (Dataset, er
 	return i, err
 }
 
+type InsertInitialBloggersParams struct {
+	DatasetID uuid.UUID `json:"dataset_id"`
+	Username  string    `json:"username"`
+	UserID    int64     `json:"user_id"`
+	IsInitial bool      `json:"is_initial"`
+}
+
 type SaveBotAccountsParams struct {
 	Username  string     `json:"username"`
 	SessionID string     `json:"session_id"`
-	WorkProxy *string    `json:"work_proxy"`
+	Proxy     Proxy      `json:"proxy"`
 	IsBlocked bool       `json:"is_blocked"`
 	StartedAt *time.Time `json:"started_at"`
 }
@@ -66,4 +122,37 @@ type SaveTargetUsersParams struct {
 	DatasetID uuid.UUID `json:"dataset_id"`
 	Username  string    `json:"username"`
 	UserID    int64     `json:"user_id"`
+}
+
+const updateDataset = `-- name: UpdateDataset :one
+update datasets
+set phone_code = $1,
+    title      = $2,
+    updated_at = now()
+where id = $3
+returning id, phone_code, status, title, user_id, created_at, started_at, stopped_at, updated_at, deleted_at
+`
+
+type UpdateDatasetParams struct {
+	PhoneCode *int16    `json:"phone_code"`
+	Title     string    `json:"title"`
+	ID        uuid.UUID `json:"id"`
+}
+
+func (q *Queries) UpdateDataset(ctx context.Context, arg UpdateDatasetParams) (Dataset, error) {
+	row := q.db.QueryRow(ctx, updateDataset, arg.PhoneCode, arg.Title, arg.ID)
+	var i Dataset
+	err := row.Scan(
+		&i.ID,
+		&i.PhoneCode,
+		&i.Status,
+		&i.Title,
+		&i.UserID,
+		&i.CreatedAt,
+		&i.StartedAt,
+		&i.StoppedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
 }

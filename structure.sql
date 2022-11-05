@@ -44,7 +44,7 @@ CREATE TABLE public.bloggers (
     followers_count bigint DEFAULT '-1'::integer NOT NULL,
     is_initial boolean NOT NULL,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
-    parsed_at timestamp without time zone NOT NULL,
+    parsed_at timestamp without time zone,
     updated_at timestamp without time zone
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE public.bots (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     username text NOT NULL,
     session_id text NOT NULL,
-    work_proxy jsonb,
+    proxy jsonb NOT NULL,
     is_blocked boolean NOT NULL,
     started_at timestamp without time zone,
     created_at timestamp without time zone DEFAULT now() NOT NULL,

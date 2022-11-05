@@ -9,6 +9,41 @@ import (
 	"context"
 )
 
+// iteratorForInsertInitialBloggers implements pgx.CopyFromSource.
+type iteratorForInsertInitialBloggers struct {
+	rows                 []InsertInitialBloggersParams
+	skippedFirstNextCall bool
+}
+
+func (r *iteratorForInsertInitialBloggers) Next() bool {
+	if len(r.rows) == 0 {
+		return false
+	}
+	if !r.skippedFirstNextCall {
+		r.skippedFirstNextCall = true
+		return true
+	}
+	r.rows = r.rows[1:]
+	return len(r.rows) > 0
+}
+
+func (r iteratorForInsertInitialBloggers) Values() ([]interface{}, error) {
+	return []interface{}{
+		r.rows[0].DatasetID,
+		r.rows[0].Username,
+		r.rows[0].UserID,
+		r.rows[0].IsInitial,
+	}, nil
+}
+
+func (r iteratorForInsertInitialBloggers) Err() error {
+	return nil
+}
+
+func (q *Queries) InsertInitialBloggers(ctx context.Context, arg []InsertInitialBloggersParams) (int64, error) {
+	return q.db.CopyFrom(ctx, []string{"bloggers"}, []string{"dataset_id", "username", "user_id", "is_initial"}, &iteratorForInsertInitialBloggers{rows: arg})
+}
+
 // iteratorForSaveBotAccounts implements pgx.CopyFromSource.
 type iteratorForSaveBotAccounts struct {
 	rows                 []SaveBotAccountsParams
@@ -31,7 +66,7 @@ func (r iteratorForSaveBotAccounts) Values() ([]interface{}, error) {
 	return []interface{}{
 		r.rows[0].Username,
 		r.rows[0].SessionID,
-		r.rows[0].WorkProxy,
+		r.rows[0].Proxy,
 		r.rows[0].IsBlocked,
 		r.rows[0].StartedAt,
 	}, nil
@@ -42,7 +77,7 @@ func (r iteratorForSaveBotAccounts) Err() error {
 }
 
 func (q *Queries) SaveBotAccounts(ctx context.Context, arg []SaveBotAccountsParams) (int64, error) {
-	return q.db.CopyFrom(ctx, []string{"bots"}, []string{"username", "session_id", "work_proxy", "is_blocked", "started_at"}, &iteratorForSaveBotAccounts{rows: arg})
+	return q.db.CopyFrom(ctx, []string{"bots"}, []string{"username", "session_id", "proxy", "is_blocked", "started_at"}, &iteratorForSaveBotAccounts{rows: arg})
 }
 
 // iteratorForSaveTargetUsers implements pgx.CopyFromSource.

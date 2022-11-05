@@ -52,10 +52,15 @@ const ServiceName = "datasets_service"
 var MethodNames = [7]string{"create dataset draft", "update dataset", "find similar", "parse dataset", "get dataset", "get progress", "list datasets"}
 
 type Blogger struct {
-	// логин блогера
-	Login string
-	// user_id блогера
-	UserID string
+	ID string
+	// имя аккаунта в инстаграме
+	Username string
+	// user_id в инстаграме, -1 если неизвестен
+	UserID int64 `json:"user_id"`
+	// айди датасета, к которому принадлежит блоггер
+	DatasetID string `json:"dataset_id"`
+	// является ли блоггер изначально в датасете или появился при парсинге
+	IsInitial bool `json:"is_initial"`
 }
 
 type BloggersProgress struct {
@@ -79,52 +84,11 @@ type CreateDatasetDraftPayload struct {
 // Dataset is the result type of the datasets_service service update dataset
 // method.
 type Dataset struct {
-	ID string
-	// описание под постом
-	TextTemplate string `json:"text_template"`
-	// список base64 строк картинок
-	PostImages []string `json:"post_images"`
-	// имена аккаунтов, на которых ведем трафик
-	LandingAccounts []string `json:"landing_accounts"`
-	// имена для аккаунтов-ботов
-	BotNames []string `json:"bot_names"`
-	// фамилии для аккаунтов-ботов
-	BotLastNames []string `json:"bot_last_names"`
-	// аватарки для ботов
-	BotImages []string `json:"bot_images"`
-	// ссылки для описания у ботов
-	BotUrls []string `json:"bot_urls"`
-	Status  DatasetStatus
+	ID       string
+	Bloggers []*Blogger
+	Status   DatasetStatus
 	// название задачи
 	Title string
-	// количество ботов в задаче
-	BotsNum int `json:"bots_num"`
-	// количество резидентских прокси в задаче
-	ResidentialProxiesNum int `json:"residential_proxies_num"`
-	// количество дешёвых прокси в задаче
-	CheapProxiesNum int `json:"cheap_proxies_num"`
-	// количество целевых пользователей в задаче
-	TargetsNum int `json:"targets_num"`
-	// название файла, из которого брали ботов
-	BotsFilename *string `json:"bots_filename"`
-	// название файла, из которого брали резидентские прокси
-	ResidentialProxiesFilename *string `json:"residential_proxies_filename"`
-	// название файла, из которого брали дешёвые прокси
-	CheapProxiesFilename *string `json:"cheap_proxies_filename"`
-	// название файла, из которого брали целевых пользователей
-	TargetsFilename *string `json:"targets_filename"`
-	// нужно ли подписываться на аккаунты
-	FollowTargets bool `json:"follow_targets"`
-	// делать отметки на фотографии
-	NeedPhotoTags bool `json:"need_photo_tags"`
-	// делать отметки на фотографии
-	PerPostSleepSeconds uint `json:"per_post_sleep_seconds"`
-	// задержка перед проставлением отметок
-	PhotoTagsDelaySeconds uint `json:"photo_tags_delay_seconds"`
-	// количество постов для каждого бота
-	PostsPerBot uint `json:"posts_per_bot"`
-	// количество упоминаний под каждым постом
-	TargetsPerPost uint `json:"targets_per_post"`
 }
 
 // DatasetProgress is the result type of the datasets_service service get
