@@ -35,16 +35,19 @@ type Bot struct {
 }
 
 type Dataset struct {
-	ID        uuid.UUID     `json:"id"`
-	PhoneCode *int32        `json:"phone_code"`
-	Status    datasetStatus `json:"status"`
-	Title     string        `json:"title"`
-	ManagerID uuid.UUID     `json:"manager_id"`
-	CreatedAt time.Time     `json:"created_at"`
-	StartedAt *time.Time    `json:"started_at"`
-	StoppedAt *time.Time    `json:"stopped_at"`
-	UpdatedAt *time.Time    `json:"updated_at"`
-	DeletedAt *time.Time    `json:"deleted_at"`
+	ID               uuid.UUID     `json:"id"`
+	PhoneCode        *int32        `json:"phone_code"`
+	Status           datasetStatus `json:"status"`
+	Title            string        `json:"title"`
+	ManagerID        uuid.UUID     `json:"manager_id"`
+	CreatedAt        time.Time     `json:"created_at"`
+	StartedAt        *time.Time    `json:"started_at"`
+	StoppedAt        *time.Time    `json:"stopped_at"`
+	UpdatedAt        *time.Time    `json:"updated_at"`
+	DeletedAt        *time.Time    `json:"deleted_at"`
+	PostsPerBlogger  int32         `json:"posts_per_blogger"`
+	LikedPerPost     int32         `json:"liked_per_post"`
+	CommentedPerPost int32         `json:"commented_per_post"`
 }
 
 type Target struct {

@@ -28,10 +28,13 @@ func (b DatasetWithBloggers) ToProto() *datasetsservice.Dataset {
 	}
 
 	return &datasetsservice.Dataset{
-		ID:       b.dataset.ID.String(),
-		Bloggers: bloggers,
-		Status:   datasetsservice.DatasetStatus(b.dataset.Status),
-		Title:    b.dataset.Title,
+		ID:               b.dataset.ID.String(),
+		Bloggers:         bloggers,
+		Status:           datasetsservice.DatasetStatus(b.dataset.Status),
+		Title:            b.dataset.Title,
+		PostsPerBlogger:  b.dataset.PostsPerBlogger,
+		LikedPerPost:     b.dataset.LikedPerPost,
+		CommentedPerPost: b.dataset.CommentedPerPost,
 	}
 }
 
@@ -42,9 +45,12 @@ func (d Datasets) ToProto() []*datasetsservice.Dataset {
 
 	for i, dataset := range d {
 		protoDatasets[i] = &datasetsservice.Dataset{
-			ID:     dataset.ID.String(),
-			Status: datasetsservice.DatasetStatus(dataset.Status),
-			Title:  dataset.Title,
+			ID:               dataset.ID.String(),
+			Status:           datasetsservice.DatasetStatus(dataset.Status),
+			Title:            dataset.Title,
+			PostsPerBlogger:  dataset.PostsPerBlogger,
+			LikedPerPost:     dataset.LikedPerPost,
+			CommentedPerPost: dataset.CommentedPerPost,
 		}
 	}
 

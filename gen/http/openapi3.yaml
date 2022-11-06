@@ -26,81 +26,143 @@ paths:
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
               example:
                 - bloggers:
                     - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: true
-                      user_id: 2159221370726463873
-                      username: Blanditiis nihil exercitationem saepe.
+                      is_initial: false
+                      user_id: 7194315760384879922
+                      username: Alias blanditiis provident voluptatem.
                     - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: true
-                      user_id: 2159221370726463873
-                      username: Blanditiis nihil exercitationem saepe.
+                      is_initial: false
+                      user_id: 7194315760384879922
+                      username: Alias blanditiis provident voluptatem.
+                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      is_initial: false
+                      user_id: 7194315760384879922
+                      username: Alias blanditiis provident voluptatem.
+                  commented_per_post: 1433924079
                   id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                  liked_per_post: 606835097
+                  posts_per_blogger: 1998950640
                   status: 5
-                  title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                  title: Omnis reiciendis illo maiores dolorem quia.
                 - bloggers:
                     - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: true
-                      user_id: 2159221370726463873
-                      username: Blanditiis nihil exercitationem saepe.
+                      is_initial: false
+                      user_id: 7194315760384879922
+                      username: Alias blanditiis provident voluptatem.
                     - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: true
-                      user_id: 2159221370726463873
-                      username: Blanditiis nihil exercitationem saepe.
+                      is_initial: false
+                      user_id: 7194315760384879922
+                      username: Alias blanditiis provident voluptatem.
+                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      is_initial: false
+                      user_id: 7194315760384879922
+                      username: Alias blanditiis provident voluptatem.
+                  commented_per_post: 1433924079
                   id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                  liked_per_post: 606835097
+                  posts_per_blogger: 1998950640
                   status: 5
-                  title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                  title: Omnis reiciendis illo maiores dolorem quia.
+                - bloggers:
+                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      is_initial: false
+                      user_id: 7194315760384879922
+                      username: Alias blanditiis provident voluptatem.
+                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      is_initial: false
+                      user_id: 7194315760384879922
+                      username: Alias blanditiis provident voluptatem.
+                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      is_initial: false
+                      user_id: 7194315760384879922
+                      username: Alias blanditiis provident voluptatem.
+                  commented_per_post: 1433924079
+                  id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                  liked_per_post: 606835097
+                  posts_per_blogger: 1998950640
+                  status: 5
+                  title: Omnis reiciendis illo maiores dolorem quia.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Aut sunt dolorum.
+                example: Sapiente vitae aliquam.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -113,45 +175,47 @@ paths:
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
-                  - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
         "404":
           description: 'dataset not found: Not Found response.'
           content:
@@ -164,59 +228,69 @@ paths:
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
-                  - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
         "500":
           description: 'internal error: Internal Server Error response.'
           content:
@@ -229,45 +303,69 @@ paths:
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: true
-                        user_id: 2159221370726463873
-                        username: Blanditiis nihil exercitationem saepe.
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        is_initial: false
+                        user_id: 7194315760384879922
+                        username: Alias blanditiis provident voluptatem.
+                    commented_per_post: 1433924079
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                    liked_per_post: 606835097
+                    posts_per_blogger: 1998950640
                     status: 5
-                    title: Aliquid qui quos nostrum mollitia consequuntur delectus.
+                    title: Omnis reiciendis illo maiores dolorem quia.
       security:
         - jwt_header_Authorization:
             - driver
@@ -287,8 +385,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Et fugiat quia id error.
-          example: Eaque laudantium.
+            example: Tempora et possimus voluptatem assumenda nisi rerum.
+          example: Animi et omnis.
       responses:
         "200":
           description: OK response.
@@ -301,23 +399,31 @@ paths:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
                     is_initial: false
-                    user_id: 3004203316163438102
-                    username: Consequatur eos reiciendis qui consequuntur.
+                    user_id: 6195190025290612606
+                    username: Optio mollitia nam.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
                     is_initial: false
-                    user_id: 3004203316163438102
-                    username: Consequatur eos reiciendis qui consequuntur.
+                    user_id: 6195190025290612606
+                    username: Optio mollitia nam.
+                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+                    is_initial: false
+                    user_id: 6195190025290612606
+                    username: Optio mollitia nam.
+                commented_per_post: 643031576
                 id: 773F4E7F-A748-DF6D-4355-233071D2534A
-                status: 3
-                title: Pariatur et velit unde.
+                liked_per_post: 1615893931
+                posts_per_blogger: 958023306
+                status: 2
+                title: Quia et laudantium cum.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Consectetur ut.
+                example: Minus alias error adipisci est aliquam qui.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -336,7 +442,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Soluta qui enim.
+                example: Aut perspiciatis odio illo ducimus sed.
       security:
         - jwt_header_Authorization:
             - driver
@@ -357,8 +463,8 @@ paths:
           schema:
             type: string
             description: id задачи, которую хотим обновить
-            example: Impedit repellat.
-          example: Nostrum culpa veritatis.
+            example: Unde dicta.
+          example: Cum voluptas voluptates iure alias et.
       requestBody:
         required: true
         content:
@@ -366,21 +472,16 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateDatasetRequestBody'
             example:
-              commented_per_post:
-                - Alias provident veritatis esse.
-                - Aliquid rerum nam optio animi.
-              liked_per_post:
-                - Eveniet id amet labore dolorum.
-                - Veritatis adipisci tenetur illo aut.
+              commented_per_post: 14756509802797021993
+              liked_per_post: 12621172150073358936
               original_accounts:
-                - Dolorem molestiae eos exercitationem consequatur eligendi temporibus.
-                - Iusto eaque perferendis eius ipsa ut blanditiis.
-                - Ad laudantium sequi consequatur reprehenderit eveniet reprehenderit.
+                - Qui rerum molestiae adipisci voluptatem.
+                - Odio qui molestiae consequatur quia doloremque fugit.
+                - Sed culpa.
+                - Deleniti dolorem molestiae eos exercitationem consequatur eligendi.
               phone_code: 7
-              posts_per_blogger:
-                - Mollitia laudantium.
-                - Omnis vero voluptatem qui quam ut sit.
-              title: Suscipit doloremque quod alias vero quibusdam occaecati.
+              posts_per_blogger: 7917445315319735926
+              title: Perferendis eius.
       responses:
         "200":
           description: OK response.
@@ -393,23 +494,26 @@ paths:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
                     is_initial: false
-                    user_id: 3004203316163438102
-                    username: Consequatur eos reiciendis qui consequuntur.
+                    user_id: 6195190025290612606
+                    username: Optio mollitia nam.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
                     is_initial: false
-                    user_id: 3004203316163438102
-                    username: Consequatur eos reiciendis qui consequuntur.
+                    user_id: 6195190025290612606
+                    username: Optio mollitia nam.
+                commented_per_post: 493751028
                 id: 2C91774A-6D4A-67B6-DC43-6AED849DACC1
-                status: 1
-                title: Non ad et est dolorem.
+                liked_per_post: 2062261290
+                posts_per_blogger: 1316725725
+                status: 6
+                title: Magni aut.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: In deleniti facilis ullam magnam.
+                example: Nesciunt totam in laudantium id.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -428,7 +532,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Voluptates aut aut.
+                example: Sapiente est.
       security:
         - jwt_header_Authorization:
             - driver
@@ -448,8 +552,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Alias alias.
-          example: Ut id in molestiae qui voluptatem.
+            example: Et itaque pariatur et illum itaque officia.
+          example: Eum cupiditate.
       responses:
         "200":
           description: OK response.
@@ -459,29 +563,21 @@ paths:
                 $ref: '#/components/schemas/DatasetProgress'
               example:
                 bots_progresses:
-                  Atque possimus.:
-                    posts_count: 2211178976413215566
-                    status: 2942676180521756233
-                    user_name: Perspiciatis ea autem.
-                  Ipsum et provident omnis.:
-                    posts_count: 2211178976413215566
-                    status: 2942676180521756233
-                    user_name: Perspiciatis ea autem.
-                  Quia sunt officia inventore.:
-                    posts_count: 2211178976413215566
-                    status: 2942676180521756233
-                    user_name: Perspiciatis ea autem.
+                  Corporis a reiciendis adipisci vitae.:
+                    posts_count: 5241754460792455823
+                    status: 4341670138231604568
+                    user_name: Magni corrupti earum dolore ab.
                 done: false
-                targets_failed: 3061420658338084514
-                targets_notified: 3293339814049071845
-                targets_waiting: 1313783838639944530
+                targets_failed: 7543780231117535126
+                targets_notified: 797476817121968289
+                targets_waiting: 8110972934114118665
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Temporibus perspiciatis enim ipsum odit velit.
+                example: Aut officia nemo nisi.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -500,7 +596,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Qui culpa temporibus praesentium ut atque.
+                example: Tempore ut consequatur.
       security:
         - jwt_header_Authorization:
             - driver
@@ -520,8 +616,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Optio consequatur facere.
-          example: Voluptas ut eius assumenda.
+            example: Sunt magnam incidunt voluptatibus.
+          example: Non quidem saepe aut saepe.
       responses:
         "200":
           description: OK response.
@@ -534,20 +630,20 @@ paths:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
                     is_initial: false
-                    user_id: 3004203316163438102
-                    username: Consequatur eos reiciendis qui consequuntur.
+                    user_id: 6195190025290612606
+                    username: Optio mollitia nam.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
                     is_initial: false
-                    user_id: 3004203316163438102
-                    username: Consequatur eos reiciendis qui consequuntur.
+                    user_id: 6195190025290612606
+                    username: Optio mollitia nam.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
                     is_initial: false
-                    user_id: 3004203316163438102
-                    username: Consequatur eos reiciendis qui consequuntur.
-                dataset_id: Non nobis commodi iure unde fugiat.
-                status: 4
+                    user_id: 6195190025290612606
+                    username: Optio mollitia nam.
+                dataset_id: Corporis fugit fugiat ex quisquam itaque nisi.
+                status: 2
         "400":
           description: 'bad request: Bad Request response.'
           content:
@@ -572,7 +668,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Dicta iusto ipsa esse non aut quia.
+                example: Sunt rerum saepe.
       security:
         - jwt_header_Authorization:
             - driver
@@ -592,8 +688,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Et nam ut vero iste perspiciatis.
-          example: Placeat ut.
+            example: Praesentium enim maiores officia non dolore quia.
+          example: Maiores architecto ipsam labore officiis quia et.
       responses:
         "200":
           description: OK response.
@@ -602,8 +698,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ParseDatasetOKResponseBody'
               example:
-                dataset_id: Vitae sit.
-                status: 6
+                dataset_id: Maiores accusantium illum rem molestiae qui fugiat.
+                status: 2
         "400":
           description: 'bad request: Bad Request response.'
           content:
@@ -628,7 +724,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Id suscipit asperiores qui nam aut ipsa.
+                example: In veniam dolore facilis necessitatibus.
       security:
         - jwt_header_Authorization:
             - driver
@@ -657,7 +753,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Ut eaque aut cumque.
+                example: Dolor odit aliquam ut.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -682,7 +778,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Reiciendis vitae.
+                example: Iure atque adipisci tempora enim voluptatem.
       security:
         - jwt_header_Authorization:
             - driver
@@ -708,18 +804,18 @@ components:
         user_id:
           type: integer
           description: user_id в инстаграме, -1 если неизвестен
-          example: 2944760333143055811
+          example: 725361841190412921
           format: int64
         username:
           type: string
           description: имя аккаунта в инстаграме
-          example: Quaerat eligendi dolor eligendi.
+          example: Eaque similique dignissimos nesciunt laudantium ut dolor.
       example:
         dataset_id: 799C598D-49D1-F53A-0ED6-818482028C45
         id: A1E767AB-DA97-F23F-D106-18BF8653EB6C
         is_initial: true
-        user_id: 7107640881189090477
-        username: Veniam dolore facilis necessitatibus pariatur eligendi officia.
+        user_id: 1320813824970598171
+        username: Vel odio quia aliquid.
       required:
         - id
         - dataset_id
@@ -732,21 +828,21 @@ components:
         posts_count:
           type: integer
           description: количество выложенных постов
-          example: 5207437395947602768
+          example: 1255921548311326738
           format: int64
         status:
           type: integer
           description: текущий статус бота, будут ли выкладываться посты
-          example: 8898647921346884582
+          example: 6509098127544037273
           format: int64
         user_name:
           type: string
           description: имя пользователя бота
-          example: Doloribus explicabo in.
+          example: Vel laborum natus dolores voluptatem necessitatibus sed.
       example:
-        posts_count: 5252012368388421029
-        status: 5713730676970669967
-        user_name: Temporibus enim sequi dolorem qui earum.
+        posts_count: 1618258270713292886
+        status: 7128797357094996647
+        user_name: Ut eveniet sed sunt aliquam quibusdam qui.
       required:
         - user_name
         - posts_count
@@ -762,22 +858,32 @@ components:
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
               is_initial: false
-              user_id: 3004203316163438102
-              username: Consequatur eos reiciendis qui consequuntur.
+              user_id: 6195190025290612606
+              username: Optio mollitia nam.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
               is_initial: false
-              user_id: 3004203316163438102
-              username: Consequatur eos reiciendis qui consequuntur.
-            - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-              id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: false
-              user_id: 3004203316163438102
-              username: Consequatur eos reiciendis qui consequuntur.
+              user_id: 6195190025290612606
+              username: Optio mollitia nam.
+        commented_per_post:
+          type: integer
+          description: сколько прокоментировааших для каждого поста брать
+          example: 918285950
+          format: int32
         id:
           type: string
           example: 6BD40BD6-7AF6-FB4E-C1C1-23700A0E68DE
           format: uuid
+        liked_per_post:
+          type: integer
+          description: сколько лайкнувших для каждого поста брать
+          example: 116643595
+          format: int32
+        posts_per_blogger:
+          type: integer
+          description: имена аккаунтов, для которых ищем похожих
+          example: 633153139
+          format: int32
         status:
           type: integer
           example: 6
@@ -791,27 +897,43 @@ components:
         title:
           type: string
           description: название задачи
-          example: Voluptatem ea reiciendis ea nihil ut.
+          example: Occaecati possimus iure dicta.
       example:
         bloggers:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 3004203316163438102
-            username: Consequatur eos reiciendis qui consequuntur.
+            user_id: 6195190025290612606
+            username: Optio mollitia nam.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 3004203316163438102
-            username: Consequatur eos reiciendis qui consequuntur.
+            user_id: 6195190025290612606
+            username: Optio mollitia nam.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6195190025290612606
+            username: Optio mollitia nam.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6195190025290612606
+            username: Optio mollitia nam.
+        commented_per_post: 861541666
         id: D16B2ED1-3971-5178-0135-F3E819F3BA4F
-        status: 5
-        title: Consequatur qui at commodi quo.
+        liked_per_post: 1890767501
+        posts_per_blogger: 207989125
+        status: 2
+        title: Qui quia animi et saepe distinctio quaerat.
       required:
         - id
         - bloggers
         - status
         - title
+        - posts_per_blogger
+        - liked_per_post
+        - commented_per_post
     DatasetProgress:
       type: object
       properties:
@@ -819,10 +941,10 @@ components:
           type: object
           description: результат работы по каждому боту, ключ- имя бота
           example:
-            Nobis cumque deleniti accusamus est.:
-              posts_count: 2211178976413215566
-              status: 2942676180521756233
-              user_name: Perspiciatis ea autem.
+            Nihil ut enim eveniet.:
+              posts_count: 5241754460792455823
+              status: 4341670138231604568
+              user_name: Magni corrupti earum dolore ab.
           additionalProperties:
             $ref: '#/components/schemas/BloggersProgress'
         done:
@@ -832,28 +954,32 @@ components:
         targets_failed:
           type: integer
           description: количество аккаунтов, которых не получилось упомянуть, при перезапуске задачи будут использованы заново
-          example: 2595506019544658051
+          example: 1521977625192955082
           format: int64
         targets_notified:
           type: integer
           description: количество аккаунтов, которых упомянули в постах
-          example: 5986827445954092871
+          example: 2349749605387729941
           format: int64
         targets_waiting:
           type: integer
           description: количество аккаунтов, которых не выбрали для постов
-          example: 1533833259193281153
+          example: 6304856710523120734
           format: int64
       example:
         bots_progresses:
-          Laboriosam adipisci dolores eos sunt.:
-            posts_count: 2211178976413215566
-            status: 2942676180521756233
-            user_name: Perspiciatis ea autem.
+          Officia adipisci.:
+            posts_count: 5241754460792455823
+            status: 4341670138231604568
+            user_name: Magni corrupti earum dolore ab.
+          Tempore laboriosam unde cupiditate est voluptatum.:
+            posts_count: 5241754460792455823
+            status: 4341670138231604568
+            user_name: Magni corrupti earum dolore ab.
         done: false
-        targets_failed: 8170192794194103218
-        targets_notified: 3387124297746522648
-        targets_waiting: 8002066294543710175
+        targets_failed: 1752804748307497791
+        targets_notified: 6364492188904649740
+        targets_waiting: 179264826678926416
       required:
         - bots_progresses
         - targets_notified
@@ -871,22 +997,17 @@ components:
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
               is_initial: false
-              user_id: 3004203316163438102
-              username: Consequatur eos reiciendis qui consequuntur.
+              user_id: 6195190025290612606
+              username: Optio mollitia nam.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
               is_initial: false
-              user_id: 3004203316163438102
-              username: Consequatur eos reiciendis qui consequuntur.
-            - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-              id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: false
-              user_id: 3004203316163438102
-              username: Consequatur eos reiciendis qui consequuntur.
+              user_id: 6195190025290612606
+              username: Optio mollitia nam.
         dataset_id:
           type: string
           description: id задачи
-          example: Recusandae soluta.
+          example: Possimus illum omnis quam dolorum soluta.
         status:
           type: integer
           example: 6
@@ -902,25 +1023,20 @@ components:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 3004203316163438102
-            username: Consequatur eos reiciendis qui consequuntur.
+            user_id: 6195190025290612606
+            username: Optio mollitia nam.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 3004203316163438102
-            username: Consequatur eos reiciendis qui consequuntur.
+            user_id: 6195190025290612606
+            username: Optio mollitia nam.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 3004203316163438102
-            username: Consequatur eos reiciendis qui consequuntur.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 3004203316163438102
-            username: Consequatur eos reiciendis qui consequuntur.
-        dataset_id: Voluptatibus ad aliquam qui.
-        status: 3
+            user_id: 6195190025290612606
+            username: Optio mollitia nam.
+        dataset_id: Omnis sit quia beatae quasi voluptatem.
+        status: 1
       required:
         - dataset_id
         - status
@@ -931,10 +1047,10 @@ components:
         dataset_id:
           type: string
           description: id задачи
-          example: Pariatur ipsam officia tempore voluptatum vel dolores.
+          example: Sunt sit aut sequi aut harum.
         status:
           type: integer
-          example: 3
+          example: 2
           enum:
             - 1
             - 2
@@ -943,8 +1059,8 @@ components:
             - 5
             - 6
       example:
-        dataset_id: Aperiam modi.
-        status: 2
+        dataset_id: Est architecto deleniti quis quam ducimus.
+        status: 6
       required:
         - dataset_id
         - status
@@ -952,33 +1068,24 @@ components:
       type: object
       properties:
         commented_per_post:
-          type: array
-          items:
-            type: string
-            example: Vero consequuntur excepturi minus quis voluptatem.
+          type: integer
           description: сколько прокоментировааших для каждого поста брать
-          example:
-            - Aut aliquid nihil facilis rerum esse.
-            - Cumque eum cumque cupiditate impedit.
+          example: 11101775644301025150
         liked_per_post:
-          type: array
-          items:
-            type: string
-            example: Maiores ex modi omnis non.
+          type: integer
           description: сколько лайкнувших для каждого поста брать
-          example:
-            - Dignissimos nesciunt.
-            - Ut dolor saepe voluptas quis id.
+          example: 17149570722218992909
         original_accounts:
           type: array
           items:
             type: string
-            example: Repellendus laborum delectus qui ad.
+            example: Excepturi pariatur.
           description: имена аккаунтов, для которых ищем похожих
           example:
-            - Nulla illum et est.
-            - Et deserunt ea dolores consequatur.
-            - Magni aut.
+            - Qui ut.
+            - Vel id.
+            - Explicabo voluptate velit sunt accusamus velit similique.
+            - Aut rem nisi omnis ad quia.
         phone_code:
           type: integer
           description: код региона, по которому будем сортировать
@@ -986,42 +1093,22 @@ components:
           minimum: 1
           maximum: 1000
         posts_per_blogger:
-          type: array
-          items:
-            type: string
-            example: Perferendis voluptatem.
+          type: integer
           description: имена аккаунтов, для которых ищем похожих
-          example:
-            - Quo optio.
-            - Impedit est voluptatibus nostrum.
-            - Nulla unde.
-            - Asperiores sint aut sit.
+          example: 8912691761507832878
         title:
           type: string
           description: название задачи
-          example: Dolor omnis vel odio.
+          example: Voluptate eius doloribus et quae.
       example:
-        commented_per_post:
-          - Quae et maiores.
-          - Animi delectus cumque cumque laborum.
-          - Dolorem tempora.
-          - Impedit ut.
-        liked_per_post:
-          - Magni eveniet enim saepe deserunt numquam.
-          - Fugit perspiciatis voluptatem rerum maxime quasi.
-          - Aperiam vel odio quia.
+        commented_per_post: 6434592887515454813
+        liked_per_post: 7709647894738480529
         original_accounts:
-          - Quos omnis consequatur ducimus debitis id aliquid.
-          - Ut ratione nemo eius.
-          - Quo earum qui.
-          - Quia similique.
+          - Porro doloremque explicabo aut maiores aperiam.
+          - Aliquam illo iste.
         phone_code: 7
-        posts_per_blogger:
-          - Cupiditate ullam necessitatibus.
-          - Et maxime sit eaque.
-          - Ut id libero quos amet.
-          - Explicabo voluptatibus et esse alias nam sint.
-        title: Illum debitis.
+        posts_per_blogger: 4187497416852408894
+        title: Sunt est est sit.
   securitySchemes:
     jwt_header_Authorization:
       type: http

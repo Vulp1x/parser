@@ -687,9 +687,12 @@ func marshalDatasetsserviceBloggersProgressToBloggersProgressResponseBody(v *dat
 // *DatasetResponse from a value of type *datasetsservice.Dataset.
 func marshalDatasetsserviceDatasetToDatasetResponse(v *datasetsservice.Dataset) *DatasetResponse {
 	res := &DatasetResponse{
-		ID:     v.ID,
-		Status: int(v.Status),
-		Title:  v.Title,
+		ID:               v.ID,
+		Status:           int(v.Status),
+		Title:            v.Title,
+		PostsPerBlogger:  v.PostsPerBlogger,
+		LikedPerPost:     v.LikedPerPost,
+		CommentedPerPost: v.CommentedPerPost,
 	}
 	if v.Bloggers != nil {
 		res.Bloggers = make([]*BloggerResponse, len(v.Bloggers))

@@ -80,7 +80,10 @@ CREATE TABLE public.datasets (
     started_at timestamp with time zone,
     stopped_at timestamp with time zone,
     updated_at timestamp with time zone,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    posts_per_blogger integer DEFAULT 0 NOT NULL,
+    liked_per_post integer DEFAULT 0 NOT NULL,
+    commented_per_post integer DEFAULT 0 NOT NULL
 );
 
 

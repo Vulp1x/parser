@@ -17,10 +17,13 @@ where id = @id;
 
 -- name: UpdateDataset :one
 update datasets
-set phone_code = $1,
-    title      = $2,
-    updated_at = now()
-where id = $3
+set phone_code         = @phone_code,
+    title              = @title,
+    posts_per_blogger  = @posts_per_blogger,
+    liked_per_post     = @liked_per_post,
+    commented_per_post = @commented_per_post,
+    updated_at         = now()
+where id = @id
 returning *;
 
 -- name: DeleteBloggersPerDataset :execresult

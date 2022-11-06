@@ -63,8 +63,22 @@ var Dataset = Type("Dataset", func() {
 
 	Attribute("status", DatasetStatus)
 	Attribute("title", String, "название задачи")
+	Attribute("posts_per_blogger", Int32, func() {
+		Description("имена аккаунтов, для которых ищем похожих")
+		Meta("struct:tag:json", "posts_per_blogger")
+	})
 
-	Required("id", "bloggers", "status", "title")
+	Attribute("liked_per_post", Int32, func() {
+		Description("сколько лайкнувших для каждого поста брать")
+		Meta("struct:tag:json", "liked_per_post")
+	})
+
+	Attribute("commented_per_post", Int32, func() {
+		Description("сколько прокоментировааших для каждого поста брать")
+		Meta("struct:tag:json", "commented_per_post")
+	})
+
+	Required("id", "bloggers", "status", "title", "posts_per_blogger", "liked_per_post", "commented_per_post")
 })
 
 var BloggersProgress = Type("BloggersProgress", func() {

@@ -18,11 +18,11 @@ type UpdateDatasetRequestBody struct {
 	// имена аккаунтов, для которых ищем похожих
 	OriginalAccounts []string `json:"original_accounts"`
 	// имена аккаунтов, для которых ищем похожих
-	PostsPerBlogger []string `json:"posts_per_blogger"`
+	PostsPerBlogger *uint `json:"posts_per_blogger"`
 	// сколько лайкнувших для каждого поста брать
-	LikedPerPost []string `json:"liked_per_post"`
+	LikedPerPost *uint `json:"liked_per_post"`
 	// сколько прокоментировааших для каждого поста брать
-	CommentedPerPost []string `json:"commented_per_post"`
+	CommentedPerPost *uint `json:"commented_per_post"`
 	// код региона, по которому будем сортировать
 	PhoneCode *int32 `json:"phone_code"`
 	// название задачи
@@ -37,6 +37,12 @@ type UpdateDatasetOKResponseBody struct {
 	Status   int                    `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
+	// имена аккаунтов, для которых ищем похожих
+	PostsPerBlogger int32 `json:"posts_per_blogger"`
+	// сколько лайкнувших для каждого поста брать
+	LikedPerPost int32 `json:"liked_per_post"`
+	// сколько прокоментировааших для каждого поста брать
+	CommentedPerPost int32 `json:"commented_per_post"`
 }
 
 // FindSimilarOKResponseBody is the type of the "datasets_service" service
@@ -64,6 +70,12 @@ type GetDatasetOKResponseBody struct {
 	Status   int                    `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
+	// имена аккаунтов, для которых ищем похожих
+	PostsPerBlogger int32 `json:"posts_per_blogger"`
+	// сколько лайкнувших для каждого поста брать
+	LikedPerPost int32 `json:"liked_per_post"`
+	// сколько прокоментировааших для каждого поста брать
+	CommentedPerPost int32 `json:"commented_per_post"`
 }
 
 // GetProgressOKResponseBody is the type of the "datasets_service" service "get
@@ -116,6 +128,12 @@ type DatasetResponse struct {
 	Status   int                `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
+	// имена аккаунтов, для которых ищем похожих
+	PostsPerBlogger int32 `json:"posts_per_blogger"`
+	// сколько лайкнувших для каждого поста брать
+	LikedPerPost int32 `json:"liked_per_post"`
+	// сколько прокоментировааших для каждого поста брать
+	CommentedPerPost int32 `json:"commented_per_post"`
 }
 
 // BloggerResponse is used to define fields on response body types.
@@ -135,9 +153,12 @@ type BloggerResponse struct {
 // of the "update dataset" endpoint of the "datasets_service" service.
 func NewUpdateDatasetOKResponseBody(res *datasetsservice.Dataset) *UpdateDatasetOKResponseBody {
 	body := &UpdateDatasetOKResponseBody{
-		ID:     res.ID,
-		Status: int(res.Status),
-		Title:  res.Title,
+		ID:               res.ID,
+		Status:           int(res.Status),
+		Title:            res.Title,
+		PostsPerBlogger:  res.PostsPerBlogger,
+		LikedPerPost:     res.LikedPerPost,
+		CommentedPerPost: res.CommentedPerPost,
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -178,9 +199,12 @@ func NewParseDatasetOKResponseBody(res *datasetsservice.ParseDatasetResult) *Par
 // the "get dataset" endpoint of the "datasets_service" service.
 func NewGetDatasetOKResponseBody(res *datasetsservice.Dataset) *GetDatasetOKResponseBody {
 	body := &GetDatasetOKResponseBody{
-		ID:     res.ID,
-		Status: int(res.Status),
-		Title:  res.Title,
+		ID:               res.ID,
+		Status:           int(res.Status),
+		Title:            res.Title,
+		PostsPerBlogger:  res.PostsPerBlogger,
+		LikedPerPost:     res.LikedPerPost,
+		CommentedPerPost: res.CommentedPerPost,
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -233,31 +257,16 @@ func NewCreateDatasetDraftPayload(token string) *datasetsservice.CreateDatasetDr
 // endpoint payload.
 func NewUpdateDatasetPayload(body *UpdateDatasetRequestBody, datasetID string, token string) *datasetsservice.UpdateDatasetPayload {
 	v := &datasetsservice.UpdateDatasetPayload{
-		PhoneCode: body.PhoneCode,
-		Title:     body.Title,
+		PostsPerBlogger:  body.PostsPerBlogger,
+		LikedPerPost:     body.LikedPerPost,
+		CommentedPerPost: body.CommentedPerPost,
+		PhoneCode:        body.PhoneCode,
+		Title:            body.Title,
 	}
 	if body.OriginalAccounts != nil {
 		v.OriginalAccounts = make([]string, len(body.OriginalAccounts))
 		for i, val := range body.OriginalAccounts {
 			v.OriginalAccounts[i] = val
-		}
-	}
-	if body.PostsPerBlogger != nil {
-		v.PostsPerBlogger = make([]string, len(body.PostsPerBlogger))
-		for i, val := range body.PostsPerBlogger {
-			v.PostsPerBlogger[i] = val
-		}
-	}
-	if body.LikedPerPost != nil {
-		v.LikedPerPost = make([]string, len(body.LikedPerPost))
-		for i, val := range body.LikedPerPost {
-			v.LikedPerPost[i] = val
-		}
-	}
-	if body.CommentedPerPost != nil {
-		v.CommentedPerPost = make([]string, len(body.CommentedPerPost))
-		for i, val := range body.CommentedPerPost {
-			v.CommentedPerPost[i] = val
 		}
 	}
 	v.DatasetID = datasetID

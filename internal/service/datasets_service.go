@@ -16,7 +16,7 @@ import (
 type datasetsStore interface {
 	CreateDraftDataset(ctx context.Context, userID uuid.UUID) (uuid.UUID, error)
 	GetDataset(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
-	UpdateDataset(ctx context.Context, datasetID uuid.UUID, title *string, phoneCode *int32, originalAccounts []string) (domain.DatasetWithBloggers, error)
+	UpdateDataset(ctx context.Context, datasetID uuid.UUID, originalAccounts []string, opts ...datasets.UpdateOption) (domain.DatasetWithBloggers, error)
 	List(ctx context.Context, managerID uuid.UUID) (domain.Datasets, error)
 }
 
@@ -78,7 +78,13 @@ func (s *datasetsServicesrvc) UpdateDataset(ctx context.Context, p *datasetsserv
 		return nil, datasetsservice.BadRequest(err.Error())
 	}
 
-	dataset, err := s.store.UpdateDataset(ctx, datasetID, p.Title, p.PhoneCode, p.OriginalAccounts)
+	dataset, err := s.store.UpdateDataset(ctx, datasetID, p.OriginalAccounts,
+		datasets.WithUpdatePostsPerBloggerOption(p.PostsPerBlogger),
+		datasets.WithUpdateCommentedPerPostOption(p.CommentedPerPost),
+		datasets.WithUpdateLikedPerPostOption(p.LikedPerPost),
+		datasets.WithUpdatePhoneCodeOption(p.PhoneCode),
+		datasets.WithUpdateTitleOption(p.Title),
+	)
 	if err != nil {
 		logger.Errorf(ctx, "failed to update dataset: %v", err)
 

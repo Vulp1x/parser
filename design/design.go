@@ -79,17 +79,17 @@ var _ = Service("datasets_service", func() {
 				Meta("struct:tag:json", "original_accounts")
 			})
 
-			Attribute("posts_per_blogger", ArrayOf(String), func() {
+			Attribute("posts_per_blogger", UInt, func() {
 				Description("имена аккаунтов, для которых ищем похожих")
 				Meta("struct:tag:json", "posts_per_blogger")
 			})
 
-			Attribute("liked_per_post", ArrayOf(String), func() {
+			Attribute("liked_per_post", UInt, func() {
 				Description("сколько лайкнувших для каждого поста брать")
 				Meta("struct:tag:json", "liked_per_post")
 			})
 
-			Attribute("commented_per_post", ArrayOf(String), func() {
+			Attribute("commented_per_post", UInt, func() {
 				Description("сколько прокоментировааших для каждого поста брать")
 				Meta("struct:tag:json", "commented_per_post")
 			})

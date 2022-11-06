@@ -79,7 +79,7 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 }
 
 const findUserDatasets = `-- name: FindUserDatasets :many
-select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at
+select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post
 from datasets
 where manager_id = $1
 `
@@ -104,6 +104,9 @@ func (q *Queries) FindUserDatasets(ctx context.Context, managerID uuid.UUID) ([]
 			&i.StoppedAt,
 			&i.UpdatedAt,
 			&i.DeletedAt,
+			&i.PostsPerBlogger,
+			&i.LikedPerPost,
+			&i.CommentedPerPost,
 		); err != nil {
 			return nil, err
 		}
@@ -116,7 +119,7 @@ func (q *Queries) FindUserDatasets(ctx context.Context, managerID uuid.UUID) ([]
 }
 
 const getDatasetByID = `-- name: GetDatasetByID :one
-select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at
+select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post
 from datasets
 where id = $1
 `
@@ -135,6 +138,9 @@ func (q *Queries) GetDatasetByID(ctx context.Context, id uuid.UUID) (Dataset, er
 		&i.StoppedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.PostsPerBlogger,
+		&i.LikedPerPost,
+		&i.CommentedPerPost,
 	)
 	return i, err
 }
@@ -162,21 +168,34 @@ type SaveTargetUsersParams struct {
 
 const updateDataset = `-- name: UpdateDataset :one
 update datasets
-set phone_code = $1,
-    title      = $2,
-    updated_at = now()
-where id = $3
-returning id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at
+set phone_code         = $1,
+    title              = $2,
+    posts_per_blogger  = $3,
+    liked_per_post     = $4,
+    commented_per_post = $5,
+    updated_at         = now()
+where id = $6
+returning id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post
 `
 
 type UpdateDatasetParams struct {
-	PhoneCode *int32    `json:"phone_code"`
-	Title     string    `json:"title"`
-	ID        uuid.UUID `json:"id"`
+	PhoneCode        *int32    `json:"phone_code"`
+	Title            string    `json:"title"`
+	PostsPerBlogger  int32     `json:"posts_per_blogger"`
+	LikedPerPost     int32     `json:"liked_per_post"`
+	CommentedPerPost int32     `json:"commented_per_post"`
+	ID               uuid.UUID `json:"id"`
 }
 
 func (q *Queries) UpdateDataset(ctx context.Context, arg UpdateDatasetParams) (Dataset, error) {
-	row := q.db.QueryRow(ctx, updateDataset, arg.PhoneCode, arg.Title, arg.ID)
+	row := q.db.QueryRow(ctx, updateDataset,
+		arg.PhoneCode,
+		arg.Title,
+		arg.PostsPerBlogger,
+		arg.LikedPerPost,
+		arg.CommentedPerPost,
+		arg.ID,
+	)
 	var i Dataset
 	err := row.Scan(
 		&i.ID,
@@ -189,6 +208,9 @@ func (q *Queries) UpdateDataset(ctx context.Context, arg UpdateDatasetParams) (D
 		&i.StoppedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.PostsPerBlogger,
+		&i.LikedPerPost,
+		&i.CommentedPerPost,
 	)
 	return i, err
 }

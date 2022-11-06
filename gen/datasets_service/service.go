@@ -87,6 +87,12 @@ type Dataset struct {
 	Status   DatasetStatus
 	// название задачи
 	Title string
+	// имена аккаунтов, для которых ищем похожих
+	PostsPerBlogger int32 `json:"posts_per_blogger"`
+	// сколько лайкнувших для каждого поста брать
+	LikedPerPost int32 `json:"liked_per_post"`
+	// сколько прокоментировааших для каждого поста брать
+	CommentedPerPost int32 `json:"commented_per_post"`
 }
 
 // DatasetProgress is the result type of the datasets_service service get
@@ -183,11 +189,11 @@ type UpdateDatasetPayload struct {
 	// имена аккаунтов, для которых ищем похожих
 	OriginalAccounts []string `json:"original_accounts"`
 	// имена аккаунтов, для которых ищем похожих
-	PostsPerBlogger []string `json:"posts_per_blogger"`
+	PostsPerBlogger *uint `json:"posts_per_blogger"`
 	// сколько лайкнувших для каждого поста брать
-	LikedPerPost []string `json:"liked_per_post"`
+	LikedPerPost *uint `json:"liked_per_post"`
 	// сколько прокоментировааших для каждого поста брать
-	CommentedPerPost []string `json:"commented_per_post"`
+	CommentedPerPost *uint `json:"commented_per_post"`
 	// код региона, по которому будем сортировать
 	PhoneCode *int32 `json:"phone_code"`
 	// название задачи
