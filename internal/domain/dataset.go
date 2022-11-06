@@ -29,7 +29,7 @@ func (b DatasetWithBloggers) ToProto() *datasetsservice.Dataset {
 
 	return &datasetsservice.Dataset{
 		ID:       b.dataset.ID.String(),
-		Bloggers: nil,
+		Bloggers: bloggers,
 		Status:   datasetsservice.DatasetStatus(b.dataset.Status),
 		Title:    b.dataset.Title,
 	}

@@ -6,8 +6,8 @@ insert into targets (dataset_id, username, user_id)
 values ($1, $2, $3);
 
 -- name: CreateDraftDataset :one
-insert into datasets (status, title, user_id, status, created_at)
-VALUES (@status, @title, @user_id, 1, now())
+insert into datasets (title, user_id, status, created_at)
+VALUES (@title, @user_id, 1, now())
 RETURNING id;
 
 -- name: GetDatasetByID :one
