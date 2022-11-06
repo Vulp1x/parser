@@ -170,7 +170,7 @@ returning id, phone_code, status, title, manager_id, created_at, started_at, sto
 `
 
 type UpdateDatasetParams struct {
-	PhoneCode *int16    `json:"phone_code"`
+	PhoneCode *int32    `json:"phone_code"`
 	Title     string    `json:"title"`
 	ID        uuid.UUID `json:"id"`
 }

@@ -105,12 +105,12 @@ type DatasetProgress struct {
 	Done bool
 }
 
-// 1 - задача только создана, нужно загрузить список ботов, прокси и получателей
-// 2- в задачу загрузили необходимые списки, нужно присвоить прокси для ботов
-// 3- задача готова к запуску
-// 4- задача запущена
-// 5 - задача остановлена
-// 6 - задача завершена
+// 1 - датасет только создан
+// 2- начали поиск блогеров
+// 3- успешно закончили поиска похожих блогеров
+// 4- начали парсинг юзеров у блогеров
+// 5- успешно закончили парсинг юзеров
+// 6- всё сломалось
 type DatasetStatus int
 
 // FindSimilarPayload is the payload type of the datasets_service service find
@@ -182,8 +182,14 @@ type UpdateDatasetPayload struct {
 	DatasetID string `json:"dataset_id"`
 	// имена аккаунтов, для которых ищем похожих
 	OriginalAccounts []string `json:"original_accounts"`
+	// имена аккаунтов, для которых ищем похожих
+	PostsPerBlogger []string `json:"posts_per_blogger"`
+	// сколько лайкнувших для каждого поста брать
+	LikedPerPost []string `json:"liked_per_post"`
+	// сколько прокоментировааших для каждого поста брать
+	CommentedPerPost []string `json:"commented_per_post"`
 	// код региона, по которому будем сортировать
-	PhoneCode *int `json:"phone_code"`
+	PhoneCode *int32 `json:"phone_code"`
 	// название задачи
 	Title *string
 }

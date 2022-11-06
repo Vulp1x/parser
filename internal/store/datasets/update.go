@@ -18,7 +18,7 @@ func (s Store) UpdateDataset(
 	ctx context.Context,
 	datasetID uuid.UUID,
 	title *string,
-	phoneCode *int16,
+	phoneCode *int32,
 	originalAccounts []string,
 ) (domain.DatasetWithBloggers, error) {
 	tx, err := s.txf(ctx)

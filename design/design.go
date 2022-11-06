@@ -79,10 +79,26 @@ var _ = Service("datasets_service", func() {
 				Meta("struct:tag:json", "original_accounts")
 			})
 
-			Attribute("phone_code", Int, func() {
+			Attribute("posts_per_blogger", ArrayOf(String), func() {
+				Description("имена аккаунтов, для которых ищем похожих")
+				Meta("struct:tag:json", "posts_per_blogger")
+			})
+
+			Attribute("liked_per_post", ArrayOf(String), func() {
+				Description("сколько лайкнувших для каждого поста брать")
+				Meta("struct:tag:json", "liked_per_post")
+			})
+
+			Attribute("commented_per_post", ArrayOf(String), func() {
+				Description("сколько прокоментировааших для каждого поста брать")
+				Meta("struct:tag:json", "commented_per_post")
+			})
+
+			Attribute("phone_code", Int32, func() {
 				Description("код региона, по которому будем сортировать")
 				Example(7)
-				Maximum(255)
+				Minimum(1)
+				Maximum(1000)
 				Meta("struct:tag:json", "phone_code")
 			})
 

@@ -36,7 +36,7 @@ type Bot struct {
 
 type Dataset struct {
 	ID        uuid.UUID     `json:"id"`
-	PhoneCode *int16        `json:"phone_code"`
+	PhoneCode *int32        `json:"phone_code"`
 	Status    datasetStatus `json:"status"`
 	Title     string        `json:"title"`
 	ManagerID uuid.UUID     `json:"manager_id"`

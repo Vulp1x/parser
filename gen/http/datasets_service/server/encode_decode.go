@@ -132,6 +132,10 @@ func DecodeUpdateDatasetRequest(mux goahttp.Muxer, decoder func(*http.Request) g
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
+		err = ValidateUpdateDatasetRequestBody(&body)
+		if err != nil {
+			return nil, err
+		}
 
 		var (
 			datasetID string

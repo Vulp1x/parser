@@ -72,7 +72,7 @@ CREATE TABLE public.bots (
 
 CREATE TABLE public.datasets (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
-    phone_code smallint,
+    phone_code integer,
     status smallint NOT NULL,
     title text NOT NULL,
     manager_id uuid NOT NULL,

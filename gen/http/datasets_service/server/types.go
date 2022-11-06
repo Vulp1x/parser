@@ -9,6 +9,7 @@ package server
 
 import (
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
+	goa "goa.design/goa/v3/pkg"
 )
 
 // UpdateDatasetRequestBody is the type of the "datasets_service" service
@@ -16,8 +17,14 @@ import (
 type UpdateDatasetRequestBody struct {
 	// имена аккаунтов, для которых ищем похожих
 	OriginalAccounts []string `json:"original_accounts"`
+	// имена аккаунтов, для которых ищем похожих
+	PostsPerBlogger []string `json:"posts_per_blogger"`
+	// сколько лайкнувших для каждого поста брать
+	LikedPerPost []string `json:"liked_per_post"`
+	// сколько прокоментировааших для каждого поста брать
+	CommentedPerPost []string `json:"commented_per_post"`
 	// код региона, по которому будем сортировать
-	PhoneCode *int `json:"phone_code"`
+	PhoneCode *int32 `json:"phone_code"`
 	// название задачи
 	Title *string `form:"title,omitempty" json:"title,omitempty" xml:"title,omitempty"`
 }
@@ -235,6 +242,24 @@ func NewUpdateDatasetPayload(body *UpdateDatasetRequestBody, datasetID string, t
 			v.OriginalAccounts[i] = val
 		}
 	}
+	if body.PostsPerBlogger != nil {
+		v.PostsPerBlogger = make([]string, len(body.PostsPerBlogger))
+		for i, val := range body.PostsPerBlogger {
+			v.PostsPerBlogger[i] = val
+		}
+	}
+	if body.LikedPerPost != nil {
+		v.LikedPerPost = make([]string, len(body.LikedPerPost))
+		for i, val := range body.LikedPerPost {
+			v.LikedPerPost[i] = val
+		}
+	}
+	if body.CommentedPerPost != nil {
+		v.CommentedPerPost = make([]string, len(body.CommentedPerPost))
+		for i, val := range body.CommentedPerPost {
+			v.CommentedPerPost[i] = val
+		}
+	}
 	v.DatasetID = datasetID
 	v.Token = token
 
@@ -288,4 +313,20 @@ func NewListDatasetsPayload(token string) *datasetsservice.ListDatasetsPayload {
 	v.Token = token
 
 	return v
+}
+
+// ValidateUpdateDatasetRequestBody runs the validations defined on Update
+// DatasetRequestBody
+func ValidateUpdateDatasetRequestBody(body *UpdateDatasetRequestBody) (err error) {
+	if body.PhoneCode != nil {
+		if *body.PhoneCode < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.phone_code", *body.PhoneCode, 1, true))
+		}
+	}
+	if body.PhoneCode != nil {
+		if *body.PhoneCode > 1000 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError("body.phone_code", *body.PhoneCode, 1000, false))
+		}
+	}
+	return
 }

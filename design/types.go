@@ -16,12 +16,12 @@ var Creds = Type("Creds", func() {
 // DatasetStatus описывает статус задачи
 var DatasetStatus = Type("DatasetStatus", Int, func() {
 	Enum(1, 2, 3, 4, 5, 6)
-	Description(`1 - задача только создана, нужно загрузить список ботов, прокси и получателей
-	2- в задачу загрузили необходимые списки, нужно присвоить прокси для ботов
-	3- задача готова к запуску
-	4- задача запущена 
-	5 - задача остановлена
-	6 - задача завершена`)
+	Description(`1 - датасет только создан
+	2- начали поиск блогеров
+	3- успешно закончили поиска похожих блогеров
+	4- начали парсинг юзеров у блогеров 
+	5- успешно закончили парсинг юзеров
+	6- всё сломалось `)
 })
 
 // Blogger описывает блоггера, который используется при парсинге
@@ -65,23 +65,6 @@ var Dataset = Type("Dataset", func() {
 	Attribute("title", String, "название задачи")
 
 	Required("id", "bloggers", "status", "title")
-})
-
-var DatasetFilenames = Type("DatasetFileNames", func() {
-	Attribute("bots_filename", String, "название файла, из которого брали ботов", func() {
-		Meta("struct:tag:json", "bots_filename")
-	})
-	Attribute("residential_proxies_filename", String, "название файла, из которого брали резидентские прокси", func() {
-		Meta("struct:tag:json", "residential_proxies_filename")
-	})
-	Attribute("cheap_proxies_filename", String, "название файла, из которого брали дешёвые прокси", func() {
-		Meta("struct:tag:json", "cheap_proxies_filename")
-	})
-	Attribute("targets_filename", String, "название файла, из которого брали целевых пользователей", func() {
-		Meta("struct:tag:json", "targets_filename")
-	})
-
-	Required("bots_filename", "residential_proxies_filename", "cheap_proxies_filename", "targets_filename")
 })
 
 var BloggersProgress = Type("BloggersProgress", func() {
