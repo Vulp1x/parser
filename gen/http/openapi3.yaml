@@ -26,144 +26,67 @@ paths:
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
-                  - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
               example:
                 - bloggers:
                     - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
+                      is_initial: true
+                      user_id: 374700181483657724
+                      username: Ducimus voluptate hic dicta impedit.
                     - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
+                      is_initial: true
+                      user_id: 374700181483657724
+                      username: Ducimus voluptate hic dicta impedit.
                   id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                  status: 5
-                  title: Omnis reiciendis illo maiores dolorem quia.
+                  status: 6
+                  title: Architecto aut alias blanditiis provident voluptatem.
                 - bloggers:
                     - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
+                      is_initial: true
+                      user_id: 374700181483657724
+                      username: Ducimus voluptate hic dicta impedit.
                     - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
+                      is_initial: true
+                      user_id: 374700181483657724
+                      username: Ducimus voluptate hic dicta impedit.
                   id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                  status: 5
-                  title: Omnis reiciendis illo maiores dolorem quia.
-                - bloggers:
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
-                  id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                  status: 5
-                  title: Omnis reiciendis illo maiores dolorem quia.
-                - bloggers:
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                      is_initial: false
-                      user_id: 7194315760384879922
-                      username: Alias blanditiis provident voluptatem.
-                  id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                  status: 5
-                  title: Omnis reiciendis illo maiores dolorem quia.
+                  status: 6
+                  title: Architecto aut alias blanditiis provident voluptatem.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Officia adipisci.
+                example: Qui rerum sunt rerum saepe omnis.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -176,41 +99,31 @@ paths:
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
         "404":
           description: 'dataset not found: Not Found response.'
           content:
@@ -223,41 +136,31 @@ paths:
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
         "500":
           description: 'internal error: Internal Server Error response.'
           content:
@@ -270,79 +173,59 @@ paths:
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
                   - bloggers:
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                       - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                        is_initial: false
-                        user_id: 7194315760384879922
-                        username: Alias blanditiis provident voluptatem.
+                        is_initial: true
+                        user_id: 374700181483657724
+                        username: Ducimus voluptate hic dicta impedit.
                     id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    status: 5
-                    title: Omnis reiciendis illo maiores dolorem quia.
+                    status: 6
+                    title: Architecto aut alias blanditiis provident voluptatem.
       security:
         - jwt_header_Authorization:
             - driver
@@ -362,8 +245,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Non quidem saepe aut saepe.
-          example: Pariatur laudantium cum natus.
+            example: Cumque deleniti accusamus est temporibus adipisci praesentium.
+          example: Eius molestias laboriosam adipisci dolores.
       responses:
         "200":
           description: OK response.
@@ -375,29 +258,24 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 4817736811071474524
-                    username: Alias vero quibusdam occaecati sit optio.
+                    is_initial: false
+                    user_id: 4004163287370251878
+                    username: Ut sit ut qui eveniet id amet.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 4817736811071474524
-                    username: Alias vero quibusdam occaecati sit optio.
-                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 4817736811071474524
-                    username: Alias vero quibusdam occaecati sit optio.
+                    is_initial: false
+                    user_id: 4004163287370251878
+                    username: Ut sit ut qui eveniet id amet.
                 id: 773F4E7F-A748-DF6D-4355-233071D2534A
-                status: 2
-                title: Quia et laudantium cum.
+                status: 4
+                title: Nam quis quaerat exercitationem.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Et sunt sit aut.
+                example: Mollitia reiciendis.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -416,7 +294,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Aut harum deleniti eligendi.
+                example: Consequatur et.
       security:
         - jwt_header_Authorization:
             - driver
@@ -437,8 +315,8 @@ paths:
           schema:
             type: string
             description: id задачи, которую хотим обновить
-            example: Officiis eos temporibus enim sequi dolorem.
-          example: Earum non sequi quos.
+            example: Recusandae soluta.
+          example: Dolorum dolor voluptatibus.
       requestBody:
         required: true
         content:
@@ -447,12 +325,12 @@ paths:
               $ref: '#/components/schemas/UpdateDatasetRequestBody'
             example:
               original_accounts:
-                - Sequi quis eum adipisci qui rerum.
-                - Adipisci voluptatem maxime.
-                - Qui molestiae consequatur.
-                - Doloremque fugit aspernatur sed culpa.
+                - Voluptatem impedit mollitia aut quaerat.
+                - Temporibus vero perferendis odit nostrum.
+                - Aperiam pariatur.
+                - Hic quisquam enim quisquam dolor molestiae.
               phone_code: 7
-              title: Deleniti dolorem molestiae eos exercitationem consequatur eligendi.
+              title: Est sequi quis.
       responses:
         "200":
           description: OK response.
@@ -464,24 +342,29 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 4817736811071474524
-                    username: Alias vero quibusdam occaecati sit optio.
+                    is_initial: false
+                    user_id: 4004163287370251878
+                    username: Ut sit ut qui eveniet id amet.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 4817736811071474524
-                    username: Alias vero quibusdam occaecati sit optio.
+                    is_initial: false
+                    user_id: 4004163287370251878
+                    username: Ut sit ut qui eveniet id amet.
+                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+                    is_initial: false
+                    user_id: 4004163287370251878
+                    username: Ut sit ut qui eveniet id amet.
                 id: 2C91774A-6D4A-67B6-DC43-6AED849DACC1
-                status: 4
-                title: Voluptatibus dolorum eius magni aut.
+                status: 3
+                title: Voluptates rerum culpa quos recusandae et illo.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Maxime repellat vero mollitia.
+                example: Fugit perspiciatis voluptatem rerum maxime quasi.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -500,7 +383,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Praesentium consequatur et quis molestiae.
+                example: Aperiam vel odio quia.
       security:
         - jwt_header_Authorization:
             - driver
@@ -520,8 +403,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Maiores architecto ipsam labore officiis quia et.
-          example: Illo tempore cumque explicabo quaerat.
+            example: Dicta porro cum.
+          example: Voluptates iure alias.
       responses:
         "200":
           description: OK response.
@@ -531,25 +414,29 @@ paths:
                 $ref: '#/components/schemas/DatasetProgress'
               example:
                 bots_progresses:
-                  Corporis a reiciendis adipisci vitae.:
-                    posts_count: 903273408638343134
-                    status: 3105141226110593161
-                    user_name: Qui laudantium deleniti nostrum odio eos omnis.
-                  Dolore ab id ut ut.:
-                    posts_count: 903273408638343134
-                    status: 3105141226110593161
-                    user_name: Qui laudantium deleniti nostrum odio eos omnis.
-                done: false
-                targets_failed: 7543780231117535126
-                targets_notified: 797476817121968289
-                targets_waiting: 8110972934114118665
+                  Dolores eius consequatur rerum debitis ut.:
+                    posts_count: 8163913208883442780
+                    status: 8459143459159644646
+                    user_name: Eos magni.
+                  Quisquam qui rerum dolorem odio.:
+                    posts_count: 8163913208883442780
+                    status: 8459143459159644646
+                    user_name: Eos magni.
+                  Similique vitae debitis.:
+                    posts_count: 8163913208883442780
+                    status: 8459143459159644646
+                    user_name: Eos magni.
+                done: true
+                targets_failed: 5252872899063290897
+                targets_notified: 8089748310782541738
+                targets_waiting: 2646535938844381755
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Est vitae ut eveniet.
+                example: Quam dolorum.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -568,7 +455,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Sunt aliquam quibusdam.
+                example: Voluptate voluptates et omnis sit quia.
       security:
         - jwt_header_Authorization:
             - driver
@@ -588,8 +475,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Sit error quisquam dolores veritatis excepturi.
-          example: Dolorem corporis fugit.
+            example: Et corporis quidem eius.
+          example: Pariatur ipsam officia tempore voluptatum vel dolores.
       responses:
         "200":
           description: OK response.
@@ -601,21 +488,26 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 4817736811071474524
-                    username: Alias vero quibusdam occaecati sit optio.
+                    is_initial: false
+                    user_id: 4004163287370251878
+                    username: Ut sit ut qui eveniet id amet.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 4817736811071474524
-                    username: Alias vero quibusdam occaecati sit optio.
+                    is_initial: false
+                    user_id: 4004163287370251878
+                    username: Ut sit ut qui eveniet id amet.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 4817736811071474524
-                    username: Alias vero quibusdam occaecati sit optio.
-                dataset_id: Corporis fugit fugiat ex quisquam itaque nisi.
-                status: 2
+                    is_initial: false
+                    user_id: 4004163287370251878
+                    username: Ut sit ut qui eveniet id amet.
+                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+                    is_initial: false
+                    user_id: 4004163287370251878
+                    username: Ut sit ut qui eveniet id amet.
+                dataset_id: Maxime necessitatibus deserunt eum ea.
+                status: 1
         "400":
           description: 'bad request: Bad Request response.'
           content:
@@ -640,7 +532,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Sapiente est.
+                example: Et est voluptas cumque beatae eum eveniet.
       security:
         - jwt_header_Authorization:
             - driver
@@ -660,8 +552,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Quis ut.
-          example: Aut sunt dolorum.
+            example: Soluta fuga saepe sequi voluptates commodi.
+          example: Eum non accusamus enim eligendi sit.
       responses:
         "200":
           description: OK response.
@@ -670,8 +562,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ParseDatasetOKResponseBody'
               example:
-                dataset_id: Maiores accusantium illum rem molestiae qui fugiat.
-                status: 2
+                dataset_id: Ad optio consequatur.
+                status: 6
         "400":
           description: 'bad request: Bad Request response.'
           content:
@@ -696,7 +588,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Molestiae aspernatur autem natus et qui.
+                example: Sit ad officia error esse eos.
       security:
         - jwt_header_Authorization:
             - driver
@@ -708,14 +600,6 @@ paths:
       summary: create dataset draft datasets_service
       description: создать драфт задачи
       operationId: datasets_service#create dataset draft
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateDatasetDraftRequestBody'
-            example:
-              title: Excepturi qui.
       responses:
         "200":
           description: OK response.
@@ -733,7 +617,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Asperiores id ducimus dolorem.
+                example: Sit rerum asperiores fuga.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -758,7 +642,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Molestias et qui.
+                example: Dignissimos eligendi dolores ipsum.
       security:
         - jwt_header_Authorization:
             - driver
@@ -784,18 +668,18 @@ components:
         user_id:
           type: integer
           description: user_id в инстаграме, -1 если неизвестен
-          example: 9090994499384863939
+          example: 8912691761507832878
           format: int64
         username:
           type: string
           description: имя аккаунта в инстаграме
-          example: Ea dolores.
+          example: Aut rem nisi omnis ad quia.
       example:
         dataset_id: 799C598D-49D1-F53A-0ED6-818482028C45
         id: A1E767AB-DA97-F23F-D106-18BF8653EB6C
-        is_initial: false
-        user_id: 5873895191775122479
-        username: Ullam necessitatibus aut et maxime sit.
+        is_initial: true
+        user_id: 3713153461626143894
+        username: Perferendis voluptatem.
       required:
         - id
         - dataset_id
@@ -808,36 +692,25 @@ components:
         posts_count:
           type: integer
           description: количество выложенных постов
-          example: 8637716912094328341
+          example: 619151380957864357
           format: int64
         status:
           type: integer
           description: текущий статус бота, будут ли выкладываться посты
-          example: 911791600317026275
+          example: 646773548713043257
           format: int64
         user_name:
           type: string
           description: имя пользователя бота
-          example: Culpa rem.
+          example: Ut debitis in.
       example:
-        posts_count: 970423762391252031
-        status: 967033606147834155
-        user_name: Culpa cumque rem sint.
+        posts_count: 8022634470998850325
+        status: 893306491790496901
+        user_name: Quia animi et saepe distinctio.
       required:
         - user_name
         - posts_count
         - status
-    CreateDatasetDraftRequestBody:
-      type: object
-      properties:
-        title:
-          type: string
-          description: название задачи
-          example: Commodi eligendi quos non velit.
-      example:
-        title: Quasi odio quidem alias et possimus ut.
-      required:
-        - title
     Dataset:
       type: object
       properties:
@@ -848,26 +721,31 @@ components:
           example:
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 4817736811071474524
-              username: Alias vero quibusdam occaecati sit optio.
+              is_initial: false
+              user_id: 4004163287370251878
+              username: Ut sit ut qui eveniet id amet.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 4817736811071474524
-              username: Alias vero quibusdam occaecati sit optio.
+              is_initial: false
+              user_id: 4004163287370251878
+              username: Ut sit ut qui eveniet id amet.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 4817736811071474524
-              username: Alias vero quibusdam occaecati sit optio.
+              is_initial: false
+              user_id: 4004163287370251878
+              username: Ut sit ut qui eveniet id amet.
+            - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+              id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+              is_initial: false
+              user_id: 4004163287370251878
+              username: Ut sit ut qui eveniet id amet.
         id:
           type: string
           example: 6BD40BD6-7AF6-FB4E-C1C1-23700A0E68DE
           format: uuid
         status:
           type: integer
-          example: 6
+          example: 4
           enum:
             - 1
             - 2
@@ -878,32 +756,32 @@ components:
         title:
           type: string
           description: название задачи
-          example: Iste impedit ut quia illum debitis est.
+          example: Saepe cumque eum.
       example:
         bloggers:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 4817736811071474524
-            username: Alias vero quibusdam occaecati sit optio.
+            is_initial: false
+            user_id: 4004163287370251878
+            username: Ut sit ut qui eveniet id amet.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 4817736811071474524
-            username: Alias vero quibusdam occaecati sit optio.
+            is_initial: false
+            user_id: 4004163287370251878
+            username: Ut sit ut qui eveniet id amet.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 4817736811071474524
-            username: Alias vero quibusdam occaecati sit optio.
+            is_initial: false
+            user_id: 4004163287370251878
+            username: Ut sit ut qui eveniet id amet.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 4817736811071474524
-            username: Alias vero quibusdam occaecati sit optio.
+            is_initial: false
+            user_id: 4004163287370251878
+            username: Ut sit ut qui eveniet id amet.
         id: D16B2ED1-3971-5178-0135-F3E819F3BA4F
-        status: 2
-        title: Esse eos adipisci dignissimos nulla sit iure.
+        status: 3
+        title: Voluptatibus et esse alias nam sint laudantium.
       required:
         - id
         - bloggers
@@ -916,14 +794,10 @@ components:
           type: object
           description: результат работы по каждому боту, ключ- имя бота
           example:
-            Quia aliquam voluptas enim dolor et et.:
-              posts_count: 903273408638343134
-              status: 3105141226110593161
-              user_name: Qui laudantium deleniti nostrum odio eos omnis.
-            Veniam dolore facilis necessitatibus pariatur eligendi officia.:
-              posts_count: 903273408638343134
-              status: 3105141226110593161
-              user_name: Qui laudantium deleniti nostrum odio eos omnis.
+            Sint quas est eius delectus dicta.:
+              posts_count: 8163913208883442780
+              status: 8459143459159644646
+              user_name: Eos magni.
           additionalProperties:
             $ref: '#/components/schemas/BloggersProgress'
         done:
@@ -933,32 +807,28 @@ components:
         targets_failed:
           type: integer
           description: количество аккаунтов, которых не получилось упомянуть, при перезапуске задачи будут использованы заново
-          example: 6291644277728887642
+          example: 4906276918893467726
           format: int64
         targets_notified:
           type: integer
           description: количество аккаунтов, которых упомянули в постах
-          example: 429667554329761776
+          example: 2869058879740364038
           format: int64
         targets_waiting:
           type: integer
           description: количество аккаунтов, которых не выбрали для постов
-          example: 5737454597146240611
+          example: 4051604194000075237
           format: int64
       example:
         bots_progresses:
-          Aut perspiciatis odio illo ducimus sed.:
-            posts_count: 903273408638343134
-            status: 3105141226110593161
-            user_name: Qui laudantium deleniti nostrum odio eos omnis.
-          Error adipisci est aliquam qui.:
-            posts_count: 903273408638343134
-            status: 3105141226110593161
-            user_name: Qui laudantium deleniti nostrum odio eos omnis.
+          Et sapiente.:
+            posts_count: 8163913208883442780
+            status: 8459143459159644646
+            user_name: Eos magni.
         done: true
-        targets_failed: 7421528294947354017
-        targets_notified: 723094388338020741
-        targets_waiting: 4058806815019457522
+        targets_failed: 1654919449603874890
+        targets_notified: 5551439519000343800
+        targets_waiting: 7959254865752238767
       required:
         - bots_progresses
         - targets_notified
@@ -975,63 +845,28 @@ components:
           example:
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 4817736811071474524
-              username: Alias vero quibusdam occaecati sit optio.
+              is_initial: false
+              user_id: 4004163287370251878
+              username: Ut sit ut qui eveniet id amet.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 4817736811071474524
-              username: Alias vero quibusdam occaecati sit optio.
+              is_initial: false
+              user_id: 4004163287370251878
+              username: Ut sit ut qui eveniet id amet.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 4817736811071474524
-              username: Alias vero quibusdam occaecati sit optio.
+              is_initial: false
+              user_id: 4004163287370251878
+              username: Ut sit ut qui eveniet id amet.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 4817736811071474524
-              username: Alias vero quibusdam occaecati sit optio.
+              is_initial: false
+              user_id: 4004163287370251878
+              username: Ut sit ut qui eveniet id amet.
         dataset_id:
           type: string
           description: id задачи
-          example: In odio ut qui quia animi et.
-        status:
-          type: integer
-          example: 1
-          enum:
-            - 1
-            - 2
-            - 3
-            - 4
-            - 5
-            - 6
-      example:
-        bloggers:
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 4817736811071474524
-            username: Alias vero quibusdam occaecati sit optio.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 4817736811071474524
-            username: Alias vero quibusdam occaecati sit optio.
-        dataset_id: Eligendi dolor eligendi.
-        status: 5
-      required:
-        - dataset_id
-        - status
-        - bloggers
-    ParseDatasetOKResponseBody:
-      type: object
-      properties:
-        dataset_id:
-          type: string
-          description: id задачи
-          example: Possimus illum omnis quam dolorum soluta.
+          example: Accusamus animi delectus cumque.
         status:
           type: integer
           example: 6
@@ -1043,8 +878,48 @@ components:
             - 5
             - 6
       example:
-        dataset_id: Et omnis sit.
-        status: 1
+        bloggers:
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 4004163287370251878
+            username: Ut sit ut qui eveniet id amet.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 4004163287370251878
+            username: Ut sit ut qui eveniet id amet.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 4004163287370251878
+            username: Ut sit ut qui eveniet id amet.
+        dataset_id: Dolorem tempora.
+        status: 2
+      required:
+        - dataset_id
+        - status
+        - bloggers
+    ParseDatasetOKResponseBody:
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: id задачи
+          example: Architecto non unde qui est non.
+        status:
+          type: integer
+          example: 1
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+      example:
+        dataset_id: Occaecati possimus iure dicta.
+        status: 6
       required:
         - dataset_id
         - status
@@ -1055,13 +930,11 @@ components:
           type: array
           items:
             type: string
-            example: Alias vitae reiciendis.
+            example: Ea pariatur quo aut amet.
           description: имена аккаунтов, для которых ищем похожих
           example:
-            - Aut consequatur enim et ducimus.
-            - Sit sint sed fugiat deserunt qui fuga.
-            - Pariatur pariatur omnis veniam.
-            - Iste eius eligendi qui dolores nihil.
+            - Nesciunt enim.
+            - Sequi possimus est.
         phone_code:
           type: integer
           description: код региона, по которому будем сортировать
@@ -1070,15 +943,14 @@ components:
         title:
           type: string
           description: название задачи
-          example: Eos rerum amet maiores dolor.
+          example: Veniam maiores dolores iste quis.
       example:
         original_accounts:
-          - Ut sit iure atque adipisci.
-          - Enim voluptatem culpa libero.
-          - Eaque excepturi pariatur totam et.
-          - Ut ratione vel id distinctio explicabo.
+          - Cum soluta et.
+          - Est aliquid hic eaque.
+          - Laborum autem harum ducimus minus.
         phone_code: 7
-        title: Velit sunt accusamus velit similique et aut.
+        title: Nesciunt et.
   securitySchemes:
     jwt_header_Authorization:
       type: http

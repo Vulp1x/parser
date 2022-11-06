@@ -34,3 +34,19 @@ func (b DatasetWithBloggers) ToProto() *datasetsservice.Dataset {
 		Title:    b.dataset.Title,
 	}
 }
+
+type Datasets []dbmodel.Dataset
+
+func (d Datasets) ToProto() []*datasetsservice.Dataset {
+	var protoDatasets = make([]*datasetsservice.Dataset, len(d))
+
+	for i, dataset := range d {
+		protoDatasets[i] = &datasetsservice.Dataset{
+			ID:     dataset.ID.String(),
+			Status: datasetsservice.DatasetStatus(dataset.Status),
+			Title:  dataset.Title,
+		}
+	}
+
+	return protoDatasets
+}

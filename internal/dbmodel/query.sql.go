@@ -14,18 +14,18 @@ import (
 )
 
 const createDraftDataset = `-- name: CreateDraftDataset :one
-insert into datasets (title, user_id, status, created_at)
+insert into datasets (title, manager_id, status, created_at)
 VALUES ($1, $2, 1, now())
 RETURNING id
 `
 
 type CreateDraftDatasetParams struct {
-	Title  string    `json:"title"`
-	UserID uuid.UUID `json:"user_id"`
+	Title     string    `json:"title"`
+	ManagerID uuid.UUID `json:"manager_id"`
 }
 
 func (q *Queries) CreateDraftDataset(ctx context.Context, arg CreateDraftDatasetParams) (uuid.UUID, error) {
-	row := q.db.QueryRow(ctx, createDraftDataset, arg.Title, arg.UserID)
+	row := q.db.QueryRow(ctx, createDraftDataset, arg.Title, arg.ManagerID)
 	var id uuid.UUID
 	err := row.Scan(&id)
 	return id, err
@@ -78,8 +78,45 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 	return items, nil
 }
 
+const findUserDatasets = `-- name: FindUserDatasets :many
+select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at
+from datasets
+where manager_id = $1
+`
+
+func (q *Queries) FindUserDatasets(ctx context.Context, managerID uuid.UUID) ([]Dataset, error) {
+	rows, err := q.db.Query(ctx, findUserDatasets, managerID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Dataset
+	for rows.Next() {
+		var i Dataset
+		if err := rows.Scan(
+			&i.ID,
+			&i.PhoneCode,
+			&i.Status,
+			&i.Title,
+			&i.ManagerID,
+			&i.CreatedAt,
+			&i.StartedAt,
+			&i.StoppedAt,
+			&i.UpdatedAt,
+			&i.DeletedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getDatasetByID = `-- name: GetDatasetByID :one
-select id, phone_code, status, title, user_id, created_at, started_at, stopped_at, updated_at, deleted_at
+select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at
 from datasets
 where id = $1
 `
@@ -92,7 +129,7 @@ func (q *Queries) GetDatasetByID(ctx context.Context, id uuid.UUID) (Dataset, er
 		&i.PhoneCode,
 		&i.Status,
 		&i.Title,
-		&i.UserID,
+		&i.ManagerID,
 		&i.CreatedAt,
 		&i.StartedAt,
 		&i.StoppedAt,
@@ -129,7 +166,7 @@ set phone_code = $1,
     title      = $2,
     updated_at = now()
 where id = $3
-returning id, phone_code, status, title, user_id, created_at, started_at, stopped_at, updated_at, deleted_at
+returning id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at
 `
 
 type UpdateDatasetParams struct {
@@ -146,7 +183,7 @@ func (q *Queries) UpdateDataset(ctx context.Context, arg UpdateDatasetParams) (D
 		&i.PhoneCode,
 		&i.Status,
 		&i.Title,
-		&i.UserID,
+		&i.ManagerID,
 		&i.CreatedAt,
 		&i.StartedAt,
 		&i.StoppedAt,

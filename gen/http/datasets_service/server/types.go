@@ -9,15 +9,7 @@ package server
 
 import (
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
-	goa "goa.design/goa/v3/pkg"
 )
-
-// CreateDatasetDraftRequestBody is the type of the "datasets_service" service
-// "create dataset draft" endpoint HTTP request body.
-type CreateDatasetDraftRequestBody struct {
-	// название задачи
-	Title *string `form:"title,omitempty" json:"title,omitempty" xml:"title,omitempty"`
-}
 
 // UpdateDatasetRequestBody is the type of the "datasets_service" service
 // "update dataset" endpoint HTTP request body.
@@ -223,10 +215,8 @@ func NewListDatasetsResponseBody(res []*datasetsservice.Dataset) ListDatasetsRes
 
 // NewCreateDatasetDraftPayload builds a datasets_service service create
 // dataset draft endpoint payload.
-func NewCreateDatasetDraftPayload(body *CreateDatasetDraftRequestBody, token string) *datasetsservice.CreateDatasetDraftPayload {
-	v := &datasetsservice.CreateDatasetDraftPayload{
-		Title: *body.Title,
-	}
+func NewCreateDatasetDraftPayload(token string) *datasetsservice.CreateDatasetDraftPayload {
+	v := &datasetsservice.CreateDatasetDraftPayload{}
 	v.Token = token
 
 	return v
@@ -298,13 +288,4 @@ func NewListDatasetsPayload(token string) *datasetsservice.ListDatasetsPayload {
 	v.Token = token
 
 	return v
-}
-
-// ValidateCreateDatasetDraftRequestBody runs the validations defined on Create
-// Dataset DraftRequestBody
-func ValidateCreateDatasetDraftRequestBody(body *CreateDatasetDraftRequestBody) (err error) {
-	if body.Title == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("title", "body"))
-	}
-	return
 }

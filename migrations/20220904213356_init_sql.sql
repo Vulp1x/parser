@@ -10,7 +10,7 @@ CREATE TABLE datasets
     phone_code smallint,
     status     smallint                 not null,
     title      text                     not null,
-    user_id    uuid                     not null,
+    manager_id uuid                     not null,
     created_at timestamp with time zone not null,
     started_at timestamp with time zone,
     stopped_at timestamp with time zone,

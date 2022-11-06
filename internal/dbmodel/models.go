@@ -39,7 +39,7 @@ type Dataset struct {
 	PhoneCode *int16        `json:"phone_code"`
 	Status    datasetStatus `json:"status"`
 	Title     string        `json:"title"`
-	UserID    uuid.UUID     `json:"user_id"`
+	ManagerID uuid.UUID     `json:"manager_id"`
 	CreatedAt time.Time     `json:"created_at"`
 	StartedAt *time.Time    `json:"started_at"`
 	StoppedAt *time.Time    `json:"stopped_at"`

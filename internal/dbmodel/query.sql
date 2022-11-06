@@ -6,8 +6,8 @@ insert into targets (dataset_id, username, user_id)
 values ($1, $2, $3);
 
 -- name: CreateDraftDataset :one
-insert into datasets (title, user_id, status, created_at)
-VALUES (@title, @user_id, 1, now())
+insert into datasets (title, manager_id, status, created_at)
+VALUES (@title, @manager_id, 1, now())
 RETURNING id;
 
 -- name: GetDatasetByID :one
@@ -37,3 +37,8 @@ VALUES ($1, $2, $3, $4);
 select *
 from bloggers
 where dataset_id = $1;
+
+-- name: FindUserDatasets :many
+select *
+from datasets
+where manager_id = $1;

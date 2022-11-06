@@ -77,8 +77,6 @@ type BloggersProgress struct {
 type CreateDatasetDraftPayload struct {
 	// JWT used for authentication
 	Token string
-	// название задачи
-	Title string
 }
 
 // Dataset is the result type of the datasets_service service update dataset

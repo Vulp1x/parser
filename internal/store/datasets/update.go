@@ -13,7 +13,14 @@ import (
 	"github.com/jackc/pgx/v4"
 )
 
-func (s Store) UpdateDataset(ctx context.Context, datasetID uuid.UUID, title *string, phoneCode *int16, originalAccounts []string) (domain.DatasetWithBloggers, error) {
+// UpdateDataset обновляет датасет, записывая новых блогеров (старые будут удалены)
+func (s Store) UpdateDataset(
+	ctx context.Context,
+	datasetID uuid.UUID,
+	title *string,
+	phoneCode *int16,
+	originalAccounts []string,
+) (domain.DatasetWithBloggers, error) {
 	tx, err := s.txf(ctx)
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to start transaction: %v", err)

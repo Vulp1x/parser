@@ -75,7 +75,7 @@ CREATE TABLE public.datasets (
     phone_code smallint,
     status smallint NOT NULL,
     title text NOT NULL,
-    user_id uuid NOT NULL,
+    manager_id uuid NOT NULL,
     created_at timestamp with time zone NOT NULL,
     started_at timestamp with time zone,
     stopped_at timestamp with time zone,

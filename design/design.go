@@ -41,11 +41,7 @@ var _ = Service("datasets_service", func() {
 				Description("JWT used for authentication")
 			})
 
-			Attribute("title", String, func() {
-				Description("название задачи")
-			})
-
-			Required("token", "title")
+			Required("token")
 		})
 
 		Result(String, func() {
@@ -86,6 +82,7 @@ var _ = Service("datasets_service", func() {
 			Attribute("phone_code", Int, func() {
 				Description("код региона, по которому будем сортировать")
 				Example(7)
+				Maximum(255)
 				Meta("struct:tag:json", "phone_code")
 			})
 
