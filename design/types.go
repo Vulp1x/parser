@@ -81,42 +81,39 @@ var Dataset = Type("Dataset", func() {
 	Required("id", "bloggers", "status", "title", "posts_per_blogger", "liked_per_post", "commented_per_post")
 })
 
-var BloggersProgress = Type("BloggersProgress", func() {
-	Attribute("user_name", String, "имя пользователя бота", func() {
-		Meta("struct:tag:json", "user_name")
-	})
-	Attribute("posts_count", Int, "количество выложенных постов", func() {
-		Meta("struct:tag:json", "posts_count")
+var ParsingProgress = Type("ParsingProgress", func() {
+	Attribute("bloggers_parsed", Int, "количество блогеров, у которых спарсили пользователей", func() {
+		Meta("struct:tag:json", "bloggers_parsed")
 	})
 
-	Attribute("status", Int, "текущий статус бота, будут ли выкладываться посты")
+	Attribute("targets_saved", Int, "количество сохраненных доноров", func() {
+		Meta("struct:tag:json", "filtered_bloggers")
+	})
 
-	Required("user_name", "posts_count", "status")
+	Attribute("done", Boolean, "закончен ли парсинг блогеров")
+
+	Required("bloggers_parsed", "targets_saved", "done")
 })
 
 var DatasetProgress = Type("DatasetProgress", func() {
-	Attribute("bots_progresses", MapOf(String, BloggersProgress), func() {
-		Description("результат работы по каждому боту, ключ- имя бота")
-		Meta("struct:tag:json", "bots_progresses")
+	Attribute("bloggers", ArrayOf(Blogger), func() {
+		Description("блогеры, которых уже нашли")
 	})
 
-	Attribute("targets_notified", Int, "количество аккаунтов, которых упомянули в постах", func() {
-		Meta("struct:tag:json", "targets_notified")
-	})
-	Attribute("targets_failed", Int, "количество аккаунтов, которых не получилось упомянуть, при перезапуске задачи будут использованы заново", func() {
-		Meta("struct:tag:json", "targets_failed")
+	Attribute("initial_bloggers", Int, "количество блогеров, которые были изначально", func() {
+		Meta("struct:tag:json", "initial_bloggers")
 	})
 
-	Attribute("targets_waiting", Int, "количество аккаунтов, которых не выбрали для постов", func() {
-		Meta("struct:tag:json", "targets_waiting")
+	Attribute("new_bloggers", Int, "количество блогеров, которых нашли", func() {
+		Meta("struct:tag:json", "new_bloggers")
 	})
 
-	Attribute("targets_waiting", Int, "количество аккаунтов, которых не выбрали для постов", func() {
-		Meta("struct:tag:json", "targets_waiting")
+	Attribute("filtered_bloggers", Int, "количество блогеров, которые проходят проверку по коду региона", func() {
+		Meta("struct:tag:json", "filtered_bloggers")
 	})
 
 	Attribute("done", Boolean, "закончена ли задача")
 
-	Required("bots_progresses", "targets_notified", "targets_failed", "targets_waiting", "done")
+	Required("bloggers", "initial_bloggers", "new_bloggers", "filtered_bloggers")
 
 })

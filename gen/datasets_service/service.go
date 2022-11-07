@@ -29,8 +29,10 @@ type Service interface {
 	ParseDataset(context.Context, *ParseDatasetPayload) (res *ParseDatasetResult, err error)
 	// получить задачу по id
 	GetDataset(context.Context, *GetDatasetPayload) (res *Dataset, err error)
-	// получить статус выполнения задачи по id
+	// получить статус выполнения поиска похожих аккаунтов по айди датасета
 	GetProgress(context.Context, *GetProgressPayload) (res *DatasetProgress, err error)
+	// получить статус выполнения парсинга аккаунтов
+	GetParsingProgress(context.Context, *GetParsingProgressPayload) (res *ParsingProgress, err error)
 	// получить все задачи для текущего пользователя
 	ListDatasets(context.Context, *ListDatasetsPayload) (res []*Dataset, err error)
 }
@@ -49,7 +51,7 @@ const ServiceName = "datasets_service"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [7]string{"create dataset draft", "update dataset", "find similar", "parse dataset", "get dataset", "get progress", "list datasets"}
+var MethodNames = [8]string{"create dataset draft", "update dataset", "find similar", "parse dataset", "get dataset", "get progress", "get parsing progress", "list datasets"}
 
 type Blogger struct {
 	ID string
@@ -61,15 +63,6 @@ type Blogger struct {
 	DatasetID string `json:"dataset_id"`
 	// является ли блоггер изначально в датасете или появился при парсинге
 	IsInitial bool `json:"is_initial"`
-}
-
-type BloggersProgress struct {
-	// имя пользователя бота
-	UserName string `json:"user_name"`
-	// количество выложенных постов
-	PostsCount int `json:"posts_count"`
-	// текущий статус бота, будут ли выкладываться посты
-	Status int
 }
 
 // CreateDatasetDraftPayload is the payload type of the datasets_service
@@ -98,17 +91,16 @@ type Dataset struct {
 // DatasetProgress is the result type of the datasets_service service get
 // progress method.
 type DatasetProgress struct {
-	// результат работы по каждому боту, ключ- имя бота
-	BotsProgresses map[string]*BloggersProgress `json:"bots_progresses"`
-	// количество аккаунтов, которых упомянули в постах
-	TargetsNotified int `json:"targets_notified"`
-	// количество аккаунтов, которых не получилось упомянуть, при перезапуске
-	// задачи будут использованы заново
-	TargetsFailed int `json:"targets_failed"`
-	// количество аккаунтов, которых не выбрали для постов
-	TargetsWaiting int `json:"targets_waiting,targets_waiting"`
+	// блогеры, которых уже нашли
+	Bloggers []*Blogger
+	// количество блогеров, которые были изначально
+	InitialBloggers int `json:"initial_bloggers"`
+	// количество блогеров, которых нашли
+	NewBloggers int `json:"new_bloggers"`
+	// количество блогеров, которые проходят проверку по коду региона
+	FilteredBloggers int `json:"filtered_bloggers"`
 	// закончена ли задача
-	Done bool
+	Done *bool
 }
 
 // 1 - датасет только создан
@@ -146,6 +138,15 @@ type GetDatasetPayload struct {
 	DatasetID string `json:"dataset_id"`
 }
 
+// GetParsingProgressPayload is the payload type of the datasets_service
+// service get parsing progress method.
+type GetParsingProgressPayload struct {
+	// JWT used for authentication
+	Token string
+	// id задачи
+	DatasetID string `json:"dataset_id"`
+}
+
 // GetProgressPayload is the payload type of the datasets_service service get
 // progress method.
 type GetProgressPayload struct {
@@ -177,6 +178,17 @@ type ParseDatasetResult struct {
 	Status DatasetStatus
 	// id задачи
 	DatasetID string `json:"dataset_id"`
+}
+
+// ParsingProgress is the result type of the datasets_service service get
+// parsing progress method.
+type ParsingProgress struct {
+	// количество блогеров, у которых спарсили пользователей
+	BloggersParsed int `json:"bloggers_parsed"`
+	// количество сохраненных доноров
+	TargetsSaved int `json:"filtered_bloggers"`
+	// закончен ли парсинг блогеров
+	Done bool
 }
 
 // UpdateDatasetPayload is the payload type of the datasets_service service

@@ -225,7 +225,7 @@ var _ = Service("datasets_service", func() {
 	})
 
 	Method("get progress", func() {
-		Description("получить статус выполнения задачи по id")
+		Description("получить статус выполнения поиска похожих аккаунтов по айди датасета")
 
 		Security(JWTAuth)
 
@@ -243,6 +243,34 @@ var _ = Service("datasets_service", func() {
 		})
 
 		Result(DatasetProgress)
+
+		HTTP(func() {
+			GET("/api/datasets/{dataset_id}/progress/")
+			Response(StatusOK)
+			Response(StatusNotFound)
+			Response(StatusUnauthorized)
+		})
+	})
+
+	Method("get parsing progress", func() {
+		Description("получить статус выполнения парсинга аккаунтов ")
+
+		Security(JWTAuth)
+
+		Payload(func() {
+			Token("token", String, func() {
+				Description("JWT used for authentication")
+			})
+
+			Attribute("dataset_id", String, func() {
+				Description("id задачи")
+				Meta("struct:tag:json", "dataset_id")
+			})
+
+			Required("token", "dataset_id")
+		})
+
+		Result(ParsingProgress)
 
 		HTTP(func() {
 			GET("/api/datasets/{dataset_id}/progress/")

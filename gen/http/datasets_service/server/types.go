@@ -81,16 +81,26 @@ type GetDatasetOKResponseBody struct {
 // GetProgressOKResponseBody is the type of the "datasets_service" service "get
 // progress" endpoint HTTP response body.
 type GetProgressOKResponseBody struct {
-	// результат работы по каждому боту, ключ- имя бота
-	BotsProgresses map[string]*BloggersProgressResponseBody `json:"bots_progresses"`
-	// количество аккаунтов, которых упомянули в постах
-	TargetsNotified int `json:"targets_notified"`
-	// количество аккаунтов, которых не получилось упомянуть, при перезапуске
-	// задачи будут использованы заново
-	TargetsFailed int `json:"targets_failed"`
-	// количество аккаунтов, которых не выбрали для постов
-	TargetsWaiting int `json:"targets_waiting,targets_waiting"`
+	// блогеры, которых уже нашли
+	Bloggers []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	// количество блогеров, которые были изначально
+	InitialBloggers int `json:"initial_bloggers"`
+	// количество блогеров, которых нашли
+	NewBloggers int `json:"new_bloggers"`
+	// количество блогеров, которые проходят проверку по коду региона
+	FilteredBloggers int `json:"filtered_bloggers"`
 	// закончена ли задача
+	Done *bool `form:"done,omitempty" json:"done,omitempty" xml:"done,omitempty"`
+}
+
+// GetParsingProgressOKResponseBody is the type of the "datasets_service"
+// service "get parsing progress" endpoint HTTP response body.
+type GetParsingProgressOKResponseBody struct {
+	// количество блогеров, у которых спарсили пользователей
+	BloggersParsed int `json:"bloggers_parsed"`
+	// количество сохраненных доноров
+	TargetsSaved int `json:"filtered_bloggers"`
+	// закончен ли парсинг блогеров
 	Done bool `form:"done" json:"done" xml:"done"`
 }
 
@@ -109,16 +119,6 @@ type BloggerResponseBody struct {
 	DatasetID string `json:"dataset_id"`
 	// является ли блоггер изначально в датасете или появился при парсинге
 	IsInitial bool `json:"is_initial"`
-}
-
-// BloggersProgressResponseBody is used to define fields on response body types.
-type BloggersProgressResponseBody struct {
-	// имя пользователя бота
-	UserName string `json:"user_name"`
-	// количество выложенных постов
-	PostsCount int `json:"posts_count"`
-	// текущий статус бота, будут ли выкладываться посты
-	Status int `form:"status" json:"status" xml:"status"`
 }
 
 // DatasetResponse is used to define fields on response body types.
@@ -219,17 +219,28 @@ func NewGetDatasetOKResponseBody(res *datasetsservice.Dataset) *GetDatasetOKResp
 // of the "get progress" endpoint of the "datasets_service" service.
 func NewGetProgressOKResponseBody(res *datasetsservice.DatasetProgress) *GetProgressOKResponseBody {
 	body := &GetProgressOKResponseBody{
-		TargetsNotified: res.TargetsNotified,
-		TargetsFailed:   res.TargetsFailed,
-		TargetsWaiting:  res.TargetsWaiting,
-		Done:            res.Done,
+		InitialBloggers:  res.InitialBloggers,
+		NewBloggers:      res.NewBloggers,
+		FilteredBloggers: res.FilteredBloggers,
+		Done:             res.Done,
 	}
-	if res.BotsProgresses != nil {
-		body.BotsProgresses = make(map[string]*BloggersProgressResponseBody, len(res.BotsProgresses))
-		for key, val := range res.BotsProgresses {
-			tk := key
-			body.BotsProgresses[tk] = marshalDatasetsserviceBloggersProgressToBloggersProgressResponseBody(val)
+	if res.Bloggers != nil {
+		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
+		for i, val := range res.Bloggers {
+			body.Bloggers[i] = marshalDatasetsserviceBloggerToBloggerResponseBody(val)
 		}
+	}
+	return body
+}
+
+// NewGetParsingProgressOKResponseBody builds the HTTP response body from the
+// result of the "get parsing progress" endpoint of the "datasets_service"
+// service.
+func NewGetParsingProgressOKResponseBody(res *datasetsservice.ParsingProgress) *GetParsingProgressOKResponseBody {
+	body := &GetParsingProgressOKResponseBody{
+		BloggersParsed: res.BloggersParsed,
+		TargetsSaved:   res.TargetsSaved,
+		Done:           res.Done,
 	}
 	return body
 }
@@ -309,6 +320,16 @@ func NewGetDatasetPayload(datasetID string, token string) *datasetsservice.GetDa
 // endpoint payload.
 func NewGetProgressPayload(datasetID string, token string) *datasetsservice.GetProgressPayload {
 	v := &datasetsservice.GetProgressPayload{}
+	v.DatasetID = datasetID
+	v.Token = token
+
+	return v
+}
+
+// NewGetParsingProgressPayload builds a datasets_service service get parsing
+// progress endpoint payload.
+func NewGetParsingProgressPayload(datasetID string, token string) *datasetsservice.GetParsingProgressPayload {
+	v := &datasetsservice.GetParsingProgressPayload{}
 	v.DatasetID = datasetID
 	v.Token = token
 

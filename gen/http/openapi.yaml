@@ -164,9 +164,9 @@ paths:
     get:
       tags:
         - datasets_service
-      summary: get progress datasets_service
-      description: получить статус выполнения задачи по id
-      operationId: datasets_service#get progress
+      summary: get parsing progress datasets_service
+      description: 'получить статус выполнения парсинга аккаунтов '
+      operationId: datasets_service#get parsing progress
       parameters:
         - name: dataset_id
           in: path
@@ -182,12 +182,10 @@ paths:
         "200":
           description: OK response.
           schema:
-            $ref: '#/definitions/DatasetsServiceGetProgressOKResponseBody'
+            $ref: '#/definitions/DatasetsServiceGetParsingProgressOKResponseBody'
             required:
-              - bots_progresses
-              - targets_notified
-              - targets_failed
-              - targets_waiting
+              - bloggers_parsed
+              - targets_saved
               - done
         "400":
           description: Bad Request response.
@@ -362,18 +360,18 @@ definitions:
       user_id:
         type: integer
         description: user_id в инстаграме, -1 если неизвестен
-        example: 7884373643633930087
+        example: 2635292095282785097
         format: int64
       username:
         type: string
         description: имя аккаунта в инстаграме
-        example: Qui dicta corrupti et ut incidunt.
+        example: Ut iure provident consectetur voluptatum.
     example:
       dataset_id: 76150F6F-C16D-33A6-B049-F5AE2D7C6385
       id: 43632E4F-A034-6412-7CEA-7CD0E1AED81D
       is_initial: true
-      user_id: 7428583732759085291
-      username: Ipsum rerum quas nemo.
+      user_id: 1735324039634807337
+      username: Nam neque.
     required:
       - id
       - dataset_id
@@ -396,54 +394,28 @@ definitions:
       is_initial:
         type: boolean
         description: является ли блоггер изначально в датасете или появился при парсинге
-        example: true
+        example: false
       user_id:
         type: integer
         description: user_id в инстаграме, -1 если неизвестен
-        example: 7684303285314453046
+        example: 1855017963218268933
         format: int64
       username:
         type: string
         description: имя аккаунта в инстаграме
-        example: Ab est exercitationem suscipit sit.
+        example: Itaque accusantium est eum.
     example:
       dataset_id: 0E0CB887-B526-812D-F285-DE018C555BB8
       id: AB12B85B-1864-53B4-4A92-3519B45D0D5E
       is_initial: false
-      user_id: 1009684138831546335
-      username: Magnam voluptatem nesciunt quaerat quasi incidunt sed.
+      user_id: 4018942745629096435
+      username: Voluptas nam.
     required:
       - id
       - dataset_id
       - username
       - is_initial
       - user_id
-  BloggersProgressResponseBody:
-    title: BloggersProgressResponseBody
-    type: object
-    properties:
-      posts_count:
-        type: integer
-        description: количество выложенных постов
-        example: 273730800156261240
-        format: int64
-      status:
-        type: integer
-        description: текущий статус бота, будут ли выкладываться посты
-        example: 1910266738775935338
-        format: int64
-      user_name:
-        type: string
-        description: имя пользователя бота
-        example: Aut rem ducimus aut.
-    example:
-      posts_count: 3414567951993234133
-      status: 4276746145283443344
-      user_name: Ratione quia et quidem nihil eligendi.
-    required:
-      - user_name
-      - posts_count
-      - status
   DatasetResponse:
     title: DatasetResponse
     type: object
@@ -456,22 +428,22 @@ definitions:
           - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
             id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
             is_initial: false
-            user_id: 7194315760384879922
-            username: Alias blanditiis provident voluptatem.
+            user_id: 2455906903059462355
+            username: Velit optio quod rerum aut blanditiis.
           - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
             id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
             is_initial: false
-            user_id: 7194315760384879922
-            username: Alias blanditiis provident voluptatem.
+            user_id: 2455906903059462355
+            username: Velit optio quod rerum aut blanditiis.
           - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
             id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
             is_initial: false
-            user_id: 7194315760384879922
-            username: Alias blanditiis provident voluptatem.
+            user_id: 2455906903059462355
+            username: Velit optio quod rerum aut blanditiis.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 1869711229
+        example: 1634727739
         format: int32
       id:
         type: string
@@ -480,16 +452,16 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 4846802
+        example: 1125898754
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 2128545017
+        example: 444709758
         format: int32
       status:
         type: integer
-        example: 4
+        example: 1
         enum:
           - 1
           - 2
@@ -500,35 +472,30 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Quos non velit.
+        example: Nam facilis.
     example:
       bloggers:
         - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
           id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
           is_initial: false
-          user_id: 7194315760384879922
-          username: Alias blanditiis provident voluptatem.
+          user_id: 2455906903059462355
+          username: Velit optio quod rerum aut blanditiis.
         - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
           id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
           is_initial: false
-          user_id: 7194315760384879922
-          username: Alias blanditiis provident voluptatem.
+          user_id: 2455906903059462355
+          username: Velit optio quod rerum aut blanditiis.
         - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
           id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
           is_initial: false
-          user_id: 7194315760384879922
-          username: Alias blanditiis provident voluptatem.
-        - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-          id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-          is_initial: false
-          user_id: 7194315760384879922
-          username: Alias blanditiis provident voluptatem.
-      commented_per_post: 263980860
+          user_id: 2455906903059462355
+          username: Velit optio quod rerum aut blanditiis.
+      commented_per_post: 1114662493
       id: AC2E8D12-84E7-ADAA-5045-93C4FF40145F
-      liked_per_post: 2019466167
-      posts_per_blogger: 743266314
-      status: 1
-      title: Qui ducimus.
+      liked_per_post: 1668751817
+      posts_per_blogger: 663033338
+      status: 5
+      title: Sequi illo quo similique delectus commodi eligendi.
     required:
       - id
       - bloggers
@@ -549,125 +516,18 @@ definitions:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-      dataset_id:
-        type: string
-        description: id задачи
-        example: Reprehenderit porro sed deleniti.
-      status:
-        type: integer
-        example: 1
-        enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-    example:
-      bloggers:
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-      dataset_id: Voluptas voluptas voluptates suscipit aut rem provident.
-      status: 3
-    required:
-      - dataset_id
-      - status
-      - bloggers
-  DatasetsServiceFindSimilarNotFoundResponseBody:
-    title: DatasetsServiceFindSimilarNotFoundResponseBody
-    type: object
-    properties:
-      bloggers:
-        type: array
-        items:
-          $ref: '#/definitions/BloggerResponseBody'
-        example:
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-      dataset_id:
-        type: string
-        description: id задачи
-        example: Porro dolorem numquam rerum eveniet voluptas perspiciatis.
-      status:
-        type: integer
-        example: 1
-        enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-    example:
-      bloggers:
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-      dataset_id: Ut placeat in et dolorem.
-      status: 3
-    required:
-      - dataset_id
-      - status
-      - bloggers
-  DatasetsServiceFindSimilarOKResponseBody:
-    title: DatasetsServiceFindSimilarOKResponseBody
-    type: object
-    properties:
-      bloggers:
-        type: array
-        items:
-          $ref: '#/definitions/BloggerResponseBody'
-        example:
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       dataset_id:
         type: string
         description: id задачи
@@ -687,20 +547,142 @@ definitions:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
       dataset_id: Nesciunt quas.
       status: 4
+    required:
+      - dataset_id
+      - status
+      - bloggers
+  DatasetsServiceFindSimilarNotFoundResponseBody:
+    title: DatasetsServiceFindSimilarNotFoundResponseBody
+    type: object
+    properties:
+      bloggers:
+        type: array
+        items:
+          $ref: '#/definitions/BloggerResponseBody'
+        example:
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+      dataset_id:
+        type: string
+        description: id задачи
+        example: Reprehenderit porro sed deleniti.
+      status:
+        type: integer
+        example: 1
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+    example:
+      bloggers:
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      dataset_id: Voluptas voluptas voluptates suscipit aut rem provident.
+      status: 3
+    required:
+      - dataset_id
+      - status
+      - bloggers
+  DatasetsServiceFindSimilarOKResponseBody:
+    title: DatasetsServiceFindSimilarOKResponseBody
+    type: object
+    properties:
+      bloggers:
+        type: array
+        items:
+          $ref: '#/definitions/BloggerResponseBody'
+        example:
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+      dataset_id:
+        type: string
+        description: id задачи
+        example: Ex rerum.
+      status:
+        type: integer
+        example: 3
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+    example:
+      bloggers:
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      dataset_id: Aut quis voluptatem expedita.
+      status: 5
     required:
       - dataset_id
       - status
@@ -717,25 +699,20 @@ definitions:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       dataset_id:
         type: string
         description: id задачи
-        example: Commodi rerum rerum nihil explicabo.
+        example: Porro dolorem numquam rerum eveniet voluptas perspiciatis.
       status:
         type: integer
-        example: 4
+        example: 1
         enum:
           - 1
           - 2
@@ -748,25 +725,15 @@ definitions:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-      dataset_id: Aut similique.
-      status: 4
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      dataset_id: Ut placeat in et dolorem.
+      status: 3
     required:
       - dataset_id
       - status
@@ -783,17 +750,27 @@ definitions:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 1027395316
+        example: 1520770337
         format: int32
       id:
         type: string
@@ -802,16 +779,16 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 553556565
+        example: 1564495545
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 816721158
+        example: 1901052252
         format: int32
       status:
         type: integer
-        example: 2
+        example: 3
         enum:
           - 1
           - 2
@@ -822,25 +799,25 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Qui et quia quaerat minus.
+        example: Placeat corporis corrupti sed magni quia.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-      commented_per_post: 1291221509
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      commented_per_post: 1223114010
       id: CEF3CAF7-AB82-083A-2F08-9497BE6B7488
-      liked_per_post: 477890404
-      posts_per_blogger: 1656988288
-      status: 4
-      title: Et dolore.
+      liked_per_post: 759518117
+      posts_per_blogger: 1909767327
+      status: 1
+      title: Occaecati necessitatibus illum qui sed mollitia.
     required:
       - id
       - bloggers
@@ -861,17 +838,22 @@ definitions:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 1501173537
+        example: 44043264
         format: int32
       id:
         type: string
@@ -880,12 +862,12 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 1127989764
+        example: 1859583143
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1030367192
+        example: 383327271
         format: int32
       status:
         type: integer
@@ -900,35 +882,35 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Pariatur suscipit nam quos.
+        example: Quidem reiciendis et corporis reiciendis nesciunt tenetur.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-      commented_per_post: 825913172
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      commented_per_post: 87351162
       id: D358BA94-28F1-C0F1-EA4E-E3BFBD8A6AE2
-      liked_per_post: 2107277120
-      posts_per_blogger: 997028186
-      status: 2
-      title: Repudiandae maxime tenetur.
+      liked_per_post: 1892329459
+      posts_per_blogger: 1968665391
+      status: 6
+      title: Neque nisi et optio.
     required:
       - id
       - bloggers
@@ -949,27 +931,27 @@ definitions:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 191540414
+        example: 1303622661
         format: int32
       id:
         type: string
@@ -978,16 +960,16 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 1621593061
+        example: 2001221851
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1093723233
+        example: 833262307
         format: int32
       status:
         type: integer
-        example: 1
+        example: 6
         enum:
           - 1
           - 2
@@ -998,25 +980,35 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Ut unde autem.
+        example: Temporibus commodi iure modi nobis qui ut.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
       commented_per_post: 2076397394
       id: E058AD50-5D7F-E9A8-E010-D33044724992
       liked_per_post: 1518200256
       posts_per_blogger: 1946612498
-      status: 5
-      title: Neque voluptatum quia.
+      status: 2
+      title: Nihil blanditiis soluta neque voluptatum quia.
     required:
       - id
       - bloggers
@@ -1025,173 +1017,289 @@ definitions:
       - posts_per_blogger
       - liked_per_post
       - commented_per_post
+  DatasetsServiceGetParsingProgressNotFoundResponseBody:
+    title: DatasetsServiceGetParsingProgressNotFoundResponseBody
+    type: object
+    properties:
+      bloggers_parsed:
+        type: integer
+        description: количество блогеров, у которых спарсили пользователей
+        example: 2971184709138637324
+        format: int64
+      done:
+        type: boolean
+        description: закончен ли парсинг блогеров
+        example: true
+      targets_saved:
+        type: integer
+        description: количество сохраненных доноров
+        example: 4411430869832263377
+        format: int64
+    example:
+      bloggers_parsed: 6216601890244916246
+      done: true
+      targets_saved: 7076453936845583940
+    required:
+      - bloggers_parsed
+      - targets_saved
+      - done
+  DatasetsServiceGetParsingProgressOKResponseBody:
+    title: DatasetsServiceGetParsingProgressOKResponseBody
+    type: object
+    properties:
+      bloggers_parsed:
+        type: integer
+        description: количество блогеров, у которых спарсили пользователей
+        example: 8727610716662988311
+        format: int64
+      done:
+        type: boolean
+        description: закончен ли парсинг блогеров
+        example: true
+      targets_saved:
+        type: integer
+        description: количество сохраненных доноров
+        example: 4316644126228996143
+        format: int64
+    example:
+      bloggers_parsed: 8940187159521150059
+      done: true
+      targets_saved: 2626035262324994385
+    required:
+      - bloggers_parsed
+      - targets_saved
+      - done
+  DatasetsServiceGetParsingProgressUnauthorizedResponseBody:
+    title: DatasetsServiceGetParsingProgressUnauthorizedResponseBody
+    type: object
+    properties:
+      bloggers_parsed:
+        type: integer
+        description: количество блогеров, у которых спарсили пользователей
+        example: 2687676018905134548
+        format: int64
+      done:
+        type: boolean
+        description: закончен ли парсинг блогеров
+        example: true
+      targets_saved:
+        type: integer
+        description: количество сохраненных доноров
+        example: 2238497754885479995
+        format: int64
+    example:
+      bloggers_parsed: 5468474074790239046
+      done: true
+      targets_saved: 601712825304782405
+    required:
+      - bloggers_parsed
+      - targets_saved
+      - done
   DatasetsServiceGetProgressNotFoundResponseBody:
     title: DatasetsServiceGetProgressNotFoundResponseBody
     type: object
     properties:
-      bots_progresses:
-        type: object
-        description: результат работы по каждому боту, ключ- имя бота
+      bloggers:
+        type: array
+        items:
+          $ref: '#/definitions/BloggerResponseBody'
+        description: блогеры, которых уже нашли
         example:
-          Magnam sunt.:
-            posts_count: 5241754460792455823
-            status: 4341670138231604568
-            user_name: Magni corrupti earum dolore ab.
-        additionalProperties:
-          $ref: '#/definitions/BloggersProgressResponseBody'
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       done:
         type: boolean
         description: закончена ли задача
-        example: true
-      targets_failed:
+        example: false
+      filtered_bloggers:
         type: integer
-        description: количество аккаунтов, которых не получилось упомянуть, при перезапуске задачи будут использованы заново
-        example: 131881568301839503
+        description: количество блогеров, которые проходят проверку по коду региона
+        example: 6675414226794893082
         format: int64
-      targets_notified:
+      initial_bloggers:
         type: integer
-        description: количество аккаунтов, которых упомянули в постах
-        example: 2541697808168446016
+        description: количество блогеров, которые были изначально
+        example: 131826049396462537
         format: int64
-      targets_waiting:
+      new_bloggers:
         type: integer
-        description: количество аккаунтов, которых не выбрали для постов
-        example: 1366329025562598189
+        description: количество блогеров, которых нашли
+        example: 2997295310305102250
         format: int64
     example:
-      bots_progresses:
-        Nostrum quos rerum voluptatibus adipisci.:
-          posts_count: 5241754460792455823
-          status: 4341670138231604568
-          user_name: Magni corrupti earum dolore ab.
+      bloggers:
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
       done: true
-      targets_failed: 5265923202135355901
-      targets_notified: 1266061003342115468
-      targets_waiting: 6855266525843690568
+      filtered_bloggers: 3417276647952450635
+      initial_bloggers: 7641126969613880687
+      new_bloggers: 4783041414819997961
     required:
-      - bots_progresses
-      - targets_notified
-      - targets_failed
-      - targets_waiting
-      - done
+      - bloggers
+      - initial_bloggers
+      - new_bloggers
+      - filtered_bloggers
   DatasetsServiceGetProgressOKResponseBody:
     title: DatasetsServiceGetProgressOKResponseBody
     type: object
     properties:
-      bots_progresses:
-        type: object
-        description: результат работы по каждому боту, ключ- имя бота
+      bloggers:
+        type: array
+        items:
+          $ref: '#/definitions/BloggerResponseBody'
+        description: блогеры, которых уже нашли
         example:
-          Ea hic fugit.:
-            posts_count: 5241754460792455823
-            status: 4341670138231604568
-            user_name: Magni corrupti earum dolore ab.
-          Eligendi laboriosam blanditiis ratione libero.:
-            posts_count: 5241754460792455823
-            status: 4341670138231604568
-            user_name: Magni corrupti earum dolore ab.
-          Nobis dolore sit cupiditate dolore laudantium.:
-            posts_count: 5241754460792455823
-            status: 4341670138231604568
-            user_name: Magni corrupti earum dolore ab.
-        additionalProperties:
-          $ref: '#/definitions/BloggersProgressResponseBody'
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       done:
         type: boolean
         description: закончена ли задача
         example: false
-      targets_failed:
+      filtered_bloggers:
         type: integer
-        description: количество аккаунтов, которых не получилось упомянуть, при перезапуске задачи будут использованы заново
-        example: 498919194165844280
+        description: количество блогеров, которые проходят проверку по коду региона
+        example: 656480431257762629
         format: int64
-      targets_notified:
+      initial_bloggers:
         type: integer
-        description: количество аккаунтов, которых упомянули в постах
-        example: 2626035262324994385
+        description: количество блогеров, которые были изначально
+        example: 3957879618379722121
         format: int64
-      targets_waiting:
+      new_bloggers:
         type: integer
-        description: количество аккаунтов, которых не выбрали для постов
-        example: 2971184709138637324
+        description: количество блогеров, которых нашли
+        example: 7216273906345686934
         format: int64
     example:
-      bots_progresses:
-        Dignissimos qui exercitationem ut est.:
-          posts_count: 5241754460792455823
-          status: 4341670138231604568
-          user_name: Magni corrupti earum dolore ab.
-        Perferendis rerum recusandae.:
-          posts_count: 5241754460792455823
-          status: 4341670138231604568
-          user_name: Magni corrupti earum dolore ab.
-      done: false
-      targets_failed: 5645662481724943687
-      targets_notified: 5240340533968572789
-      targets_waiting: 4732356462312574418
+      bloggers:
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      done: true
+      filtered_bloggers: 4770068945958608346
+      initial_bloggers: 1910266738775935338
+      new_bloggers: 4069235053161526389
     required:
-      - bots_progresses
-      - targets_notified
-      - targets_failed
-      - targets_waiting
-      - done
+      - bloggers
+      - initial_bloggers
+      - new_bloggers
+      - filtered_bloggers
   DatasetsServiceGetProgressUnauthorizedResponseBody:
     title: DatasetsServiceGetProgressUnauthorizedResponseBody
     type: object
     properties:
-      bots_progresses:
-        type: object
-        description: результат работы по каждому боту, ключ- имя бота
+      bloggers:
+        type: array
+        items:
+          $ref: '#/definitions/BloggerResponseBody'
+        description: блогеры, которых уже нашли
         example:
-          Ducimus hic.:
-            posts_count: 5241754460792455823
-            status: 4341670138231604568
-            user_name: Magni corrupti earum dolore ab.
-          Et hic dolores earum perferendis nisi.:
-            posts_count: 5241754460792455823
-            status: 4341670138231604568
-            user_name: Magni corrupti earum dolore ab.
-          Omnis assumenda molestiae quo quia consequatur.:
-            posts_count: 5241754460792455823
-            status: 4341670138231604568
-            user_name: Magni corrupti earum dolore ab.
-        additionalProperties:
-          $ref: '#/definitions/BloggersProgressResponseBody'
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: false
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       done:
         type: boolean
         description: закончена ли задача
         example: false
-      targets_failed:
+      filtered_bloggers:
         type: integer
-        description: количество аккаунтов, которых не получилось упомянуть, при перезапуске задачи будут использованы заново
-        example: 2372612441274165778
+        description: количество блогеров, которые проходят проверку по коду региона
+        example: 406752612869416159
         format: int64
-      targets_notified:
+      initial_bloggers:
         type: integer
-        description: количество аккаунтов, которых упомянули в постах
-        example: 5974723451702194596
+        description: количество блогеров, которые были изначально
+        example: 7903539746758672101
         format: int64
-      targets_waiting:
+      new_bloggers:
         type: integer
-        description: количество аккаунтов, которых не выбрали для постов
-        example: 486751458840746133
+        description: количество блогеров, которых нашли
+        example: 5035725464828784639
         format: int64
     example:
-      bots_progresses:
-        Voluptatem ut ipsum.:
-          posts_count: 5241754460792455823
-          status: 4341670138231604568
-          user_name: Magni corrupti earum dolore ab.
-      done: true
-      targets_failed: 1211602041623664540
-      targets_notified: 1586761469937398784
-      targets_waiting: 4732767903271408452
+      bloggers:
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: false
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      done: false
+      filtered_bloggers: 3299523996977778552
+      initial_bloggers: 8545793955665992454
+      new_bloggers: 8042407693620604896
     required:
-      - bots_progresses
-      - targets_notified
-      - targets_failed
-      - targets_waiting
-      - done
+      - bloggers
+      - initial_bloggers
+      - new_bloggers
+      - filtered_bloggers
   DatasetsServiceParseDatasetBadRequestResponseBody:
     title: DatasetsServiceParseDatasetBadRequestResponseBody
     type: object
@@ -1199,10 +1307,10 @@ definitions:
       dataset_id:
         type: string
         description: id задачи
-        example: Sit sit doloremque rerum soluta nulla pariatur.
+        example: Laborum id ipsam labore omnis itaque.
       status:
         type: integer
-        example: 4
+        example: 1
         enum:
           - 1
           - 2
@@ -1211,8 +1319,8 @@ definitions:
           - 5
           - 6
     example:
-      dataset_id: Animi perspiciatis aut.
-      status: 1
+      dataset_id: Quisquam ut voluptate expedita.
+      status: 2
     required:
       - dataset_id
       - status
@@ -1223,31 +1331,7 @@ definitions:
       dataset_id:
         type: string
         description: id задачи
-        example: Autem ea voluptatum voluptas et eligendi.
-      status:
-        type: integer
-        example: 4
-        enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-    example:
-      dataset_id: Enim architecto.
-      status: 3
-    required:
-      - dataset_id
-      - status
-  DatasetsServiceParseDatasetOKResponseBody:
-    title: DatasetsServiceParseDatasetOKResponseBody
-    type: object
-    properties:
-      dataset_id:
-        type: string
-        description: id задачи
-        example: Ipsam labore.
+        example: Autem sit.
       status:
         type: integer
         example: 2
@@ -1259,19 +1343,19 @@ definitions:
           - 5
           - 6
     example:
-      dataset_id: Vel laborum quisquam ut voluptate expedita ipsa.
-      status: 6
+      dataset_id: Rerum soluta nulla pariatur tenetur aut.
+      status: 1
     required:
       - dataset_id
       - status
-  DatasetsServiceParseDatasetUnauthorizedResponseBody:
-    title: DatasetsServiceParseDatasetUnauthorizedResponseBody
+  DatasetsServiceParseDatasetOKResponseBody:
+    title: DatasetsServiceParseDatasetOKResponseBody
     type: object
     properties:
       dataset_id:
         type: string
         description: id задачи
-        example: Rem cumque et tempora voluptates.
+        example: Commodi rerum rerum nihil explicabo.
       status:
         type: integer
         example: 4
@@ -1283,7 +1367,31 @@ definitions:
           - 5
           - 6
     example:
-      dataset_id: Ut deserunt.
+      dataset_id: Est aut.
+      status: 5
+    required:
+      - dataset_id
+      - status
+  DatasetsServiceParseDatasetUnauthorizedResponseBody:
+    title: DatasetsServiceParseDatasetUnauthorizedResponseBody
+    type: object
+    properties:
+      dataset_id:
+        type: string
+        description: id задачи
+        example: Aut quia.
+      status:
+        type: integer
+        example: 2
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+    example:
+      dataset_id: Ea voluptatum voluptas et.
       status: 6
     required:
       - dataset_id
@@ -1300,27 +1408,22 @@ definitions:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 1325917588
+        example: 850268615
         format: int32
       id:
         type: string
@@ -1329,16 +1432,16 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 269905666
+        example: 2141483658
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 997821163
+        example: 541665029
         format: int32
       status:
         type: integer
-        example: 6
+        example: 4
         enum:
           - 1
           - 2
@@ -1349,30 +1452,25 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Reprehenderit sed.
+        example: Enim beatae vel ipsa et distinctio non.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-      commented_per_post: 1050414311
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      commented_per_post: 1297291094
       id: 233374F1-297F-8711-5FC3-4F6B3731AD63
-      liked_per_post: 1408914937
-      posts_per_blogger: 230902202
+      liked_per_post: 1114740870
+      posts_per_blogger: 788750128
       status: 4
-      title: Aut laborum delectus commodi commodi vel.
+      title: Sed magni non aut.
     required:
       - id
       - bloggers
@@ -1393,27 +1491,17 @@ definitions:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 2121787775
+        example: 1451279129
         format: int32
       id:
         type: string
@@ -1422,16 +1510,16 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 198255485
+        example: 1291189900
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1415685313
+        example: 1388673350
         format: int32
       status:
         type: integer
-        example: 2
+        example: 3
         enum:
           - 1
           - 2
@@ -1442,35 +1530,35 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Enim autem temporibus laborum.
+        example: Molestiae praesentium odio dolorum voluptates.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-      commented_per_post: 91622038
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      commented_per_post: 339930640
       id: 77DFBD55-EC3C-CF64-7021-5A80D932517B
-      liked_per_post: 427831637
-      posts_per_blogger: 674924356
+      liked_per_post: 507072005
+      posts_per_blogger: 1926570359
       status: 4
-      title: Sunt voluptatem est eos ipsa eos similique.
+      title: Et doloribus non exercitationem et consectetur.
     required:
       - id
       - bloggers
@@ -1486,22 +1574,24 @@ definitions:
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 16044480179341848302
+        example: 6833704593627279754
         format: int64
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 1507068571979252134
+        example: 4392471973513765523
         format: int64
       original_accounts:
         type: array
         items:
           type: string
-          example: Quas et aut nihil iste qui.
+          example: Non cum libero.
         description: имена аккаунтов, для которых ищем похожих
         example:
-          - Magni beatae.
-          - Est aut facere nihil expedita consequatur quia.
+          - Sit dolores vel modi vel qui.
+          - Animi ipsa qui a consequatur.
+          - Architecto aliquid reprehenderit quas.
+          - Aut nihil iste qui.
       phone_code:
         type: integer
         description: код региона, по которому будем сортировать
@@ -1511,22 +1601,23 @@ definitions:
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 4564337280206112403
+        example: 5728205418193779270
         format: int64
       title:
         type: string
         description: название задачи
-        example: Sit dolor doloremque provident voluptatem.
+        example: Quia est aut facere nihil expedita.
     example:
-      commented_per_post: 11627789894998437097
-      liked_per_post: 15829637107088005580
+      commented_per_post: 10649641822094174285
+      liked_per_post: 3357621609319471321
       original_accounts:
+        - Fugit quibusdam expedita et.
+        - Dolor doloremque.
+        - Voluptatem doloremque.
         - Reprehenderit omnis similique ratione.
-        - Voluptatem vero molestias.
-        - Beatae vitae ea ipsam eligendi sint.
       phone_code: 7
-      posts_per_blogger: 3762476979844829310
-      title: Sequi aut quis voluptatem expedita in.
+      posts_per_blogger: 16149588099189313073
+      title: Quaerat beatae vitae ea ipsam.
   DatasetsServiceUpdateDatasetUnauthorizedResponseBody:
     title: DatasetsServiceUpdateDatasetUnauthorizedResponseBody
     type: object
@@ -1539,27 +1630,22 @@ definitions:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
             is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 6195190025290612606
-            username: Optio mollitia nam.
+            user_id: 6517268191477979916
+            username: Veritatis adipisci tenetur illo aut.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 1588445835
+        example: 1685705299
         format: int32
       id:
         type: string
@@ -1568,16 +1654,16 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 2109870417
+        example: 638541148
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1595072188
+        example: 605596526
         format: int32
       status:
         type: integer
-        example: 1
+        example: 5
         enum:
           - 1
           - 2
@@ -1588,35 +1674,35 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Alias ipsa sunt.
+        example: Ut eligendi consequuntur nulla quasi ea.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
           id: 74C53540-E974-ABFF-2565-6BF99F9017B2
           is_initial: false
-          user_id: 6195190025290612606
-          username: Optio mollitia nam.
-      commented_per_post: 454529169
+          user_id: 6517268191477979916
+          username: Veritatis adipisci tenetur illo aut.
+      commented_per_post: 1319493499
       id: 1576BB1F-D21C-05AD-6677-73725A387FA6
-      liked_per_post: 79656612
-      posts_per_blogger: 169917170
+      liked_per_post: 836220290
+      posts_per_blogger: 1301412967
       status: 1
-      title: Animi ipsa qui a consequatur.
+      title: Ullam eius cupiditate sed.
     required:
       - id
       - bloggers
