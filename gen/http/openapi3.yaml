@@ -518,7 +518,63 @@ paths:
         - jwt_header_Authorization:
             - driver
             - admin
-  /api/datasets/{dataset_id}/progress/:
+  /api/datasets/{dataset_id}/parse/:
+    post:
+      tags:
+        - datasets_service
+      summary: parse dataset datasets_service
+      description: получить базу доноров для выбранных блогеров
+      operationId: datasets_service#parse dataset
+      parameters:
+        - name: dataset_id
+          in: path
+          description: id задачи
+          required: true
+          schema:
+            type: string
+            description: id задачи
+            example: Aut sunt dolorum.
+          example: Laborum atque alias et culpa consequatur.
+      responses:
+        "200":
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseDatasetOKResponseBody'
+              example:
+                dataset_id: Ad optio consequatur.
+                status: 6
+        "400":
+          description: 'bad request: Bad Request response.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseDatasetOKResponseBody'
+        "401":
+          description: 'unauthorized: Unauthorized response.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseDatasetOKResponseBody'
+        "404":
+          description: 'dataset not found: Not Found response.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseDatasetOKResponseBody'
+        "500":
+          description: 'internal error: Internal Server Error response.'
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Quasi voluptatem sint id tempora ea.
+      security:
+        - jwt_header_Authorization:
+            - driver
+            - admin
+  /api/datasets/{dataset_id}/parsing_progress/:
     get:
       tags:
         - datasets_service
@@ -572,6 +628,76 @@ paths:
               schema:
                 type: string
                 example: Alias error adipisci est aliquam qui natus.
+      security:
+        - jwt_header_Authorization:
+            - driver
+            - admin
+  /api/datasets/{dataset_id}/progress/:
+    get:
+      tags:
+        - datasets_service
+      summary: get progress datasets_service
+      description: получить статус выполнения поиска похожих аккаунтов по айди датасета
+      operationId: datasets_service#get progress
+      parameters:
+        - name: dataset_id
+          in: path
+          description: id задачи
+          required: true
+          schema:
+            type: string
+            description: id задачи
+            example: Illo tempore cumque explicabo quaerat.
+          example: Reiciendis temporibus voluptas rerum explicabo quia numquam.
+      responses:
+        "200":
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetProgress'
+              example:
+                bloggers:
+                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+                    is_initial: false
+                    user_id: 6517268191477979916
+                    username: Veritatis adipisci tenetur illo aut.
+                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+                    is_initial: false
+                    user_id: 6517268191477979916
+                    username: Veritatis adipisci tenetur illo aut.
+                done: true
+                filtered_bloggers: 8163913208883442780
+                initial_bloggers: 6940211590439773124
+                new_bloggers: 2761799592145712309
+        "400":
+          description: 'bad request: Bad Request response.'
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Et ut culpa cumque.
+        "401":
+          description: 'unauthorized: Unauthorized response.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetProgress'
+        "404":
+          description: 'dataset not found: Not Found response.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetProgress'
+        "500":
+          description: 'internal error: Internal Server Error response.'
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Sint amet.
       security:
         - jwt_header_Authorization:
             - driver
@@ -649,62 +775,6 @@ paths:
               schema:
                 type: string
                 example: Est eius delectus dicta.
-      security:
-        - jwt_header_Authorization:
-            - driver
-            - admin
-  /api/datasets/{dataset_id}/stop/:
-    post:
-      tags:
-        - datasets_service
-      summary: parse dataset datasets_service
-      description: получить базу доноров для выбранных блогеров
-      operationId: datasets_service#parse dataset
-      parameters:
-        - name: dataset_id
-          in: path
-          description: id задачи
-          required: true
-          schema:
-            type: string
-            description: id задачи
-            example: Aut sunt dolorum.
-          example: Laborum atque alias et culpa consequatur.
-      responses:
-        "200":
-          description: OK response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ParseDatasetOKResponseBody'
-              example:
-                dataset_id: Ad optio consequatur.
-                status: 6
-        "400":
-          description: 'bad request: Bad Request response.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ParseDatasetOKResponseBody'
-        "401":
-          description: 'unauthorized: Unauthorized response.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ParseDatasetOKResponseBody'
-        "404":
-          description: 'dataset not found: Not Found response.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ParseDatasetOKResponseBody'
-        "500":
-          description: 'internal error: Internal Server Error response.'
-          content:
-            application/json:
-              schema:
-                type: string
-                example: Quasi voluptatem sint id tempora ea.
       security:
         - jwt_header_Authorization:
             - driver

@@ -169,6 +169,11 @@ func (s *datasetsServicesrvc) ListDatasets(ctx context.Context, p *datasetsservi
 	return domainDatasets.ToProto(), nil
 }
 
+func (s *datasetsServicesrvc) GetParsingProgress(ctx context.Context, payload *datasetsservice.GetParsingProgressPayload) (*datasetsservice.ParsingProgress, error) {
+	logger.Info(ctx, "datasetsService.getParsingProgress", payload.DatasetID)
+	return nil, nil
+}
+
 func internalErr(err error) datasetsservice.InternalError {
-	return internalErr(err)
+	return datasetsservice.InternalError(err.Error())
 }

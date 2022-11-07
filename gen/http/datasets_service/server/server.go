@@ -59,10 +59,10 @@ func New(
 			{"CreateDatasetDraft", "POST", "/api/datasets/draft/"},
 			{"UpdateDataset", "PUT", "/api/datasets/{dataset_id}/"},
 			{"FindSimilar", "POST", "/api/datasets/{dataset_id}/start/"},
-			{"ParseDataset", "POST", "/api/datasets/{dataset_id}/stop/"},
+			{"ParseDataset", "POST", "/api/datasets/{dataset_id}/parse/"},
 			{"GetDataset", "GET", "/api/datasets/{dataset_id}/"},
 			{"GetProgress", "GET", "/api/datasets/{dataset_id}/progress/"},
-			{"GetParsingProgress", "GET", "/api/datasets/{dataset_id}/progress/"},
+			{"GetParsingProgress", "GET", "/api/datasets/{dataset_id}/parsing_progress/"},
 			{"ListDatasets", "GET", "/api/datasets/"},
 		},
 		CreateDatasetDraft: NewCreateDatasetDraftHandler(e.CreateDatasetDraft, mux, decoder, encoder, errhandler, formatter),
@@ -274,7 +274,7 @@ func MountParseDatasetHandler(mux goahttp.Muxer, h http.Handler) {
 			h.ServeHTTP(w, r)
 		}
 	}
-	mux.Handle("POST", "/api/datasets/{dataset_id}/stop/", f)
+	mux.Handle("POST", "/api/datasets/{dataset_id}/parse/", f)
 }
 
 // NewParseDatasetHandler creates a HTTP handler which loads the HTTP request
@@ -427,7 +427,7 @@ func MountGetParsingProgressHandler(mux goahttp.Muxer, h http.Handler) {
 			h.ServeHTTP(w, r)
 		}
 	}
-	mux.Handle("GET", "/api/datasets/{dataset_id}/progress/", f)
+	mux.Handle("GET", "/api/datasets/{dataset_id}/parsing_progress/", f)
 }
 
 // NewGetParsingProgressHandler creates a HTTP handler which loads the HTTP

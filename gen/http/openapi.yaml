@@ -160,7 +160,53 @@ paths:
         - http
       security:
         - jwt_header_Authorization: []
-  /api/datasets/{dataset_id}/progress/:
+  /api/datasets/{dataset_id}/parse/:
+    post:
+      tags:
+        - datasets_service
+      summary: parse dataset datasets_service
+      description: получить базу доноров для выбранных блогеров
+      operationId: datasets_service#parse dataset
+      parameters:
+        - name: dataset_id
+          in: path
+          description: id задачи
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: JWT used for authentication
+          required: true
+          type: string
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            $ref: '#/definitions/DatasetsServiceParseDatasetOKResponseBody'
+            required:
+              - dataset_id
+              - status
+        "400":
+          description: Bad Request response.
+          schema:
+            type: string
+        "401":
+          description: Unauthorized response.
+          schema:
+            type: string
+        "404":
+          description: Not Found response.
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error response.
+          schema:
+            type: string
+      schemes:
+        - http
+      security:
+        - jwt_header_Authorization: []
+  /api/datasets/{dataset_id}/parsing_progress/:
     get:
       tags:
         - datasets_service
@@ -187,6 +233,54 @@ paths:
               - bloggers_parsed
               - targets_saved
               - done
+        "400":
+          description: Bad Request response.
+          schema:
+            type: string
+        "401":
+          description: Unauthorized response.
+          schema:
+            type: string
+        "404":
+          description: Not Found response.
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error response.
+          schema:
+            type: string
+      schemes:
+        - http
+      security:
+        - jwt_header_Authorization: []
+  /api/datasets/{dataset_id}/progress/:
+    get:
+      tags:
+        - datasets_service
+      summary: get progress datasets_service
+      description: получить статус выполнения поиска похожих аккаунтов по айди датасета
+      operationId: datasets_service#get progress
+      parameters:
+        - name: dataset_id
+          in: path
+          description: id задачи
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: JWT used for authentication
+          required: true
+          type: string
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            $ref: '#/definitions/DatasetsServiceGetProgressOKResponseBody'
+            required:
+              - bloggers
+              - initial_bloggers
+              - new_bloggers
+              - filtered_bloggers
         "400":
           description: Bad Request response.
           schema:
@@ -234,52 +328,6 @@ paths:
               - dataset_id
               - status
               - bloggers
-        "400":
-          description: Bad Request response.
-          schema:
-            type: string
-        "401":
-          description: Unauthorized response.
-          schema:
-            type: string
-        "404":
-          description: Not Found response.
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error response.
-          schema:
-            type: string
-      schemes:
-        - http
-      security:
-        - jwt_header_Authorization: []
-  /api/datasets/{dataset_id}/stop/:
-    post:
-      tags:
-        - datasets_service
-      summary: parse dataset datasets_service
-      description: получить базу доноров для выбранных блогеров
-      operationId: datasets_service#parse dataset
-      parameters:
-        - name: dataset_id
-          in: path
-          description: id задачи
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: JWT used for authentication
-          required: true
-          type: string
-      responses:
-        "200":
-          description: OK response.
-          schema:
-            $ref: '#/definitions/DatasetsServiceParseDatasetOKResponseBody'
-            required:
-              - dataset_id
-              - status
         "400":
           description: Bad Request response.
           schema:

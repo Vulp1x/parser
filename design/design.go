@@ -188,7 +188,7 @@ var _ = Service("datasets_service", func() {
 		})
 
 		HTTP(func() {
-			POST("/api/datasets/{dataset_id}/stop/")
+			POST("/api/datasets/{dataset_id}/parse/")
 			Response(StatusOK)
 			Response(StatusBadRequest)
 			Response(StatusNotFound)
@@ -273,7 +273,7 @@ var _ = Service("datasets_service", func() {
 		Result(ParsingProgress)
 
 		HTTP(func() {
-			GET("/api/datasets/{dataset_id}/progress/")
+			GET("/api/datasets/{dataset_id}/parsing_progress/")
 			Response(StatusOK)
 			Response(StatusNotFound)
 			Response(StatusUnauthorized)

@@ -28,7 +28,7 @@ func FindSimilarDatasetsServicePath(datasetID string) string {
 
 // ParseDatasetDatasetsServicePath returns the URL path to the datasets_service service parse dataset HTTP endpoint.
 func ParseDatasetDatasetsServicePath(datasetID string) string {
-	return fmt.Sprintf("/api/datasets/%v/stop/", datasetID)
+	return fmt.Sprintf("/api/datasets/%v/parse/", datasetID)
 }
 
 // GetDatasetDatasetsServicePath returns the URL path to the datasets_service service get dataset HTTP endpoint.
@@ -43,7 +43,7 @@ func GetProgressDatasetsServicePath(datasetID string) string {
 
 // GetParsingProgressDatasetsServicePath returns the URL path to the datasets_service service get parsing progress HTTP endpoint.
 func GetParsingProgressDatasetsServicePath(datasetID string) string {
-	return fmt.Sprintf("/api/datasets/%v/progress/", datasetID)
+	return fmt.Sprintf("/api/datasets/%v/parsing_progress/", datasetID)
 }
 
 // ListDatasetsDatasetsServicePath returns the URL path to the datasets_service service list datasets HTTP endpoint.
