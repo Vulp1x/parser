@@ -25,12 +25,12 @@ type Service interface {
 	UpdateDataset(context.Context, *UpdateDatasetPayload) (res *Dataset, err error)
 	// начать выполнение задачи
 	FindSimilar(context.Context, *FindSimilarPayload) (res *FindSimilarResult, err error)
+	// получить статус выполнения поиска похожих аккаунтов по айди датасета
+	GetProgress(context.Context, *GetProgressPayload) (res *DatasetProgress, err error)
 	// получить базу доноров для выбранных блогеров
 	ParseDataset(context.Context, *ParseDatasetPayload) (res *ParseDatasetResult, err error)
 	// получить задачу по id
 	GetDataset(context.Context, *GetDatasetPayload) (res *Dataset, err error)
-	// получить статус выполнения поиска похожих аккаунтов по айди датасета
-	GetProgress(context.Context, *GetProgressPayload) (res *DatasetProgress, err error)
 	// получить статус выполнения парсинга аккаунтов
 	GetParsingProgress(context.Context, *GetParsingProgressPayload) (res *ParsingProgress, err error)
 	// получить все задачи для текущего пользователя
@@ -51,7 +51,7 @@ const ServiceName = "datasets_service"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [8]string{"create dataset draft", "update dataset", "find similar", "parse dataset", "get dataset", "get progress", "get parsing progress", "list datasets"}
+var MethodNames = [8]string{"create dataset draft", "update dataset", "find similar", "get progress", "parse dataset", "get dataset", "get parsing progress", "list datasets"}
 
 type Blogger struct {
 	ID string
@@ -100,7 +100,7 @@ type DatasetProgress struct {
 	// количество блогеров, которые проходят проверку по коду региона
 	FilteredBloggers int `json:"filtered_bloggers"`
 	// закончена ли задача
-	Done *bool
+	Done bool
 }
 
 // 1 - датасет только создан

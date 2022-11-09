@@ -36,6 +36,7 @@ type Config struct {
 type ServerConfig struct {
 	BindIP   string `yaml:"bind_ip"`
 	Port     string `yaml:"port"`
+	GRPCPort string `yaml:"grpc_port"`
 	CertFile string `yaml:"cert_file"`
 	KeyFile  string `yaml:"key_file"`
 }
@@ -78,7 +79,7 @@ func (c *Config) ParseConfiguration(configMode string) error {
 
 // Default sets default values in config variables.
 func (c *Config) Default() {
-	c.Listen = ServerConfig{BindIP: "0.0.0.0", Port: "9090"}
+	c.Listen = ServerConfig{BindIP: "0.0.0.0", Port: "9090", GRPCPort: "90"}
 	c.Logger.Default()
 	c.Postgres.Default()
 	c.Security.Default()

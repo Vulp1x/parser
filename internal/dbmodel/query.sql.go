@@ -13,6 +13,31 @@ import (
 	"time"
 )
 
+const blockBot = `-- name: BlockBot :exec
+update bots
+set is_blocked   = true,
+    locked_until = null
+where id = $1
+`
+
+func (q *Queries) BlockBot(ctx context.Context, id uuid.UUID) error {
+	_, err := q.db.Exec(ctx, blockBot, id)
+	return err
+}
+
+const countAvailableBots = `-- name: CountAvailableBots :one
+select count(*)
+from bots
+where is_blocked = false
+`
+
+func (q *Queries) CountAvailableBots(ctx context.Context) (int64, error) {
+	row := q.db.QueryRow(ctx, countAvailableBots)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const createDraftDataset = `-- name: CreateDraftDataset :one
 insert into datasets (title, manager_id, status, created_at)
 VALUES ($1, $2, 1, now())
@@ -34,7 +59,7 @@ func (q *Queries) CreateDraftDataset(ctx context.Context, arg CreateDraftDataset
 const deleteBloggersPerDataset = `-- name: DeleteBloggersPerDataset :execresult
 delete
 from bloggers
-where dataset_id = $1
+where dataset_id = ?
   and is_initial = true
 `
 
@@ -43,9 +68,9 @@ func (q *Queries) DeleteBloggersPerDataset(ctx context.Context, datasetID uuid.U
 }
 
 const findBloggersForDataset = `-- name: FindBloggersForDataset :many
-select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email
 from bloggers
-where dataset_id = $1
+where dataset_id = ?
 `
 
 func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUID) ([]Blogger, error) {
@@ -67,6 +92,63 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 			&i.CreatedAt,
 			&i.ParsedAt,
 			&i.UpdatedAt,
+			&i.Parsed,
+			&i.IsPrivate,
+			&i.IsVerified,
+			&i.IsBusiness,
+			&i.FollowingsCount,
+			&i.ContactPhoneNumber,
+			&i.PublicPhoneNumber,
+			&i.PublicPhoneCountryCode,
+			&i.CityName,
+			&i.PublicEmail,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const findInitialBloggersForDataset = `-- name: FindInitialBloggersForDataset :many
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email
+from bloggers
+where dataset_id = ?
+  AND is_initial = true
+`
+
+func (q *Queries) FindInitialBloggersForDataset(ctx context.Context, datasetID uuid.UUID) ([]Blogger, error) {
+	rows, err := q.db.Query(ctx, findInitialBloggersForDataset, datasetID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Blogger
+	for rows.Next() {
+		var i Blogger
+		if err := rows.Scan(
+			&i.ID,
+			&i.DatasetID,
+			&i.Username,
+			&i.UserID,
+			&i.FollowersCount,
+			&i.IsInitial,
+			&i.CreatedAt,
+			&i.ParsedAt,
+			&i.UpdatedAt,
+			&i.Parsed,
+			&i.IsPrivate,
+			&i.IsVerified,
+			&i.IsBusiness,
+			&i.FollowingsCount,
+			&i.ContactPhoneNumber,
+			&i.PublicPhoneNumber,
+			&i.PublicPhoneCountryCode,
+			&i.CityName,
+			&i.PublicEmail,
 		); err != nil {
 			return nil, err
 		}
@@ -152,12 +234,84 @@ type InsertInitialBloggersParams struct {
 	IsInitial bool      `json:"is_initial"`
 }
 
-type SaveBotAccountsParams struct {
-	Username  string     `json:"username"`
-	SessionID string     `json:"session_id"`
-	Proxy     Proxy      `json:"proxy"`
-	IsBlocked bool       `json:"is_blocked"`
-	StartedAt *time.Time `json:"started_at"`
+const lockAvailableBots = `-- name: LockAvailableBots :many
+update bots
+set locked_until = now() + interval '15m'
+where id in (select id
+             from bots
+             where is_blocked = false
+               and (bots.locked_until is null or locked_until < now())
+             limit ?)
+RETURNING id, username, session_id, proxy, is_blocked, created_at, updated_at, deleted_at, locked_until
+`
+
+func (q *Queries) LockAvailableBots(ctx context.Context, limit int32) ([]Bot, error) {
+	rows, err := q.db.Query(ctx, lockAvailableBots, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Bot
+	for rows.Next() {
+		var i Bot
+		if err := rows.Scan(
+			&i.ID,
+			&i.Username,
+			&i.SessionID,
+			&i.Proxy,
+			&i.IsBlocked,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.DeletedAt,
+			&i.LockedUntil,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+type SaveBloggersParams struct {
+	DatasetID              uuid.UUID  `json:"dataset_id"`
+	Username               string     `json:"username"`
+	UserID                 int64      `json:"user_id"`
+	FollowersCount         int64      `json:"followers_count"`
+	IsInitial              bool       `json:"is_initial"`
+	ParsedAt               *time.Time `json:"parsed_at"`
+	Parsed                 bool       `json:"parsed"`
+	IsPrivate              bool       `json:"is_private"`
+	IsVerified             bool       `json:"is_verified"`
+	IsBusiness             bool       `json:"is_business"`
+	FollowingsCount        int32      `json:"followings_count"`
+	ContactPhoneNumber     *string    `json:"contact_phone_number"`
+	PublicPhoneNumber      *string    `json:"public_phone_number"`
+	PublicPhoneCountryCode *string    `json:"public_phone_country_code"`
+	CityName               *string    `json:"city_name"`
+	PublicEmail            *string    `json:"public_email"`
+}
+
+const saveBots = `-- name: SaveBots :execrows
+insert into bots (username, session_id, proxy, is_blocked)
+    (select unnest($1::text[]), unnest($2::text[]), unnest($3::jsonb[]), false)
+ON CONFLICT (session_id) DO NOTHING
+`
+
+type SaveBotsParams struct {
+	Usernames  []string `json:"usernames"`
+	SessionIds []string `json:"session_ids"`
+	Proxies    []string `json:"proxies"`
+}
+
+func (q *Queries) SaveBots(ctx context.Context, arg SaveBotsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, saveBots, arg.Usernames, arg.SessionIds, arg.Proxies)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 type SaveTargetUsersParams struct {
@@ -213,4 +367,21 @@ func (q *Queries) UpdateDataset(ctx context.Context, arg UpdateDatasetParams) (D
 		&i.CommentedPerPost,
 	)
 	return i, err
+}
+
+const updateDatasetStatus = `-- name: UpdateDatasetStatus :exec
+update datasets
+set status     = $1,
+    updated_at = now()
+where id = $2
+`
+
+type UpdateDatasetStatusParams struct {
+	Status datasetStatus `json:"status"`
+	ID     uuid.UUID     `json:"id"`
+}
+
+func (q *Queries) UpdateDatasetStatus(ctx context.Context, arg UpdateDatasetStatusParams) error {
+	_, err := q.db.Exec(ctx, updateDatasetStatus, arg.Status, arg.ID)
+	return err
 }

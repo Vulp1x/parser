@@ -4,16 +4,13 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"fmt"
-
-	"github.com/google/uuid"
 )
 
 type Proxy struct {
-	ID    uuid.UUID `json:"id"`
-	Host  string    `json:"host"`
-	Port  int32     `json:"port"`
-	Login string    `json:"login"`
-	Pass  string    `json:"pass"`
+	Host  string `json:"host"`
+	Port  int32  `json:"port"`
+	Login string `json:"login"`
+	Pass  string `json:"pass"`
 }
 
 // Value is a implementation for driver.Valuer.
@@ -40,10 +37,6 @@ func (p *Proxy) Scan(value interface{}) error {
 	}
 
 	return json.Unmarshal(data, p)
-}
-
-func (p Proxy) GetID() uuid.UUID {
-	return p.ID
 }
 
 func (p Proxy) PythonString() string {

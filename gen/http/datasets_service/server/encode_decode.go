@@ -300,6 +300,96 @@ func EncodeFindSimilarError(encoder func(context.Context, http.ResponseWriter) g
 	}
 }
 
+// EncodeGetProgressResponse returns an encoder for responses returned by the
+// datasets_service get progress endpoint.
+func EncodeGetProgressResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
+	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
+		res, _ := v.(*datasetsservice.DatasetProgress)
+		enc := encoder(ctx, w)
+		body := NewGetProgressOKResponseBody(res)
+		w.WriteHeader(http.StatusOK)
+		return enc.Encode(body)
+	}
+}
+
+// DecodeGetProgressRequest returns a decoder for requests sent to the
+// datasets_service get progress endpoint.
+func DecodeGetProgressRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
+	return func(r *http.Request) (interface{}, error) {
+		var (
+			datasetID string
+			token     string
+			err       error
+
+			params = mux.Vars(r)
+		)
+		datasetID = params["dataset_id"]
+		token = r.Header.Get("Authorization")
+		if token == "" {
+			err = goa.MergeErrors(err, goa.MissingFieldError("Authorization", "header"))
+		}
+		if err != nil {
+			return nil, err
+		}
+		payload := NewGetProgressPayload(datasetID, token)
+		if strings.Contains(payload.Token, " ") {
+			// Remove authorization scheme prefix (e.g. "Bearer")
+			cred := strings.SplitN(payload.Token, " ", 2)[1]
+			payload.Token = cred
+		}
+
+		return payload, nil
+	}
+}
+
+// EncodeGetProgressError returns an encoder for errors returned by the get
+// progress datasets_service endpoint.
+func EncodeGetProgressError(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder, formatter func(ctx context.Context, err error) goahttp.Statuser) func(context.Context, http.ResponseWriter, error) error {
+	encodeError := goahttp.ErrorEncoder(encoder, formatter)
+	return func(ctx context.Context, w http.ResponseWriter, v error) error {
+		var en goa.GoaErrorNamer
+		if !errors.As(v, &en) {
+			return encodeError(ctx, w, v)
+		}
+		switch en.GoaErrorName() {
+		case "bad request":
+			var res datasetsservice.BadRequest
+			errors.As(v, &res)
+			enc := encoder(ctx, w)
+			body := res
+			w.Header().Set("goa-error", res.GoaErrorName())
+			w.WriteHeader(http.StatusBadRequest)
+			return enc.Encode(body)
+		case "dataset not found":
+			var res datasetsservice.DatasetNotFound
+			errors.As(v, &res)
+			enc := encoder(ctx, w)
+			body := res
+			w.Header().Set("goa-error", res.GoaErrorName())
+			w.WriteHeader(http.StatusNotFound)
+			return enc.Encode(body)
+		case "internal error":
+			var res datasetsservice.InternalError
+			errors.As(v, &res)
+			enc := encoder(ctx, w)
+			body := res
+			w.Header().Set("goa-error", res.GoaErrorName())
+			w.WriteHeader(http.StatusInternalServerError)
+			return enc.Encode(body)
+		case "unauthorized":
+			var res datasetsservice.Unauthorized
+			errors.As(v, &res)
+			enc := encoder(ctx, w)
+			body := res
+			w.Header().Set("goa-error", res.GoaErrorName())
+			w.WriteHeader(http.StatusUnauthorized)
+			return enc.Encode(body)
+		default:
+			return encodeError(ctx, w, v)
+		}
+	}
+}
+
 // EncodeParseDatasetResponse returns an encoder for responses returned by the
 // datasets_service parse dataset endpoint.
 func EncodeParseDatasetResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
@@ -435,96 +525,6 @@ func DecodeGetDatasetRequest(mux goahttp.Muxer, decoder func(*http.Request) goah
 // EncodeGetDatasetError returns an encoder for errors returned by the get
 // dataset datasets_service endpoint.
 func EncodeGetDatasetError(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder, formatter func(ctx context.Context, err error) goahttp.Statuser) func(context.Context, http.ResponseWriter, error) error {
-	encodeError := goahttp.ErrorEncoder(encoder, formatter)
-	return func(ctx context.Context, w http.ResponseWriter, v error) error {
-		var en goa.GoaErrorNamer
-		if !errors.As(v, &en) {
-			return encodeError(ctx, w, v)
-		}
-		switch en.GoaErrorName() {
-		case "bad request":
-			var res datasetsservice.BadRequest
-			errors.As(v, &res)
-			enc := encoder(ctx, w)
-			body := res
-			w.Header().Set("goa-error", res.GoaErrorName())
-			w.WriteHeader(http.StatusBadRequest)
-			return enc.Encode(body)
-		case "dataset not found":
-			var res datasetsservice.DatasetNotFound
-			errors.As(v, &res)
-			enc := encoder(ctx, w)
-			body := res
-			w.Header().Set("goa-error", res.GoaErrorName())
-			w.WriteHeader(http.StatusNotFound)
-			return enc.Encode(body)
-		case "internal error":
-			var res datasetsservice.InternalError
-			errors.As(v, &res)
-			enc := encoder(ctx, w)
-			body := res
-			w.Header().Set("goa-error", res.GoaErrorName())
-			w.WriteHeader(http.StatusInternalServerError)
-			return enc.Encode(body)
-		case "unauthorized":
-			var res datasetsservice.Unauthorized
-			errors.As(v, &res)
-			enc := encoder(ctx, w)
-			body := res
-			w.Header().Set("goa-error", res.GoaErrorName())
-			w.WriteHeader(http.StatusUnauthorized)
-			return enc.Encode(body)
-		default:
-			return encodeError(ctx, w, v)
-		}
-	}
-}
-
-// EncodeGetProgressResponse returns an encoder for responses returned by the
-// datasets_service get progress endpoint.
-func EncodeGetProgressResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
-	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
-		res, _ := v.(*datasetsservice.DatasetProgress)
-		enc := encoder(ctx, w)
-		body := NewGetProgressOKResponseBody(res)
-		w.WriteHeader(http.StatusOK)
-		return enc.Encode(body)
-	}
-}
-
-// DecodeGetProgressRequest returns a decoder for requests sent to the
-// datasets_service get progress endpoint.
-func DecodeGetProgressRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
-	return func(r *http.Request) (interface{}, error) {
-		var (
-			datasetID string
-			token     string
-			err       error
-
-			params = mux.Vars(r)
-		)
-		datasetID = params["dataset_id"]
-		token = r.Header.Get("Authorization")
-		if token == "" {
-			err = goa.MergeErrors(err, goa.MissingFieldError("Authorization", "header"))
-		}
-		if err != nil {
-			return nil, err
-		}
-		payload := NewGetProgressPayload(datasetID, token)
-		if strings.Contains(payload.Token, " ") {
-			// Remove authorization scheme prefix (e.g. "Bearer")
-			cred := strings.SplitN(payload.Token, " ", 2)[1]
-			payload.Token = cred
-		}
-
-		return payload, nil
-	}
-}
-
-// EncodeGetProgressError returns an encoder for errors returned by the get
-// progress datasets_service endpoint.
-func EncodeGetProgressError(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder, formatter func(ctx context.Context, err error) goahttp.Statuser) func(context.Context, http.ResponseWriter, error) error {
 	encodeError := goahttp.ErrorEncoder(encoder, formatter)
 	return func(ctx context.Context, w http.ResponseWriter, v error) error {
 		var en goa.GoaErrorNamer

@@ -103,26 +103,23 @@ func handleHTTPServer(
 		logger.Infof(ctx, "HTTP %q mounted on %s %s", m.Method, m.Verb, m.Pattern)
 	}
 
-	wg.Add(1)
+	defer wg.Done()
+
+	// Start HTTP server in a separate goroutine.
 	go func() {
-		defer wg.Done()
-
-		// Start HTTP server in a separate goroutine.
-		go func() {
-			logger.Infof(ctx, "HTTP server listening on %s:%s", host, port)
-			// errc <- srv.ListenAndServeTLS("deploy/cert.pem", "deploy/key.pem")
-			errc <- srv.ListenAndServe()
-		}()
-
-		<-ctx.Done()
-		logger.Infof(ctx, "shutting down HTTP server at %s", host)
-
-		// Shutdown gracefully with a 10s timeout.
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		defer cancel()
-
-		_ = srv.Shutdown(ctx)
+		logger.Infof(ctx, "HTTP server listening on %s:%s", host, port)
+		// errc <- srv.ListenAndServeTLS("deploy/cert.pem", "deploy/key.pem")
+		errc <- srv.ListenAndServe()
 	}()
+
+	<-ctx.Done()
+	logger.Infof(ctx, "shutting down HTTP server at %s", host)
+
+	// Shutdown gracefully with a 10s timeout.
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	_ = srv.Shutdown(ctx)
 }
 
 // errorHandler returns a function that writes and logs the given error.

@@ -5,8 +5,8 @@ type datasetStatus int16
 const (
 	// DraftDatasetStatus задача только создана, нужно загрузить список ботов, прокси и получателей
 	DraftDatasetStatus datasetStatus = 1
-	// DataUploadedDatasetStatus в задачу загрузили необходимые списки, нужно присвоить прокси для ботов
-	DataUploadedDatasetStatus datasetStatus = 2
+	// FindingSimilarStarted запустили поиска похожих блогеров
+	FindingSimilarStarted datasetStatus = 2
 	// ReadyDatasetStatus задача готова к запуску
 	ReadyDatasetStatus   datasetStatus = 3
 	StartedDatasetStatus datasetStatus = 4

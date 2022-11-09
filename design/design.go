@@ -5,8 +5,8 @@ import (
 	. "goa.design/goa/v3/dsl"
 )
 
-var _ = API("rest-api", func() {
-	Title("REST api for simple route app")
+var _ = API("parser-api", func() {
+	Title("api for parsing instagram")
 })
 
 // JWTAuth defines a security scheme that uses JWT tokens.
@@ -159,6 +159,34 @@ var _ = Service("datasets_service", func() {
 		})
 	})
 
+	Method("get progress", func() {
+		Description("получить статус выполнения поиска похожих аккаунтов по айди датасета")
+
+		Security(JWTAuth)
+
+		Payload(func() {
+			Token("token", String, func() {
+				Description("JWT used for authentication")
+			})
+
+			Attribute("dataset_id", String, func() {
+				Description("id задачи")
+				Meta("struct:tag:json", "dataset_id")
+			})
+
+			Required("token", "dataset_id")
+		})
+
+		Result(DatasetProgress)
+
+		HTTP(func() {
+			GET("/api/datasets/{dataset_id}/progress/")
+			Response(StatusOK)
+			Response(StatusNotFound)
+			Response(StatusUnauthorized)
+		})
+	})
+
 	Method("parse dataset", func() {
 		Description("получить базу доноров для выбранных блогеров")
 
@@ -218,34 +246,6 @@ var _ = Service("datasets_service", func() {
 
 		HTTP(func() {
 			GET("/api/datasets/{dataset_id}/")
-			Response(StatusOK)
-			Response(StatusNotFound)
-			Response(StatusUnauthorized)
-		})
-	})
-
-	Method("get progress", func() {
-		Description("получить статус выполнения поиска похожих аккаунтов по айди датасета")
-
-		Security(JWTAuth)
-
-		Payload(func() {
-			Token("token", String, func() {
-				Description("JWT used for authentication")
-			})
-
-			Attribute("dataset_id", String, func() {
-				Description("id задачи")
-				Meta("struct:tag:json", "dataset_id")
-			})
-
-			Required("token", "dataset_id")
-		})
-
-		Result(DatasetProgress)
-
-		HTTP(func() {
-			GET("/api/datasets/{dataset_id}/progress/")
 			Response(StatusOK)
 			Response(StatusNotFound)
 			Response(StatusUnauthorized)

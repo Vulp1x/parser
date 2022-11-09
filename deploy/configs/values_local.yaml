@@ -1,8 +1,7 @@
 listen:
   port: 9090
+  grpc_port: 9091
   bind_ip: 127.0.0.1
-  cert_file: 'localhost.crt'
-  key_file: 'localhost.key'
 logger:
   enable console: true
   console json format: true

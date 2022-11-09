@@ -54,6 +54,21 @@ type FindSimilarOKResponseBody struct {
 	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
 }
 
+// GetProgressOKResponseBody is the type of the "datasets_service" service "get
+// progress" endpoint HTTP response body.
+type GetProgressOKResponseBody struct {
+	// блогеры, которых уже нашли
+	Bloggers []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	// количество блогеров, которые были изначально
+	InitialBloggers int `json:"initial_bloggers"`
+	// количество блогеров, которых нашли
+	NewBloggers int `json:"new_bloggers"`
+	// количество блогеров, которые проходят проверку по коду региона
+	FilteredBloggers int `json:"filtered_bloggers"`
+	// закончена ли задача
+	Done bool `form:"done" json:"done" xml:"done"`
+}
+
 // ParseDatasetOKResponseBody is the type of the "datasets_service" service
 // "parse dataset" endpoint HTTP response body.
 type ParseDatasetOKResponseBody struct {
@@ -76,21 +91,6 @@ type GetDatasetOKResponseBody struct {
 	LikedPerPost int32 `json:"liked_per_post"`
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
-}
-
-// GetProgressOKResponseBody is the type of the "datasets_service" service "get
-// progress" endpoint HTTP response body.
-type GetProgressOKResponseBody struct {
-	// блогеры, которых уже нашли
-	Bloggers []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
-	// количество блогеров, которые были изначально
-	InitialBloggers int `json:"initial_bloggers"`
-	// количество блогеров, которых нашли
-	NewBloggers int `json:"new_bloggers"`
-	// количество блогеров, которые проходят проверку по коду региона
-	FilteredBloggers int `json:"filtered_bloggers"`
-	// закончена ли задача
-	Done *bool `form:"done,omitempty" json:"done,omitempty" xml:"done,omitempty"`
 }
 
 // GetParsingProgressOKResponseBody is the type of the "datasets_service"
@@ -185,6 +185,24 @@ func NewFindSimilarOKResponseBody(res *datasetsservice.FindSimilarResult) *FindS
 	return body
 }
 
+// NewGetProgressOKResponseBody builds the HTTP response body from the result
+// of the "get progress" endpoint of the "datasets_service" service.
+func NewGetProgressOKResponseBody(res *datasetsservice.DatasetProgress) *GetProgressOKResponseBody {
+	body := &GetProgressOKResponseBody{
+		InitialBloggers:  res.InitialBloggers,
+		NewBloggers:      res.NewBloggers,
+		FilteredBloggers: res.FilteredBloggers,
+		Done:             res.Done,
+	}
+	if res.Bloggers != nil {
+		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
+		for i, val := range res.Bloggers {
+			body.Bloggers[i] = marshalDatasetsserviceBloggerToBloggerResponseBody(val)
+		}
+	}
+	return body
+}
+
 // NewParseDatasetOKResponseBody builds the HTTP response body from the result
 // of the "parse dataset" endpoint of the "datasets_service" service.
 func NewParseDatasetOKResponseBody(res *datasetsservice.ParseDatasetResult) *ParseDatasetOKResponseBody {
@@ -205,24 +223,6 @@ func NewGetDatasetOKResponseBody(res *datasetsservice.Dataset) *GetDatasetOKResp
 		PostsPerBlogger:  res.PostsPerBlogger,
 		LikedPerPost:     res.LikedPerPost,
 		CommentedPerPost: res.CommentedPerPost,
-	}
-	if res.Bloggers != nil {
-		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
-		for i, val := range res.Bloggers {
-			body.Bloggers[i] = marshalDatasetsserviceBloggerToBloggerResponseBody(val)
-		}
-	}
-	return body
-}
-
-// NewGetProgressOKResponseBody builds the HTTP response body from the result
-// of the "get progress" endpoint of the "datasets_service" service.
-func NewGetProgressOKResponseBody(res *datasetsservice.DatasetProgress) *GetProgressOKResponseBody {
-	body := &GetProgressOKResponseBody{
-		InitialBloggers:  res.InitialBloggers,
-		NewBloggers:      res.NewBloggers,
-		FilteredBloggers: res.FilteredBloggers,
-		Done:             res.Done,
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -296,6 +296,16 @@ func NewFindSimilarPayload(datasetID string, token string) *datasetsservice.Find
 	return v
 }
 
+// NewGetProgressPayload builds a datasets_service service get progress
+// endpoint payload.
+func NewGetProgressPayload(datasetID string, token string) *datasetsservice.GetProgressPayload {
+	v := &datasetsservice.GetProgressPayload{}
+	v.DatasetID = datasetID
+	v.Token = token
+
+	return v
+}
+
 // NewParseDatasetPayload builds a datasets_service service parse dataset
 // endpoint payload.
 func NewParseDatasetPayload(datasetID string, token string) *datasetsservice.ParseDatasetPayload {
@@ -310,16 +320,6 @@ func NewParseDatasetPayload(datasetID string, token string) *datasetsservice.Par
 // payload.
 func NewGetDatasetPayload(datasetID string, token string) *datasetsservice.GetDatasetPayload {
 	v := &datasetsservice.GetDatasetPayload{}
-	v.DatasetID = datasetID
-	v.Token = token
-
-	return v
-}
-
-// NewGetProgressPayload builds a datasets_service service get progress
-// endpoint payload.
-func NewGetProgressPayload(datasetID string, token string) *datasetsservice.GetProgressPayload {
-	v := &datasetsservice.GetProgressPayload{}
 	v.DatasetID = datasetID
 	v.Token = token
 

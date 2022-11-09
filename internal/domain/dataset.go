@@ -56,3 +56,5 @@ func (d Datasets) ToProto() []*datasetsservice.Dataset {
 
 	return protoDatasets
 }
+
+type Dataset dbmodel.Dataset

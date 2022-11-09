@@ -101,8 +101,7 @@ func (s *datasetsServicesrvc) UpdateDataset(ctx context.Context, p *datasetsserv
 // FindSimilar начать выполнение задачи
 func (s *datasetsServicesrvc) FindSimilar(ctx context.Context, p *datasetsservice.FindSimilarPayload) (res *datasetsservice.FindSimilarResult, err error) {
 	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
-	res = &datasetsservice.FindSimilarResult{}
-	logger.Info(ctx, "datasetsService.find similar")
+
 	return
 }
 

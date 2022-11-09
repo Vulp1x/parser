@@ -54,7 +54,11 @@ bin-deps:
 	GOBIN=$(LOCAL_BIN) go install github.com/kyleconroy/sqlc/cmd/sqlc@v1.15.0 && \
 	GOBIN=$(LOCAL_BIN) go install github.com/goresed/goresed/cmd/goresed@v0.2.3 && \
 	GOBIN=$(LOCAL_BIN) go install github.com/mikefarah/yq/v4@v4.22.1 && \
-	GOBIN=$(LOCAL_BIN) go install github.com/go-delve/delve/cmd/dlv@v1.9.1
+	GOBIN=$(LOCAL_BIN) go install github.com/go-delve/delve/cmd/dlv@v1.9.1 && \
+    GOBIN=$(LOCAL_BIN) go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.27.1 && \
+    GOBIN=$(LOCAL_BIN) go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1.0 && \
+    GOBIN=$(LOCAL_BIN) go install github.com/mjibson/esc@v0.2.0 && \
+    GOBIN=$(LOCAL_BIN) go install github.com/planetscale/vtprotobuf/cmd/protoc-gen-go-vtproto@v0.2.0
 
 
 
@@ -103,7 +107,7 @@ build:
 gen:
 	$(LOCAL_BIN)/goa gen github.com/inst-api/parser/design
 	echo "generate succeeded"
-	# $(LOCAL_BIN)/goa example github.com/inst-api/parser/design -o internal/service
+	 $(LOCAL_BIN)/goa example github.com/inst-api/parser/design -o internal/service
 	$(LOCAL_BIN)/yq -i '.servers[0].url = "/"'  gen/http/openapi3.yaml
 	$(LOCAL_BIN)/yq -i '.host = "/"' gen/http/openapi.yaml
 	rm -rf ./internal/service/cmd

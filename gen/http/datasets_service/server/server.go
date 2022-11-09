@@ -22,9 +22,9 @@ type Server struct {
 	CreateDatasetDraft http.Handler
 	UpdateDataset      http.Handler
 	FindSimilar        http.Handler
+	GetProgress        http.Handler
 	ParseDataset       http.Handler
 	GetDataset         http.Handler
-	GetProgress        http.Handler
 	GetParsingProgress http.Handler
 	ListDatasets       http.Handler
 }
@@ -59,18 +59,18 @@ func New(
 			{"CreateDatasetDraft", "POST", "/api/datasets/draft/"},
 			{"UpdateDataset", "PUT", "/api/datasets/{dataset_id}/"},
 			{"FindSimilar", "POST", "/api/datasets/{dataset_id}/start/"},
+			{"GetProgress", "GET", "/api/datasets/{dataset_id}/progress/"},
 			{"ParseDataset", "POST", "/api/datasets/{dataset_id}/parse/"},
 			{"GetDataset", "GET", "/api/datasets/{dataset_id}/"},
-			{"GetProgress", "GET", "/api/datasets/{dataset_id}/progress/"},
 			{"GetParsingProgress", "GET", "/api/datasets/{dataset_id}/parsing_progress/"},
 			{"ListDatasets", "GET", "/api/datasets/"},
 		},
 		CreateDatasetDraft: NewCreateDatasetDraftHandler(e.CreateDatasetDraft, mux, decoder, encoder, errhandler, formatter),
 		UpdateDataset:      NewUpdateDatasetHandler(e.UpdateDataset, mux, decoder, encoder, errhandler, formatter),
 		FindSimilar:        NewFindSimilarHandler(e.FindSimilar, mux, decoder, encoder, errhandler, formatter),
+		GetProgress:        NewGetProgressHandler(e.GetProgress, mux, decoder, encoder, errhandler, formatter),
 		ParseDataset:       NewParseDatasetHandler(e.ParseDataset, mux, decoder, encoder, errhandler, formatter),
 		GetDataset:         NewGetDatasetHandler(e.GetDataset, mux, decoder, encoder, errhandler, formatter),
-		GetProgress:        NewGetProgressHandler(e.GetProgress, mux, decoder, encoder, errhandler, formatter),
 		GetParsingProgress: NewGetParsingProgressHandler(e.GetParsingProgress, mux, decoder, encoder, errhandler, formatter),
 		ListDatasets:       NewListDatasetsHandler(e.ListDatasets, mux, decoder, encoder, errhandler, formatter),
 	}
@@ -84,9 +84,9 @@ func (s *Server) Use(m func(http.Handler) http.Handler) {
 	s.CreateDatasetDraft = m(s.CreateDatasetDraft)
 	s.UpdateDataset = m(s.UpdateDataset)
 	s.FindSimilar = m(s.FindSimilar)
+	s.GetProgress = m(s.GetProgress)
 	s.ParseDataset = m(s.ParseDataset)
 	s.GetDataset = m(s.GetDataset)
-	s.GetProgress = m(s.GetProgress)
 	s.GetParsingProgress = m(s.GetParsingProgress)
 	s.ListDatasets = m(s.ListDatasets)
 }
@@ -99,9 +99,9 @@ func Mount(mux goahttp.Muxer, h *Server) {
 	MountCreateDatasetDraftHandler(mux, h.CreateDatasetDraft)
 	MountUpdateDatasetHandler(mux, h.UpdateDataset)
 	MountFindSimilarHandler(mux, h.FindSimilar)
+	MountGetProgressHandler(mux, h.GetProgress)
 	MountParseDatasetHandler(mux, h.ParseDataset)
 	MountGetDatasetHandler(mux, h.GetDataset)
-	MountGetProgressHandler(mux, h.GetProgress)
 	MountGetParsingProgressHandler(mux, h.GetParsingProgress)
 	MountListDatasetsHandler(mux, h.ListDatasets)
 }
@@ -265,6 +265,57 @@ func NewFindSimilarHandler(
 	})
 }
 
+// MountGetProgressHandler configures the mux to serve the "datasets_service"
+// service "get progress" endpoint.
+func MountGetProgressHandler(mux goahttp.Muxer, h http.Handler) {
+	f, ok := h.(http.HandlerFunc)
+	if !ok {
+		f = func(w http.ResponseWriter, r *http.Request) {
+			h.ServeHTTP(w, r)
+		}
+	}
+	mux.Handle("GET", "/api/datasets/{dataset_id}/progress/", f)
+}
+
+// NewGetProgressHandler creates a HTTP handler which loads the HTTP request
+// and calls the "datasets_service" service "get progress" endpoint.
+func NewGetProgressHandler(
+	endpoint goa.Endpoint,
+	mux goahttp.Muxer,
+	decoder func(*http.Request) goahttp.Decoder,
+	encoder func(context.Context, http.ResponseWriter) goahttp.Encoder,
+	errhandler func(context.Context, http.ResponseWriter, error),
+	formatter func(ctx context.Context, err error) goahttp.Statuser,
+) http.Handler {
+	var (
+		decodeRequest  = DecodeGetProgressRequest(mux, decoder)
+		encodeResponse = EncodeGetProgressResponse(encoder)
+		encodeError    = EncodeGetProgressError(encoder, formatter)
+	)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
+		ctx = context.WithValue(ctx, goa.MethodKey, "get progress")
+		ctx = context.WithValue(ctx, goa.ServiceKey, "datasets_service")
+		payload, err := decodeRequest(r)
+		if err != nil {
+			if err := encodeError(ctx, w, err); err != nil {
+				errhandler(ctx, w, err)
+			}
+			return
+		}
+		res, err := endpoint(ctx, payload)
+		if err != nil {
+			if err := encodeError(ctx, w, err); err != nil {
+				errhandler(ctx, w, err)
+			}
+			return
+		}
+		if err := encodeResponse(ctx, w, res); err != nil {
+			errhandler(ctx, w, err)
+		}
+	})
+}
+
 // MountParseDatasetHandler configures the mux to serve the "datasets_service"
 // service "parse dataset" endpoint.
 func MountParseDatasetHandler(mux goahttp.Muxer, h http.Handler) {
@@ -346,57 +397,6 @@ func NewGetDatasetHandler(
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
 		ctx = context.WithValue(ctx, goa.MethodKey, "get dataset")
-		ctx = context.WithValue(ctx, goa.ServiceKey, "datasets_service")
-		payload, err := decodeRequest(r)
-		if err != nil {
-			if err := encodeError(ctx, w, err); err != nil {
-				errhandler(ctx, w, err)
-			}
-			return
-		}
-		res, err := endpoint(ctx, payload)
-		if err != nil {
-			if err := encodeError(ctx, w, err); err != nil {
-				errhandler(ctx, w, err)
-			}
-			return
-		}
-		if err := encodeResponse(ctx, w, res); err != nil {
-			errhandler(ctx, w, err)
-		}
-	})
-}
-
-// MountGetProgressHandler configures the mux to serve the "datasets_service"
-// service "get progress" endpoint.
-func MountGetProgressHandler(mux goahttp.Muxer, h http.Handler) {
-	f, ok := h.(http.HandlerFunc)
-	if !ok {
-		f = func(w http.ResponseWriter, r *http.Request) {
-			h.ServeHTTP(w, r)
-		}
-	}
-	mux.Handle("GET", "/api/datasets/{dataset_id}/progress/", f)
-}
-
-// NewGetProgressHandler creates a HTTP handler which loads the HTTP request
-// and calls the "datasets_service" service "get progress" endpoint.
-func NewGetProgressHandler(
-	endpoint goa.Endpoint,
-	mux goahttp.Muxer,
-	decoder func(*http.Request) goahttp.Decoder,
-	encoder func(context.Context, http.ResponseWriter) goahttp.Encoder,
-	errhandler func(context.Context, http.ResponseWriter, error),
-	formatter func(ctx context.Context, err error) goahttp.Statuser,
-) http.Handler {
-	var (
-		decodeRequest  = DecodeGetProgressRequest(mux, decoder)
-		encodeResponse = EncodeGetProgressResponse(encoder)
-		encodeError    = EncodeGetProgressError(encoder, formatter)
-	)
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
-		ctx = context.WithValue(ctx, goa.MethodKey, "get progress")
 		ctx = context.WithValue(ctx, goa.ServiceKey, "datasets_service")
 		payload, err := decodeRequest(r)
 		if err != nil {

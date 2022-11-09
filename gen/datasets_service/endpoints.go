@@ -19,9 +19,9 @@ type Endpoints struct {
 	CreateDatasetDraft goa.Endpoint
 	UpdateDataset      goa.Endpoint
 	FindSimilar        goa.Endpoint
+	GetProgress        goa.Endpoint
 	ParseDataset       goa.Endpoint
 	GetDataset         goa.Endpoint
-	GetProgress        goa.Endpoint
 	GetParsingProgress goa.Endpoint
 	ListDatasets       goa.Endpoint
 }
@@ -35,9 +35,9 @@ func NewEndpoints(s Service) *Endpoints {
 		CreateDatasetDraft: NewCreateDatasetDraftEndpoint(s, a.JWTAuth),
 		UpdateDataset:      NewUpdateDatasetEndpoint(s, a.JWTAuth),
 		FindSimilar:        NewFindSimilarEndpoint(s, a.JWTAuth),
+		GetProgress:        NewGetProgressEndpoint(s, a.JWTAuth),
 		ParseDataset:       NewParseDatasetEndpoint(s, a.JWTAuth),
 		GetDataset:         NewGetDatasetEndpoint(s, a.JWTAuth),
-		GetProgress:        NewGetProgressEndpoint(s, a.JWTAuth),
 		GetParsingProgress: NewGetParsingProgressEndpoint(s, a.JWTAuth),
 		ListDatasets:       NewListDatasetsEndpoint(s, a.JWTAuth),
 	}
@@ -49,9 +49,9 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.CreateDatasetDraft = m(e.CreateDatasetDraft)
 	e.UpdateDataset = m(e.UpdateDataset)
 	e.FindSimilar = m(e.FindSimilar)
+	e.GetProgress = m(e.GetProgress)
 	e.ParseDataset = m(e.ParseDataset)
 	e.GetDataset = m(e.GetDataset)
-	e.GetProgress = m(e.GetProgress)
 	e.GetParsingProgress = m(e.GetParsingProgress)
 	e.ListDatasets = m(e.ListDatasets)
 }
@@ -113,6 +113,25 @@ func NewFindSimilarEndpoint(s Service, authJWTFn security.AuthJWTFunc) goa.Endpo
 	}
 }
 
+// NewGetProgressEndpoint returns an endpoint function that calls the method
+// "get progress" of service "datasets_service".
+func NewGetProgressEndpoint(s Service, authJWTFn security.AuthJWTFunc) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*GetProgressPayload)
+		var err error
+		sc := security.JWTScheme{
+			Name:           "jwt",
+			Scopes:         []string{"driver", "admin"},
+			RequiredScopes: []string{},
+		}
+		ctx, err = authJWTFn(ctx, p.Token, &sc)
+		if err != nil {
+			return nil, err
+		}
+		return s.GetProgress(ctx, p)
+	}
+}
+
 // NewParseDatasetEndpoint returns an endpoint function that calls the method
 // "parse dataset" of service "datasets_service".
 func NewParseDatasetEndpoint(s Service, authJWTFn security.AuthJWTFunc) goa.Endpoint {
@@ -148,25 +167,6 @@ func NewGetDatasetEndpoint(s Service, authJWTFn security.AuthJWTFunc) goa.Endpoi
 			return nil, err
 		}
 		return s.GetDataset(ctx, p)
-	}
-}
-
-// NewGetProgressEndpoint returns an endpoint function that calls the method
-// "get progress" of service "datasets_service".
-func NewGetProgressEndpoint(s Service, authJWTFn security.AuthJWTFunc) goa.Endpoint {
-	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*GetProgressPayload)
-		var err error
-		sc := security.JWTScheme{
-			Name:           "jwt",
-			Scopes:         []string{"driver", "admin"},
-			RequiredScopes: []string{},
-		}
-		ctx, err = authJWTFn(ctx, p.Token, &sc)
-		if err != nil {
-			return nil, err
-		}
-		return s.GetProgress(ctx, p)
 	}
 }
 

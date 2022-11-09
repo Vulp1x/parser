@@ -44,13 +44,13 @@ func (q *Queries) InsertInitialBloggers(ctx context.Context, arg []InsertInitial
 	return q.db.CopyFrom(ctx, []string{"bloggers"}, []string{"dataset_id", "username", "user_id", "is_initial"}, &iteratorForInsertInitialBloggers{rows: arg})
 }
 
-// iteratorForSaveBotAccounts implements pgx.CopyFromSource.
-type iteratorForSaveBotAccounts struct {
-	rows                 []SaveBotAccountsParams
+// iteratorForSaveBloggers implements pgx.CopyFromSource.
+type iteratorForSaveBloggers struct {
+	rows                 []SaveBloggersParams
 	skippedFirstNextCall bool
 }
 
-func (r *iteratorForSaveBotAccounts) Next() bool {
+func (r *iteratorForSaveBloggers) Next() bool {
 	if len(r.rows) == 0 {
 		return false
 	}
@@ -62,22 +62,33 @@ func (r *iteratorForSaveBotAccounts) Next() bool {
 	return len(r.rows) > 0
 }
 
-func (r iteratorForSaveBotAccounts) Values() ([]interface{}, error) {
+func (r iteratorForSaveBloggers) Values() ([]interface{}, error) {
 	return []interface{}{
+		r.rows[0].DatasetID,
 		r.rows[0].Username,
-		r.rows[0].SessionID,
-		r.rows[0].Proxy,
-		r.rows[0].IsBlocked,
-		r.rows[0].StartedAt,
+		r.rows[0].UserID,
+		r.rows[0].FollowersCount,
+		r.rows[0].IsInitial,
+		r.rows[0].ParsedAt,
+		r.rows[0].Parsed,
+		r.rows[0].IsPrivate,
+		r.rows[0].IsVerified,
+		r.rows[0].IsBusiness,
+		r.rows[0].FollowingsCount,
+		r.rows[0].ContactPhoneNumber,
+		r.rows[0].PublicPhoneNumber,
+		r.rows[0].PublicPhoneCountryCode,
+		r.rows[0].CityName,
+		r.rows[0].PublicEmail,
 	}, nil
 }
 
-func (r iteratorForSaveBotAccounts) Err() error {
+func (r iteratorForSaveBloggers) Err() error {
 	return nil
 }
 
-func (q *Queries) SaveBotAccounts(ctx context.Context, arg []SaveBotAccountsParams) (int64, error) {
-	return q.db.CopyFrom(ctx, []string{"bots"}, []string{"username", "session_id", "proxy", "is_blocked", "started_at"}, &iteratorForSaveBotAccounts{rows: arg})
+func (q *Queries) SaveBloggers(ctx context.Context, arg []SaveBloggersParams) (int64, error) {
+	return q.db.CopyFrom(ctx, []string{"bloggers"}, []string{"dataset_id", "username", "user_id", "followers_count", "is_initial", "parsed_at", "parsed", "is_private", "is_verified", "is_business", "followings_count", "contact_phone_number", "public_phone_number", "public_phone_country_code", "city_name", "public_email"}, &iteratorForSaveBloggers{rows: arg})
 }
 
 // iteratorForSaveTargetUsers implements pgx.CopyFromSource.

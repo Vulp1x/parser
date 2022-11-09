@@ -45,7 +45,17 @@ CREATE TABLE public.bloggers (
     is_initial boolean NOT NULL,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     parsed_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    parsed boolean DEFAULT false NOT NULL,
+    is_private boolean DEFAULT false NOT NULL,
+    is_verified boolean DEFAULT false NOT NULL,
+    is_business boolean DEFAULT false NOT NULL,
+    followings_count integer DEFAULT '-1'::integer NOT NULL,
+    contact_phone_number text,
+    public_phone_number text,
+    public_phone_country_code text,
+    city_name text,
+    public_email text
 );
 
 
@@ -59,10 +69,10 @@ CREATE TABLE public.bots (
     session_id text NOT NULL,
     proxy jsonb NOT NULL,
     is_blocked boolean NOT NULL,
-    started_at timestamp without time zone,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     updated_at timestamp without time zone,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    locked_until timestamp without time zone
 );
 
 
@@ -111,7 +121,17 @@ CREATE TABLE public.targets (
     user_id bigint NOT NULL,
     status smallint DEFAULT 0 NOT NULL,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    is_private boolean DEFAULT false NOT NULL,
+    is_verified boolean DEFAULT false NOT NULL,
+    is_business boolean DEFAULT false NOT NULL,
+    followers_count integer DEFAULT '-1'::integer NOT NULL,
+    followings_count integer DEFAULT '-1'::integer NOT NULL,
+    contact_phone_number text,
+    public_phone_number text,
+    public_phone_country_code text,
+    city_name text,
+    public_email text
 );
 
 
@@ -153,6 +173,13 @@ ALTER TABLE ONLY public.datasets
 
 ALTER TABLE ONLY public.targets
     ADD CONSTRAINT targets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bots_session_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX bots_session_id_idx ON public.bots USING btree (session_id);
 
 
 --

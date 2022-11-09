@@ -1,9 +1,11 @@
--- name: SaveBotAccounts :copyfrom
-insert into bots (username, session_id, proxy, is_blocked, started_at)
-values ($1, $2, $3, $4, $5);
+-- name: SaveBots :execrows
+insert into bots (username, session_id, proxy, is_blocked)
+    (select unnest(sqlc.arg(usernames)::text[]), unnest(sqlc.arg(session_ids)::text[]), unnest(sqlc.arg(proxies)::jsonb[]), false)
+ON CONFLICT (session_id) DO NOTHING;
+
 -- name: SaveTargetUsers :copyfrom
 insert into targets (dataset_id, username, user_id)
-values ($1, $2, $3);
+values (?, ?, ?);
 
 -- name: CreateDraftDataset :one
 insert into datasets (title, manager_id, status, created_at)
@@ -29,19 +31,58 @@ returning *;
 -- name: DeleteBloggersPerDataset :execresult
 delete
 from bloggers
-where dataset_id = $1
+where dataset_id = ?
   and is_initial = true;
 
 -- name: InsertInitialBloggers :copyfrom
 insert into bloggers(dataset_id, username, user_id, is_initial)
-VALUES ($1, $2, $3, $4);
+VALUES (?, ?, ?, ?);
 
 -- name: FindBloggersForDataset :many
 select *
 from bloggers
-where dataset_id = $1;
+where dataset_id = ?;
+
+-- name: FindInitialBloggersForDataset :many
+select *
+from bloggers
+where dataset_id = ?
+  AND is_initial = true;
+
+-- name: LockAvailableBots :many
+update bots
+set locked_until = now() + interval '15m'
+where id in (select id
+             from bots
+             where is_blocked = false
+               and (bots.locked_until is null or locked_until < now())
+             limit ?)
+RETURNING *;
+
+-- name: BlockBot :exec
+update bots
+set is_blocked   = true,
+    locked_until = null
+where id = @id;
+
+-- name: CountAvailableBots :one
+select count(*)
+from bots
+where is_blocked = false;
 
 -- name: FindUserDatasets :many
 select *
 from datasets
-where manager_id = $1;
+where manager_id = @manager_id;
+
+-- name: UpdateDatasetStatus :exec
+update datasets
+set status     = @status,
+    updated_at = now()
+where id = @id;
+
+-- name: SaveBloggers :copyfrom
+insert into bloggers (dataset_id, username, user_id, followers_count, is_initial, parsed_at,
+                      parsed, is_private, is_verified, is_business, followings_count, contact_phone_number,
+                      public_phone_number, public_phone_country_code, city_name, public_email)
+values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);

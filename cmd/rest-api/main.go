@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net/url"
 	"os"
 	"os/signal"
 	"sync"
@@ -15,6 +16,7 @@ import (
 	"github.com/inst-api/parser/internal/config"
 	"github.com/inst-api/parser/internal/postgres"
 	"github.com/inst-api/parser/internal/service"
+	"github.com/inst-api/parser/internal/store/bots"
 	"github.com/inst-api/parser/internal/store/datasets"
 	"github.com/inst-api/parser/pkg/logger"
 )
@@ -61,6 +63,10 @@ func main() {
 	}
 
 	datasetsStore := datasets.NewStore(5*time.Second, dbTXFunc, txFunc, conf.Instagrapi.Hostname)
+	botsStore := bots.NewStore(dbTXFunc, txFunc)
+
+	// Initialize the services.
+	adminServiceSvc := service.NewAdminService(botsStore)
 
 	// Initialize the services.
 	datasetsService := service.NewDatasetsService(conf.Security, datasetsStore)
@@ -70,20 +76,22 @@ func main() {
 
 	// Create channel used by both the signal handler and server goroutines
 	// to notify the main goroutine when to stop the server.
-	errc := make(chan error)
+	errc := make(chan error, 5)
 
 	// Setup interrupt handler. This optional step configures the process so
 	// that SIGINT and SIGTERM signals cause the services to stop gracefully.
 	go func() {
-		c := make(chan os.Signal, 1)
+		c := make(chan os.Signal, 2)
 		signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 		errc <- fmt.Errorf("%s", <-c)
 	}()
 
 	var wg sync.WaitGroup
 
+	wg.Add(2)
+
 	// Start the servers and send errors (if any) to the error channel.
-	handleHTTPServer(
+	go handleHTTPServer(
 		ctx,
 		conf.Listen.BindIP,
 		conf.Listen.Port,
@@ -92,6 +100,16 @@ func main() {
 		errc,
 		*debugFlag,
 	)
+
+	go handleGRPCServer(
+		ctx,
+		&url.URL{Host: fmt.Sprintf("%s:%s", conf.Listen.BindIP, conf.Listen.GRPCPort)},
+		adminServiceSvc,
+		&wg,
+		errc,
+		*debugFlag,
+	)
+
 	// Wait for signal.
 	logger.Infof(ctx, "exiting from main: (%v)", <-errc)
 

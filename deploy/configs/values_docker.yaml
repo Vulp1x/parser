@@ -1,5 +1,6 @@
 listen:
   port: 9090
+  grpc_port: 90
   bind_ip: 0.0.0.0
 logger:
   enable console: true

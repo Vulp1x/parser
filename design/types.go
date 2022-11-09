@@ -114,6 +114,42 @@ var DatasetProgress = Type("DatasetProgress", func() {
 
 	Attribute("done", Boolean, "закончена ли задача")
 
-	Required("bloggers", "initial_bloggers", "new_bloggers", "filtered_bloggers")
+	Required("bloggers", "initial_bloggers", "new_bloggers", "filtered_bloggers", "done")
+})
 
+var Bot = Type("Bot", func() {
+	Field(1, "username", String, func() {
+		Description("имя аккаунта в инстаграме")
+	})
+
+	Field(2, "user_id", Int64, "количество блогеров, которые проходят проверку по коду региона", func() {
+		Meta("struct:tag:json", "user_id")
+	})
+
+	Field(3, "session_id", String, "количество блогеров, которые проходят проверку по коду региона", func() {
+		Meta("struct:tag:json", "session_id")
+	})
+
+	Field(4, "proxy", Proxy, "прокси для бота", func() {
+	})
+
+	Required("username", "user_id", "session_id", "proxy")
+})
+
+var Proxy = Type("Proxy", func() {
+	Field(1, "host", String, func() {
+		Description("имя аккаунта в инстаграме")
+	})
+
+	Field(2, "port", Int32, "количество блогеров, которые проходят проверку по коду региона")
+
+	Field(3, "login", String, func() {
+		Description("имя аккаунта в инстаграме")
+	})
+
+	Field(4, "pass", String, func() {
+		Description("имя аккаунта в инстаграме")
+	})
+
+	Required("host", "port", "login", "pass")
 })
