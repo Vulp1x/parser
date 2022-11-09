@@ -5,11 +5,10 @@
 package api
 
 import (
-	"fmt"
-	"io"
-	"math/bits"
-
-	"google.golang.org/protobuf/runtime/protoimpl"
+	fmt "fmt"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	io "io"
+	bits "math/bits"
 )
 
 const (
@@ -101,13 +100,6 @@ func (m *Bot) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if len(m.SessionId) > 0 {
-		i -= len(m.SessionId)
-		copy(dAtA[i:], m.SessionId)
-		i = encodeVarint(dAtA, i, uint64(len(m.SessionId)))
-		i--
-		dAtA[i] = 0x22
-	}
 	if m.Proxy != nil {
 		size, err := m.Proxy.MarshalToSizedBufferVT(dAtA[:i])
 		if err != nil {
@@ -115,6 +107,13 @@ func (m *Bot) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		}
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.SessionId) > 0 {
+		i -= len(m.SessionId)
+		copy(dAtA[i:], m.SessionId)
+		i = encodeVarint(dAtA, i, uint64(len(m.SessionId)))
 		i--
 		dAtA[i] = 0x1a
 	}
@@ -222,8 +221,8 @@ func (m *SaveBotsResponse) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if m.SavedCount != 0 {
-		i = encodeVarint(dAtA, i, uint64(m.SavedCount))
+	if m.BotsSaved != 0 {
+		i = encodeVarint(dAtA, i, uint64(m.BotsSaved))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -276,12 +275,12 @@ func (m *Bot) SizeVT() (n int) {
 	if m.UserId != 0 {
 		n += 1 + sov(uint64(m.UserId))
 	}
-	if m.Proxy != nil {
-		l = m.Proxy.SizeVT()
-		n += 1 + l + sov(uint64(l))
-	}
 	l = len(m.SessionId)
 	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
+	if m.Proxy != nil {
+		l = m.Proxy.SizeVT()
 		n += 1 + l + sov(uint64(l))
 	}
 	if m.unknownFields != nil {
@@ -323,8 +322,8 @@ func (m *SaveBotsResponse) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.SavedCount != 0 {
-		n += 1 + sov(uint64(m.SavedCount))
+	if m.BotsSaved != 0 {
+		n += 1 + sov(uint64(m.BotsSaved))
 	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
@@ -537,6 +536,38 @@ func (m *Bot) UnmarshalVT(dAtA []byte) error {
 			}
 		case 3:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SessionId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SessionId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Proxy", wireType)
 			}
 			var msglen int
@@ -570,38 +601,6 @@ func (m *Bot) UnmarshalVT(dAtA []byte) error {
 			if err := m.Proxy.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SessionId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.SessionId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -822,9 +821,9 @@ func (m *SaveBotsResponse) UnmarshalVT(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SavedCount", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field BotsSaved", wireType)
 			}
-			m.SavedCount = 0
+			m.BotsSaved = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflow
@@ -834,7 +833,7 @@ func (m *SaveBotsResponse) UnmarshalVT(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SavedCount |= int64(b&0x7F) << shift
+				m.BotsSaved |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}

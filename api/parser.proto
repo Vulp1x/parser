@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package parser;
 
-option go_package = "github.com/inst-api/parser/pkg/api/parser;parser";
+option go_package = "github.com/inst-api/parser/pkg/api;api";
 
 service Parser {
   // сохраняем ботов
@@ -18,7 +18,7 @@ message Bot {
   // имя аккаунта в инстаграме
   string username = 1;
   // количество блогеров, которые проходят проверку по коду региона
-  sint64 user_id = 2;
+  int64 user_id = 2;
   // количество блогеров, которые проходят проверку по коду региона
   string session_id = 3;
   // прокси для бота
@@ -29,7 +29,7 @@ message Proxy {
   // имя аккаунта в инстаграме
   string host = 1;
   // количество блогеров, которые проходят проверку по коду региона
-  sint32 port = 2;
+  int32 port = 2;
   // имя аккаунта в инстаграме
   string login = 3;
   // имя аккаунта в инстаграме
@@ -37,5 +37,5 @@ message Proxy {
 }
 
 message SaveBotsResponse {
-  sint32 field = 1;
+  int32 bots_saved = 1;
 }

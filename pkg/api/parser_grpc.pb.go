@@ -3,11 +3,10 @@
 package api
 
 import (
-	"context"
-
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+	context "context"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ParserClient interface {
+	// сохраняем ботов
 	SaveBots(ctx context.Context, in *SaveBotsRequest, opts ...grpc.CallOption) (*SaveBotsResponse, error)
 }
 
@@ -43,6 +43,7 @@ func (c *parserClient) SaveBots(ctx context.Context, in *SaveBotsRequest, opts .
 // All implementations must embed UnimplementedParserServer
 // for forward compatibility
 type ParserServer interface {
+	// сохраняем ботов
 	SaveBots(context.Context, *SaveBotsRequest) (*SaveBotsResponse, error)
 	mustEmbedUnimplementedParserServer()
 }

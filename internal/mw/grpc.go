@@ -2,11 +2,14 @@ package mw
 
 import (
 	"context"
+	"fmt"
+	"runtime/debug"
 	"time"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/inst-api/parser/pkg/logger"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 )
@@ -109,4 +112,21 @@ func generateRequestID(ctx context.Context) context.Context {
 
 	md.Set(RequestIDMetadataKey, requestID)
 	return metadata.NewIncomingContext(ctx, md)
+}
+
+// Recover interceptor.
+func Recover(ctx context.Context, req interface{}, _ *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (_ interface{}, err error) {
+	defer func() {
+		if p := recover(); p != nil {
+			err = status.Errorf(codes.Internal, "recover: unexpected server error")
+
+			logger.ErrorKV(
+				ctx, fmt.Sprintf("recovered from panic: %v", p),
+				"stack_trace", string(debug.Stack()),
+				"panic", true,
+				"component", "grpc_recover_middleware",
+			)
+		}
+	}()
+	return handler(ctx, req)
 }

@@ -1,21 +1,21 @@
 version: v1beta1
 plugins:
-    - name: go
-      path: bin/protoc-gen-go
-      out: .
-      opt:
-        - paths=source_relative
-      strategy: directory
-    - name: go-grpc
-      path: bin/protoc-gen-go-grpc
-      out: .
-      opt:
-        - paths=source_relative
-      strategy: directory
-    - name: go-vtproto
-      path: bin/protoc-gen-go-vtproto
-      out: .
-      opt:
-        - features=marshal+unmarshal+size+pool
-        - paths=source_relative
-      strategy: directory
+  - name: go
+    path: bin/protoc-gen-go
+    out: pkg/api
+    opt:
+      - paths=source_relative
+    strategy: directory
+  - name: go-grpc
+    path: bin/protoc-gen-go-grpc
+    out: pkg/api
+    opt:
+      - paths=source_relative
+    strategy: directory
+  - name: go-vtproto
+    path: bin/protoc-gen-go-vtproto
+    out: pkg/api
+    opt:
+      - features=marshal+unmarshal+size+pool
+      - paths=source_relative
+    strategy: directory

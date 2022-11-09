@@ -23,6 +23,7 @@ func handleGRPCServer(ctx context.Context, u *url.URL, src api.ParserServer, wg 
 		grpcmiddleware.WithUnaryServerChain(
 			mw.UnaryRequestID(),
 			mw.UnaryServerLog(),
+			mw.Recover,
 		),
 	)
 
