@@ -86,6 +86,8 @@ type Dataset struct {
 	LikedPerPost int32 `json:"liked_per_post"`
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
+	// является ли блоггер изначально в датасете или появился при парсинге
+	PhoneCode *int32 `json:"phone_code"`
 }
 
 // DatasetProgress is the result type of the datasets_service service get

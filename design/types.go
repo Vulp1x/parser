@@ -78,6 +78,11 @@ var Dataset = Type("Dataset", func() {
 		Meta("struct:tag:json", "commented_per_post")
 	})
 
+	Attribute("phone_code", Int32, func() {
+		Description("является ли блоггер изначально в датасете или появился при парсинге")
+		Meta("struct:tag:json", "phone_code")
+	})
+
 	Required("id", "bloggers", "status", "title", "posts_per_blogger", "liked_per_post", "commented_per_post")
 })
 

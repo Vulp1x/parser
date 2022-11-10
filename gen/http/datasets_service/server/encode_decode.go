@@ -770,6 +770,7 @@ func marshalDatasetsserviceDatasetToDatasetResponse(v *datasetsservice.Dataset) 
 		PostsPerBlogger:  v.PostsPerBlogger,
 		LikedPerPost:     v.LikedPerPost,
 		CommentedPerPost: v.CommentedPerPost,
+		PhoneCode:        v.PhoneCode,
 	}
 	if v.Bloggers != nil {
 		res.Bloggers = make([]*BloggerResponse, len(v.Bloggers))

@@ -71,6 +71,7 @@ func (d Datasets) ToProto() []*datasetsservice.Dataset {
 			PostsPerBlogger:  dataset.PostsPerBlogger,
 			LikedPerPost:     dataset.LikedPerPost,
 			CommentedPerPost: dataset.CommentedPerPost,
+			PhoneCode:        dataset.PhoneCode,
 		}
 	}
 

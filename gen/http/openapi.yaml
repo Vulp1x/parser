@@ -409,22 +409,22 @@ definitions:
       is_initial:
         type: boolean
         description: является ли блоггер изначально в датасете или появился при парсинге
-        example: true
+        example: false
       user_id:
         type: integer
         description: user_id в инстаграме, -1 если неизвестен
-        example: 8836726991290345035
+        example: 6144131923047577869
         format: int64
       username:
         type: string
         description: имя аккаунта в инстаграме
-        example: Quam vero optio.
+        example: Molestiae suscipit.
     example:
       dataset_id: 36111869-D7E7-159A-3E5F-AC3C2E0C42DD
       id: EBC096AD-D9EC-2F9C-CCD5-2819684939D3
       is_initial: false
-      user_id: 2291813680264155443
-      username: Perferendis rem maxime delectus eos recusandae.
+      user_id: 8780298628190365172
+      username: Omnis pariatur doloribus.
     required:
       - id
       - dataset_id
@@ -451,12 +451,12 @@ definitions:
       user_id:
         type: integer
         description: user_id в инстаграме, -1 если неизвестен
-        example: 2135484799195837838
+        example: 3250399620365109478
         format: int64
       username:
         type: string
         description: имя аккаунта в инстаграме
-        example: Dolorum eaque exercitationem aut laudantium et at.
+        example: Laudantium et.
     example:
       dataset_id: A8E7C55C-B3EA-B228-EF84-9DB3D55D57A4
       id: 233374F1-297F-8711-5FC3-4F6B3731AD63
@@ -480,23 +480,18 @@ definitions:
         example:
           - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
             id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-            is_initial: false
-            user_id: 2467489778041992473
-            username: Et inventore molestiae.
+            is_initial: true
+            user_id: 769588810445092808
+            username: Doloremque tenetur.
           - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
             id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-            is_initial: false
-            user_id: 2467489778041992473
-            username: Et inventore molestiae.
-          - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-            id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-            is_initial: false
-            user_id: 2467489778041992473
-            username: Et inventore molestiae.
+            is_initial: true
+            user_id: 769588810445092808
+            username: Doloremque tenetur.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 490506844
+        example: 585946147
         format: int32
       id:
         type: string
@@ -505,16 +500,21 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 748738032
+        example: 490506844
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 1049080419
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 720673127
+        example: 748738032
         format: int32
       status:
         type: integer
-        example: 1
+        example: 3
         enum:
           - 1
           - 2
@@ -525,35 +525,36 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Non alias doloribus est.
+        example: Est officia.
     example:
       bloggers:
         - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
           id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-          is_initial: false
-          user_id: 2467489778041992473
-          username: Et inventore molestiae.
+          is_initial: true
+          user_id: 769588810445092808
+          username: Doloremque tenetur.
         - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
           id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-          is_initial: false
-          user_id: 2467489778041992473
-          username: Et inventore molestiae.
+          is_initial: true
+          user_id: 769588810445092808
+          username: Doloremque tenetur.
         - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
           id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-          is_initial: false
-          user_id: 2467489778041992473
-          username: Et inventore molestiae.
+          is_initial: true
+          user_id: 769588810445092808
+          username: Doloremque tenetur.
         - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
           id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-          is_initial: false
-          user_id: 2467489778041992473
-          username: Et inventore molestiae.
-      commented_per_post: 815289139
+          is_initial: true
+          user_id: 769588810445092808
+          username: Doloremque tenetur.
+      commented_per_post: 2078117138
       id: C14F18CD-9DAC-4197-F250-EC3FBAFE81DD
-      liked_per_post: 1312231857
-      posts_per_blogger: 2078117138
-      status: 6
-      title: Delectus ea earum ullam dolores.
+      liked_per_post: 1422831102
+      phone_code: 1312231857
+      posts_per_blogger: 963789932
+      status: 2
+      title: Ea earum.
     required:
       - id
       - bloggers
@@ -581,15 +582,10 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 3396955594930387235
-            username: Eos voluptate dolor assumenda.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 834470085
+        example: 1660376736
         format: int32
       id:
         type: string
@@ -598,16 +594,21 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 282144633
+        example: 808635245
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 1212347949
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 690894349
+        example: 1020369978
         format: int32
       status:
         type: integer
-        example: 5
+        example: 2
         enum:
           - 1
           - 2
@@ -618,7 +619,7 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Quam dolorem doloremque quasi et et.
+        example: Atque consequuntur facilis maxime repudiandae.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -631,22 +632,13 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: true
-          user_id: 3396955594930387235
-          username: Eos voluptate dolor assumenda.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: true
-          user_id: 3396955594930387235
-          username: Eos voluptate dolor assumenda.
-      commented_per_post: 1934537303
+      commented_per_post: 807053661
       id: EA2D3703-2B9D-E7C0-35B9-DB753C364369
-      liked_per_post: 1928948151
-      posts_per_blogger: 1482192805
-      status: 6
-      title: Omnis et consequatur culpa.
+      liked_per_post: 558448896
+      phone_code: 1416534965
+      posts_per_blogger: 1583126824
+      status: 2
+      title: Sed voluptatibus eius veritatis similique.
     required:
       - id
       - bloggers
@@ -674,15 +666,10 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 3396955594930387235
-            username: Eos voluptate dolor assumenda.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 683749147
+        example: 233949060
         format: int32
       id:
         type: string
@@ -691,16 +678,21 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 738497486
+        example: 1535040540
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 139909573
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1990629866
+        example: 1852053309
         format: int32
       status:
         type: integer
-        example: 6
+        example: 4
         enum:
           - 1
           - 2
@@ -711,7 +703,7 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Eos ducimus hic libero et ex ut.
+        example: Blanditiis ea excepturi incidunt.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -729,17 +721,13 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: true
-          user_id: 3396955594930387235
-          username: Eos voluptate dolor assumenda.
-      commented_per_post: 1021821552
+      commented_per_post: 1371782957
       id: 43632E4F-A034-6412-7CEA-7CD0E1AED81D
-      liked_per_post: 1552941764
-      posts_per_blogger: 1209335115
-      status: 4
-      title: Placeat excepturi eius cupiditate aliquid.
+      liked_per_post: 488762834
+      phone_code: 62626470
+      posts_per_blogger: 1021821552
+      status: 6
+      title: Aliquid provident repudiandae.
     required:
       - id
       - bloggers
@@ -767,15 +755,10 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 3396955594930387235
-            username: Eos voluptate dolor assumenda.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 194447658
+        example: 1869410644
         format: int32
       id:
         type: string
@@ -784,12 +767,17 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 1277621510
+        example: 46686734
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 1111310438
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1886483557
+        example: 1710521401
         format: int32
       status:
         type: integer
@@ -804,7 +792,7 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Repellat reiciendis modi nemo aliquam inventore hic.
+        example: Inventore hic amet vitae nostrum.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -817,22 +805,13 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: true
-          user_id: 3396955594930387235
-          username: Eos voluptate dolor assumenda.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: true
-          user_id: 3396955594930387235
-          username: Eos voluptate dolor assumenda.
-      commented_per_post: 264844162
+      commented_per_post: 157181447
       id: E058AD50-5D7F-E9A8-E010-D33044724992
-      liked_per_post: 821172082
-      posts_per_blogger: 1975581375
-      status: 4
-      title: Ducimus laboriosam et molestiae.
+      liked_per_post: 1260234971
+      phone_code: 401973152
+      posts_per_blogger: 352600402
+      status: 3
+      title: Pariatur quia vel aut dicta.
     required:
       - id
       - bloggers
@@ -860,20 +839,10 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 3396955594930387235
-            username: Eos voluptate dolor assumenda.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 3396955594930387235
-            username: Eos voluptate dolor assumenda.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 400174825
+        example: 1859471034
         format: int32
       id:
         type: string
@@ -882,16 +851,21 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 1426370371
+        example: 400174825
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 1575111006
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1462614940
+        example: 1426370371
         format: int32
       status:
         type: integer
-        example: 4
+        example: 5
         enum:
           - 1
           - 2
@@ -902,7 +876,7 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Est temporibus ea consequatur totam accusamus odio.
+        example: Odio qui.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -915,22 +889,13 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: true
-          user_id: 3396955594930387235
-          username: Eos voluptate dolor assumenda.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: true
-          user_id: 3396955594930387235
-          username: Eos voluptate dolor assumenda.
-      commented_per_post: 639335317
+      commented_per_post: 460751304
       id: AC2E8D12-84E7-ADAA-5045-93C4FF40145F
-      liked_per_post: 714737315
-      posts_per_blogger: 566963256
-      status: 1
-      title: Ullam repudiandae magnam illo ad.
+      liked_per_post: 639335317
+      phone_code: 1929251005
+      posts_per_blogger: 714737315
+      status: 5
+      title: Magnam illo ad accusamus.
     required:
       - id
       - bloggers
@@ -971,7 +936,7 @@ definitions:
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 978392884
+        example: 1148317380
         format: int32
       id:
         type: string
@@ -980,16 +945,21 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 1370373556
+        example: 295379086
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 1687887755
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 606823879
+        example: 341903435
         format: int32
       status:
         type: integer
-        example: 5
+        example: 3
         enum:
           - 1
           - 2
@@ -1000,7 +970,7 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Odit accusamus est corporis ea iure explicabo.
+        example: Eligendi quaerat eligendi porro.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1013,12 +983,18 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-      commented_per_post: 1449448286
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: true
+          user_id: 3396955594930387235
+          username: Eos voluptate dolor assumenda.
+      commented_per_post: 1358468439
       id: 6BD40BD6-7AF6-FB4E-C1C1-23700A0E68DE
-      liked_per_post: 1259605263
-      posts_per_blogger: 1729941610
-      status: 6
-      title: Ut est nulla.
+      liked_per_post: 1392497978
+      phone_code: 198384374
+      posts_per_blogger: 1535750384
+      status: 2
+      title: Blanditiis eligendi repellendus doloremque vitae.
     required:
       - id
       - bloggers
@@ -1046,10 +1022,20 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 1283341319
+        example: 2070556287
         format: int32
       id:
         type: string
@@ -1058,16 +1044,21 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 519145455
+        example: 2123997777
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 829829300
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 725918037
+        example: 1730721914
         format: int32
       status:
         type: integer
-        example: 1
+        example: 4
         enum:
           - 1
           - 2
@@ -1078,7 +1069,7 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Est provident.
+        example: Sed saepe at ea et.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1091,12 +1082,23 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-      commented_per_post: 106188976
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: true
+          user_id: 3396955594930387235
+          username: Eos voluptate dolor assumenda.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: true
+          user_id: 3396955594930387235
+          username: Eos voluptate dolor assumenda.
+      commented_per_post: 809230167
       id: E6770800-709B-577A-95B9-5007000379C3
-      liked_per_post: 1729356044
-      posts_per_blogger: 271595276
-      status: 1
-      title: Id et quia eos ullam natus.
+      liked_per_post: 1609603215
+      phone_code: 1781581851
+      posts_per_blogger: 1138045806
+      status: 6
+      title: Repellat facere labore animi.
     required:
       - id
       - bloggers
@@ -1124,10 +1126,15 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 197717599
+        example: 1045552570
         format: int32
       id:
         type: string
@@ -1136,16 +1143,21 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 431799974
+        example: 681408336
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 1011647913
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 791661045
+        example: 197717599
         format: int32
       status:
         type: integer
-        example: 1
+        example: 6
         enum:
           - 1
           - 2
@@ -1156,7 +1168,7 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Neque quibusdam recusandae et laborum in delectus.
+        example: Et dignissimos.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1169,12 +1181,13 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-      commented_per_post: 2081613375
+      commented_per_post: 602091744
       id: 8B791A71-1C43-AB9B-4366-12192353E1A2
-      liked_per_post: 2027486238
-      posts_per_blogger: 1209326092
-      status: 5
-      title: Nihil ducimus cum.
+      liked_per_post: 1234500294
+      phone_code: 1703878800
+      posts_per_blogger: 978998979
+      status: 1
+      title: Perferendis architecto omnis id nam velit.
     required:
       - id
       - bloggers
@@ -1190,7 +1203,7 @@ definitions:
       bloggers_parsed:
         type: integer
         description: количество блогеров, у которых спарсили пользователей
-        example: 2585964350471341653
+        example: 8422254370471625403
         format: int64
       done:
         type: boolean
@@ -1199,12 +1212,12 @@ definitions:
       targets_saved:
         type: integer
         description: количество сохраненных доноров
-        example: 7318103725083573617
+        example: 3184257112282625804
         format: int64
     example:
-      bloggers_parsed: 6731344572062995256
-      done: true
-      targets_saved: 6553462619151722362
+      bloggers_parsed: 4065071179920545852
+      done: false
+      targets_saved: 4411688311530703603
     required:
       - bloggers_parsed
       - targets_saved
@@ -1216,21 +1229,21 @@ definitions:
       bloggers_parsed:
         type: integer
         description: количество блогеров, у которых спарсили пользователей
-        example: 3262507817068154147
+        example: 3871110820658317145
         format: int64
       done:
         type: boolean
         description: закончен ли парсинг блогеров
-        example: false
+        example: true
       targets_saved:
         type: integer
         description: количество сохраненных доноров
-        example: 1986804184191332263
+        example: 6731344572062995256
         format: int64
     example:
-      bloggers_parsed: 136645575928419890
+      bloggers_parsed: 8318301136168870512
       done: false
-      targets_saved: 4204768598634566621
+      targets_saved: 8817809490777621165
     required:
       - bloggers_parsed
       - targets_saved
@@ -1242,7 +1255,7 @@ definitions:
       bloggers_parsed:
         type: integer
         description: количество блогеров, у которых спарсили пользователей
-        example: 8817809490777621165
+        example: 9083923454268629055
         format: int64
       done:
         type: boolean
@@ -1251,12 +1264,12 @@ definitions:
       targets_saved:
         type: integer
         description: количество сохраненных доноров
-        example: 8768879170093175813
+        example: 4956566805380424979
         format: int64
     example:
-      bloggers_parsed: 3184257112282625804
+      bloggers_parsed: 9087234311254479569
       done: true
-      targets_saved: 602167527430432907
+      targets_saved: 933325160482933133
     required:
       - bloggers_parsed
       - targets_saved
@@ -1281,29 +1294,24 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 3396955594930387235
-            username: Eos voluptate dolor assumenda.
       done:
         type: boolean
         description: закончена ли задача
-        example: false
+        example: true
       filtered_bloggers:
         type: integer
         description: количество блогеров, которые проходят проверку по коду региона
-        example: 5350633501756042373
+        example: 1554061618333973047
         format: int64
       initial_bloggers:
         type: integer
         description: количество блогеров, которые были изначально
-        example: 8733150841743007745
+        example: 5350633501756042373
         format: int64
       new_bloggers:
         type: integer
         description: количество блогеров, которых нашли
-        example: 6255402882145852230
+        example: 396858673495302009
         format: int64
     example:
       bloggers:
@@ -1322,10 +1330,15 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-      done: false
-      filtered_bloggers: 2872918283134592816
-      initial_bloggers: 6595155749072001444
-      new_bloggers: 1599039346713108755
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: true
+          user_id: 3396955594930387235
+          username: Eos voluptate dolor assumenda.
+      done: true
+      filtered_bloggers: 3624979793826075657
+      initial_bloggers: 2872918283134592816
+      new_bloggers: 7551765721188436859
     required:
       - bloggers
       - initial_bloggers
@@ -1352,11 +1365,6 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 3396955594930387235
-            username: Eos voluptate dolor assumenda.
       done:
         type: boolean
         description: закончена ли задача
@@ -1364,17 +1372,17 @@ definitions:
       filtered_bloggers:
         type: integer
         description: количество блогеров, которые проходят проверку по коду региона
-        example: 6162826844240336156
+        example: 6593957446993784433
         format: int64
       initial_bloggers:
         type: integer
         description: количество блогеров, которые были изначально
-        example: 8286069973542348601
+        example: 6162826844240336156
         format: int64
       new_bloggers:
         type: integer
         description: количество блогеров, которых нашли
-        example: 3323565044353537962
+        example: 6659056567816580097
         format: int64
     example:
       bloggers:
@@ -1389,9 +1397,9 @@ definitions:
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
       done: false
-      filtered_bloggers: 4124674104880933270
-      initial_bloggers: 7696642074747350569
-      new_bloggers: 7818291634010651067
+      filtered_bloggers: 4349127354057924484
+      initial_bloggers: 4124674104880933270
+      new_bloggers: 6951812892034214223
     required:
       - bloggers
       - initial_bloggers
@@ -1418,6 +1426,16 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
       done:
         type: boolean
         description: закончена ли задача
@@ -1425,17 +1443,17 @@ definitions:
       filtered_bloggers:
         type: integer
         description: количество блогеров, которые проходят проверку по коду региона
-        example: 4555767785573860462
+        example: 8416229058848643592
         format: int64
       initial_bloggers:
         type: integer
         description: количество блогеров, которые были изначально
-        example: 8693617069224986552
+        example: 4555767785573860462
         format: int64
       new_bloggers:
         type: integer
         description: количество блогеров, которых нашли
-        example: 2696026668079107860
+        example: 7656092488512493627
         format: int64
     example:
       bloggers:
@@ -1455,9 +1473,9 @@ definitions:
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
       done: true
-      filtered_bloggers: 4302368604214521066
-      initial_bloggers: 2898517877302087283
-      new_bloggers: 3250758751568051380
+      filtered_bloggers: 7289029352537506103
+      initial_bloggers: 4302368604214521066
+      new_bloggers: 6183182950296169520
     required:
       - bloggers
       - initial_bloggers
@@ -1471,10 +1489,10 @@ definitions:
       dataset_id:
         type: string
         description: id задачи
-        example: Illo omnis est quidem.
+        example: Est quidem dolor eum vel sequi nobis.
       status:
         type: integer
-        example: 4
+        example: 2
         enum:
           - 1
           - 2
@@ -1483,7 +1501,7 @@ definitions:
           - 5
           - 6
     example:
-      dataset_id: Vel sequi nobis delectus.
+      dataset_id: Labore dolorem maxime veritatis sit quia laudantium.
       status: 3
     required:
       - dataset_id
@@ -1495,31 +1513,7 @@ definitions:
       dataset_id:
         type: string
         description: id задачи
-        example: Dolorem maxime veritatis sit.
-      status:
-        type: integer
-        example: 4
-        enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-    example:
-      dataset_id: Nisi sunt rerum facilis occaecati laborum.
-      status: 3
-    required:
-      - dataset_id
-      - status
-  DatasetsServiceParseDatasetOKResponseBody:
-    title: DatasetsServiceParseDatasetOKResponseBody
-    type: object
-    properties:
-      dataset_id:
-        type: string
-        description: id задачи
-        example: Pariatur architecto earum tempora aperiam.
+        example: Rerum facilis occaecati laborum culpa modi.
       status:
         type: integer
         example: 6
@@ -1531,8 +1525,32 @@ definitions:
           - 5
           - 6
     example:
-      dataset_id: Corporis commodi.
-      status: 2
+      dataset_id: Rem sapiente at aut.
+      status: 5
+    required:
+      - dataset_id
+      - status
+  DatasetsServiceParseDatasetOKResponseBody:
+    title: DatasetsServiceParseDatasetOKResponseBody
+    type: object
+    properties:
+      dataset_id:
+        type: string
+        description: id задачи
+        example: Earum tempora aperiam pariatur dicta.
+      status:
+        type: integer
+        example: 3
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+    example:
+      dataset_id: Vitae itaque.
+      status: 6
     required:
       - dataset_id
       - status
@@ -1543,10 +1561,10 @@ definitions:
       dataset_id:
         type: string
         description: id задачи
-        example: Nemo sapiente rem sapiente at aut.
+        example: Magnam et.
       status:
         type: integer
-        example: 1
+        example: 3
         enum:
           - 1
           - 2
@@ -1555,8 +1573,8 @@ definitions:
           - 5
           - 6
     example:
-      dataset_id: Magnam et.
-      status: 3
+      dataset_id: Vel eveniet.
+      status: 1
     required:
       - dataset_id
       - status
@@ -1579,15 +1597,10 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 3396955594930387235
-            username: Eos voluptate dolor assumenda.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 134683078
+        example: 2145685321
         format: int32
       id:
         type: string
@@ -1596,16 +1609,21 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 533994210
+        example: 1269188923
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 135220385
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1032075635
+        example: 202379968
         format: int32
       status:
         type: integer
-        example: 2
+        example: 5
         enum:
           - 1
           - 2
@@ -1616,7 +1634,7 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Repellendus dolorem.
+        example: Voluptatem molestias asperiores dolor aut error.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1629,17 +1647,13 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-          is_initial: true
-          user_id: 3396955594930387235
-          username: Eos voluptate dolor assumenda.
-      commented_per_post: 1383220349
+      commented_per_post: 1708963486
       id: D358BA94-28F1-C0F1-EA4E-E3BFBD8A6AE2
-      liked_per_post: 1699013523
-      posts_per_blogger: 1067332086
+      liked_per_post: 268874268
+      phone_code: 1749959405
+      posts_per_blogger: 1799599707
       status: 6
-      title: Facere ut.
+      title: Dicta non tenetur consequuntur architecto quidem.
     required:
       - id
       - bloggers
@@ -1686,6 +1700,11 @@ definitions:
         description: сколько лайкнувших для каждого поста брать
         example: 1537998510
         format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 1770272594
+        format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
@@ -1717,12 +1736,23 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-      commented_per_post: 1039615147
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: true
+          user_id: 3396955594930387235
+          username: Eos voluptate dolor assumenda.
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: true
+          user_id: 3396955594930387235
+          username: Eos voluptate dolor assumenda.
+      commented_per_post: 2057994761
       id: 1576BB1F-D21C-05AD-6677-73725A387FA6
-      liked_per_post: 867078541
-      posts_per_blogger: 729911290
-      status: 3
-      title: Fugit minima sed.
+      liked_per_post: 1831014768
+      phone_code: 30336692
+      posts_per_blogger: 1162648381
+      status: 4
+      title: Minima sed facilis eos ut quos.
     required:
       - id
       - bloggers
@@ -1738,24 +1768,23 @@ definitions:
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 6342660575485887121
+        example: 1177605483533275590
         format: int64
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 235038465239679281
+        example: 6824486584459462427
         format: int64
       original_accounts:
         type: array
         items:
           type: string
-          example: Corporis in.
+          example: Est odit.
         description: имена аккаунтов, для которых ищем похожих
         example:
-          - Ut inventore sequi quis.
-          - Est odit.
-          - Excepturi commodi debitis error aspernatur aliquid laboriosam.
+          - Commodi debitis error aspernatur aliquid laboriosam.
           - Est voluptate porro.
+          - Minus quia et et sit.
       phone_code:
         type: integer
         description: код региона, по которому будем сортировать
@@ -1765,23 +1794,22 @@ definitions:
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1490148374753192317
+        example: 14664380777646610542
         format: int64
       title:
         type: string
         description: название задачи
-        example: Et sit aut.
+        example: Quos qui eos ut magni.
     example:
-      commented_per_post: 4380572833231892244
-      liked_per_post: 18108755343606303694
+      commented_per_post: 1053212861361504523
+      liked_per_post: 4380572833231892244
       original_accounts:
-        - Quia quos.
-        - Eos ut magni aut inventore est.
-        - Ea itaque iusto omnis vel est.
-        - Placeat maxime molestiae dolores est placeat.
+        - Est dolorum ea itaque iusto omnis vel.
+        - Qui placeat maxime molestiae dolores.
+        - Placeat aut.
       phone_code: 7
-      posts_per_blogger: 7417093173992898669
-      title: Unde dignissimos.
+      posts_per_blogger: 18108755343606303694
+      title: Dignissimos officiis exercitationem eveniet est reprehenderit.
   DatasetsServiceUpdateDatasetUnauthorizedResponseBody:
     title: DatasetsServiceUpdateDatasetUnauthorizedResponseBody
     type: object
@@ -1801,10 +1829,15 @@ definitions:
             is_initial: true
             user_id: 3396955594930387235
             username: Eos voluptate dolor assumenda.
+          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
       commented_per_post:
         type: integer
         description: сколько прокоментировааших для каждого поста брать
-        example: 1435229332
+        example: 1190362949
         format: int32
       id:
         type: string
@@ -1813,16 +1846,21 @@ definitions:
       liked_per_post:
         type: integer
         description: сколько лайкнувших для каждого поста брать
-        example: 1660404136
+        example: 1567271096
+        format: int32
+      phone_code:
+        type: integer
+        description: является ли блоггер изначально в датасете или появился при парсинге
+        example: 286104411
         format: int32
       posts_per_blogger:
         type: integer
         description: имена аккаунтов, для которых ищем похожих
-        example: 1684556625
+        example: 797160719
         format: int32
       status:
         type: integer
-        example: 5
+        example: 1
         enum:
           - 1
           - 2
@@ -1833,7 +1871,7 @@ definitions:
       title:
         type: string
         description: название задачи
-        example: Voluptate dignissimos ad aperiam.
+        example: Accusantium et qui.
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1851,12 +1889,18 @@ definitions:
           is_initial: true
           user_id: 3396955594930387235
           username: Eos voluptate dolor assumenda.
-      commented_per_post: 309211527
+        - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+          id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+          is_initial: true
+          user_id: 3396955594930387235
+          username: Eos voluptate dolor assumenda.
+      commented_per_post: 682888763
       id: CEF3CAF7-AB82-083A-2F08-9497BE6B7488
-      liked_per_post: 1730202412
-      posts_per_blogger: 330986040
-      status: 1
-      title: Ut hic labore et et.
+      liked_per_post: 244436093
+      phone_code: 1057936850
+      posts_per_blogger: 632946853
+      status: 2
+      title: Maxime repudiandae.
     required:
       - id
       - bloggers

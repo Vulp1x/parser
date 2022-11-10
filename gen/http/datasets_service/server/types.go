@@ -43,6 +43,8 @@ type UpdateDatasetOKResponseBody struct {
 	LikedPerPost int32 `json:"liked_per_post"`
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
+	// является ли блоггер изначально в датасете или появился при парсинге
+	PhoneCode *int32 `json:"phone_code"`
 }
 
 // FindSimilarOKResponseBody is the type of the "datasets_service" service
@@ -59,6 +61,8 @@ type FindSimilarOKResponseBody struct {
 	LikedPerPost int32 `json:"liked_per_post"`
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
+	// является ли блоггер изначально в датасете или появился при парсинге
+	PhoneCode *int32 `json:"phone_code"`
 }
 
 // GetProgressOKResponseBody is the type of the "datasets_service" service "get
@@ -98,6 +102,8 @@ type GetDatasetOKResponseBody struct {
 	LikedPerPost int32 `json:"liked_per_post"`
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
+	// является ли блоггер изначально в датасете или появился при парсинге
+	PhoneCode *int32 `json:"phone_code"`
 }
 
 // GetParsingProgressOKResponseBody is the type of the "datasets_service"
@@ -141,6 +147,8 @@ type DatasetResponse struct {
 	LikedPerPost int32 `json:"liked_per_post"`
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
+	// является ли блоггер изначально в датасете или появился при парсинге
+	PhoneCode *int32 `json:"phone_code"`
 }
 
 // BloggerResponse is used to define fields on response body types.
@@ -166,6 +174,7 @@ func NewUpdateDatasetOKResponseBody(res *datasetsservice.Dataset) *UpdateDataset
 		PostsPerBlogger:  res.PostsPerBlogger,
 		LikedPerPost:     res.LikedPerPost,
 		CommentedPerPost: res.CommentedPerPost,
+		PhoneCode:        res.PhoneCode,
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -186,6 +195,7 @@ func NewFindSimilarOKResponseBody(res *datasetsservice.Dataset) *FindSimilarOKRe
 		PostsPerBlogger:  res.PostsPerBlogger,
 		LikedPerPost:     res.LikedPerPost,
 		CommentedPerPost: res.CommentedPerPost,
+		PhoneCode:        res.PhoneCode,
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -234,6 +244,7 @@ func NewGetDatasetOKResponseBody(res *datasetsservice.Dataset) *GetDatasetOKResp
 		PostsPerBlogger:  res.PostsPerBlogger,
 		LikedPerPost:     res.LikedPerPost,
 		CommentedPerPost: res.CommentedPerPost,
+		PhoneCode:        res.PhoneCode,
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
