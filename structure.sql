@@ -47,6 +47,7 @@ CREATE TABLE public.bloggers (
     parsed_at timestamp without time zone,
     updated_at timestamp without time zone,
     parsed boolean DEFAULT false NOT NULL,
+    is_correct boolean DEFAULT false NOT NULL,
     is_private boolean DEFAULT false NOT NULL,
     is_verified boolean DEFAULT false NOT NULL,
     is_business boolean DEFAULT false NOT NULL,

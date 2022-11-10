@@ -8,6 +8,8 @@ CREATE UNIQUE INDEX on bots (session_id);
 
 ALTER TABLE bloggers
     ADD COLUMN parsed                    boolean not null default false,
+--     нашли блогера и успешно получили инфо по нему
+    ADD COLUMN is_correct                boolean not null default false,
     ADD COLUMN is_private                boolean not null default false,
     ADD COLUMN is_verified               boolean not null default false,
     ADD COLUMN is_business               boolean not null default false,

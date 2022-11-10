@@ -48,10 +48,17 @@ type UpdateDatasetOKResponseBody struct {
 // FindSimilarOKResponseBody is the type of the "datasets_service" service
 // "find similar" endpoint HTTP response body.
 type FindSimilarOKResponseBody struct {
-	Status int `form:"status" json:"status" xml:"status"`
-	// id задачи
-	DatasetID string                 `json:"dataset_id"`
-	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	ID       string                 `form:"id" json:"id" xml:"id"`
+	Bloggers []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Status   int                    `form:"status" json:"status" xml:"status"`
+	// название задачи
+	Title string `form:"title" json:"title" xml:"title"`
+	// имена аккаунтов, для которых ищем похожих
+	PostsPerBlogger int32 `json:"posts_per_blogger"`
+	// сколько лайкнувших для каждого поста брать
+	LikedPerPost int32 `json:"liked_per_post"`
+	// сколько прокоментировааших для каждого поста брать
+	CommentedPerPost int32 `json:"commented_per_post"`
 }
 
 // GetProgressOKResponseBody is the type of the "datasets_service" service "get
@@ -171,10 +178,14 @@ func NewUpdateDatasetOKResponseBody(res *datasetsservice.Dataset) *UpdateDataset
 
 // NewFindSimilarOKResponseBody builds the HTTP response body from the result
 // of the "find similar" endpoint of the "datasets_service" service.
-func NewFindSimilarOKResponseBody(res *datasetsservice.FindSimilarResult) *FindSimilarOKResponseBody {
+func NewFindSimilarOKResponseBody(res *datasetsservice.Dataset) *FindSimilarOKResponseBody {
 	body := &FindSimilarOKResponseBody{
-		Status:    int(res.Status),
-		DatasetID: res.DatasetID,
+		ID:               res.ID,
+		Status:           int(res.Status),
+		Title:            res.Title,
+		PostsPerBlogger:  res.PostsPerBlogger,
+		LikedPerPost:     res.LikedPerPost,
+		CommentedPerPost: res.CommentedPerPost,
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))

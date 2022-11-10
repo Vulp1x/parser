@@ -214,7 +214,7 @@ func EncodeUpdateDatasetError(encoder func(context.Context, http.ResponseWriter)
 // datasets_service find similar endpoint.
 func EncodeFindSimilarResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
 	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
-		res, _ := v.(*datasetsservice.FindSimilarResult)
+		res, _ := v.(*datasetsservice.Dataset)
 		enc := encoder(ctx, w)
 		body := NewFindSimilarOKResponseBody(res)
 		w.WriteHeader(http.StatusOK)

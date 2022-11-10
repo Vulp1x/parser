@@ -21,6 +21,7 @@ type Blogger struct {
 	ParsedAt               *time.Time `json:"parsed_at"`
 	UpdatedAt              *time.Time `json:"updated_at"`
 	Parsed                 bool       `json:"parsed"`
+	IsCorrect              bool       `json:"is_correct"`
 	IsPrivate              bool       `json:"is_private"`
 	IsVerified             bool       `json:"is_verified"`
 	IsBusiness             bool       `json:"is_business"`

@@ -24,148 +24,148 @@ paths:
                   $ref: '#/components/schemas/Dataset'
                 example:
                   - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    commented_per_post: 262106816
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    liked_per_post: 863570267
-                    posts_per_blogger: 1493922858
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
                     status: 6
-                    title: Natus et autem libero in.
+                    title: Excepturi nihil illo.
                   - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    commented_per_post: 262106816
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    liked_per_post: 863570267
-                    posts_per_blogger: 1493922858
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
                     status: 6
-                    title: Natus et autem libero in.
+                    title: Excepturi nihil illo.
               example:
                 - bloggers:
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                  commented_per_post: 262106816
-                  id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                  liked_per_post: 863570267
-                  posts_per_blogger: 1493922858
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                  commented_per_post: 2002815683
+                  id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                  liked_per_post: 1742085052
+                  posts_per_blogger: 2076719602
                   status: 6
-                  title: Natus et autem libero in.
+                  title: Excepturi nihil illo.
                 - bloggers:
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                  commented_per_post: 262106816
-                  id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                  liked_per_post: 863570267
-                  posts_per_blogger: 1493922858
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                  commented_per_post: 2002815683
+                  id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                  liked_per_post: 1742085052
+                  posts_per_blogger: 2076719602
                   status: 6
-                  title: Natus et autem libero in.
+                  title: Excepturi nihil illo.
                 - bloggers:
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: false
-                      user_id: 3184562924672277963
-                      username: Repellat iure asperiores numquam alias aliquid temporibus.
-                  commented_per_post: 262106816
-                  id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                  liked_per_post: 863570267
-                  posts_per_blogger: 1493922858
+                      user_id: 2467489778041992473
+                      username: Et inventore molestiae.
+                  commented_per_post: 2002815683
+                  id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                  liked_per_post: 1742085052
+                  posts_per_blogger: 2076719602
                   status: 6
-                  title: Natus et autem libero in.
+                  title: Excepturi nihil illo.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Odio dolore ut iure unde fuga.
+                example: Incidunt ipsum reprehenderit et.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -176,86 +176,86 @@ paths:
                   $ref: '#/components/schemas/Dataset'
                 example:
                   - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    commented_per_post: 262106816
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    liked_per_post: 863570267
-                    posts_per_blogger: 1493922858
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
                     status: 6
-                    title: Natus et autem libero in.
+                    title: Excepturi nihil illo.
                   - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    commented_per_post: 262106816
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    liked_per_post: 863570267
-                    posts_per_blogger: 1493922858
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
                     status: 6
-                    title: Natus et autem libero in.
+                    title: Excepturi nihil illo.
                   - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    commented_per_post: 262106816
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    liked_per_post: 863570267
-                    posts_per_blogger: 1493922858
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
                     status: 6
-                    title: Natus et autem libero in.
+                    title: Excepturi nihil illo.
         "404":
           description: 'dataset not found: Not Found response.'
           content:
@@ -266,59 +266,59 @@ paths:
                   $ref: '#/components/schemas/Dataset'
                 example:
                   - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    commented_per_post: 262106816
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    liked_per_post: 863570267
-                    posts_per_blogger: 1493922858
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
                     status: 6
-                    title: Natus et autem libero in.
+                    title: Excepturi nihil illo.
                   - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    commented_per_post: 262106816
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    liked_per_post: 863570267
-                    posts_per_blogger: 1493922858
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
                     status: 6
-                    title: Natus et autem libero in.
+                    title: Excepturi nihil illo.
         "500":
           description: 'internal error: Internal Server Error response.'
           content:
@@ -329,59 +329,86 @@ paths:
                   $ref: '#/components/schemas/Dataset'
                 example:
                   - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    commented_per_post: 262106816
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    liked_per_post: 863570267
-                    posts_per_blogger: 1493922858
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
                     status: 6
-                    title: Natus et autem libero in.
+                    title: Excepturi nihil illo.
                   - bloggers:
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                      - dataset_id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: false
-                        user_id: 3184562924672277963
-                        username: Repellat iure asperiores numquam alias aliquid temporibus.
-                    commented_per_post: 262106816
-                    id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                    liked_per_post: 863570267
-                    posts_per_blogger: 1493922858
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
                     status: 6
-                    title: Natus et autem libero in.
+                    title: Excepturi nihil illo.
+                  - bloggers:
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: false
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: false
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: false
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: false
+                        user_id: 2467489778041992473
+                        username: Et inventore molestiae.
+                    commented_per_post: 2002815683
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 1742085052
+                    posts_per_blogger: 2076719602
+                    status: 6
+                    title: Excepturi nihil illo.
       security:
         - jwt_header_Authorization:
             - driver
@@ -401,8 +428,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Iusto possimus dolor.
-          example: Exercitationem aspernatur labore quo.
+            example: Atque repudiandae voluptas minus voluptatem sed laborum.
+          example: Architecto illum.
       responses:
         "200":
           description: OK response.
@@ -414,32 +441,32 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
-                commented_per_post: 1882399015
-                id: 773F4E7F-A748-DF6D-4355-233071D2534A
-                liked_per_post: 775458837
-                posts_per_blogger: 26197528
-                status: 2
-                title: Consequatur nemo ut ratione eligendi consequatur.
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
+                commented_per_post: 1587063343
+                id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
+                liked_per_post: 1558805361
+                posts_per_blogger: 881898396
+                status: 4
+                title: Quod qui saepe.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Modi doloribus ut eius.
+                example: Iste commodi enim quo quo sit et.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -458,7 +485,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Quasi quae non voluptatibus.
+                example: Odio excepturi cum error doloremque error harum.
       security:
         - jwt_header_Authorization:
             - driver
@@ -479,8 +506,8 @@ paths:
           schema:
             type: string
             description: id задачи, которую хотим обновить
-            example: Repudiandae repellendus aliquid rem atque.
-          example: Magnam cumque corporis aliquam est optio.
+            example: Minima non quia est ipsam numquam ab.
+          example: Exercitationem voluptatem.
       requestBody:
         required: true
         content:
@@ -488,15 +515,15 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateDatasetRequestBody'
             example:
-              commented_per_post: 8760930728613017419
-              liked_per_post: 4695425168703842683
+              commented_per_post: 17144541818468990168
+              liked_per_post: 1234718394506119178
               original_accounts:
-                - Doloribus numquam minus eum.
-                - Dignissimos quia enim in asperiores nam.
-                - Ut corrupti.
+                - Odio repellat occaecati aut.
+                - Error doloribus.
+                - Minus eum voluptatum dignissimos.
               phone_code: 7
-              posts_per_blogger: 1692609974404416853
-              title: Ab voluptatem ipsa doloribus modi aut.
+              posts_per_blogger: 3727743447371436444
+              title: Nam aliquid ut corrupti nam non.
       responses:
         "200":
           description: OK response.
@@ -508,37 +535,37 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
-                commented_per_post: 787945541
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
+                commented_per_post: 700010426
                 id: 2C91774A-6D4A-67B6-DC43-6AED849DACC1
-                liked_per_post: 560087897
-                posts_per_blogger: 332157749
-                status: 5
-                title: Sit distinctio magnam ipsam quaerat.
+                liked_per_post: 1537009460
+                posts_per_blogger: 820842255
+                status: 3
+                title: Porro velit labore.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Voluptatem necessitatibus.
+                example: Voluptate non sapiente odio.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -557,7 +584,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Possimus assumenda amet.
+                example: Modi praesentium autem maxime.
       security:
         - jwt_header_Authorization:
             - driver
@@ -577,8 +604,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Et enim perferendis quia.
-          example: Sit corrupti tenetur vitae.
+            example: Quam soluta illo.
+          example: Voluptatem eius incidunt et.
       responses:
         "200":
           description: OK response.
@@ -587,8 +614,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ParseDatasetOKResponseBody'
               example:
-                dataset_id: Ipsa velit omnis officia eligendi blanditiis.
-                status: 1
+                dataset_id: Quo officiis omnis nihil autem aspernatur.
+                status: 2
         "400":
           description: 'bad request: Bad Request response.'
           content:
@@ -613,7 +640,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Quam amet mollitia vitae quo voluptatum dolorem.
+                example: Eos fuga dolor itaque dolores aut.
       security:
         - jwt_header_Authorization:
             - driver
@@ -633,8 +660,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Non illum rem quia exercitationem.
-          example: Ex qui aperiam voluptatum.
+            example: Tenetur cumque totam enim ea aut neque.
+          example: Dolore quod.
       responses:
         "200":
           description: OK response.
@@ -643,16 +670,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ParsingProgress'
               example:
-                bloggers_parsed: 2963387860363756899
+                bloggers_parsed: 6821685042825604698
                 done: true
-                targets_saved: 1804262323694326888
+                targets_saved: 4800857605870124209
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Commodi ratione reiciendis consequatur ut.
+                example: Cupiditate suscipit explicabo neque laudantium doloremque.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -671,7 +698,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Molestiae quisquam illo a sunt dolorem perspiciatis.
+                example: Ex deserunt repellat.
       security:
         - jwt_header_Authorization:
             - driver
@@ -691,8 +718,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Ut omnis sunt accusamus voluptatem sed.
-          example: Enim veritatis culpa.
+            example: Commodi nesciunt fugiat.
+          example: Aperiam recusandae aspernatur est repudiandae voluptatibus qui.
       responses:
         "200":
           description: OK response.
@@ -704,35 +731,25 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
-                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
-                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
-                done: false
-                filtered_bloggers: 3582321234141657411
-                initial_bloggers: 8037221430164523449
-                new_bloggers: 7894633658868568541
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
+                done: true
+                filtered_bloggers: 2032893028617859801
+                initial_bloggers: 4464905760620963785
+                new_bloggers: 344984773560843185
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Quaerat velit cum aliquid enim totam nihil.
+                example: Et quia.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -751,7 +768,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Ea earum.
+                example: Quo sed quisquam quo et sint aperiam.
       security:
         - jwt_header_Authorization:
             - driver
@@ -771,54 +788,68 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Explicabo qui odit.
-          example: Et dolores quos qui quisquam aspernatur quia.
+            example: Fugiat modi autem reiciendis enim.
+          example: Vel nam.
       responses:
         "200":
           description: OK response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindSimilarOKResponseBody'
+                $ref: '#/components/schemas/Dataset'
               example:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: false
-                    user_id: 2427052876305480419
-                    username: Eveniet iste molestiae dolores nihil asperiores ullam.
-                dataset_id: Quia sint qui laboriosam enim est.
-                status: 4
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
+                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
+                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+                    is_initial: true
+                    user_id: 3396955594930387235
+                    username: Eos voluptate dolor assumenda.
+                commented_per_post: 36062723
+                id: 773F4E7F-A748-DF6D-4355-233071D2534A
+                liked_per_post: 1253534538
+                posts_per_blogger: 801589574
+                status: 6
+                title: At nesciunt sint placeat ipsam ducimus.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindSimilarOKResponseBody'
+                $ref: '#/components/schemas/Dataset'
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindSimilarOKResponseBody'
+                $ref: '#/components/schemas/Dataset'
         "404":
           description: 'dataset not found: Not Found response.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindSimilarOKResponseBody'
+                $ref: '#/components/schemas/Dataset'
         "500":
           description: 'internal error: Internal Server Error response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Et consequatur quisquam.
+                example: Veniam quo aliquam et magnam ratione numquam.
       security:
         - jwt_header_Authorization:
             - driver
@@ -838,16 +869,16 @@ paths:
               schema:
                 type: string
                 description: dataset_id для созданной задачи
-                example: 35814117-F834-9FAB-0A03-DB6E91CE1F7F
+                example: 0866BAED-0A78-C310-5523-F8F1C3A1D14C
                 format: uuid
-              example: EBC096AD-D9EC-2F9C-CCD5-2819684939D3
+              example: 86EDFB6E-94F4-2B51-2B7E-E4683F848FD6
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Necessitatibus nesciunt iste.
+                example: Quis excepturi.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -855,7 +886,7 @@ paths:
               schema:
                 type: string
                 description: dataset_id для созданной задачи
-                example: 5D93A99A-535C-03BB-87BD-865144549E25
+                example: D027EA19-1014-886E-F650-7C507090065C
                 format: uuid
         "404":
           description: 'dataset not found: Not Found response.'
@@ -864,7 +895,7 @@ paths:
               schema:
                 type: string
                 description: dataset_id для созданной задачи
-                example: E6770800-709B-577A-95B9-5007000379C3
+                example: 08881150-0EBF-0710-C5E8-0B82D2C9C671
                 format: uuid
         "500":
           description: 'internal error: Internal Server Error response.'
@@ -872,7 +903,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Culpa hic.
+                example: Praesentium pariatur nulla rerum consequatur.
       security:
         - jwt_header_Authorization:
             - driver
@@ -885,31 +916,31 @@ components:
         dataset_id:
           type: string
           description: айди датасета, к которому принадлежит блоггер
-          example: 8B791A71-1C43-AB9B-4366-12192353E1A2
+          example: 3E620E27-EED0-3E38-87CD-C7C87D512815
           format: uuid
         id:
           type: string
-          example: 6E989AEF-9C11-4862-D8B1-5CFC4F6414E0
+          example: 84858054-1B69-3E9A-C82B-BF11FF33B1D8
           format: uuid
         is_initial:
           type: boolean
           description: является ли блоггер изначально в датасете или появился при парсинге
-          example: false
+          example: true
         user_id:
           type: integer
           description: user_id в инстаграме, -1 если неизвестен
-          example: 161298219259891587
+          example: 8916723230635603425
           format: int64
         username:
           type: string
           description: имя аккаунта в инстаграме
-          example: Molestias at non illum aut.
+          example: Dolore sed sit.
       example:
-        dataset_id: 799C598D-49D1-F53A-0ED6-818482028C45
-        id: A1E767AB-DA97-F23F-D106-18BF8653EB6C
+        dataset_id: 45442A02-3FD6-C827-BA11-864B7D92257A
+        id: BD3BFBE7-02F2-99D7-D026-8BD77E75C122
         is_initial: false
-        user_id: 8591112524454114777
-        username: Reprehenderit labore nesciunt praesentium molestiae.
+        user_id: 1582128747492642008
+        username: Commodi dignissimos vel.
       required:
         - id
         - dataset_id
@@ -926,41 +957,46 @@ components:
           example:
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: false
-              user_id: 2427052876305480419
-              username: Eveniet iste molestiae dolores nihil asperiores ullam.
+              is_initial: true
+              user_id: 3396955594930387235
+              username: Eos voluptate dolor assumenda.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: false
-              user_id: 2427052876305480419
-              username: Eveniet iste molestiae dolores nihil asperiores ullam.
+              is_initial: true
+              user_id: 3396955594930387235
+              username: Eos voluptate dolor assumenda.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: false
-              user_id: 2427052876305480419
-              username: Eveniet iste molestiae dolores nihil asperiores ullam.
+              is_initial: true
+              user_id: 3396955594930387235
+              username: Eos voluptate dolor assumenda.
+            - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+              id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+              is_initial: true
+              user_id: 3396955594930387235
+              username: Eos voluptate dolor assumenda.
         commented_per_post:
           type: integer
           description: сколько прокоментировааших для каждого поста брать
-          example: 182552005
+          example: 1071257635
           format: int32
         id:
           type: string
-          example: 6BD40BD6-7AF6-FB4E-C1C1-23700A0E68DE
+          example: 1A24D89F-A0EE-4671-E9C1-CE63E054B707
           format: uuid
         liked_per_post:
           type: integer
           description: сколько лайкнувших для каждого поста брать
-          example: 390761844
+          example: 133810726
           format: int32
         posts_per_blogger:
           type: integer
           description: имена аккаунтов, для которых ищем похожих
-          example: 1076891895
+          example: 1994100323
           format: int32
         status:
           type: integer
-          example: 2
+          example: 6
           enum:
             - 1
             - 2
@@ -971,30 +1007,30 @@ components:
         title:
           type: string
           description: название задачи
-          example: Similique repudiandae perspiciatis et.
+          example: Debitis ex qui.
       example:
         bloggers:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
-        commented_per_post: 326329917
-        id: D16B2ED1-3971-5178-0135-F3E819F3BA4F
-        liked_per_post: 677707112
-        posts_per_blogger: 1714527626
-        status: 5
-        title: Aut expedita sit.
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
+        commented_per_post: 262253218
+        id: 2E7D48F1-CD94-6874-B6D8-717D4A8FD873
+        liked_per_post: 1801040334
+        posts_per_blogger: 2024460772
+        status: 3
+        title: Voluptatem provident possimus voluptas voluptatem quaerat fugiat.
       required:
         - id
         - bloggers
@@ -1014,14 +1050,19 @@ components:
           example:
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: false
-              user_id: 2427052876305480419
-              username: Eveniet iste molestiae dolores nihil asperiores ullam.
+              is_initial: true
+              user_id: 3396955594930387235
+              username: Eos voluptate dolor assumenda.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: false
-              user_id: 2427052876305480419
-              username: Eveniet iste molestiae dolores nihil asperiores ullam.
+              is_initial: true
+              user_id: 3396955594930387235
+              username: Eos voluptate dolor assumenda.
+            - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+              id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+              is_initial: true
+              user_id: 3396955594930387235
+              username: Eos voluptate dolor assumenda.
         done:
           type: boolean
           description: закончена ли задача
@@ -1029,120 +1070,55 @@ components:
         filtered_bloggers:
           type: integer
           description: количество блогеров, которые проходят проверку по коду региона
-          example: 746266190825644087
+          example: 9110738500897642904
           format: int64
         initial_bloggers:
           type: integer
           description: количество блогеров, которые были изначально
-          example: 1710840909498322810
+          example: 770760069430203798
           format: int64
         new_bloggers:
           type: integer
           description: количество блогеров, которых нашли
-          example: 532804934730235621
+          example: 24810825125778825
           format: int64
       example:
         bloggers:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
+            is_initial: true
+            user_id: 3396955594930387235
+            username: Eos voluptate dolor assumenda.
         done: true
-        filtered_bloggers: 9172333418802098430
-        initial_bloggers: 2242940264579545667
-        new_bloggers: 4689484189778331788
+        filtered_bloggers: 7912382658610814647
+        initial_bloggers: 8733047271586894608
+        new_bloggers: 2861227184345395978
       required:
         - bloggers
         - initial_bloggers
         - new_bloggers
         - filtered_bloggers
         - done
-    FindSimilarOKResponseBody:
-      type: object
-      properties:
-        bloggers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Blogger'
-          example:
-            - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-              id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: false
-              user_id: 2427052876305480419
-              username: Eveniet iste molestiae dolores nihil asperiores ullam.
-            - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-              id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: false
-              user_id: 2427052876305480419
-              username: Eveniet iste molestiae dolores nihil asperiores ullam.
-        dataset_id:
-          type: string
-          description: id задачи
-          example: Alias doloribus est officia ab.
-        status:
-          type: integer
-          example: 6
-          enum:
-            - 1
-            - 2
-            - 3
-            - 4
-            - 5
-            - 6
-      example:
-        bloggers:
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: false
-            user_id: 2427052876305480419
-            username: Eveniet iste molestiae dolores nihil asperiores ullam.
-        dataset_id: Cupiditate ducimus molestiae possimus quidem.
-        status: 1
-      required:
-        - dataset_id
-        - status
-        - bloggers
     ParseDatasetOKResponseBody:
       type: object
       properties:
         dataset_id:
           type: string
           description: id задачи
-          example: Cumque quia ut vero.
+          example: Incidunt possimus autem.
         status:
           type: integer
-          example: 2
+          example: 3
           enum:
             - 1
             - 2
@@ -1151,8 +1127,8 @@ components:
             - 5
             - 6
       example:
-        dataset_id: Est omnis sed saepe ea est et.
-        status: 1
+        dataset_id: Est iste.
+        status: 4
       required:
         - dataset_id
         - status
@@ -1162,7 +1138,7 @@ components:
         bloggers_parsed:
           type: integer
           description: количество блогеров, у которых спарсили пользователей
-          example: 1912575426945409546
+          example: 6202357078758524907
           format: int64
         done:
           type: boolean
@@ -1171,12 +1147,12 @@ components:
         targets_saved:
           type: integer
           description: количество сохраненных доноров
-          example: 3652168488568438243
+          example: 4794414539822332023
           format: int64
       example:
-        bloggers_parsed: 4413183516721376119
+        bloggers_parsed: 2705002944627314639
         done: true
-        targets_saved: 7310983318703797968
+        targets_saved: 892073411133051054
       required:
         - bloggers_parsed
         - targets_saved
@@ -1187,22 +1163,21 @@ components:
         commented_per_post:
           type: integer
           description: сколько прокоментировааших для каждого поста брать
-          example: 15353113954232388017
+          example: 9419388202506810221
         liked_per_post:
           type: integer
           description: сколько лайкнувших для каждого поста брать
-          example: 5838559356463437478
+          example: 1202847920377117317
         original_accounts:
           type: array
           items:
             type: string
-            example: Veniam totam itaque.
+            example: Et porro error iste praesentium iure et.
           description: имена аккаунтов, для которых ищем похожих
           example:
-            - Ut est nulla.
-            - Cum blanditiis eligendi repellendus doloremque vitae.
-            - Ea perspiciatis qui rerum.
-            - Voluptatem asperiores mollitia quas consequatur et sint.
+            - Est dolorem sed quo et et maiores.
+            - Voluptas voluptas quidem iste.
+            - Ea occaecati ipsum odit.
         phone_code:
           type: integer
           description: код региона, по которому будем сортировать
@@ -1212,21 +1187,21 @@ components:
         posts_per_blogger:
           type: integer
           description: имена аккаунтов, для которых ищем похожих
-          example: 2874547546787290201
+          example: 2728869132680424709
         title:
           type: string
           description: название задачи
-          example: Et animi necessitatibus occaecati modi officia qui.
+          example: Laboriosam autem voluptates quam voluptas vero.
       example:
-        commented_per_post: 4880969743564813278
-        liked_per_post: 7390511612237997981
+        commented_per_post: 6208578701000148507
+        liked_per_post: 14272633746513473269
         original_accounts:
-          - Est omnis.
-          - Molestiae eaque ut.
-          - Labore non molestias vel et magnam.
+          - Ratione harum.
+          - Velit aut.
+          - Quis sunt debitis rem.
         phone_code: 7
-        posts_per_blogger: 15705505876979715364
-        title: Qui neque.
+        posts_per_blogger: 6982182579760512513
+        title: Quidem non accusantium.
   securitySchemes:
     jwt_header_Authorization:
       type: http

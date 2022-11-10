@@ -15,6 +15,7 @@ type Service struct {
 	similarQueue taskq.Queue
 	dbf          dbmodel.DBTXFunc
 	cli          *instagrapi.Client
+	task         *taskq.Task
 }
 
 func NewService(instagrapiHost string, dbf dbmodel.DBTXFunc) Service {
@@ -24,9 +25,21 @@ func NewService(instagrapiHost string, dbf dbmodel.DBTXFunc) Service {
 		Storage:         taskq.NewLocalStorage(),
 	})
 
-	return Service{
+	service := Service{
 		similarQueue: q,
 		cli:          instagrapi.NewClient(instagrapiHost),
 		dbf:          dbf,
 	}
+
+	task := taskq.RegisterTask(&taskq.TaskOptions{
+		Name:            "find similar bloggers",
+		Handler:         service.findSimilarBloggers,
+		FallbackHandler: service.processFailedTask,
+		RetryLimit:      5,
+		MinBackoff:      5 * time.Second,
+	})
+
+	service.task = task
+
+	return service
 }

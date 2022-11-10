@@ -67,10 +67,10 @@ func (s Store) insertInitialBloggers(ctx context.Context, q *dbmodel.Queries, da
 
 	tag, err := q.DeleteBloggersPerDataset(ctx, datasetID)
 	if err != nil {
-		return fmt.Errorf("failed to delete previous bloggers")
+		return fmt.Errorf("failed to delete previous bloggers: %v", err)
 	}
 
-	logger.Infof(ctx, "deleted %d bloggers: %v", tag.RowsAffected())
+	logger.Infof(ctx, "deleted %d bloggers", tag.RowsAffected())
 
 	var initialBloggersParams = make([]dbmodel.InsertInitialBloggersParams, len(originalAccounts))
 

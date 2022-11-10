@@ -6,18 +6,18 @@ import (
 )
 
 func NewDatasetWithBloggers(dataset dbmodel.Dataset, bloggers []dbmodel.Blogger) DatasetWithBloggers {
-	return DatasetWithBloggers{dataset: dataset, bloggers: bloggers}
+	return DatasetWithBloggers{Dataset: dataset, Bloggers: bloggers}
 }
 
 type DatasetWithBloggers struct {
-	dataset  dbmodel.Dataset
-	bloggers []dbmodel.Blogger
+	Dataset  dbmodel.Dataset
+	Bloggers []dbmodel.Blogger
 }
 
 func (b DatasetWithBloggers) ToProto() *datasetsservice.Dataset {
-	var bloggers = make([]*datasetsservice.Blogger, len(b.bloggers))
+	var bloggers = make([]*datasetsservice.Blogger, len(b.Bloggers))
 
-	for i, blogger := range b.bloggers {
+	for i, blogger := range b.Bloggers {
 		bloggers[i] = &datasetsservice.Blogger{
 			ID:        blogger.ID.String(),
 			Username:  blogger.Username,
@@ -28,14 +28,34 @@ func (b DatasetWithBloggers) ToProto() *datasetsservice.Dataset {
 	}
 
 	return &datasetsservice.Dataset{
-		ID:               b.dataset.ID.String(),
+		ID:               b.Dataset.ID.String(),
 		Bloggers:         bloggers,
-		Status:           datasetsservice.DatasetStatus(b.dataset.Status),
-		Title:            b.dataset.Title,
-		PostsPerBlogger:  b.dataset.PostsPerBlogger,
-		LikedPerPost:     b.dataset.LikedPerPost,
-		CommentedPerPost: b.dataset.CommentedPerPost,
+		Status:           datasetsservice.DatasetStatus(b.Dataset.Status),
+		Title:            b.Dataset.Title,
+		PostsPerBlogger:  b.Dataset.PostsPerBlogger,
+		LikedPerPost:     b.Dataset.LikedPerPost,
+		CommentedPerPost: b.Dataset.CommentedPerPost,
 	}
+}
+
+func (b DatasetWithBloggers) ToBloggersProto() []*datasetsservice.Blogger {
+	var bloggers = make([]*datasetsservice.Blogger, len(b.Bloggers))
+
+	for i, blogger := range b.Bloggers {
+		bloggers[i] = &datasetsservice.Blogger{
+			ID:        blogger.ID.String(),
+			Username:  blogger.Username,
+			UserID:    blogger.UserID,
+			DatasetID: blogger.DatasetID.String(),
+			IsInitial: blogger.IsInitial,
+		}
+	}
+
+	return bloggers
+}
+
+func (b DatasetWithBloggers) IsReadyForParsing() bool {
+	return b.Dataset.Status == dbmodel.ReadyForParsingDatasetStatus
 }
 
 type Datasets []dbmodel.Dataset

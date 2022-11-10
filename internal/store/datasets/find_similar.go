@@ -9,6 +9,7 @@ import (
 	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/dbtx"
 	"github.com/inst-api/parser/internal/domain"
+	"github.com/inst-api/parser/pkg/logger"
 	"github.com/jackc/pgx/v4"
 )
 
@@ -19,6 +20,9 @@ var ErrNoBlogers = errors.New("no initial bloggers")
 
 // ErrNoReadyBots не смогли найти таску
 var ErrNoReadyBots = errors.New("all bots are blocked")
+
+// Количество ботов, которые будут задействованы для одного датасета
+const botsPerDataset = 5
 
 func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error) {
 	tx, err := s.txf(ctx)
@@ -41,7 +45,7 @@ func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (d
 
 	if dataset.Status != dbmodel.DraftDatasetStatus {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("%w: ожидали статус драфт (%d), а получили %d",
-			ErrTaskInvalidStatus, dbmodel.DraftDatasetStatus, dataset.Status,
+			ErrDatasetInvalidStatus, dbmodel.DraftDatasetStatus, dataset.Status,
 		)
 	}
 
@@ -54,12 +58,12 @@ func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (d
 		return domain.DatasetWithBloggers{}, ErrNoBlogers
 	}
 
-	count, err := q.CountAvailableBots(ctx)
+	countAvailableBots, err := q.CountAvailableBots(ctx)
 	if err != nil {
-		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to count available bots")
+		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to countAvailableBots available bots")
 	}
 
-	if count == 0 {
+	if countAvailableBots == 0 {
 		return domain.DatasetWithBloggers{}, ErrNoReadyBots
 	}
 
@@ -70,9 +74,11 @@ func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (d
 
 	dataset.Status = dbmodel.FindingSimilarStarted
 
-	err = s.findSimilarQueue.AddFindSimilarTask(ctx, dataset.ID, bloggers, 5)
-	if err != nil {
+	logger.Infof(ctx, "adding task for %d bloggers, expected maximum %d bots (available %d)", len(bloggers), botsPerDataset, countAvailableBots)
 
+	err = s.findSimilarService.AddFindSimilarTask(ctx, dataset.ID, bloggers, botsPerDataset)
+	if err != nil {
+		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to add task: %v", err)
 	}
 
 	err = tx.Commit(ctx)

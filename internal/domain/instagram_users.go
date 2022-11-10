@@ -40,6 +40,38 @@ type InstUser struct {
 	InteropMessagingUserFbid interface{} `json:"interop_messaging_user_fbid"`
 }
 
+type InstUserShort struct {
+	Pk              int64         `json:"pk"`
+	Username        string        `json:"username"`
+	FullName        string        `json:"full_name"`
+	ProfilePicUrl   string        `json:"profile_pic_url"`
+	ProfilePicUrlHd string        `json:"profile_pic_url_hd"`
+	IsPrivate       bool          `json:"is_private"`
+	IsVerified      bool          `json:"is_verified"`
+	Stories         []interface{} `json:"stories"`
+}
+
+func (u InstUser) ToUpdateParams(id uuid.UUID, isCorrect bool) dbmodel.UpdateBloggerParams {
+	parsedAt := time.Now()
+	return dbmodel.UpdateBloggerParams{
+		UserID:                 u.Pk,
+		FollowersCount:         int64(u.FollowerCount),
+		ParsedAt:               &parsedAt,
+		IsCorrect:              isCorrect,
+		Parsed:                 true,
+		IsPrivate:              u.IsPrivate,
+		IsVerified:             u.IsVerified,
+		IsBusiness:             u.IsBusiness,
+		FollowingsCount:        int32(u.FollowingCount),
+		ContactPhoneNumber:     u.ContactPhoneNumber,
+		PublicPhoneNumber:      u.PublicPhoneNumber,
+		PublicPhoneCountryCode: u.PublicPhoneCountryCode,
+		CityName:               u.CityName,
+		PublicEmail:            u.PublicEmail,
+		ID:                     id,
+	}
+}
+
 type InstUsers []InstUser
 
 func (u InstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.SaveBloggersParams {
@@ -64,6 +96,41 @@ func (u InstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.SaveBlogg
 			PublicPhoneCountryCode: user.PublicPhoneCountryCode,
 			CityName:               user.CityName,
 			PublicEmail:            user.PublicEmail,
+		}
+	}
+
+	return params
+}
+
+func (u InstUserShort) ToUpdateParams(id uuid.UUID, isCorrect bool) dbmodel.UpdateBloggerParams {
+	parsedAt := time.Now()
+	return dbmodel.UpdateBloggerParams{
+		UserID:     u.Pk,
+		ParsedAt:   &parsedAt,
+		IsCorrect:  isCorrect,
+		Parsed:     true,
+		IsPrivate:  u.IsPrivate,
+		IsVerified: u.IsVerified,
+		ID:         id,
+	}
+}
+
+type ShortInstUsers []InstUserShort
+
+func (u ShortInstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.SaveBloggersParams {
+	params := make([]dbmodel.SaveBloggersParams, len(u))
+	parsedAt := time.Now()
+
+	for i, user := range u {
+		params[i] = dbmodel.SaveBloggersParams{
+			DatasetID:  datasetID,
+			Username:   user.Username,
+			UserID:     user.Pk,
+			IsInitial:  false,
+			ParsedAt:   &parsedAt,
+			Parsed:     true,
+			IsPrivate:  user.IsPrivate,
+			IsVerified: user.IsVerified,
 		}
 	}
 

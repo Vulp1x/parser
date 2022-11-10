@@ -138,17 +138,7 @@ var _ = Service("datasets_service", func() {
 			Required("token", "dataset_id")
 		})
 
-		Result(func() {
-			Attribute("status", DatasetStatus)
-			Attribute("dataset_id", String, func() {
-				Description("id задачи")
-				Meta("struct:tag:json", "dataset_id")
-			})
-
-			Attribute("bloggers", ArrayOf(Blogger))
-
-			Required("dataset_id", "status", "bloggers")
-		})
+		Result(Dataset)
 
 		HTTP(func() {
 			POST("/api/datasets/{dataset_id}/start/")

@@ -24,7 +24,7 @@ type Service interface {
 	// остановить выполнение.
 	UpdateDataset(context.Context, *UpdateDatasetPayload) (res *Dataset, err error)
 	// начать выполнение задачи
-	FindSimilar(context.Context, *FindSimilarPayload) (res *FindSimilarResult, err error)
+	FindSimilar(context.Context, *FindSimilarPayload) (res *Dataset, err error)
 	// получить статус выполнения поиска похожих аккаунтов по айди датасета
 	GetProgress(context.Context, *GetProgressPayload) (res *DatasetProgress, err error)
 	// получить базу доноров для выбранных блогеров
@@ -118,15 +118,6 @@ type FindSimilarPayload struct {
 	Token string
 	// id задачи
 	DatasetID string `json:"dataset_id"`
-}
-
-// FindSimilarResult is the result type of the datasets_service service find
-// similar method.
-type FindSimilarResult struct {
-	Status DatasetStatus
-	// id задачи
-	DatasetID string `json:"dataset_id"`
-	Bloggers  []*Blogger
 }
 
 // GetDatasetPayload is the payload type of the datasets_service service get

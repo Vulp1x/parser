@@ -7,9 +7,9 @@ const (
 	DraftDatasetStatus datasetStatus = 1
 	// FindingSimilarStarted запустили поиска похожих блогеров
 	FindingSimilarStarted datasetStatus = 2
-	// ReadyDatasetStatus задача готова к запуску
-	ReadyDatasetStatus   datasetStatus = 3
-	StartedDatasetStatus datasetStatus = 4
+	// ReadyForParsingDatasetStatus закончили поиск похожих блогеров
+	ReadyForParsingDatasetStatus datasetStatus = 3
+	StartedDatasetStatus         datasetStatus = 4
 	// StoppedDatasetStatus - задача остановлена
 	StoppedDatasetStatus datasetStatus = 5
 	// DoneDatasetStatus задача выполнена

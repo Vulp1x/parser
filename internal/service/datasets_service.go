@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/google/uuid"
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
@@ -18,6 +19,7 @@ type datasetsStore interface {
 	GetDataset(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
 	UpdateDataset(ctx context.Context, datasetID uuid.UUID, originalAccounts []string, opts ...datasets.UpdateOption) (domain.DatasetWithBloggers, error)
 	List(ctx context.Context, managerID uuid.UUID) (domain.Datasets, error)
+	FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
 }
 
 // datasets_service service example implementation.
@@ -99,10 +101,30 @@ func (s *datasetsServicesrvc) UpdateDataset(ctx context.Context, p *datasetsserv
 }
 
 // FindSimilar начать выполнение задачи
-func (s *datasetsServicesrvc) FindSimilar(ctx context.Context, p *datasetsservice.FindSimilarPayload) (res *datasetsservice.FindSimilarResult, err error) {
+func (s *datasetsServicesrvc) FindSimilar(ctx context.Context, p *datasetsservice.FindSimilarPayload) (*datasetsservice.Dataset, error) {
 	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
 
-	return
+	datasetID, err := uuid.Parse(p.DatasetID)
+	if err != nil {
+		logger.Error(ctx, err.Error())
+		return nil, datasetsservice.BadRequest(err.Error())
+	}
+
+	datasetWithBloggers, err := s.store.FindSimilarBloggers(ctx, datasetID)
+	if err != nil {
+		logger.Errorf(ctx, "failed to find similar bots: %v", err)
+		if errors.Is(err, datasets.ErrDatasetInvalidStatus) || errors.Is(err, datasets.ErrNoBlogers) || errors.Is(err, datasets.ErrNoReadyBots) {
+			return nil, datasetsservice.BadRequest(err.Error())
+		}
+
+		if errors.Is(err, datasets.ErrDatasetNotFound) {
+			return nil, datasetsservice.DatasetNotFound("")
+		}
+
+		return nil, internalErr(err)
+	}
+
+	return datasetWithBloggers.ToProto(), nil
 }
 
 // ParseDataset получить базу доноров для выбранных блогеров
@@ -139,10 +161,50 @@ func (s *datasetsServicesrvc) GetDataset(ctx context.Context, p *datasetsservice
 }
 
 // GetProgress получить статус выполнения задачи по id
-func (s *datasetsServicesrvc) GetProgress(ctx context.Context, p *datasetsservice.GetProgressPayload) (res *datasetsservice.DatasetProgress, err error) {
-	res = &datasetsservice.DatasetProgress{}
+func (s *datasetsServicesrvc) GetProgress(ctx context.Context, p *datasetsservice.GetProgressPayload) (*datasetsservice.DatasetProgress, error) {
+	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
 	logger.Info(ctx, "datasetsService.get progress")
-	return
+
+	datasetID, err := uuid.Parse(p.DatasetID)
+	if err != nil {
+		logger.Error(ctx, err.Error())
+		return nil, datasetsservice.BadRequest(err.Error())
+	}
+
+	dataset, err := s.store.GetDataset(ctx, datasetID)
+	if err != nil {
+		logger.Errorf(ctx, "failed to find dataset by id: %v", err)
+
+		if errors.Is(err, datasets.ErrDatasetNotFound) {
+			return nil, datasetsservice.DatasetNotFound("")
+		}
+
+		return nil, internalErr(err)
+	}
+
+	var initialBloggersCount, newBloggersCount, filteredBloggersCount int
+
+	for _, blogger := range dataset.Bloggers {
+		if blogger.IsInitial {
+			initialBloggersCount++
+		} else {
+			newBloggersCount++
+		}
+
+		if dataset.Dataset.PhoneCode != nil &&
+			blogger.PublicPhoneCountryCode != nil &&
+			fmt.Sprintf("%d", dataset.Dataset.PhoneCode) == *blogger.PublicPhoneCountryCode {
+			filteredBloggersCount++
+		}
+	}
+
+	return &datasetsservice.DatasetProgress{
+		Bloggers:         dataset.ToBloggersProto(),
+		InitialBloggers:  initialBloggersCount,
+		NewBloggers:      newBloggersCount,
+		FilteredBloggers: filteredBloggersCount,
+		Done:             dataset.IsReadyForParsing(),
+	}, nil
 }
 
 // ListDatasets получить все задачи для текущего пользователя

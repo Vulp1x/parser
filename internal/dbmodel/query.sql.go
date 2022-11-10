@@ -59,7 +59,7 @@ func (q *Queries) CreateDraftDataset(ctx context.Context, arg CreateDraftDataset
 const deleteBloggersPerDataset = `-- name: DeleteBloggersPerDataset :execresult
 delete
 from bloggers
-where dataset_id = ?
+where dataset_id = $1
   and is_initial = true
 `
 
@@ -68,9 +68,9 @@ func (q *Queries) DeleteBloggersPerDataset(ctx context.Context, datasetID uuid.U
 }
 
 const findBloggersForDataset = `-- name: FindBloggersForDataset :many
-select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email
 from bloggers
-where dataset_id = ?
+where dataset_id = $1
 `
 
 func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUID) ([]Blogger, error) {
@@ -93,6 +93,7 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 			&i.ParsedAt,
 			&i.UpdatedAt,
 			&i.Parsed,
+			&i.IsCorrect,
 			&i.IsPrivate,
 			&i.IsVerified,
 			&i.IsBusiness,
@@ -114,9 +115,9 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 }
 
 const findInitialBloggersForDataset = `-- name: FindInitialBloggersForDataset :many
-select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email
 from bloggers
-where dataset_id = ?
+where dataset_id = $1
   AND is_initial = true
 `
 
@@ -140,6 +141,7 @@ func (q *Queries) FindInitialBloggersForDataset(ctx context.Context, datasetID u
 			&i.ParsedAt,
 			&i.UpdatedAt,
 			&i.Parsed,
+			&i.IsCorrect,
 			&i.IsPrivate,
 			&i.IsVerified,
 			&i.IsBusiness,
@@ -241,7 +243,7 @@ where id in (select id
              from bots
              where is_blocked = false
                and (bots.locked_until is null or locked_until < now())
-             limit ?)
+             limit $1)
 RETURNING id, username, session_id, proxy, is_blocked, created_at, updated_at, deleted_at, locked_until
 `
 
@@ -296,7 +298,10 @@ type SaveBloggersParams struct {
 
 const saveBots = `-- name: SaveBots :execrows
 insert into bots (username, session_id, proxy, is_blocked)
-    (select unnest($1::text[]), unnest($2::text[]), unnest($3::jsonb[]), false)
+    (select unnest($1::text[]),
+            unnest($2::text[]),
+            unnest($3::jsonb[]),
+            false)
 ON CONFLICT (session_id) DO NOTHING
 `
 
@@ -318,6 +323,94 @@ type SaveTargetUsersParams struct {
 	DatasetID uuid.UUID `json:"dataset_id"`
 	Username  string    `json:"username"`
 	UserID    int64     `json:"user_id"`
+}
+
+const setBloggerIsParsed = `-- name: SetBloggerIsParsed :exec
+update bloggers
+set parsed     = true,
+    is_correct = $1,
+    parsed_at  = now()
+where id = $2
+`
+
+type SetBloggerIsParsedParams struct {
+	IsCorrect bool      `json:"is_correct"`
+	ID        uuid.UUID `json:"id"`
+}
+
+func (q *Queries) SetBloggerIsParsed(ctx context.Context, arg SetBloggerIsParsedParams) error {
+	_, err := q.db.Exec(ctx, setBloggerIsParsed, arg.IsCorrect, arg.ID)
+	return err
+}
+
+const unlockBot = `-- name: UnlockBot :exec
+update bots
+set locked_until = now() + interval '10s'
+where id = $1
+`
+
+// Чтобы другие запросы смогли опять его использовать
+func (q *Queries) UnlockBot(ctx context.Context, id uuid.UUID) error {
+	_, err := q.db.Exec(ctx, unlockBot, id)
+	return err
+}
+
+const updateBlogger = `-- name: UpdateBlogger :exec
+update bloggers
+set user_id                   = $1,
+    followers_count           = $2,
+    parsed_at                 = $3,
+    parsed                    = $4,
+    is_correct                = $5,
+    is_private                = $6,
+    is_verified               = $7,
+    is_business               = $8,
+    followings_count          = $9,
+    contact_phone_number      = $10,
+    public_phone_number       = $11,
+    public_phone_country_code = $12,
+    city_name                 = $13,
+    public_email              = $14
+where id = $15
+`
+
+type UpdateBloggerParams struct {
+	UserID                 int64      `json:"user_id"`
+	FollowersCount         int64      `json:"followers_count"`
+	ParsedAt               *time.Time `json:"parsed_at"`
+	Parsed                 bool       `json:"parsed"`
+	IsCorrect              bool       `json:"is_correct"`
+	IsPrivate              bool       `json:"is_private"`
+	IsVerified             bool       `json:"is_verified"`
+	IsBusiness             bool       `json:"is_business"`
+	FollowingsCount        int32      `json:"followings_count"`
+	ContactPhoneNumber     *string    `json:"contact_phone_number"`
+	PublicPhoneNumber      *string    `json:"public_phone_number"`
+	PublicPhoneCountryCode *string    `json:"public_phone_country_code"`
+	CityName               *string    `json:"city_name"`
+	PublicEmail            *string    `json:"public_email"`
+	ID                     uuid.UUID  `json:"id"`
+}
+
+func (q *Queries) UpdateBlogger(ctx context.Context, arg UpdateBloggerParams) error {
+	_, err := q.db.Exec(ctx, updateBlogger,
+		arg.UserID,
+		arg.FollowersCount,
+		arg.ParsedAt,
+		arg.Parsed,
+		arg.IsCorrect,
+		arg.IsPrivate,
+		arg.IsVerified,
+		arg.IsBusiness,
+		arg.FollowingsCount,
+		arg.ContactPhoneNumber,
+		arg.PublicPhoneNumber,
+		arg.PublicPhoneCountryCode,
+		arg.CityName,
+		arg.PublicEmail,
+		arg.ID,
+	)
+	return err
 }
 
 const updateDataset = `-- name: UpdateDataset :one
