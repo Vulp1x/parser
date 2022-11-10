@@ -40,6 +40,16 @@ func handleGRPCServer(ctx context.Context, u *url.URL, src api.ParserServer, wg 
 	// See https://grpc.github.io/grpc/core/md_doc_server-reflection.html.
 	reflection.Register(srv)
 
+	// 	mux, err := swaggway.NewMux(desc, a.publicServer, a.opts.ServeMuxOpts...)
+	// 	if err != nil {
+	// 		logger.Fatalf(context.Background(), "error while init gateway:%s", err.Error())
+	// 	}
+	//
+	// 	if err := desc.RegisterGateway(context.Background(), mux); err != nil {
+	// 		logger.Fatalf(context.Background(), "error while register gateway:%s", err.Error())
+	// 	}
+	// }
+
 	defer wg.Done()
 
 	// Start gRPC server in a separate goroutine.

@@ -1,0 +1,149 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "parser.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Parser"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/parser.Parser/SaveBots": {
+      "post": {
+        "summary": "сохраняем ботов",
+        "operationId": "Parser_SaveBots",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/parserSaveBotsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/parserSaveBotsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Parser"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "parserBot": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "имя аккаунта в инстаграме"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "количество блогеров, которые проходят проверку по коду региона"
+        },
+        "sessionId": {
+          "type": "string",
+          "title": "количество блогеров, которые проходят проверку по коду региона"
+        },
+        "proxy": {
+          "$ref": "#/definitions/parserProxy",
+          "title": "прокси для бота"
+        }
+      }
+    },
+    "parserProxy": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "title": "имя аккаунта в инстаграме"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32",
+          "title": "количество блогеров, которые проходят проверку по коду региона"
+        },
+        "login": {
+          "type": "string",
+          "title": "имя аккаунта в инстаграме"
+        },
+        "pass": {
+          "type": "string",
+          "title": "имя аккаунта в инстаграме"
+        }
+      }
+    },
+    "parserSaveBotsRequest": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "bots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/parserBot"
+          }
+        }
+      }
+    },
+    "parserSaveBotsResponse": {
+      "type": "object",
+      "properties": {
+        "botsSaved": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
