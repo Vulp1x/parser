@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     ports:
       - "9090:9090" # REST
+      - "9091:9091" # GRPC
     #    healthcheck:
     #      test: ['CMD', 'curl', '-f', 'http://localhost:8000/live']
     #      interval: 1m
