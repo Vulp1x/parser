@@ -26,6 +26,7 @@ type Server struct {
 	ParseDataset       http.Handler
 	GetDataset         http.Handler
 	GetParsingProgress http.Handler
+	DownloadTargets    http.Handler
 	ListDatasets       http.Handler
 }
 
@@ -63,6 +64,7 @@ func New(
 			{"ParseDataset", "POST", "/api/datasets/{dataset_id}/parse/"},
 			{"GetDataset", "GET", "/api/datasets/{dataset_id}/"},
 			{"GetParsingProgress", "GET", "/api/datasets/{dataset_id}/parsing_progress/"},
+			{"DownloadTargets", "GET", "/api/datasets/{dataset_id}/download/"},
 			{"ListDatasets", "GET", "/api/datasets/"},
 		},
 		CreateDatasetDraft: NewCreateDatasetDraftHandler(e.CreateDatasetDraft, mux, decoder, encoder, errhandler, formatter),
@@ -72,6 +74,7 @@ func New(
 		ParseDataset:       NewParseDatasetHandler(e.ParseDataset, mux, decoder, encoder, errhandler, formatter),
 		GetDataset:         NewGetDatasetHandler(e.GetDataset, mux, decoder, encoder, errhandler, formatter),
 		GetParsingProgress: NewGetParsingProgressHandler(e.GetParsingProgress, mux, decoder, encoder, errhandler, formatter),
+		DownloadTargets:    NewDownloadTargetsHandler(e.DownloadTargets, mux, decoder, encoder, errhandler, formatter),
 		ListDatasets:       NewListDatasetsHandler(e.ListDatasets, mux, decoder, encoder, errhandler, formatter),
 	}
 }
@@ -88,6 +91,7 @@ func (s *Server) Use(m func(http.Handler) http.Handler) {
 	s.ParseDataset = m(s.ParseDataset)
 	s.GetDataset = m(s.GetDataset)
 	s.GetParsingProgress = m(s.GetParsingProgress)
+	s.DownloadTargets = m(s.DownloadTargets)
 	s.ListDatasets = m(s.ListDatasets)
 }
 
@@ -103,6 +107,7 @@ func Mount(mux goahttp.Muxer, h *Server) {
 	MountParseDatasetHandler(mux, h.ParseDataset)
 	MountGetDatasetHandler(mux, h.GetDataset)
 	MountGetParsingProgressHandler(mux, h.GetParsingProgress)
+	MountDownloadTargetsHandler(mux, h.DownloadTargets)
 	MountListDatasetsHandler(mux, h.ListDatasets)
 }
 
@@ -449,6 +454,57 @@ func NewGetParsingProgressHandler(
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
 		ctx = context.WithValue(ctx, goa.MethodKey, "get parsing progress")
+		ctx = context.WithValue(ctx, goa.ServiceKey, "datasets_service")
+		payload, err := decodeRequest(r)
+		if err != nil {
+			if err := encodeError(ctx, w, err); err != nil {
+				errhandler(ctx, w, err)
+			}
+			return
+		}
+		res, err := endpoint(ctx, payload)
+		if err != nil {
+			if err := encodeError(ctx, w, err); err != nil {
+				errhandler(ctx, w, err)
+			}
+			return
+		}
+		if err := encodeResponse(ctx, w, res); err != nil {
+			errhandler(ctx, w, err)
+		}
+	})
+}
+
+// MountDownloadTargetsHandler configures the mux to serve the
+// "datasets_service" service "download targets" endpoint.
+func MountDownloadTargetsHandler(mux goahttp.Muxer, h http.Handler) {
+	f, ok := h.(http.HandlerFunc)
+	if !ok {
+		f = func(w http.ResponseWriter, r *http.Request) {
+			h.ServeHTTP(w, r)
+		}
+	}
+	mux.Handle("GET", "/api/datasets/{dataset_id}/download/", f)
+}
+
+// NewDownloadTargetsHandler creates a HTTP handler which loads the HTTP
+// request and calls the "datasets_service" service "download targets" endpoint.
+func NewDownloadTargetsHandler(
+	endpoint goa.Endpoint,
+	mux goahttp.Muxer,
+	decoder func(*http.Request) goahttp.Decoder,
+	encoder func(context.Context, http.ResponseWriter) goahttp.Encoder,
+	errhandler func(context.Context, http.ResponseWriter, error),
+	formatter func(ctx context.Context, err error) goahttp.Statuser,
+) http.Handler {
+	var (
+		decodeRequest  = DecodeDownloadTargetsRequest(mux, decoder)
+		encodeResponse = EncodeDownloadTargetsResponse(encoder)
+		encodeError    = EncodeDownloadTargetsError(encoder, formatter)
+	)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
+		ctx = context.WithValue(ctx, goa.MethodKey, "download targets")
 		ctx = context.WithValue(ctx, goa.ServiceKey, "datasets_service")
 		payload, err := decodeRequest(r)
 		if err != nil {

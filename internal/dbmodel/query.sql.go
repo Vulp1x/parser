@@ -68,7 +68,7 @@ func (q *Queries) DeleteBloggersPerDataset(ctx context.Context, datasetID uuid.U
 }
 
 const findBloggersForDataset = `-- name: FindBloggersForDataset :many
-select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email, status
 from bloggers
 where dataset_id = $1
 `
@@ -103,6 +103,7 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 			&i.PublicPhoneCountryCode,
 			&i.CityName,
 			&i.PublicEmail,
+			&i.Status,
 		); err != nil {
 			return nil, err
 		}
@@ -115,7 +116,7 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 }
 
 const findInitialBloggersForDataset = `-- name: FindInitialBloggersForDataset :many
-select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email, status
 from bloggers
 where dataset_id = $1
   AND is_initial = true
@@ -151,6 +152,7 @@ func (q *Queries) FindInitialBloggersForDataset(ctx context.Context, datasetID u
 			&i.PublicPhoneCountryCode,
 			&i.CityName,
 			&i.PublicEmail,
+			&i.Status,
 		); err != nil {
 			return nil, err
 		}
@@ -277,6 +279,17 @@ func (q *Queries) LockAvailableBots(ctx context.Context, limit int32) ([]Bot, er
 	return items, nil
 }
 
+const markBloggerAsParsed = `-- name: MarkBloggerAsParsed :exec
+update bloggers
+set status = 3 -- TargetsParsedBloggerStatus
+where id = $1
+`
+
+func (q *Queries) MarkBloggerAsParsed(ctx context.Context, id uuid.UUID) error {
+	_, err := q.db.Exec(ctx, markBloggerAsParsed, id)
+	return err
+}
+
 type SaveBloggersParams struct {
 	DatasetID              uuid.UUID  `json:"dataset_id"`
 	Username               string     `json:"username"`
@@ -319,10 +332,43 @@ func (q *Queries) SaveBots(ctx context.Context, arg SaveBotsParams) (int64, erro
 	return result.RowsAffected(), nil
 }
 
+const saveTargetUsers = `-- name: SaveTargetUsers :execrows
+insert into targets (username, user_id, full_name, is_private, is_verified, dataset_id)
+    (select unnest($1::text[]),
+            unnest($2::bigint[]),
+            unnest($3::text[]),
+            unnest($4::bool[]),
+            unnest($5::bool[]),
+            $6)
+ON CONFLICT (user_id, dataset_id) DO UPDATE set updated_at  = now(),
+                                                username    = excluded.username,
+                                                is_private  = excluded.is_private,
+                                                is_verified = excluded.is_verified,
+                                                full_name   = excluded.full_name
+`
+
 type SaveTargetUsersParams struct {
-	DatasetID uuid.UUID `json:"dataset_id"`
-	Username  string    `json:"username"`
-	UserID    int64     `json:"user_id"`
+	Usernames  []string  `json:"usernames"`
+	UserIds    []int64   `json:"user_ids"`
+	FullNames  []string  `json:"full_names"`
+	IsPrivate  []bool    `json:"is_private"`
+	IsVerified []bool    `json:"is_verified"`
+	DatasetID  uuid.UUID `json:"dataset_id"`
+}
+
+func (q *Queries) SaveTargetUsers(ctx context.Context, arg SaveTargetUsersParams) (int64, error) {
+	result, err := q.db.Exec(ctx, saveTargetUsers,
+		arg.Usernames,
+		arg.UserIds,
+		arg.FullNames,
+		arg.IsPrivate,
+		arg.IsVerified,
+		arg.DatasetID,
+	)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const setBloggerIsParsed = `-- name: SetBloggerIsParsed :exec

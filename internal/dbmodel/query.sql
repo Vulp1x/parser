@@ -6,9 +6,19 @@ insert into bots (username, session_id, proxy, is_blocked)
             false)
 ON CONFLICT (session_id) DO NOTHING;
 
--- name: SaveTargetUsers :copyfrom
-insert into targets (dataset_id, username, user_id)
-values ($1, $2, $3);
+-- name: SaveTargetUsers :execrows
+insert into targets (username, user_id, full_name, is_private, is_verified, dataset_id)
+    (select unnest(sqlc.arg(usernames)::text[]),
+            unnest(sqlc.arg(user_ids)::bigint[]),
+            unnest(sqlc.arg(full_names)::text[]),
+            unnest(sqlc.arg(is_private)::bool[]),
+            unnest(sqlc.arg(is_verified)::bool[]),
+            @dataset_id)
+ON CONFLICT (user_id, dataset_id) DO UPDATE set updated_at  = now(),
+                                                username    = excluded.username,
+                                                is_private  = excluded.is_private,
+                                                is_verified = excluded.is_verified,
+                                                full_name   = excluded.full_name;
 
 -- name: CreateDraftDataset :one
 insert into datasets (title, manager_id, status, created_at)
@@ -119,4 +129,9 @@ set user_id                   = @user_id,
     public_phone_country_code = @public_phone_country_code,
     city_name                 = @city_name,
     public_email              = @public_email
+where id = @id;
+
+-- name: MarkBloggerAsParsed :exec
+update bloggers
+set status = 3 -- TargetsParsedBloggerStatus
 where id = @id;

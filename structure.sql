@@ -56,7 +56,8 @@ CREATE TABLE public.bloggers (
     public_phone_number text,
     public_phone_country_code text,
     city_name text,
-    public_email text
+    public_email text,
+    status smallint DEFAULT 0 NOT NULL
 );
 
 
@@ -125,14 +126,7 @@ CREATE TABLE public.targets (
     updated_at timestamp without time zone,
     is_private boolean DEFAULT false NOT NULL,
     is_verified boolean DEFAULT false NOT NULL,
-    is_business boolean DEFAULT false NOT NULL,
-    followers_count integer DEFAULT '-1'::integer NOT NULL,
-    followings_count integer DEFAULT '-1'::integer NOT NULL,
-    contact_phone_number text,
-    public_phone_number text,
-    public_phone_country_code text,
-    city_name text,
-    public_email text
+    full_name text DEFAULT ''::text NOT NULL
 );
 
 

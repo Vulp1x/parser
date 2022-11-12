@@ -12,23 +12,32 @@ import (
 const botLockDuration = 10 * time.Minute
 
 type Service struct {
-	similarQueue taskq.Queue
-	dbf          dbmodel.DBTXFunc
-	cli          *instagrapi.Client
-	task         *taskq.Task
+	similarQueue      taskq.Queue
+	dbf               dbmodel.DBTXFunc
+	cli               *instagrapi.Client
+	findSimilarTask   *taskq.Task
+	parseTargetsTask  *taskq.Task
+	parseTargetsQueue *memqueue.Queue
 }
 
 func NewService(instagrapiHost string, dbf dbmodel.DBTXFunc) Service {
-	q := memqueue.NewQueue(&taskq.QueueOptions{
+	simQueue := memqueue.NewQueue(&taskq.QueueOptions{
 		Name:            "find_similar",
 		ReservationSize: 1,
 		Storage:         taskq.NewLocalStorage(),
 	})
 
+	parseTargetsQueue := memqueue.NewQueue(&taskq.QueueOptions{
+		Name:            "parse_targets",
+		ReservationSize: 1,
+		Storage:         taskq.NewLocalStorage(),
+	})
+
 	service := Service{
-		similarQueue: q,
-		cli:          instagrapi.NewClient(instagrapiHost),
-		dbf:          dbf,
+		similarQueue:      simQueue,
+		parseTargetsQueue: parseTargetsQueue,
+		cli:               instagrapi.NewClient(instagrapiHost),
+		dbf:               dbf,
 	}
 
 	task := taskq.RegisterTask(&taskq.TaskOptions{
@@ -39,7 +48,16 @@ func NewService(instagrapiHost string, dbf dbmodel.DBTXFunc) Service {
 		MinBackoff:      5 * time.Second,
 	})
 
-	service.task = task
+	parseTargetsTask := taskq.RegisterTask(&taskq.TaskOptions{
+		Name:            "parse targets from bloggers",
+		Handler:         service.findSimilarBloggers,
+		FallbackHandler: service.processFailedTask,
+		RetryLimit:      5,
+		MinBackoff:      5 * time.Second,
+	})
+
+	service.findSimilarTask = task
+	service.parseTargetsTask = parseTargetsTask
 
 	return service
 }

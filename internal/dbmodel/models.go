@@ -11,26 +11,27 @@ import (
 )
 
 type Blogger struct {
-	ID                     uuid.UUID  `json:"id"`
-	DatasetID              uuid.UUID  `json:"dataset_id"`
-	Username               string     `json:"username"`
-	UserID                 int64      `json:"user_id"`
-	FollowersCount         int64      `json:"followers_count"`
-	IsInitial              bool       `json:"is_initial"`
-	CreatedAt              time.Time  `json:"created_at"`
-	ParsedAt               *time.Time `json:"parsed_at"`
-	UpdatedAt              *time.Time `json:"updated_at"`
-	Parsed                 bool       `json:"parsed"`
-	IsCorrect              bool       `json:"is_correct"`
-	IsPrivate              bool       `json:"is_private"`
-	IsVerified             bool       `json:"is_verified"`
-	IsBusiness             bool       `json:"is_business"`
-	FollowingsCount        int32      `json:"followings_count"`
-	ContactPhoneNumber     *string    `json:"contact_phone_number"`
-	PublicPhoneNumber      *string    `json:"public_phone_number"`
-	PublicPhoneCountryCode *string    `json:"public_phone_country_code"`
-	CityName               *string    `json:"city_name"`
-	PublicEmail            *string    `json:"public_email"`
+	ID                     uuid.UUID     `json:"id"`
+	DatasetID              uuid.UUID     `json:"dataset_id"`
+	Username               string        `json:"username"`
+	UserID                 int64         `json:"user_id"`
+	FollowersCount         int64         `json:"followers_count"`
+	IsInitial              bool          `json:"is_initial"`
+	CreatedAt              time.Time     `json:"created_at"`
+	ParsedAt               *time.Time    `json:"parsed_at"`
+	UpdatedAt              *time.Time    `json:"updated_at"`
+	Parsed                 bool          `json:"parsed"`
+	IsCorrect              bool          `json:"is_correct"`
+	IsPrivate              bool          `json:"is_private"`
+	IsVerified             bool          `json:"is_verified"`
+	IsBusiness             bool          `json:"is_business"`
+	FollowingsCount        int32         `json:"followings_count"`
+	ContactPhoneNumber     *string       `json:"contact_phone_number"`
+	PublicPhoneNumber      *string       `json:"public_phone_number"`
+	PublicPhoneCountryCode *string       `json:"public_phone_country_code"`
+	CityName               *string       `json:"city_name"`
+	PublicEmail            *string       `json:"public_email"`
+	Status                 bloggerStatus `json:"status"`
 }
 
 type Bot struct {
@@ -62,21 +63,14 @@ type Dataset struct {
 }
 
 type Target struct {
-	ID                     uuid.UUID  `json:"id"`
-	DatasetID              uuid.UUID  `json:"dataset_id"`
-	Username               string     `json:"username"`
-	UserID                 int64      `json:"user_id"`
-	Status                 int16      `json:"status"`
-	CreatedAt              time.Time  `json:"created_at"`
-	UpdatedAt              *time.Time `json:"updated_at"`
-	IsPrivate              bool       `json:"is_private"`
-	IsVerified             bool       `json:"is_verified"`
-	IsBusiness             bool       `json:"is_business"`
-	FollowersCount         int32      `json:"followers_count"`
-	FollowingsCount        int32      `json:"followings_count"`
-	ContactPhoneNumber     *string    `json:"contact_phone_number"`
-	PublicPhoneNumber      *string    `json:"public_phone_number"`
-	PublicPhoneCountryCode *string    `json:"public_phone_country_code"`
-	CityName               *string    `json:"city_name"`
-	PublicEmail            *string    `json:"public_email"`
+	ID         uuid.UUID  `json:"id"`
+	DatasetID  uuid.UUID  `json:"dataset_id"`
+	Username   string     `json:"username"`
+	UserID     int64      `json:"user_id"`
+	Status     int16      `json:"status"`
+	CreatedAt  time.Time  `json:"created_at"`
+	UpdatedAt  *time.Time `json:"updated_at"`
+	IsPrivate  bool       `json:"is_private"`
+	IsVerified bool       `json:"is_verified"`
+	FullName   string     `json:"full_name"`
 }

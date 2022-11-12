@@ -33,6 +33,8 @@ type Service interface {
 	GetDataset(context.Context, *GetDatasetPayload) (res *Dataset, err error)
 	// получить статус выполнения парсинга аккаунтов
 	GetParsingProgress(context.Context, *GetParsingProgressPayload) (res *ParsingProgress, err error)
+	// получить всех пользователей, которых спарсили в задаче
+	DownloadTargets(context.Context, *DownloadTargetsPayload) (res []string, err error)
 	// получить все задачи для текущего пользователя
 	ListDatasets(context.Context, *ListDatasetsPayload) (res []*Dataset, err error)
 }
@@ -51,7 +53,7 @@ const ServiceName = "datasets_service"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [8]string{"create dataset draft", "update dataset", "find similar", "get progress", "parse dataset", "get dataset", "get parsing progress", "list datasets"}
+var MethodNames = [9]string{"create dataset draft", "update dataset", "find similar", "get progress", "parse dataset", "get dataset", "get parsing progress", "download targets", "list datasets"}
 
 type Blogger struct {
 	ID string
@@ -112,6 +114,17 @@ type DatasetProgress struct {
 // 5- успешно закончили парсинг юзеров
 // 6- всё сломалось
 type DatasetStatus int
+
+// DownloadTargetsPayload is the payload type of the datasets_service service
+// download targets method.
+type DownloadTargetsPayload struct {
+	// JWT used for authentication
+	Token string
+	// id задачи
+	DatasetID string `json:"dataset_id"`
+	// 1- только user_id, 2- только username, 3 - и то и другое
+	Format int
+}
 
 // FindSimilarPayload is the payload type of the datasets_service service find
 // similar method.

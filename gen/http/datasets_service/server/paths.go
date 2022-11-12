@@ -46,6 +46,11 @@ func GetParsingProgressDatasetsServicePath(datasetID string) string {
 	return fmt.Sprintf("/api/datasets/%v/parsing_progress/", datasetID)
 }
 
+// DownloadTargetsDatasetsServicePath returns the URL path to the datasets_service service download targets HTTP endpoint.
+func DownloadTargetsDatasetsServicePath(datasetID string) string {
+	return fmt.Sprintf("/api/datasets/%v/download/", datasetID)
+}
+
 // ListDatasetsDatasetsServicePath returns the URL path to the datasets_service service list datasets HTTP endpoint.
 func ListDatasetsDatasetsServicePath() string {
 	return "/api/datasets/"

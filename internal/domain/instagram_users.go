@@ -117,11 +117,11 @@ func (u InstUserShort) ToUpdateParams(id uuid.UUID, isCorrect bool) dbmodel.Upda
 
 type ShortInstUsers []InstUserShort
 
-func (u ShortInstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.SaveBloggersParams {
-	params := make([]dbmodel.SaveBloggersParams, len(u))
+func (su ShortInstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.SaveBloggersParams {
+	params := make([]dbmodel.SaveBloggersParams, len(su))
 	parsedAt := time.Now()
 
-	for i, user := range u {
+	for i, user := range su {
 		params[i] = dbmodel.SaveBloggersParams{
 			DatasetID:  datasetID,
 			Username:   user.Username,
@@ -135,4 +135,29 @@ func (u ShortInstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.Save
 	}
 
 	return params
+}
+
+func (su ShortInstUsers) ToSaveTargetsParams(datasetID uuid.UUID) dbmodel.SaveTargetUsersParams {
+	var usernames = make([]string, len(su))
+	var fullNames = make([]string, len(su))
+	var userIDs = make([]int64, len(su))
+	var isPrivates = make([]bool, len(su))
+	var isVerified = make([]bool, len(su))
+
+	for i, user := range su {
+		usernames[i] = user.Username
+		userIDs[i] = user.Pk
+		fullNames[i] = user.FullName
+		isPrivates[i] = user.IsPrivate
+		isVerified[i] = user.IsVerified
+	}
+
+	return dbmodel.SaveTargetUsersParams{
+		Usernames:  usernames,
+		UserIds:    userIDs,
+		FullNames:  fullNames,
+		IsPrivate:  isPrivates,
+		IsVerified: isVerified,
+		DatasetID:  datasetID,
+	}
 }

@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/inst-api/parser/internal/domain"
@@ -22,7 +22,7 @@ var ErrBloggerNotFound = errors.New("blogger not found")
 
 type Client struct {
 	cli              *http.Client
-	saveResponseFunc func(ctx context.Context, sessionID string, response *http.Response, opts ...SaveResponseOption) error
+	saveResponseFunc func(ctx context.Context, sessionID string, response *http.Response, opts ...SaveResponseOption) ([]byte, error)
 	host             string
 }
 
@@ -38,7 +38,7 @@ func (c *Client) CheckBot(ctx context.Context, sessionID string) error {
 		return err
 	}
 
-	err = c.saveResponseFunc(ctx, sessionID, resp, WithElapsedTime(time.Since(startedAt)))
+	_, err = c.saveResponseFunc(ctx, sessionID, resp, WithElapsedTime(time.Since(startedAt)))
 	if err != nil {
 		logger.Errorf(ctx, "failed to save response: %v", err)
 	}
@@ -64,7 +64,8 @@ func (c Client) FindSimilarBloggers(ctx context.Context, sessionID, bloggerUserN
 		return nil, err
 	}
 
-	err = c.saveResponseFunc(ctx, sessionID, resp, WithElapsedTime(time.Since(startedAt)), WithReuseResponseBody(true))
+	var respBytes []byte
+	respBytes, err = c.saveResponseFunc(ctx, sessionID, resp, WithElapsedTime(time.Since(startedAt)))
 	if err != nil {
 		logger.Errorf(ctx, "failed to save response: %v", err)
 	}
@@ -79,12 +80,6 @@ func (c Client) FindSimilarBloggers(ctx context.Context, sessionID, bloggerUserN
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("got %d response code, expected 200", resp.StatusCode)
-	}
-	defer resp.Body.Close()
-
-	respBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read body: %v", err)
 	}
 
 	var users []domain.InstUser
@@ -110,7 +105,8 @@ func (c Client) FindSimilarBloggersShort(ctx context.Context, sessionID, blogger
 		return nil, err
 	}
 
-	err = c.saveResponseFunc(ctx, sessionID, resp, WithElapsedTime(time.Since(startedAt)), WithReuseResponseBody(true))
+	var respBytes []byte
+	respBytes, err = c.saveResponseFunc(ctx, sessionID, resp, WithElapsedTime(time.Since(startedAt)))
 	if err != nil {
 		logger.Errorf(ctx, "failed to save response: %v", err)
 	}
@@ -126,11 +122,59 @@ func (c Client) FindSimilarBloggersShort(ctx context.Context, sessionID, blogger
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("got %d response code, expected 200", resp.StatusCode)
 	}
-	defer resp.Body.Close()
 
-	respBytes, err := io.ReadAll(resp.Body)
+	var users []domain.InstUserShort
+	err = json.Unmarshal(respBytes, &users)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read body: %v", err)
+		return nil, fmt.Errorf("failed to unmarshal users: %v", err)
+	}
+
+	if len(users) == 0 {
+		return nil, ErrBloggerNotFound
+	}
+
+	return users, nil
+}
+
+// ParseUsers берет postsToParse последних постов блогера с user_id = bloggerUserID
+// Для каждого поста:
+// 1. Выбирает commentsToParse пользователей, который комментировали этот пост
+// 2. Выбирает likesToParse пользователей, который поставили лайк этому посту
+func (c Client) ParseUsers(
+	ctx context.Context,
+	sessionID string,
+	bloggerUserID, postsToParse, commentsToParse, likesToParse int64,
+) (domain.ShortInstUsers, error) {
+	startedAt := time.Now()
+	val := map[string][]string{
+		"sessionid":      {sessionID},
+		"user_id":        {strconv.FormatInt(bloggerUserID, 10)},
+		"posts_count":    {strconv.FormatInt(postsToParse, 10)},
+		"comments_count": {strconv.FormatInt(commentsToParse, 10)},
+		"likes_count":    {strconv.FormatInt(likesToParse, 10)},
+	}
+
+	resp, err := c.cli.PostForm(c.host+"/user/similar", val)
+	if err != nil {
+		return nil, err
+	}
+
+	var respBytes []byte
+	respBytes, err = c.saveResponseFunc(ctx, sessionID, resp, WithElapsedTime(time.Since(startedAt)))
+	if err != nil {
+		logger.Errorf(ctx, "failed to save response: %v", err)
+	}
+
+	if resp.StatusCode == http.StatusBadRequest {
+		return nil, ErrBotIsBlocked
+	}
+
+	if resp.StatusCode == http.StatusNotFound {
+		return nil, ErrBloggerNotFound
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("got %d response code, expected 200", resp.StatusCode)
 	}
 
 	var users []domain.InstUserShort

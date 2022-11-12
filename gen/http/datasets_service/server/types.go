@@ -358,6 +358,17 @@ func NewGetParsingProgressPayload(datasetID string, token string) *datasetsservi
 	return v
 }
 
+// NewDownloadTargetsPayload builds a datasets_service service download targets
+// endpoint payload.
+func NewDownloadTargetsPayload(datasetID string, format int, token string) *datasetsservice.DownloadTargetsPayload {
+	v := &datasetsservice.DownloadTargetsPayload{}
+	v.DatasetID = datasetID
+	v.Format = format
+	v.Token = token
+
+	return v
+}
+
 // NewListDatasetsPayload builds a datasets_service service list datasets
 // endpoint payload.
 func NewListDatasetsPayload(token string) *datasetsservice.ListDatasetsPayload {

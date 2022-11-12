@@ -23,6 +23,7 @@ type Endpoints struct {
 	ParseDataset       goa.Endpoint
 	GetDataset         goa.Endpoint
 	GetParsingProgress goa.Endpoint
+	DownloadTargets    goa.Endpoint
 	ListDatasets       goa.Endpoint
 }
 
@@ -39,6 +40,7 @@ func NewEndpoints(s Service) *Endpoints {
 		ParseDataset:       NewParseDatasetEndpoint(s, a.JWTAuth),
 		GetDataset:         NewGetDatasetEndpoint(s, a.JWTAuth),
 		GetParsingProgress: NewGetParsingProgressEndpoint(s, a.JWTAuth),
+		DownloadTargets:    NewDownloadTargetsEndpoint(s, a.JWTAuth),
 		ListDatasets:       NewListDatasetsEndpoint(s, a.JWTAuth),
 	}
 }
@@ -53,6 +55,7 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.ParseDataset = m(e.ParseDataset)
 	e.GetDataset = m(e.GetDataset)
 	e.GetParsingProgress = m(e.GetParsingProgress)
+	e.DownloadTargets = m(e.DownloadTargets)
 	e.ListDatasets = m(e.ListDatasets)
 }
 
@@ -186,6 +189,25 @@ func NewGetParsingProgressEndpoint(s Service, authJWTFn security.AuthJWTFunc) go
 			return nil, err
 		}
 		return s.GetParsingProgress(ctx, p)
+	}
+}
+
+// NewDownloadTargetsEndpoint returns an endpoint function that calls the
+// method "download targets" of service "datasets_service".
+func NewDownloadTargetsEndpoint(s Service, authJWTFn security.AuthJWTFunc) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*DownloadTargetsPayload)
+		var err error
+		sc := security.JWTScheme{
+			Name:           "jwt",
+			Scopes:         []string{"driver", "admin"},
+			RequiredScopes: []string{},
+		}
+		ctx, err = authJWTFn(ctx, p.Token, &sc)
+		if err != nil {
+			return nil, err
+		}
+		return s.DownloadTargets(ctx, p)
 	}
 }
 

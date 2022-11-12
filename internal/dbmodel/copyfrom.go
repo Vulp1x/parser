@@ -90,37 +90,3 @@ func (r iteratorForSaveBloggers) Err() error {
 func (q *Queries) SaveBloggers(ctx context.Context, arg []SaveBloggersParams) (int64, error) {
 	return q.db.CopyFrom(ctx, []string{"bloggers"}, []string{"dataset_id", "username", "user_id", "followers_count", "is_initial", "parsed_at", "parsed", "is_private", "is_verified", "is_business", "followings_count", "contact_phone_number", "public_phone_number", "public_phone_country_code", "city_name", "public_email"}, &iteratorForSaveBloggers{rows: arg})
 }
-
-// iteratorForSaveTargetUsers implements pgx.CopyFromSource.
-type iteratorForSaveTargetUsers struct {
-	rows                 []SaveTargetUsersParams
-	skippedFirstNextCall bool
-}
-
-func (r *iteratorForSaveTargetUsers) Next() bool {
-	if len(r.rows) == 0 {
-		return false
-	}
-	if !r.skippedFirstNextCall {
-		r.skippedFirstNextCall = true
-		return true
-	}
-	r.rows = r.rows[1:]
-	return len(r.rows) > 0
-}
-
-func (r iteratorForSaveTargetUsers) Values() ([]interface{}, error) {
-	return []interface{}{
-		r.rows[0].DatasetID,
-		r.rows[0].Username,
-		r.rows[0].UserID,
-	}, nil
-}
-
-func (r iteratorForSaveTargetUsers) Err() error {
-	return nil
-}
-
-func (q *Queries) SaveTargetUsers(ctx context.Context, arg []SaveTargetUsersParams) (int64, error) {
-	return q.db.CopyFrom(ctx, []string{"targets"}, []string{"dataset_id", "username", "user_id"}, &iteratorForSaveTargetUsers{rows: arg})
-}

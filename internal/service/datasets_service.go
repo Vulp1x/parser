@@ -20,6 +20,7 @@ type datasetsStore interface {
 	UpdateDataset(ctx context.Context, datasetID uuid.UUID, originalAccounts []string, opts ...datasets.UpdateOption) (domain.DatasetWithBloggers, error)
 	List(ctx context.Context, managerID uuid.UUID) (domain.Datasets, error)
 	FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
+	ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
 }
 
 // datasets_service service example implementation.
@@ -128,11 +129,38 @@ func (s *datasetsServicesrvc) FindSimilar(ctx context.Context, p *datasetsservic
 }
 
 // ParseDataset получить базу доноров для выбранных блогеров
-func (s *datasetsServicesrvc) ParseDataset(ctx context.Context, p *datasetsservice.ParseDatasetPayload) (res *datasetsservice.ParseDatasetResult, err error) {
+func (s *datasetsServicesrvc) ParseDataset(ctx context.Context, p *datasetsservice.ParseDatasetPayload) (*datasetsservice.ParseDatasetResult, error) {
 	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
-	res = &datasetsservice.ParseDatasetResult{}
-	logger.Info(ctx, "datasetsService.parse dataset")
-	return
+
+	datasetID, err := uuid.Parse(p.DatasetID)
+	if err != nil {
+		logger.Error(ctx, err.Error())
+		return nil, datasetsservice.BadRequest(err.Error())
+	}
+
+	dataset, err := s.store.ParseTargetUsers(ctx, datasetID)
+	if err != nil {
+		logger.Errorf(ctx, "failed to start parsing users: %v", err)
+		if errors.Is(err, datasets.ErrDatasetInvalidStatus) || errors.Is(err, datasets.ErrNoBlogers) || errors.Is(err, datasets.ErrNoReadyBots) {
+			return nil, datasetsservice.BadRequest(err.Error())
+		}
+
+		if errors.Is(err, datasets.ErrDatasetNotFound) {
+			return nil, datasetsservice.DatasetNotFound("")
+		}
+
+		return nil, internalErr(err)
+	}
+
+	return &datasetsservice.ParseDatasetResult{
+		Status:    datasetsservice.DatasetStatus(dataset.Dataset.Status),
+		DatasetID: dataset.Dataset.ID.String(),
+	}, nil
+}
+
+func (s *datasetsServicesrvc) GetParsingProgress(ctx context.Context, payload *datasetsservice.GetParsingProgressPayload) (*datasetsservice.ParsingProgress, error) {
+	logger.Info(ctx, "datasetsService.getParsingProgress", payload.DatasetID)
+	return nil, nil
 }
 
 // GetDataset получить задачу по id
@@ -230,9 +258,18 @@ func (s *datasetsServicesrvc) ListDatasets(ctx context.Context, p *datasetsservi
 	return domainDatasets.ToProto(), nil
 }
 
-func (s *datasetsServicesrvc) GetParsingProgress(ctx context.Context, payload *datasetsservice.GetParsingProgressPayload) (*datasetsservice.ParsingProgress, error) {
-	logger.Info(ctx, "datasetsService.getParsingProgress", payload.DatasetID)
-	return nil, nil
+func (s *datasetsServicesrvc) DownloadTargets(ctx context.Context, p *datasetsservice.DownloadTargetsPayload) ([]string, error) {
+	switch p.Format {
+	case 1:
+		return []string{"1111111"}, nil
+	case 2:
+		return []string{"yurydud"}, nil
+	case 3:
+		return []string{"yurydud,11111111"}, nil
+	default:
+		return nil, datasetsservice.BadRequest(fmt.Sprintf("unknown format %d", p.Format))
+	}
+
 }
 
 func internalErr(err error) datasetsservice.InternalError {

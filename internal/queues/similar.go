@@ -32,7 +32,7 @@ func (s Service) AddFindSimilarTask(
 		}
 	}()
 
-	err = s.similarQueue.Add(s.task.WithArgs(ctx, datasetID, initialBloggers, botsPerDataset))
+	err = s.similarQueue.Add(s.findSimilarTask.WithArgs(ctx, datasetID, initialBloggers, botsPerDataset))
 	if err != nil {
 		return err
 	}
@@ -42,7 +42,7 @@ func (s Service) AddFindSimilarTask(
 }
 
 func (s Service) processFailedTask(ctx context.Context, datasetID uuid.UUID, _ []dbmodel.Blogger, _ int) error {
-	logger.Info(ctx, "task failed, changing dataset status to draft")
+	logger.Info(ctx, "findSimilarTask failed, changing dataset status to draft")
 
 	q := dbmodel.New(s.dbf(ctx))
 

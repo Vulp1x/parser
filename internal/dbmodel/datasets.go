@@ -9,9 +9,10 @@ const (
 	FindingSimilarStarted datasetStatus = 2
 	// ReadyForParsingDatasetStatus закончили поиск похожих блогеров
 	ReadyForParsingDatasetStatus datasetStatus = 3
-	StartedDatasetStatus         datasetStatus = 4
-	// StoppedDatasetStatus - задача остановлена
-	StoppedDatasetStatus datasetStatus = 5
+	// ParsingTargetsStartedDatasetStatus начали парсинг юзеров
+	ParsingTargetsStartedDatasetStatus datasetStatus = 4
+	// StoppedDatasetStatus - закончили парсинг похожих юзеров
+	ParsingTargetsStoppedDatasetStatus datasetStatus = 5
 	// DoneDatasetStatus задача выполнена
 	DoneDatasetStatus datasetStatus = 6
 )

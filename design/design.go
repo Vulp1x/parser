@@ -270,6 +270,41 @@ var _ = Service("datasets_service", func() {
 		})
 	})
 
+	Method("download targets", func() {
+		Description("получить всех пользователей, которых спарсили в задаче")
+
+		Security(JWTAuth)
+
+		Payload(func() {
+			Token("token", String, func() {
+				Description("JWT used for authentication")
+			})
+
+			Attribute("dataset_id", String, func() {
+				Description("id задачи")
+				Meta("struct:tag:json", "dataset_id")
+			})
+
+			Attribute("format", Int, func() {
+				Enum(1, 2, 3)
+				Description(`1- только user_id, 2- только username, 3 - и то и другое`)
+				Default(3)
+			})
+
+			Required("token", "dataset_id", "format")
+		})
+
+		Result(ArrayOf(String))
+
+		HTTP(func() {
+			GET("/api/datasets/{dataset_id}/download/")
+			Param("format:format")
+			Response(StatusOK)
+			Response(StatusNotFound)
+			Response(StatusUnauthorized)
+		})
+	})
+
 	Method("list datasets", func() {
 		Description("получить все задачи для текущего пользователя")
 

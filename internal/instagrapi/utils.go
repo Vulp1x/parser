@@ -1,7 +1,6 @@
 package instagrapi
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -28,7 +27,7 @@ func init() {
 	})
 }
 
-func saveResponse(ctx context.Context, sessionID string, resp *http.Response, opts ...SaveResponseOption) error {
+func saveResponse(ctx context.Context, sessionID string, resp *http.Response, opts ...SaveResponseOption) ([]byte, error) {
 	var cfg saveResponseConfig
 	for _, opt := range opts {
 		opt(&cfg)
@@ -36,7 +35,7 @@ func saveResponse(ctx context.Context, sessionID string, resp *http.Response, op
 
 	startedAt := time.Now()
 	if resp == nil {
-		return fmt.Errorf("empty resp")
+		return []byte{}, fmt.Errorf("empty resp")
 	}
 
 	headerBytes, err := json.Marshal(resp.Header)
@@ -60,10 +59,6 @@ func saveResponse(ctx context.Context, sessionID string, resp *http.Response, op
 		fields = append(fields, zap.String("elapsed_time", cfg.elapsed.String()))
 	}
 
-	if cfg.reuseBody {
-		resp.Body = io.NopCloser(bytes.NewReader(bodyBytes))
-	}
-
 	fields = append(fields,
 		zap.Int("response_code", resp.StatusCode),
 		zap.Int64("response_len", resp.ContentLength),
@@ -81,12 +76,11 @@ func saveResponse(ctx context.Context, sessionID string, resp *http.Response, op
 	)
 
 	log.Infof("saving response from instagrapi, saving took %s", time.Since(startedAt))
-	return nil
+	return bodyBytes, nil
 }
 
 type saveResponseConfig struct {
-	elapsed   *time.Duration
-	reuseBody bool // Нужно ли перезаписать resp.Body, чтобы потом использовать ещё раз
+	elapsed *time.Duration
 }
 
 type SaveResponseOption func(config *saveResponseConfig)
@@ -94,11 +88,5 @@ type SaveResponseOption func(config *saveResponseConfig)
 func WithElapsedTime(duration time.Duration) SaveResponseOption {
 	return func(config *saveResponseConfig) {
 		config.elapsed = &duration
-	}
-}
-
-func WithReuseResponseBody(reuseBody bool) SaveResponseOption {
-	return func(config *saveResponseConfig) {
-		config.reuseBody = reuseBody
 	}
 }
