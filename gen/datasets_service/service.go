@@ -192,7 +192,7 @@ type ParsingProgress struct {
 	// количество блогеров, у которых спарсили пользователей
 	BloggersParsed int `json:"bloggers_parsed"`
 	// количество сохраненных доноров
-	TargetsSaved int `json:"filtered_bloggers"`
+	TargetsSaved int `json:"targets_saved"`
 	// закончен ли парсинг блогеров
 	Done bool
 }

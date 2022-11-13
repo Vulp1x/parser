@@ -92,7 +92,7 @@ var ParsingProgress = Type("ParsingProgress", func() {
 	})
 
 	Attribute("targets_saved", Int, "количество сохраненных доноров", func() {
-		Meta("struct:tag:json", "filtered_bloggers")
+		Meta("struct:tag:json", "targets_saved")
 	})
 
 	Attribute("done", Boolean, "закончен ли парсинг блогеров")
