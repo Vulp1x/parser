@@ -77,9 +77,8 @@ type CreateDatasetDraftPayload struct {
 // Dataset is the result type of the datasets_service service update dataset
 // method.
 type Dataset struct {
-	ID       string
-	Bloggers []*Blogger
-	Status   DatasetStatus
+	ID     string
+	Status DatasetStatus
 	// название задачи
 	Title string
 	// имена аккаунтов, для которых ищем похожих
@@ -90,6 +89,7 @@ type Dataset struct {
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
 	PhoneCode *int32 `json:"phone_code"`
+	Bloggers  []*Blogger
 }
 
 // DatasetProgress is the result type of the datasets_service service get

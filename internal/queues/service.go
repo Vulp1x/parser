@@ -50,8 +50,8 @@ func NewService(instagrapiHost string, dbf dbmodel.DBTXFunc) Service {
 
 	parseTargetsTask := taskq.RegisterTask(&taskq.TaskOptions{
 		Name:            "parse targets from bloggers",
-		Handler:         service.findSimilarBloggers,
-		FallbackHandler: service.processFailedTask,
+		Handler:         service.parseTargetUsers,
+		FallbackHandler: service.processParseTargetsFailedTask,
 		RetryLimit:      5,
 		MinBackoff:      5 * time.Second,
 	})

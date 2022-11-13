@@ -66,6 +66,10 @@ func (s Service) findSimilarBloggers(ctx context.Context, datasetID uuid.UUID, i
 		logger.Warnf(ctx, "got %d available bots, expected %d", len(bots), botsPerDataset)
 	}
 
+	if len(bots) > len(initialBloggers) {
+		bots = bots[:len(initialBloggers)]
+	}
+
 	bloggersLen := len(initialBloggers)
 	bloggersPerBot := bloggersLen / len(bots)
 	allBloggersProcessed := false
@@ -96,7 +100,7 @@ func (s Service) findSimilarBloggers(ctx context.Context, datasetID uuid.UUID, i
 		}
 	}
 
-	logger.Info(ctx, "started all goroutines, waiting for them")
+	logger.Infof(ctx, "started %d bots for %d bloggers, waiting for them", len(bots), len(initialBloggers))
 	wg.Wait()
 
 	close(errc)
@@ -208,7 +212,12 @@ func (s Service) findAndSaveSimilarBloggers(ctx context.Context, datasetID uuid.
 
 		totalCount += count
 
-		logger.Infof(ctx, "saved %d bloggers from initial blogger '%s' (parsed %d/%d)", count, blogger.Username, i, len(initialBloggers))
+		logger.Infof(ctx, "saved %d bloggers from initial blogger '%s' (parsed %d/%d)", count, blogger.Username, i+1, len(initialBloggers))
+
+		err = q.MarkBloggerAsSimilarAccountsFound(ctx, blogger.ID)
+		if err != nil {
+			nonBlockingWriteError(ctx, errc, fmt.Errorf("failed to mark blogger (%s) as ready for target's parsing : %v", blogger.ID, err))
+		}
 	}
 
 	logger.Infof(ctx, "saved %d new bloggers in %s", totalCount, time.Since(startedAt))

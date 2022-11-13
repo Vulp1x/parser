@@ -131,6 +131,7 @@ func (su ShortInstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.Sav
 			Parsed:     true,
 			IsPrivate:  user.IsPrivate,
 			IsVerified: user.IsVerified,
+			Status:     dbmodel.SimilarBloggersFoundBloggerStatus,
 		}
 	}
 

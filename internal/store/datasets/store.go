@@ -19,24 +19,24 @@ func NewStore(timeout time.Duration, dbtxFunc dbmodel.DBTXFunc, txFunc dbmodel.T
 
 	return &Store{
 		// tasksChan:   make(chan domain.Task, 10),
-		taskCancels:        make(map[uuid.UUID]func()),
-		pushTimeout:        timeout,
-		dbtxf:              dbtxFunc,
-		txf:                txFunc,
-		taskMu:             &sync.Mutex{},
-		findSimilarService: queues.NewService(instagrapiHost, dbtxFunc),
+		taskCancels:  make(map[uuid.UUID]func()),
+		pushTimeout:  timeout,
+		dbtxf:        dbtxFunc,
+		txf:          txFunc,
+		taskMu:       &sync.Mutex{},
+		queueService: queues.NewService(instagrapiHost, dbtxFunc),
 		// instaClient: instagrapi.NewClient(instagrapiHost),
 	}
 }
 
 type Store struct {
 	// tasksChan   chan domain.Task
-	taskCancels        map[uuid.UUID]func()
-	taskMu             *sync.Mutex
-	pushTimeout        time.Duration
-	dbtxf              dbmodel.DBTXFunc
-	txf                dbmodel.TxFunc
-	findSimilarService queues.Service
+	taskCancels  map[uuid.UUID]func()
+	taskMu       *sync.Mutex
+	pushTimeout  time.Duration
+	dbtxf        dbmodel.DBTXFunc
+	txf          dbmodel.TxFunc
+	queueService queues.Service
 
 	// instaClient instagrapiClient
 }

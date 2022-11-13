@@ -32,9 +32,8 @@ type UpdateDatasetRequestBody struct {
 // UpdateDatasetOKResponseBody is the type of the "datasets_service" service
 // "update dataset" endpoint HTTP response body.
 type UpdateDatasetOKResponseBody struct {
-	ID       string                 `form:"id" json:"id" xml:"id"`
-	Bloggers []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
-	Status   int                    `form:"status" json:"status" xml:"status"`
+	ID     string `form:"id" json:"id" xml:"id"`
+	Status int    `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
 	// имена аккаунтов, для которых ищем похожих
@@ -44,15 +43,15 @@ type UpdateDatasetOKResponseBody struct {
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
-	PhoneCode *int32 `json:"phone_code"`
+	PhoneCode *int32                 `json:"phone_code"`
+	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
 }
 
 // FindSimilarOKResponseBody is the type of the "datasets_service" service
 // "find similar" endpoint HTTP response body.
 type FindSimilarOKResponseBody struct {
-	ID       string                 `form:"id" json:"id" xml:"id"`
-	Bloggers []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
-	Status   int                    `form:"status" json:"status" xml:"status"`
+	ID     string `form:"id" json:"id" xml:"id"`
+	Status int    `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
 	// имена аккаунтов, для которых ищем похожих
@@ -62,7 +61,8 @@ type FindSimilarOKResponseBody struct {
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
-	PhoneCode *int32 `json:"phone_code"`
+	PhoneCode *int32                 `json:"phone_code"`
+	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
 }
 
 // GetProgressOKResponseBody is the type of the "datasets_service" service "get
@@ -91,9 +91,8 @@ type ParseDatasetOKResponseBody struct {
 // GetDatasetOKResponseBody is the type of the "datasets_service" service "get
 // dataset" endpoint HTTP response body.
 type GetDatasetOKResponseBody struct {
-	ID       string                 `form:"id" json:"id" xml:"id"`
-	Bloggers []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
-	Status   int                    `form:"status" json:"status" xml:"status"`
+	ID     string `form:"id" json:"id" xml:"id"`
+	Status int    `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
 	// имена аккаунтов, для которых ищем похожих
@@ -103,7 +102,8 @@ type GetDatasetOKResponseBody struct {
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
-	PhoneCode *int32 `json:"phone_code"`
+	PhoneCode *int32                 `json:"phone_code"`
+	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
 }
 
 // GetParsingProgressOKResponseBody is the type of the "datasets_service"
@@ -136,9 +136,8 @@ type BloggerResponseBody struct {
 
 // DatasetResponse is used to define fields on response body types.
 type DatasetResponse struct {
-	ID       string             `form:"id" json:"id" xml:"id"`
-	Bloggers []*BloggerResponse `form:"bloggers" json:"bloggers" xml:"bloggers"`
-	Status   int                `form:"status" json:"status" xml:"status"`
+	ID     string `form:"id" json:"id" xml:"id"`
+	Status int    `form:"status" json:"status" xml:"status"`
 	// название задачи
 	Title string `form:"title" json:"title" xml:"title"`
 	// имена аккаунтов, для которых ищем похожих
@@ -148,7 +147,8 @@ type DatasetResponse struct {
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
-	PhoneCode *int32 `json:"phone_code"`
+	PhoneCode *int32             `json:"phone_code"`
+	Bloggers  []*BloggerResponse `form:"bloggers" json:"bloggers" xml:"bloggers"`
 }
 
 // BloggerResponse is used to define fields on response body types.

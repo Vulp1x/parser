@@ -32,13 +32,13 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 		return domain.DatasetWithBloggers{}, err
 	}
 
-	if dataset.Status != dbmodel.DraftDatasetStatus {
-		return domain.DatasetWithBloggers{}, fmt.Errorf("%w: ожидали статус драфт (%d), а получили %d",
-			ErrDatasetInvalidStatus, dbmodel.DraftDatasetStatus, dataset.Status,
+	if dataset.Status != dbmodel.ReadyForParsingDatasetStatus {
+		return domain.DatasetWithBloggers{}, fmt.Errorf("%w: ожидали статус готов к пасрингу (%d), а получили %d",
+			ErrDatasetInvalidStatus, dbmodel.ReadyForParsingDatasetStatus, dataset.Status,
 		)
 	}
 
-	bloggers, err := q.FindInitialBloggersForDataset(ctx, datasetID)
+	bloggers, err := q.FindBloggersForParsing(ctx, datasetID)
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to find initial bloggers for dataset: %v", err)
 	}
@@ -56,16 +56,16 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 		return domain.DatasetWithBloggers{}, ErrNoReadyBots
 	}
 
-	err = q.UpdateDatasetStatus(ctx, dbmodel.UpdateDatasetStatusParams{Status: dbmodel.FindingSimilarStarted, ID: datasetID})
+	err = q.UpdateDatasetStatus(ctx, dbmodel.UpdateDatasetStatusParams{Status: dbmodel.ParsingTargetsStartedDatasetStatus, ID: datasetID})
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to update dataset status: %v", err)
 	}
 
-	dataset.Status = dbmodel.ReadyForParsingDatasetStatus
+	dataset.Status = dbmodel.ParsingTargetsStartedDatasetStatus
 
 	logger.Infof(ctx, "adding task for %d bloggers, expected maximum %d bots (available %d)", len(bloggers), botsPerDataset, countAvailableBots)
 
-	err = s.findSimilarService.AddParseTargetsTask(ctx, dataset.ID, bloggers, botsPerDataset)
+	err = s.queueService.AddParseTargetsTask(ctx, dataset.ID, bloggers)
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to add task: %v", err)
 	}

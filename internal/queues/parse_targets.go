@@ -18,7 +18,7 @@ import (
 // ErrBotIsBlocked бот заблокирован, необходимо воспользоваться другим
 var ErrBotIsBlocked = errors.New("provided bot is blocked, need to choose another")
 
-func (s Service) AddParseTargetsTask(ctx context.Context, datasetID uuid.UUID, bloggers []dbmodel.Blogger, botsPerDataset int) (err error) {
+func (s Service) AddParseTargetsTask(ctx context.Context, datasetID uuid.UUID, bloggers []dbmodel.Blogger) (err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			logger.Errorf(ctx, "recovered panic: %s, stack: %s", r, string(debug.Stack()))
@@ -26,7 +26,7 @@ func (s Service) AddParseTargetsTask(ctx context.Context, datasetID uuid.UUID, b
 		}
 	}()
 
-	err = s.parseTargetsQueue.Add(s.parseTargetsTask.WithArgs(ctx, datasetID, bloggers, botsPerDataset))
+	err = s.parseTargetsQueue.Add(s.parseTargetsTask.WithArgs(ctx, datasetID, bloggers))
 	if err != nil {
 		return err
 	}
@@ -35,7 +35,7 @@ func (s Service) AddParseTargetsTask(ctx context.Context, datasetID uuid.UUID, b
 
 }
 
-func (s Service) processParseTargetsFailedTask(ctx context.Context, datasetID uuid.UUID, _ []dbmodel.Blogger, _ int) error {
+func (s Service) processParseTargetsFailedTask(ctx context.Context, datasetID uuid.UUID, _ []dbmodel.Blogger) error {
 	logger.Info(ctx, "ParseTargets task failed, changing dataset status to draft")
 
 	q := dbmodel.New(s.dbf(ctx))
@@ -125,18 +125,17 @@ func (s Service) parseAndSaveTargets(
 	for i, blogger := range bloggersToParse {
 		ctx = logger.WithKV(initialCtx, "blogger_username", blogger.Username)
 
-		users, err = s.cli.ParseUsers(ctx, bot.SessionID, blogger.UserID,
-			int64(dataset.PostsPerBlogger), int64(dataset.LikedPerPost), int64(dataset.CommentedPerPost),
-		)
+		users, err = s.cli.ParseUsers(ctx, bot.SessionID, blogger.UserID, dataset)
 		if err != nil {
-			logger.Errorf(ctx, "failed to find similar accounts: %v", err)
+			logger.Errorf(ctx, "failed to parse users: %v", err)
 
 			if errors.Is(err, instagrapi.ErrBotIsBlocked) {
 				err = q.BlockBot(ctx, bot.ID)
 				if err != nil {
 					logger.Errorf(ctx, "failed to block bot (%s): %v", bot.ID, err)
 				}
-				continue
+
+				return ErrBotIsBlocked
 			}
 
 			if errors.Is(err, instagrapi.ErrBloggerNotFound) {
@@ -145,8 +144,6 @@ func (s Service) parseAndSaveTargets(
 					logger.Errorf(ctx, "failed to mark blogger as parsed  (%s): %v", bot.ID, err)
 				}
 			}
-
-			continue
 		}
 
 		if len(users) == 0 {
@@ -154,9 +151,12 @@ func (s Service) parseAndSaveTargets(
 			continue
 		}
 
-		count, err = q.SaveTargetUsers(ctx, users.ToSaveTargetsParams(datasetID))
+		uniqueUsers := getUniqueusers(users)
+		logger.Infof(ctx, "got %d unique users from %d parsed", len(uniqueUsers), len(users))
+
+		count, err = q.SaveTargetUsers(ctx, uniqueUsers.ToSaveTargetsParams(datasetID))
 		if err != nil {
-			logger.Errorf(ctx, "failed to save parsed bloggers from blogger  (%s): %v", bot.ID, err)
+			logger.Errorf(ctx, "failed to save targets from blogger: %v", err)
 			continue
 		}
 
@@ -167,10 +167,25 @@ func (s Service) parseAndSaveTargets(
 
 		totalCount += count
 
-		logger.Infof(ctx, "saved %d new target users (parsed %d/%d bloggers)", count, i, len(bloggersToParse))
+		logger.Infof(ctx, "saved %d new target users (parsed %d/%d bloggers)", count, i+1, len(bloggersToParse))
 	}
 
 	logger.Infof(ctx, "saved %d new target in %s", totalCount, time.Since(startedAt))
 
 	return nil
+}
+
+func getUniqueusers(users domain.ShortInstUsers) domain.ShortInstUsers {
+	var uniqueUsers []domain.InstUserShort
+	var m = make(map[int64]domain.InstUserShort)
+
+	for _, user := range users {
+		m[user.Pk] = user
+	}
+
+	for _, short := range m {
+		uniqueUsers = append(uniqueUsers, short)
+	}
+
+	return uniqueUsers
 }

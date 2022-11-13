@@ -115,6 +115,56 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 	return items, nil
 }
 
+const findBloggersForParsing = `-- name: FindBloggersForParsing :many
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email, status
+from bloggers
+where dataset_id = $1
+  AND status = 2
+  AND user_id > 0
+`
+
+func (q *Queries) FindBloggersForParsing(ctx context.Context, datasetID uuid.UUID) ([]Blogger, error) {
+	rows, err := q.db.Query(ctx, findBloggersForParsing, datasetID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Blogger
+	for rows.Next() {
+		var i Blogger
+		if err := rows.Scan(
+			&i.ID,
+			&i.DatasetID,
+			&i.Username,
+			&i.UserID,
+			&i.FollowersCount,
+			&i.IsInitial,
+			&i.CreatedAt,
+			&i.ParsedAt,
+			&i.UpdatedAt,
+			&i.Parsed,
+			&i.IsCorrect,
+			&i.IsPrivate,
+			&i.IsVerified,
+			&i.IsBusiness,
+			&i.FollowingsCount,
+			&i.ContactPhoneNumber,
+			&i.PublicPhoneNumber,
+			&i.PublicPhoneCountryCode,
+			&i.CityName,
+			&i.PublicEmail,
+			&i.Status,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const findInitialBloggersForDataset = `-- name: FindInitialBloggersForDataset :many
 select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email, status
 from bloggers
@@ -231,6 +281,25 @@ func (q *Queries) GetDatasetByID(ctx context.Context, id uuid.UUID) (Dataset, er
 	return i, err
 }
 
+const getParsingProgress = `-- name: GetParsingProgress :one
+select (select count(*) from bloggers where bloggers.dataset_id = $1 and status = 3) as parsed_bloggers_count,
+       (select count(*) from bloggers where bloggers.dataset_id = $1)                as total_bloggers,
+       (select count(*) from targets where targets.dataset_id = $1)                  as targets_saved_coun
+`
+
+type GetParsingProgressRow struct {
+	ParsedBloggersCount int64 `json:"parsed_bloggers_count"`
+	TotalBloggers       int64 `json:"total_bloggers"`
+	TargetsSavedCoun    int64 `json:"targets_saved_coun"`
+}
+
+func (q *Queries) GetParsingProgress(ctx context.Context, datasetID uuid.UUID) (GetParsingProgressRow, error) {
+	row := q.db.QueryRow(ctx, getParsingProgress, datasetID)
+	var i GetParsingProgressRow
+	err := row.Scan(&i.ParsedBloggersCount, &i.TotalBloggers, &i.TargetsSavedCoun)
+	return i, err
+}
+
 type InsertInitialBloggersParams struct {
 	DatasetID uuid.UUID `json:"dataset_id"`
 	Username  string    `json:"username"`
@@ -290,23 +359,35 @@ func (q *Queries) MarkBloggerAsParsed(ctx context.Context, id uuid.UUID) error {
 	return err
 }
 
+const markBloggerAsSimilarAccountsFound = `-- name: MarkBloggerAsSimilarAccountsFound :exec
+update bloggers
+set status = 2 -- TargetsParsedBloggerStatus
+where id = $1
+`
+
+func (q *Queries) MarkBloggerAsSimilarAccountsFound(ctx context.Context, id uuid.UUID) error {
+	_, err := q.db.Exec(ctx, markBloggerAsSimilarAccountsFound, id)
+	return err
+}
+
 type SaveBloggersParams struct {
-	DatasetID              uuid.UUID  `json:"dataset_id"`
-	Username               string     `json:"username"`
-	UserID                 int64      `json:"user_id"`
-	FollowersCount         int64      `json:"followers_count"`
-	IsInitial              bool       `json:"is_initial"`
-	ParsedAt               *time.Time `json:"parsed_at"`
-	Parsed                 bool       `json:"parsed"`
-	IsPrivate              bool       `json:"is_private"`
-	IsVerified             bool       `json:"is_verified"`
-	IsBusiness             bool       `json:"is_business"`
-	FollowingsCount        int32      `json:"followings_count"`
-	ContactPhoneNumber     *string    `json:"contact_phone_number"`
-	PublicPhoneNumber      *string    `json:"public_phone_number"`
-	PublicPhoneCountryCode *string    `json:"public_phone_country_code"`
-	CityName               *string    `json:"city_name"`
-	PublicEmail            *string    `json:"public_email"`
+	DatasetID              uuid.UUID     `json:"dataset_id"`
+	Username               string        `json:"username"`
+	UserID                 int64         `json:"user_id"`
+	FollowersCount         int64         `json:"followers_count"`
+	IsInitial              bool          `json:"is_initial"`
+	ParsedAt               *time.Time    `json:"parsed_at"`
+	Parsed                 bool          `json:"parsed"`
+	IsPrivate              bool          `json:"is_private"`
+	IsVerified             bool          `json:"is_verified"`
+	IsBusiness             bool          `json:"is_business"`
+	FollowingsCount        int32         `json:"followings_count"`
+	ContactPhoneNumber     *string       `json:"contact_phone_number"`
+	PublicPhoneNumber      *string       `json:"public_phone_number"`
+	PublicPhoneCountryCode *string       `json:"public_phone_country_code"`
+	CityName               *string       `json:"city_name"`
+	PublicEmail            *string       `json:"public_email"`
+	Status                 bloggerStatus `json:"status"`
 }
 
 const saveBots = `-- name: SaveBots :execrows

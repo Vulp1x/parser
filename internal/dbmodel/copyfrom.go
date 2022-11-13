@@ -80,6 +80,7 @@ func (r iteratorForSaveBloggers) Values() ([]interface{}, error) {
 		r.rows[0].PublicPhoneCountryCode,
 		r.rows[0].CityName,
 		r.rows[0].PublicEmail,
+		r.rows[0].Status,
 	}, nil
 }
 
@@ -88,5 +89,5 @@ func (r iteratorForSaveBloggers) Err() error {
 }
 
 func (q *Queries) SaveBloggers(ctx context.Context, arg []SaveBloggersParams) (int64, error) {
-	return q.db.CopyFrom(ctx, []string{"bloggers"}, []string{"dataset_id", "username", "user_id", "followers_count", "is_initial", "parsed_at", "parsed", "is_private", "is_verified", "is_business", "followings_count", "contact_phone_number", "public_phone_number", "public_phone_country_code", "city_name", "public_email"}, &iteratorForSaveBloggers{rows: arg})
+	return q.db.CopyFrom(ctx, []string{"bloggers"}, []string{"dataset_id", "username", "user_id", "followers_count", "is_initial", "parsed_at", "parsed", "is_private", "is_verified", "is_business", "followings_count", "contact_phone_number", "public_phone_number", "public_phone_country_code", "city_name", "public_email", "status"}, &iteratorForSaveBloggers{rows: arg})
 }

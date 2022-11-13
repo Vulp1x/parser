@@ -36,7 +36,7 @@ func UnaryLog(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, 
 
 	reqID = MetadataValue(md, RequestIDMetadataKey)
 	if reqID == "" {
-		reqID = shortID()
+		reqID = ShortID()
 	}
 
 	started := time.Now()
@@ -53,7 +53,7 @@ func UnaryLog(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, 
 	// after executing rpc
 	s, _ := status.FromError(err)
 
-	afterCtx := logger.WithFields(ctx, logger.Fields{"status": s.Code(), "bytes": byteCount(messageLength(req)), "elapsed": time.Since(started).String()})
+	afterCtx := logger.WithFields(ctx, logger.Fields{"status": s.Code(), "bytes": byteCount(messageLength(resp)), "elapsed": time.Since(started).String()})
 	logger.Info(afterCtx, "request completed")
 
 	return resp, err
@@ -107,7 +107,7 @@ func generateRequestID(ctx context.Context) context.Context {
 
 	requestID := MetadataValue(md, RequestIDMetadataKey)
 	if requestID == "" {
-		requestID = shortID()
+		requestID = ShortID()
 	}
 
 	md.Set(RequestIDMetadataKey, requestID)

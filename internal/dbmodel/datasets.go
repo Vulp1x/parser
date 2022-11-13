@@ -11,8 +11,8 @@ const (
 	ReadyForParsingDatasetStatus datasetStatus = 3
 	// ParsingTargetsStartedDatasetStatus начали парсинг юзеров
 	ParsingTargetsStartedDatasetStatus datasetStatus = 4
-	// StoppedDatasetStatus - закончили парсинг похожих юзеров
-	ParsingTargetsStoppedDatasetStatus datasetStatus = 5
-	// DoneDatasetStatus задача выполнена
-	DoneDatasetStatus datasetStatus = 6
+	// ParsingDoneDatasetStatus - закончили парсинг целевых пользователей
+	ParsingDoneDatasetStatus datasetStatus = 5
+	// ErrorDatasetStatus проблема при парсинге/поиска похожих в датасете
+	ErrorDatasetStatus datasetStatus = 6
 )

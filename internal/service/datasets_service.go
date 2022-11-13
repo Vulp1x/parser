@@ -21,6 +21,7 @@ type datasetsStore interface {
 	List(ctx context.Context, managerID uuid.UUID) (domain.Datasets, error)
 	FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
 	ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
+	ParsingProgress(ctx context.Context, datasetID uuid.UUID) (domain.ParsingProgress, error)
 }
 
 // datasets_service service example implementation.
@@ -158,9 +159,31 @@ func (s *datasetsServicesrvc) ParseDataset(ctx context.Context, p *datasetsservi
 	}, nil
 }
 
-func (s *datasetsServicesrvc) GetParsingProgress(ctx context.Context, payload *datasetsservice.GetParsingProgressPayload) (*datasetsservice.ParsingProgress, error) {
-	logger.Info(ctx, "datasetsService.getParsingProgress", payload.DatasetID)
-	return nil, nil
+func (s *datasetsServicesrvc) GetParsingProgress(ctx context.Context, p *datasetsservice.GetParsingProgressPayload) (*datasetsservice.ParsingProgress, error) {
+	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
+	logger.Info(ctx, "datasetsService.getParsingProgress", p.DatasetID)
+
+	datasetID, err := uuid.Parse(p.DatasetID)
+	if err != nil {
+		logger.Error(ctx, err.Error())
+		return nil, datasetsservice.BadRequest(err.Error())
+	}
+
+	progress, err := s.store.ParsingProgress(ctx, datasetID)
+	if err != nil {
+		logger.Errorf(ctx, "failed to get dataset's progress: %v", err)
+		if errors.Is(err, datasets.ErrDatasetInvalidStatus) || errors.Is(err, datasets.ErrNoBlogers) || errors.Is(err, datasets.ErrNoReadyBots) {
+			return nil, datasetsservice.BadRequest(err.Error())
+		}
+
+		if errors.Is(err, datasets.ErrDatasetNotFound) {
+			return nil, datasetsservice.DatasetNotFound("")
+		}
+
+		return nil, internalErr(err)
+	}
+
+	return progress.ToProto(), nil
 }
 
 // GetDataset получить задачу по id

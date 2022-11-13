@@ -6,9 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
+	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/domain"
 	"github.com/inst-api/parser/internal/transport"
 	"github.com/inst-api/parser/pkg/logger"
@@ -33,7 +36,7 @@ func NewClient(host string) *Client {
 // CheckBot проверяет, что бот
 func (c *Client) CheckBot(ctx context.Context, sessionID string) error {
 	startedAt := time.Now()
-	resp, err := c.cli.Get(fmt.Sprintf("%s:/auth/settings/get?sessionid=%s", c.host, sessionID))
+	resp, err := c.getWithCtx(ctx, fmt.Sprintf("%s:/auth/settings/get?sessionid=%s", c.host, sessionID))
 	if err != nil {
 		return err
 	}
@@ -59,7 +62,7 @@ func (c Client) FindSimilarBloggers(ctx context.Context, sessionID, bloggerUserN
 	startedAt := time.Now()
 	val := map[string][]string{"sessionid": {sessionID}, "username": {bloggerUserName}}
 
-	resp, err := c.cli.PostForm(c.host+"/user/similar/full", val)
+	resp, err := c.postFormWithCtx(ctx, c.host+"/user/similar/full", val)
 	if err != nil {
 		return nil, err
 	}
@@ -143,18 +146,19 @@ func (c Client) FindSimilarBloggersShort(ctx context.Context, sessionID, blogger
 func (c Client) ParseUsers(
 	ctx context.Context,
 	sessionID string,
-	bloggerUserID, postsToParse, commentsToParse, likesToParse int64,
+	bloggerUserID int64,
+	dataset dbmodel.Dataset,
 ) (domain.ShortInstUsers, error) {
 	startedAt := time.Now()
 	val := map[string][]string{
 		"sessionid":      {sessionID},
 		"user_id":        {strconv.FormatInt(bloggerUserID, 10)},
-		"posts_count":    {strconv.FormatInt(postsToParse, 10)},
-		"comments_count": {strconv.FormatInt(commentsToParse, 10)},
-		"likes_count":    {strconv.FormatInt(likesToParse, 10)},
+		"posts_count":    {strconv.FormatInt(int64(dataset.PostsPerBlogger), 10)},
+		"comments_count": {strconv.FormatInt(int64(dataset.CommentedPerPost), 10)},
+		"likes_count":    {strconv.FormatInt(int64(dataset.LikedPerPost), 10)},
 	}
 
-	resp, err := c.cli.PostForm(c.host+"/user/similar", val)
+	resp, err := c.postFormWithCtx(ctx, c.host+"/user/parse", val)
 	if err != nil {
 		return nil, err
 	}
@@ -183,9 +187,25 @@ func (c Client) ParseUsers(
 		return nil, fmt.Errorf("failed to unmarshal users: %v", err)
 	}
 
-	if len(users) == 0 {
-		return nil, ErrBloggerNotFound
+	return users, nil
+}
+
+func (c Client) postFormWithCtx(ctx context.Context, url string, data url.Values) (*http.Response, error) {
+	req, err := http.NewRequestWithContext(ctx, "POST", url, strings.NewReader(data.Encode()))
+	if err != nil {
+		return nil, err
 	}
 
-	return users, nil
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	return c.cli.Do(req)
+}
+
+func (c *Client) getWithCtx(ctx context.Context, url string) (resp *http.Response, err error) {
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return c.cli.Do(req)
 }

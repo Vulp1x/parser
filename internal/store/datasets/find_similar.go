@@ -76,7 +76,7 @@ func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (d
 
 	logger.Infof(ctx, "adding task for %d bloggers, expected maximum %d bots (available %d)", len(bloggers), botsPerDataset, countAvailableBots)
 
-	err = s.findSimilarService.AddFindSimilarTask(ctx, dataset.ID, bloggers, botsPerDataset)
+	err = s.queueService.AddFindSimilarTask(ctx, dataset.ID, bloggers, botsPerDataset)
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to add task: %v", err)
 	}

@@ -59,8 +59,6 @@ var Dataset = Type("Dataset", func() {
 		Format(FormatUUID)
 	})
 
-	Attribute("bloggers", ArrayOf(Blogger))
-
 	Attribute("status", DatasetStatus)
 	Attribute("title", String, "название задачи")
 	Attribute("posts_per_blogger", Int32, func() {
@@ -82,6 +80,8 @@ var Dataset = Type("Dataset", func() {
 		Description("является ли блоггер изначально в датасете или появился при парсинге")
 		Meta("struct:tag:json", "phone_code")
 	})
+
+	Attribute("bloggers", ArrayOf(Blogger))
 
 	Required("id", "bloggers", "status", "title", "posts_per_blogger", "liked_per_post", "commented_per_post")
 })
