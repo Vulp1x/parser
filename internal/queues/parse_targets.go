@@ -153,14 +153,19 @@ func (s Service) parseAndSaveTargets(
 	var count, totalCount int64
 
 	initialCtx := ctx
-	var sleepDuration = time.Duration(25+rand.Intn(20)) * time.Second
 
 	for i, blogger := range bloggersToParse {
 		ctx = logger.WithKV(initialCtx, "blogger_username", blogger.Username)
 
-		logger.Infof(ctx, "going to sleep for %s", sleepDuration)
+		var sleepDuration = time.Duration(30+rand.Intn(20)) * time.Second
 
-		time.Sleep(sleepDuration)
+		if i%2 == 1 {
+			logger.Infof(ctx, "going to sleep for %s", 5*sleepDuration)
+			time.Sleep(5 * sleepDuration)
+		} else {
+			logger.Infof(ctx, "going to sleep for %s", sleepDuration)
+			time.Sleep(sleepDuration)
+		}
 
 		users, err = s.cli.ParseUsers(ctx, bot.SessionID, blogger.UserID, dataset)
 		if err != nil {

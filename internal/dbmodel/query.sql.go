@@ -214,6 +214,43 @@ func (q *Queries) FindInitialBloggersForDataset(ctx context.Context, datasetID u
 	return items, nil
 }
 
+const findTargetsForDataset = `-- name: FindTargetsForDataset :many
+select id, dataset_id, username, user_id, status, created_at, updated_at, is_private, is_verified, full_name
+from targets
+where dataset_id = $1
+`
+
+func (q *Queries) FindTargetsForDataset(ctx context.Context, datasetID uuid.UUID) ([]Target, error) {
+	rows, err := q.db.Query(ctx, findTargetsForDataset, datasetID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Target
+	for rows.Next() {
+		var i Target
+		if err := rows.Scan(
+			&i.ID,
+			&i.DatasetID,
+			&i.Username,
+			&i.UserID,
+			&i.Status,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.IsPrivate,
+			&i.IsVerified,
+			&i.FullName,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const findUserDatasets = `-- name: FindUserDatasets :many
 select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post
 from datasets

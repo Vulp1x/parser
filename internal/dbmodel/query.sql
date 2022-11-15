@@ -152,3 +152,8 @@ where id = @id;
 select (select count(*) from bloggers where bloggers.dataset_id = @dataset_id and status = 3) as parsed_bloggers_count,
        (select count(*) from bloggers where bloggers.dataset_id = @dataset_id)                as total_bloggers,
        (select count(*) from targets where targets.dataset_id = @dataset_id)                  as targets_saved_coun;
+
+-- name: FindTargetsForDataset :many
+select *
+from targets
+where dataset_id = @dataset_id;
