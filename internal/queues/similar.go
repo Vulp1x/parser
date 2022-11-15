@@ -108,13 +108,13 @@ func (s Service) findSimilarBloggers(ctx context.Context, datasetID uuid.UUID, i
 	for err2 := range errc {
 		err = multierr.Append(err, err2)
 	}
+	if err != nil {
+		return fmt.Errorf("got err from bots: %v", err)
+	}
 
-	err2 := q.UpdateDatasetStatus(ctx, dbmodel.UpdateDatasetStatusParams{Status: dbmodel.ReadyForParsingDatasetStatus, ID: datasetID})
-	if err2 != nil {
-		err2 = fmt.Errorf("failed to update dataset status to ReadyForParsingDatasetStatus (%d): %v", dbmodel.ReadyForParsingDatasetStatus, err2)
-		logger.Error(ctx, err2)
-
-		err = multierr.Append(err, err2)
+	err = q.UpdateDatasetStatus(ctx, dbmodel.UpdateDatasetStatusParams{Status: dbmodel.ReadyForParsingDatasetStatus, ID: datasetID})
+	if err != nil {
+		return fmt.Errorf("failed to update dataset status to ReadyForParsingDatasetStatus (%d): %v", dbmodel.ReadyForParsingDatasetStatus, err)
 	}
 
 	logger.Infof(ctx, "all goroutines completed in %s", time.Since(startedAt))

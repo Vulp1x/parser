@@ -80,7 +80,7 @@ func (l *StructuredLogger) NewLogEntry(r *http.Request) middleware.LogEntry {
 		logCtx = logger.WithFields(logCtx, logDebugFields)
 	}
 
-	logger.Infof(logCtx, "request started")
+	logger.Debugf(logCtx, "request started")
 
 	return entry
 }
@@ -118,8 +118,6 @@ func (l *DebugStructuredLoggerEntry) Write(status, bytesWriten int, header http.
 		"resp_status": status, "resp_bytes_length": bytesWriten,
 		"resp_elapsed_ms": float64(elapsed.Nanoseconds()) * float64(time.Nanosecond) / float64(time.Millisecond),
 	}
-
-	logger.Info(logger.WithFields(l.ctx, fields), "request complete")
 
 	ww, ok := extra.(*responseDupper)
 	if ok {

@@ -161,7 +161,7 @@ func (s *datasetsServicesrvc) ParseDataset(ctx context.Context, p *datasetsservi
 
 func (s *datasetsServicesrvc) GetParsingProgress(ctx context.Context, p *datasetsservice.GetParsingProgressPayload) (*datasetsservice.ParsingProgress, error) {
 	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
-	logger.Info(ctx, "datasetsService.getParsingProgress", p.DatasetID)
+	logger.Debug(ctx, "datasetsService.getParsingProgress")
 
 	datasetID, err := uuid.Parse(p.DatasetID)
 	if err != nil {

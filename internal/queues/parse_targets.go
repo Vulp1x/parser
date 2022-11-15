@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"math/rand"
 	"runtime/debug"
 	"time"
 
@@ -11,6 +12,7 @@ import (
 	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/domain"
 	"github.com/inst-api/parser/internal/instagrapi"
+	"github.com/inst-api/parser/internal/mw"
 	"github.com/inst-api/parser/pkg/logger"
 	"go.uber.org/multierr"
 )
@@ -26,9 +28,38 @@ func (s Service) AddParseTargetsTask(ctx context.Context, datasetID uuid.UUID, b
 		}
 	}()
 
-	err = s.parseTargetsQueue.Add(s.parseTargetsTask.WithArgs(ctx, datasetID, bloggers))
+	err = s.parseTargetsQueue.Add(s.parseTargetsTask.WithArgs(ctx, datasetID, bloggers[0]))
 	if err != nil {
 		return err
+	}
+
+	if len(bloggers) == 1 {
+		return nil
+	}
+
+	bloggers = bloggers[1:]
+	bloggersPerBot := len(bloggers) / 5
+	allBloggersProcessed := false
+
+	for i := 0; i < 5; i++ {
+		rightBorderOfBatch := (i + 1) * bloggersPerBot
+		processorCtx := logger.WithFields(ctx, logger.Fields{"processor_index": i})
+
+		var bloggersBatch []dbmodel.Blogger
+
+		if rightBorderOfBatch >= len(bloggers) {
+			bloggersBatch = bloggers[i*bloggersPerBot:]
+			allBloggersProcessed = true
+		} else {
+			bloggersBatch = bloggers[i*bloggersPerBot : rightBorderOfBatch]
+		}
+
+		_ = s.parseTargetsQueue.Add(s.parseTargetsTask.WithArgs(processorCtx, datasetID, bloggersBatch))
+
+		if allBloggersProcessed {
+			logger.Warnf(ctx, "all bloggers were sent to bots in %d batches", i+1)
+			break
+		}
 	}
 
 	return nil
@@ -36,7 +67,7 @@ func (s Service) AddParseTargetsTask(ctx context.Context, datasetID uuid.UUID, b
 }
 
 func (s Service) processParseTargetsFailedTask(ctx context.Context, datasetID uuid.UUID, _ []dbmodel.Blogger) error {
-	logger.Info(ctx, "ParseTargets task failed, changing dataset status to draft")
+	logger.Info(ctx, "ParseTargets task failed, changing dataset status to ready for parsing")
 
 	q := dbmodel.New(s.dbf(ctx))
 
@@ -85,6 +116,7 @@ func (s Service) parseAndSaveTargets(
 	startedAt := time.Now()
 	q := dbmodel.New(s.dbf(ctx))
 
+	ctx = logger.WithKV(ctx, "uniq_task_processor", mw.ShortID())
 	dataset, err := q.GetDatasetByID(ctx, datasetID)
 	if err != nil {
 		return fmt.Errorf("failed to find dataset: %v", err)
@@ -121,9 +153,14 @@ func (s Service) parseAndSaveTargets(
 	var count, totalCount int64
 
 	initialCtx := ctx
+	var sleepDuration = time.Duration(25+rand.Intn(20)) * time.Second
 
 	for i, blogger := range bloggersToParse {
 		ctx = logger.WithKV(initialCtx, "blogger_username", blogger.Username)
+
+		logger.Infof(ctx, "going to sleep for %s", sleepDuration)
+
+		time.Sleep(sleepDuration)
 
 		users, err = s.cli.ParseUsers(ctx, bot.SessionID, blogger.UserID, dataset)
 		if err != nil {
@@ -143,6 +180,12 @@ func (s Service) parseAndSaveTargets(
 				if err != nil {
 					logger.Errorf(ctx, "failed to mark blogger as parsed  (%s): %v", bot.ID, err)
 				}
+			}
+
+			if errors.Is(err, instagrapi.ErrToManyRequests) {
+				logger.Warn(ctx, "going to sleep for 2 minutes, after 429 resp code")
+				time.Sleep(2 * time.Minute)
+				continue
 			}
 		}
 

@@ -23,6 +23,10 @@ var ErrBotIsBlocked = errors.New("bot account is blocked")
 // ErrBloggerNotFound не нашли блогера по username
 var ErrBloggerNotFound = errors.New("blogger not found")
 
+var ErrToManyRequests = errors.New("wait a few minutes before next request")
+
+var ErrBloggerIsPrivate = errors.New("blogger is private couldn't fetch")
+
 type Client struct {
 	cli              *http.Client
 	saveResponseFunc func(ctx context.Context, sessionID string, response *http.Response, opts ...SaveResponseOption) ([]byte, error)
@@ -114,12 +118,21 @@ func (c Client) FindSimilarBloggersShort(ctx context.Context, sessionID, blogger
 		logger.Errorf(ctx, "failed to save response: %v", err)
 	}
 
-	if resp.StatusCode == http.StatusBadRequest {
-		return nil, ErrBotIsBlocked
-	}
-
-	if resp.StatusCode == http.StatusNotFound {
+	switch resp.StatusCode {
+	case http.StatusOK:
+		break
+	case http.StatusForbidden:
+		return nil, ErrBloggerIsPrivate
+	case http.StatusTooManyRequests:
+		return nil, ErrToManyRequests
+	case http.StatusNotFound:
 		return nil, ErrBloggerNotFound
+	case http.StatusBadRequest:
+		return nil, ErrBotIsBlocked
+
+	case http.StatusInternalServerError:
+		logger.Errorf(ctx, "got internal error, assuming bot is blocked: %s", string(respBytes))
+		return nil, ErrBotIsBlocked
 	}
 
 	if resp.StatusCode != http.StatusOK {
@@ -169,16 +182,21 @@ func (c Client) ParseUsers(
 		logger.Errorf(ctx, "failed to save response: %v", err)
 	}
 
-	if resp.StatusCode == http.StatusBadRequest {
-		return nil, ErrBotIsBlocked
-	}
-
-	if resp.StatusCode == http.StatusNotFound {
+	switch resp.StatusCode {
+	case http.StatusOK:
+		break
+	case http.StatusForbidden:
+		return nil, ErrBloggerIsPrivate
+	case http.StatusTooManyRequests:
+		return nil, ErrToManyRequests
+	case http.StatusNotFound:
 		return nil, ErrBloggerNotFound
-	}
+	case http.StatusBadRequest:
+		return nil, ErrBotIsBlocked
 
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("got %d response code, expected 200", resp.StatusCode)
+	case http.StatusInternalServerError:
+		logger.Errorf(ctx, "got internal error, assuming bot is blocked: %s", string(respBytes))
+		return nil, ErrBotIsBlocked
 	}
 
 	var users []domain.InstUserShort
