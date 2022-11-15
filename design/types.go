@@ -146,7 +146,7 @@ var Proxy = Type("Proxy", func() {
 		Description("имя аккаунта в инстаграме")
 	})
 
-	Field(2, "port", Int32, "количество блогеров, которые проходят проверку по коду региона")
+	Field(2, "port", Int32, "порт для прокси")
 
 	Field(3, "login", String, func() {
 		Description("имя аккаунта в инстаграме")
