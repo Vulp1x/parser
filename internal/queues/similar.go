@@ -67,6 +67,18 @@ func (s Service) findSimilarBloggers(ctx context.Context, datasetID uuid.UUID, i
 	}
 
 	if len(bots) > len(initialBloggers) {
+		var botsUnlocked int
+		for _, bot := range bots[len(initialBloggers):] {
+			err = q.UnlockBot(ctx, bot.ID)
+			if err != nil {
+				logger.Errorf(ctx, "failed to unblock bot %s: %v", bot.Username, err)
+			}
+
+			botsUnlocked++
+		}
+
+		logger.Infof(ctx, "got %d initial bloggers and %d bots, unlocked %d bots", len(initialBloggers), len(bots), botsUnlocked)
+
 		bots = bots[:len(initialBloggers)]
 	}
 
