@@ -119,8 +119,6 @@ const findBloggersForParsing = `-- name: FindBloggersForParsing :many
 select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, parsed, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email, status
 from bloggers
 where dataset_id = $1
-  AND status = 2
-  AND user_id > 0
 `
 
 func (q *Queries) FindBloggersForParsing(ctx context.Context, datasetID uuid.UUID) ([]Blogger, error) {
@@ -345,6 +343,7 @@ type InsertInitialBloggersParams struct {
 }
 
 const lockAvailableBots = `-- name: LockAvailableBots :many
+
 update bots
 set locked_until = now() + interval '15m'
 where id in (select id
@@ -355,6 +354,8 @@ where id in (select id
 RETURNING id, username, session_id, proxy, is_blocked, created_at, updated_at, deleted_at, locked_until
 `
 
+// AND status = 2
+// AND user_id > 0;
 func (q *Queries) LockAvailableBots(ctx context.Context, limit int32) ([]Bot, error) {
 	rows, err := q.db.Query(ctx, lockAvailableBots, limit)
 	if err != nil {

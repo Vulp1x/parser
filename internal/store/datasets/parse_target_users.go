@@ -32,9 +32,9 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 		return domain.DatasetWithBloggers{}, err
 	}
 
-	if dataset.Status != dbmodel.ReadyForParsingDatasetStatus {
-		return domain.DatasetWithBloggers{}, fmt.Errorf("%w: ожидали статус готов к пасрингу (%d), а получили %d",
-			ErrDatasetInvalidStatus, dbmodel.ReadyForParsingDatasetStatus, dataset.Status,
+	if dataset.Status != dbmodel.ReadyForParsingDatasetStatus && dataset.Status != dbmodel.DraftDatasetStatus {
+		return domain.DatasetWithBloggers{}, fmt.Errorf("%w: ожидали статус готов к парсингу (%d) или драфт (%d), а получили %d",
+			ErrDatasetInvalidStatus, dbmodel.ReadyForParsingDatasetStatus, dbmodel.DraftDatasetStatus, dataset.Status,
 		)
 	}
 

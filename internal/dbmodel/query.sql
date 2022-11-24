@@ -65,9 +65,9 @@ where dataset_id = @dataset_id
 -- name: FindBloggersForParsing :many
 select *
 from bloggers
-where dataset_id = @dataset_id
-  AND status = 2
-  AND user_id > 0;
+where dataset_id = @dataset_id;
+--   AND status = 2
+--   AND user_id > 0;
 
 -- name: LockAvailableBots :many
 update bots
