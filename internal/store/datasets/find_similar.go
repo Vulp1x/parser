@@ -2,6 +2,7 @@ package datasets
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -9,7 +10,9 @@ import (
 	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/dbtx"
 	"github.com/inst-api/parser/internal/domain"
+	"github.com/inst-api/parser/internal/workers"
 	"github.com/inst-api/parser/pkg/logger"
+	"github.com/inst-api/parser/pkg/pgqueue"
 	"github.com/jackc/pgx/v4"
 )
 
@@ -49,22 +52,13 @@ func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (d
 		)
 	}
 
-	bloggers, err := q.FindInitialBloggersForDataset(ctx, datasetID)
+	initialBloggers, err := q.FindInitialBloggersForDataset(ctx, datasetID)
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to find initial bloggers for dataset: %v", err)
 	}
 
-	if len(bloggers) == 0 {
+	if len(initialBloggers) == 0 {
 		return domain.DatasetWithBloggers{}, ErrNoBlogers
-	}
-
-	countAvailableBots, err := q.CountAvailableBots(ctx)
-	if err != nil {
-		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to countAvailableBots available bots")
-	}
-
-	if countAvailableBots == 0 {
-		return domain.DatasetWithBloggers{}, ErrNoReadyBots
 	}
 
 	err = q.UpdateDatasetStatus(ctx, dbmodel.UpdateDatasetStatusParams{Status: dbmodel.FindingSimilarStarted, ID: datasetID})
@@ -74,11 +68,26 @@ func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (d
 
 	dataset.Status = dbmodel.FindingSimilarStarted
 
-	logger.Infof(ctx, "adding task for %d bloggers, expected maximum %d bots (available %d)", len(bloggers), botsPerDataset, countAvailableBots)
+	logger.Infof(ctx, "adding task for %d initial bloggers", len(initialBloggers))
 
-	err = s.queueService.AddFindSimilarTask(ctx, dataset.ID, bloggers, botsPerDataset)
+	var tasks = make([]pgqueue.Task, len(initialBloggers))
+
+	for i, initialBlogger := range initialBloggers {
+		bloggerBytes, err := json.Marshal(initialBlogger)
+		if err != nil {
+			return domain.DatasetWithBloggers{}, fmt.Errorf("failed to marshal blogger %s: %v", initialBlogger.Username, err)
+		}
+
+		tasks[i] = pgqueue.Task{
+			Kind:        workers.FindSimilarBloggersTaskKind,
+			Payload:     bloggerBytes,
+			ExternalKey: fmt.Sprintf("%s::%s", dataset.ID, initialBlogger.Username),
+		}
+	}
+
+	err = s.queue.PushTasksTx(ctx, tx, tasks)
 	if err != nil {
-		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to add task: %v", err)
+		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to push tasks to queue: %v", err)
 	}
 
 	err = tx.Commit(ctx)
@@ -86,9 +95,5 @@ func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (d
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to commit transaction: %v", err)
 	}
 
-	return domain.NewDatasetWithBloggers(dataset, bloggers), nil
-}
-
-func findAvailableBots(ctx context.Context, q *dbmodel.Queries, i int) (dbmodel.Bot, error) {
-	return dbmodel.Bot{}, nil
+	return domain.NewDatasetWithBloggers(dataset, initialBloggers), nil
 }

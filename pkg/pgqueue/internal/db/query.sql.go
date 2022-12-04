@@ -3,8 +3,9 @@ package db
 import (
 	"context"
 	"database/sql"
-	"fmt"
-	"strings"
+	"time"
+
+	"github.com/jackc/pgx/v4"
 )
 
 // primary key
@@ -21,7 +22,9 @@ type CancelTaskParams struct {
 
 // CancelTask переводит задачу в статус 'cancelled', если она была открытой.
 func (q *Queries) CancelTask(ctx context.Context, arg CancelTaskParams) error {
-	return q.executor.Exec(ctx, cancelTask, arg.Reason, arg.ID)
+	_, err := q.executor.Exec(ctx, cancelTask, arg.Reason, arg.ID)
+
+	return err
 }
 
 // pgqueue_idempotency_idx
@@ -39,7 +42,9 @@ type CancelTaskByKeyParams struct {
 
 // CancelTaskByKey переводит задачу в статус 'cancelled', если она была открытой.
 func (q *Queries) CancelTaskByKey(ctx context.Context, arg CancelTaskByKeyParams) error {
-	return q.executor.Exec(ctx, cancelTaskByKey, arg.Reason, arg.Kind, arg.ExternalKey)
+	_, err := q.executor.Exec(ctx, cancelTaskByKey, arg.Reason, arg.Kind, arg.ExternalKey)
+
+	return err
 }
 
 // pgqueue_terminal_tasks_idx
@@ -59,7 +64,9 @@ func (q *Queries) CleanupTasks(ctx context.Context, arg CleanupTasksParams) erro
 	if err := q.TryPassRegistry(ctx, jobCleanupTasks(arg.Kind), arg.Period); err != nil {
 		return err
 	}
-	return q.executor.Exec(ctx, cleanupTasks, arg.Kind, arg.Timeout)
+	_, err := q.executor.Exec(ctx, cleanupTasks, arg.Kind, arg.Timeout)
+
+	return err
 }
 
 // primary key
@@ -69,7 +76,9 @@ UPDATE pgqueue SET status = 'succeeded', updated_at = NOW() WHERE id = $1
 
 // CompleteTask переводит задачу в статус 'succeeded'.
 func (q *Queries) CompleteTask(ctx context.Context, id int64) error {
-	return q.executor.Exec(ctx, completeTask, id)
+	_, err := q.executor.Exec(ctx, completeTask, id)
+
+	return err
 }
 
 // primary key
@@ -79,7 +88,9 @@ DELETE FROM pgqueue WHERE id = $1;
 
 // DeleteTask удаляет задачу по id.
 func (q *Queries) DeleteTask(ctx context.Context, id int64) error {
-	return q.executor.Exec(ctx, deleteTask, id)
+	_, err := q.executor.Exec(ctx, deleteTask, id)
+
+	return err
 }
 
 // pgqueue_open_tasks_idx
@@ -172,7 +183,9 @@ type RefuseTaskParams struct {
 // RefuseTask в зависимости от числа оставшихся попыток
 // переводит задачу в статус 'no_attempts_left' или 'must_retry'.
 func (q *Queries) RefuseTask(ctx context.Context, arg RefuseTaskParams) error {
-	return q.executor.Exec(ctx, refuseTask, arg.MessagesLimit, arg.Reason, arg.Delay, arg.ID)
+	_, err := q.executor.Exec(ctx, refuseTask, arg.MessagesLimit, arg.Reason, arg.Delay, arg.ID)
+
+	return err
 }
 
 // pgqueue_broken_tasks_idx
@@ -196,34 +209,60 @@ type RetryTasksParams struct {
 // RetryTasks обновляет количество попыток у задач в статусе 'no_attempts_left',
 // переводя их в статус `must_retry` в порядке добавления в очередь.
 func (q *Queries) RetryTasks(ctx context.Context, arg RetryTasksParams) error {
-	return q.executor.Exec(ctx, retryTasks, arg.Kind, arg.AttemptsLeft, arg.Limit)
+	_, err := q.executor.Exec(ctx, retryTasks, arg.Kind, arg.AttemptsLeft, arg.Limit)
+
+	return err
 }
 
 // pgqueue_idempotency_idx
 const pushTasks = `-- pgqueue: PushTasks :exec
-INSERT INTO pgqueue (%v) VALUES %v ON CONFLICT DO NOTHING
+INSERT INTO pgqueue (kind, payload, external_key, attempts_left, delayed_till)
+VALUES ($1, $2, $3, $4, $5)
+ON CONFLICT DO NOTHING
 `
 
-type PushTasksParams struct {
-	Kind         int16
-	Payload      []byte
-	ExternalKey  sql.NullString
-	AttemptsLeft int16
-	Delay        string
+type PushTasksBatchResults struct {
+	br  pgx.BatchResults
+	ind int
 }
 
-// PushTasks добавляет задачи в очередь батчом. При конфликте по ключу идемпотентности - DO NOTHING.
-func (q *Queries) PushTasks(ctx context.Context, arg []PushTasksParams) error {
-	cols := []string{"kind", "payload", "external_key", "attempts_left", "delayed_till"}
+type PushTasksParams struct {
+	Kind         int16          `json:"kind"`
+	Payload      []byte         `json:"payload"`
+	ExternalKey  sql.NullString `json:"external_key"`
+	AttemptsLeft int16          `json:"attempts_left"`
+	DelayedTill  time.Time      `json:"delayed_till"`
+}
 
-	vls := make([]string, 0, len(arg))
-	args := make([]interface{}, 0, len(arg))
-	for i, a := range arg {
-		rn := i * len(cols)
-		vls = append(vls, fmt.Sprintf("($%d, $%d, $%d, $%d, NOW() + $%d::interval)", rn+1, rn+2, rn+3, rn+4, rn+5))
-		args = append(args, a.Kind, a.Payload, a.ExternalKey, a.AttemptsLeft, a.Delay)
+func (q *Queries) PushTasks(ctx context.Context, arg []PushTasksParams) *PushTasksBatchResults {
+	batch := &pgx.Batch{}
+	for _, a := range arg {
+		vals := []interface{}{
+			a.Kind,
+			a.Payload,
+			a.ExternalKey,
+			a.AttemptsLeft,
+			a.DelayedTill,
+		}
+		batch.Queue(pushTasks, vals...)
 	}
+	br := q.executor.SendBatch(ctx, batch)
+	return &PushTasksBatchResults{br, 0}
+}
 
-	query := fmt.Sprintf(pushTasks, strings.Join(cols, ","), strings.Join(vls, ","))
-	return q.executor.Exec(ctx, query, args...)
+func (b *PushTasksBatchResults) Exec(f func(int, error)) {
+	for {
+		_, err := b.br.Exec()
+		if err != nil && (err.Error() == "no result" || err.Error() == "batch already closed") {
+			break
+		}
+		if f != nil {
+			f(b.ind, err)
+		}
+		b.ind++
+	}
+}
+
+func (b *PushTasksBatchResults) Close() error {
+	return b.br.Close()
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/queues"
+	"github.com/inst-api/parser/pkg/pgqueue"
 )
 
 const workersPerTask = 1
@@ -15,7 +16,13 @@ const workersPerTask = 1
 // ErrDatasetInvalidStatus переход по статусам не возможен
 var ErrDatasetInvalidStatus = errors.New("invalid task status")
 
-func NewStore(timeout time.Duration, dbtxFunc dbmodel.DBTXFunc, txFunc dbmodel.TxFunc, instagrapiHost string) *Store {
+func NewStore(
+	timeout time.Duration,
+	dbtxFunc dbmodel.DBTXFunc,
+	txFunc dbmodel.TxFunc,
+	instagrapiHost string,
+	queue *pgqueue.Queue,
+) *Store {
 
 	return &Store{
 		// tasksChan:   make(chan domain.Task, 10),
@@ -25,6 +32,7 @@ func NewStore(timeout time.Duration, dbtxFunc dbmodel.DBTXFunc, txFunc dbmodel.T
 		txf:          txFunc,
 		taskMu:       &sync.Mutex{},
 		queueService: queues.NewService(instagrapiHost, dbtxFunc),
+		queue:        queue,
 		// instaClient: instagrapi.NewClient(instagrapiHost),
 	}
 }
@@ -37,6 +45,7 @@ type Store struct {
 	dbtxf        dbmodel.DBTXFunc
 	txf          dbmodel.TxFunc
 	queueService queues.Service
+	queue        *pgqueue.Queue
 
 	// instaClient instagrapiClient
 }

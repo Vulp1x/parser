@@ -6,14 +6,14 @@ import (
 	"time"
 
 	"github.com/cenkalti/backoff/v4"
+	"github.com/inst-api/parser/pkg/logger"
 	"github.com/inst-api/parser/pkg/pgqueue/internal/db"
 	"github.com/inst-api/parser/pkg/pgqueue/pkg/executor"
-	"github.com/inst-api/parser/pkg/pgqueue/pkg/status"
 )
 
 const (
 	// Таймаут на выполнение запросов к БД.
-	storageTimeout = 3 * time.Second
+	storageTimeout = 5 * time.Second
 	// Таймаут на ретрай запросов к БД.
 	storageBackoffMaxElapsedTime = 3 * storageTimeout
 )
@@ -136,7 +136,20 @@ func (s *storage) PushTasks(parentCtx context.Context, kds map[int16]kindData, t
 		ctx, cancel := context.WithTimeout(parentCtx, storageTimeout)
 		defer cancel()
 
-		return s.Queries.PushTasks(ctx, dbParams)
+		batch := s.Queries.PushTasks(ctx, dbParams)
+
+		batch.Exec(func(i int, err2 error) {
+			if err2 != nil {
+				err = fmt.Errorf("failed to push task: %v", err2)
+
+				err2 = batch.Close()
+				if err2 != nil {
+					logger.Error(ctx, "failed to close batch after error: %v", err2)
+				}
+			}
+		})
+
+		return err
 	}); err != nil {
 		return fmt.Errorf("PushTasks failed: %w", err)
 	}
@@ -159,7 +172,7 @@ func getPushManyParams(kds map[int16]kindData, tasks []Task, opts ...PushOption)
 			Payload:      task.Payload,
 			ExternalKey:  db.NullString(task.ExternalKey),
 			AttemptsLeft: kd.opts.MaxAttempts,
-			Delay:        db.SQLInterval(0),
+			DelayedTill:  time.Now(),
 		}
 
 		for _, opt := range opts {
@@ -176,7 +189,7 @@ type PushOption func(db.PushTasksParams) db.PushTasksParams
 
 func WithDelay(delay time.Duration) PushOption {
 	return func(params db.PushTasksParams) db.PushTasksParams {
-		params.Delay = db.SQLInterval(delay)
+		params.DelayedTill = time.Now().Add(delay)
 		return params
 	}
 }
@@ -187,9 +200,9 @@ func collectTasksInStatusNew(kds map[int16]kindData, tasks []Task) {
 		counts[task.Kind]++
 	}
 
-	for kind, count := range counts {
-		mc.CollectTasksInStatus(kds[kind].opts.Name, status.New, count)
-	}
+	// for kind, count := range counts {
+	// mc.CollectTasksInStatus(kds[kind].opts.Name, status.New, count)
+	// }
 }
 
 func retry(fn func() error) error {

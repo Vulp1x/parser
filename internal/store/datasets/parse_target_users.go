@@ -9,7 +9,9 @@ import (
 	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/dbtx"
 	"github.com/inst-api/parser/internal/domain"
+	"github.com/inst-api/parser/internal/workers"
 	"github.com/inst-api/parser/pkg/logger"
+	"github.com/inst-api/parser/pkg/pgqueue"
 	"github.com/jackc/pgx/v4"
 )
 
@@ -47,15 +49,6 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 		return domain.DatasetWithBloggers{}, ErrNoBlogers
 	}
 
-	countAvailableBots, err := q.CountAvailableBots(ctx)
-	if err != nil {
-		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to countAvailableBots available bots")
-	}
-
-	if countAvailableBots == 0 {
-		return domain.DatasetWithBloggers{}, ErrNoReadyBots
-	}
-
 	err = q.UpdateDatasetStatus(ctx, dbmodel.UpdateDatasetStatusParams{Status: dbmodel.ParsingTargetsStartedDatasetStatus, ID: datasetID})
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to update dataset status: %v", err)
@@ -63,11 +56,19 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 
 	dataset.Status = dbmodel.ParsingTargetsStartedDatasetStatus
 
-	logger.Infof(ctx, "adding task for %d bloggers, expected maximum %d bots (available %d)", len(bloggers), botsPerDataset, countAvailableBots)
+	logger.Infof(ctx, "adding tasks for %d bloggers", len(bloggers))
 
-	err = s.queueService.AddParseTargetsTask(ctx, dataset.ID, bloggers)
+	emptyPayload := []byte("{}")
+	tasks := make([]pgqueue.Task, len(bloggers))
+	for i, blogger := range bloggers {
+		tasks[i] = pgqueue.Task{
+			Kind: workers.ParseBloggersMediaTaskKind, ExternalKey: fmt.Sprintf("%s::%s", datasetID, blogger.Username), Payload: emptyPayload,
+		}
+	}
+
+	err = s.queue.PushTasksTx(ctx, tx, tasks)
 	if err != nil {
-		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to add task: %v", err)
+		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to push tasks to queue: %v", err)
 	}
 
 	err = tx.Commit(ctx)

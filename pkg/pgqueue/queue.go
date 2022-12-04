@@ -8,7 +8,6 @@ import (
 	"github.com/inst-api/parser/pkg/pgqueue/internal/db"
 	"github.com/inst-api/parser/pkg/pgqueue/internal/workerpool"
 	"github.com/inst-api/parser/pkg/pgqueue/pkg/executor"
-	"github.com/inst-api/parser/pkg/pgqueue/pkg/status"
 )
 
 var mc MetricsCollector
@@ -33,8 +32,8 @@ type Cluster interface {
 
 // Queue - очередь задач.
 type Queue struct {
-	cluster Cluster
-	kds     map[int16]kindData
+	executor executor.Executor
+	kds      map[int16]kindData
 
 	start chan struct{}
 	stop  chan struct{}
@@ -42,13 +41,12 @@ type Queue struct {
 }
 
 // NewQueue создает очередь задач.
-func NewQueue(ctx context.Context, cluster Cluster, metricsCollector MetricsCollector) *Queue {
-	mc = metricsCollector
+func NewQueue(ctx context.Context, executor executor.Executor) *Queue {
 	queue := &Queue{
-		cluster: cluster,
-		kds:     make(map[int16]kindData),
-		start:   make(chan struct{}),
-		stop:    make(chan struct{}),
+		executor: executor,
+		kds:      make(map[int16]kindData),
+		start:    make(chan struct{}),
+		stop:     make(chan struct{}),
 	}
 	queue.done = newLoop(queue).Watch(ctx)
 	return queue
@@ -79,7 +77,7 @@ func (q *Queue) RegisterKind(kind int16, handler TaskHandler, opts KindOptions) 
 
 	checkAndSetDefaultKindOptions(kind, &opts)
 	q.kds[kind] = kindData{handler: handler, opts: opts, wp: workerpool.New()}
-	mc.RegisterKind(opts.Name)
+	// mc.RegisterKind(opts.Name)
 
 	return q
 }
@@ -112,12 +110,12 @@ func (q *Queue) PushTasksTx(ctx context.Context, tx executor.Tx, tasks []Task, o
 // CancelTaskByKey закрывает открытую задачу по ключу идемпотентности.
 // Если задача не была найдена в открытом статусе, ошибка не возвращается.
 func (q *Queue) CancelTaskByKey(ctx context.Context, kind int16, key string) error {
-	kd, ok := q.kds[kind]
+	_, ok := q.kds[kind]
 	if !ok {
 		return ErrUnexpectedTaskKind
 	}
 
-	mc.CollectTasksInStatus(kd.opts.Name, status.Cancelled, 1)
+	// mc.CollectTasksInStatus(kd.opts.Name, status.Cancelled, 1)
 	params := db.CancelTaskByKeyParams{Reason: "CancelTaskByKey", Kind: kind, ExternalKey: db.NullString(key)}
 	return q.storage(ctx).CancelTaskByKey(ctx, params)
 }
@@ -141,7 +139,7 @@ func (q *Queue) storage(ctx context.Context, db ...executor.Executor) *storage {
 	if len(db) > 0 {
 		return newStorage(db[0])
 	}
-	return newStorage(q.cluster.Master(ctx))
+	return newStorage(q.executor)
 }
 
 func (q *Queue) shutdown() {

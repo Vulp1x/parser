@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/inst-api/parser/internal/mw"
 	"github.com/inst-api/parser/pkg/ctxutil"
 	"github.com/inst-api/parser/pkg/logger"
 	"github.com/inst-api/parser/pkg/pgqueue/internal/db"
@@ -130,7 +131,7 @@ func (l loop) runFetcher(ctx context.Context, kind int16, kd kindData) {
 			for _, task := range tasks {
 				kd.wp.Push(l.wrapTask(ctx, kd, task))
 			}
-			mc.CollectTasksInStatus(kd.opts.Name, status.Processing, int32(len(tasks)))
+			// mc.CollectTasksInStatus(kd.opts.Name, status.Processing, int32(len(tasks)))
 		}
 	}
 
@@ -140,6 +141,7 @@ func (l loop) runFetcher(ctx context.Context, kind int16, kd kindData) {
 func (l loop) wrapTask(parentCtx context.Context, kd kindData, task Task) func() {
 	return func() {
 		ctx := logger.WithKV(ctxutil.Detach(parentCtx), "task_id", task.id)
+		ctx = mw.GenerateRequestID(ctx)
 
 		elapsedTime, executionErr := task.wrapExecution(ctx, kd.handler, kd.opts.AttemptTimeout)
 		collectExecutionResults(kd.opts.Name, elapsedTime, errToStatus(executionErr))
@@ -149,12 +151,12 @@ func (l loop) wrapTask(parentCtx context.Context, kd kindData, task Task) func()
 			if kd.opts.TerminalTasksTTL() == 0 {
 				if err := l.storage(ctx).DeleteTask(ctx, task.id); err != nil {
 					logger.Errorf(ctx, "DeleteTask failed: %v", err)
-					mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
+					// mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
 				}
 			} else {
 				if err := l.storage(ctx).CompleteTask(ctx, task.id); err != nil {
 					logger.Errorf(ctx, "CompleteTask failed: %v", err)
-					mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
+					// // mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
 				}
 			}
 		case errors.Is(executionErr, ErrMustCancelTask):
@@ -162,19 +164,19 @@ func (l loop) wrapTask(parentCtx context.Context, kd kindData, task Task) func()
 			if kd.opts.TerminalTasksTTL() == 0 {
 				if err := l.storage(ctx).DeleteTask(ctx, task.id); err != nil {
 					logger.Errorf(ctx, "DeleteTask failed: %v", err)
-					mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
+					// mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
 				}
 			} else {
 				params := db.CancelTaskParams{ID: task.id, Reason: executionErr.Error()}
 				if err := l.storage(ctx).CancelTask(ctx, params); err != nil {
 					logger.Errorf(ctx, "CancelTask failed: %v", err)
-					mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
+					// mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
 				}
 			}
 		default:
 			delay := kd.opts.Delayer(task.attemptsElapsed - 1)
 			if task.attemptsLeft == 0 {
-				mc.CollectTasksInStatus(kd.opts.Name, status.NoAttemptsLeft, 1)
+				// mc.CollectTasksInStatus(kd.opts.Name, status.NoAttemptsLeft, 1)
 				logger.Errorf(ctx, "no attempts left, spent [%v], error: %v", elapsedTime, executionErr)
 			} else {
 				logger.Warnf(ctx, "attempts left [%v], spent [%v], delay [%v], error: %v", task.attemptsLeft, elapsedTime, delay, executionErr)
@@ -187,7 +189,7 @@ func (l loop) wrapTask(parentCtx context.Context, kd kindData, task Task) func()
 				MessagesLimit: kd.opts.MaxTaskErrorMessages,
 			}); err != nil {
 				logger.Errorf(ctx, "RefuseTask failed: %v", err)
-				mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
+				// mc.CollectTasksInStatus(kd.opts.Name, status.Lost, 1)
 			}
 		}
 	}
@@ -233,8 +235,8 @@ func resizeWP(ctx context.Context, wp *workerpool.Pool, size int32) {
 }
 
 func collectExecutionResults(name string, elapsedTime time.Duration, status string) {
-	mc.CollectTasksInStatus(name, status, 1)
-	mc.CollectTaskDuration(name, elapsedTime, status)
+	// mc.CollectTasksInStatus(name, status, 1)
+	// mc.CollectTaskDuration(name, elapsedTime, status)
 }
 
 func errToStatus(err error) string {

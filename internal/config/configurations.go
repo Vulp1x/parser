@@ -34,11 +34,10 @@ type Config struct {
 
 // ServerConfig represents configuration of server location
 type ServerConfig struct {
-	BindIP   string `yaml:"bind_ip"`
-	Port     string `yaml:"port"`
-	GRPCPort string `yaml:"grpc_port"`
-	CertFile string `yaml:"cert_file"`
-	KeyFile  string `yaml:"key_file"`
+	BindIP        string `yaml:"bind_ip"`
+	Port          string `yaml:"port"`
+	GRPCPort      string `yaml:"grpc_port"`
+	InstaProxyURL string `yaml:"insta_proxy_url"`
 }
 
 // ParseConfiguration parses configuration from values_*.yaml

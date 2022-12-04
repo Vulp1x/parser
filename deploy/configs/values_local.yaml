@@ -2,6 +2,7 @@ listen:
   port: 9090
   grpc_port: 9091
   bind_ip: 127.0.0.1
+  insta_proxy_url: 127.0.0.1:8092
 logger:
   enable console: true
   console json format: true

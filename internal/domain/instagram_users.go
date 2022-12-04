@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/inst-api/parser/internal/dbmodel"
+	"github.com/inst-api/parser/internal/pb/instaproxy"
 )
 
 type InstUser struct {
@@ -13,7 +14,6 @@ type InstUser struct {
 	FullName                 string      `json:"full_name"`
 	IsPrivate                bool        `json:"is_private"`
 	ProfilePicUrl            string      `json:"profile_pic_url"`
-	ProfilePicUrlHd          string      `json:"profile_pic_url_hd"`
 	IsVerified               bool        `json:"is_verified"`
 	MediaCount               int         `json:"media_count"`
 	FollowerCount            int         `json:"follower_count"`
@@ -49,6 +49,52 @@ type InstUserShort struct {
 	IsPrivate       bool          `json:"is_private"`
 	IsVerified      bool          `json:"is_verified"`
 	Stories         []interface{} `json:"stories"`
+}
+
+func FullUserFromProto(protoUser *instaproxy.FullUser) *InstUser {
+	u := &InstUser{}
+	if protoUser == nil {
+		return u
+	}
+
+	u.Pk = protoUser.Pk
+	u.Username = protoUser.Username
+	u.FullName = protoUser.FullName
+	u.IsPrivate = protoUser.IsPrivate
+	u.ProfilePicUrl = protoUser.ProfilePicUrl
+	u.IsVerified = protoUser.IsVerified
+	u.MediaCount = int(protoUser.MediaCount)
+	u.FollowerCount = int(protoUser.FollowerCount)
+	u.FollowingCount = int(protoUser.FollowingCount)
+	u.Biography = protoUser.Biography
+	u.ExternalUrl = &protoUser.ExternalUrl
+	u.IsBusiness = protoUser.IsBusiness
+	// u.PublicEmail  =
+	// u.ContactPhoneNumber =
+	// u.PublicPhoneCountryCode  =
+	// u.PublicPhoneNumber       =
+
+	return u
+}
+
+func ShortUsersFromProto(users []*instaproxy.UserShort) ShortInstUsers {
+	var domainUsers = make([]InstUserShort, 0, len(users))
+	for _, userShort := range users {
+		if userShort == nil {
+			continue
+		}
+
+		domainUsers = append(domainUsers, InstUserShort{
+			Pk:            int64(userShort.Pk),
+			Username:      userShort.Username,
+			FullName:      userShort.FullName,
+			ProfilePicUrl: userShort.ProfilePicUrl,
+			IsPrivate:     userShort.IsPrivate,
+			IsVerified:    userShort.IsVerified,
+		})
+	}
+
+	return domainUsers
 }
 
 func (u InstUser) ToUpdateParams(id uuid.UUID, isCorrect bool) dbmodel.UpdateBloggerParams {

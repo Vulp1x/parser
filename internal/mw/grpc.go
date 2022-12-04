@@ -59,6 +59,37 @@ func UnaryLog(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, 
 	return resp, err
 }
 
+func UnaryClientLog() grpc.UnaryClientInterceptor {
+	return func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+		return unaryClientLog(ctx, method, req, reply, cc, invoker, opts...)
+	}
+}
+
+// UnaryClientLog does the actual logging given the logger for unary methods.
+func unaryClientLog(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+	reqID := ShortID()
+	ctx = metadata.NewOutgoingContext(ctx, metadata.New(map[string]string{RequestIDMetadataKey: reqID}))
+
+	started := time.Now()
+
+	ctx = logger.WithFields(ctx, logger.Fields{"req_id": reqID})
+
+	startCtx := logger.WithFields(ctx, logger.Fields{"method": method, "request_length": byteCount(messageLength(req))})
+	// before executing rpc
+	logger.Info(startCtx, "request started")
+
+	// invoke rpc
+	err := invoker(ctx, method, req, reply, cc, opts...)
+
+	// after executing rpc
+	s, _ := status.FromError(err)
+
+	afterCtx := logger.WithFields(ctx, logger.Fields{"status": s.Code(), "bytes": byteCount(messageLength(req)), "elapsed": time.Since(started).String()})
+	logger.Info(afterCtx, "request completed")
+
+	return err
+}
+
 // MetadataValue returns the first value for the given metadata key if
 // key exists, else returns an empty string.
 func MetadataValue(md metadata.MD, key string) string {
@@ -94,12 +125,12 @@ func messageLength(msg interface{}) int64 {
 //	  middleware.XRequestMetadataLimitOption(128))))
 func UnaryRequestID() grpc.UnaryServerInterceptor {
 	return grpc.UnaryServerInterceptor(func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
-		ctx = generateRequestID(ctx)
+		ctx = GenerateRequestID(ctx)
 		return handler(ctx, req)
 	})
 }
 
-func generateRequestID(ctx context.Context) context.Context {
+func GenerateRequestID(ctx context.Context) context.Context {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		md = metadata.MD{}

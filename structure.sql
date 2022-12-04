@@ -30,6 +30,19 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 
 
+--
+-- Name: pgqueue_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.pgqueue_status AS ENUM (
+    'new',
+    'must_retry',
+    'no_attempts_left',
+    'cancelled',
+    'succeeded'
+);
+
+
 SET default_table_access_method = heap;
 
 --
@@ -113,6 +126,66 @@ CREATE SEQUENCE public.goose_db_version_id_seq
 
 
 --
+-- Name: medias; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.medias (
+    pk bigint NOT NULL,
+    id text NOT NULL,
+    dataset_id uuid NOT NULL,
+    media_type integer NOT NULL,
+    code text NOT NULL,
+    has_more_comments boolean NOT NULL,
+    caption text NOT NULL,
+    width integer NOT NULL,
+    height integer NOT NULL,
+    like_count integer NOT NULL,
+    taken_at integer NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: pgqueue; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pgqueue (
+    id bigint NOT NULL,
+    kind smallint NOT NULL,
+    payload bytea NOT NULL,
+    external_key text,
+    status public.pgqueue_status DEFAULT 'new'::public.pgqueue_status NOT NULL,
+    messages text[] DEFAULT ARRAY[]::text[] NOT NULL,
+    attempts_left smallint NOT NULL,
+    attempts_elapsed smallint DEFAULT 0 NOT NULL,
+    delayed_till timestamp with time zone NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+)
+WITH (fillfactor='80');
+
+
+--
+-- Name: pgqueue_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.pgqueue_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pgqueue_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.pgqueue_id_seq OWNED BY public.pgqueue.id;
+
+
+--
 -- Name: targets; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -128,6 +201,13 @@ CREATE TABLE public.targets (
     is_verified boolean DEFAULT false NOT NULL,
     full_name text DEFAULT ''::text NOT NULL
 );
+
+
+--
+-- Name: pgqueue id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pgqueue ALTER COLUMN id SET DEFAULT nextval('public.pgqueue_id_seq'::regclass);
 
 
 --
@@ -163,6 +243,30 @@ ALTER TABLE ONLY public.datasets
 
 
 --
+-- Name: medias medias_pk_dataset_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.medias
+    ADD CONSTRAINT medias_pk_dataset_id_key UNIQUE (pk, dataset_id);
+
+
+--
+-- Name: medias medias_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.medias
+    ADD CONSTRAINT medias_pkey PRIMARY KEY (pk);
+
+
+--
+-- Name: pgqueue pgqueue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pgqueue
+    ADD CONSTRAINT pgqueue_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: targets targets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -178,6 +282,34 @@ CREATE UNIQUE INDEX bots_session_id_idx ON public.bots USING btree (session_id);
 
 
 --
+-- Name: pgqueue_broken_tasks_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX pgqueue_broken_tasks_idx ON public.pgqueue USING btree (kind, created_at) WHERE (status = 'no_attempts_left'::public.pgqueue_status);
+
+
+--
+-- Name: pgqueue_idempotency_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX pgqueue_idempotency_idx ON public.pgqueue USING btree (kind, external_key);
+
+
+--
+-- Name: pgqueue_open_tasks_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX pgqueue_open_tasks_idx ON public.pgqueue USING btree (kind, delayed_till) WHERE (status = ANY (ARRAY['new'::public.pgqueue_status, 'must_retry'::public.pgqueue_status]));
+
+
+--
+-- Name: pgqueue_terminal_tasks_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX pgqueue_terminal_tasks_idx ON public.pgqueue USING btree (kind, updated_at) WHERE (status = ANY (ARRAY['cancelled'::public.pgqueue_status, 'succeeded'::public.pgqueue_status]));
+
+
+--
 -- Name: target_users_uniq_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -190,6 +322,14 @@ CREATE UNIQUE INDEX target_users_uniq_idx ON public.targets USING btree (dataset
 
 ALTER TABLE ONLY public.bloggers
     ADD CONSTRAINT bloggers_dataset_id_fkey FOREIGN KEY (dataset_id) REFERENCES public.datasets(id);
+
+
+--
+-- Name: medias medias_dataset_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.medias
+    ADD CONSTRAINT medias_dataset_id_fkey FOREIGN KEY (dataset_id) REFERENCES public.datasets(id);
 
 
 --

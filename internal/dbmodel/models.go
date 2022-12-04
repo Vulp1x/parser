@@ -5,10 +5,57 @@
 package dbmodel
 
 import (
+	"database/sql/driver"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 )
+
+type PgqueueStatus string
+
+const (
+	PgqueueStatusNew            PgqueueStatus = "new"
+	PgqueueStatusMustRetry      PgqueueStatus = "must_retry"
+	PgqueueStatusNoAttemptsLeft PgqueueStatus = "no_attempts_left"
+	PgqueueStatusCancelled      PgqueueStatus = "cancelled"
+	PgqueueStatusSucceeded      PgqueueStatus = "succeeded"
+)
+
+func (e *PgqueueStatus) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = PgqueueStatus(s)
+	case string:
+		*e = PgqueueStatus(s)
+	default:
+		return fmt.Errorf("unsupported scan type for PgqueueStatus: %T", src)
+	}
+	return nil
+}
+
+type NullPgqueueStatus struct {
+	PgqueueStatus PgqueueStatus
+	Valid         bool // Valid is true if String is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullPgqueueStatus) Scan(value interface{}) error {
+	if value == nil {
+		ns.PgqueueStatus, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.PgqueueStatus.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullPgqueueStatus) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return ns.PgqueueStatus, nil
+}
 
 type Blogger struct {
 	ID                     uuid.UUID     `json:"id"`
@@ -60,6 +107,36 @@ type Dataset struct {
 	PostsPerBlogger  int32         `json:"posts_per_blogger"`
 	LikedPerPost     int32         `json:"liked_per_post"`
 	CommentedPerPost int32         `json:"commented_per_post"`
+}
+
+type Media struct {
+	Pk              int64     `json:"pk"`
+	ID              string    `json:"id"`
+	DatasetID       uuid.UUID `json:"dataset_id"`
+	MediaType       int32     `json:"media_type"`
+	Code            string    `json:"code"`
+	HasMoreComments bool      `json:"has_more_comments"`
+	Caption         string    `json:"caption"`
+	Width           int32     `json:"width"`
+	Height          int32     `json:"height"`
+	LikeCount       int32     `json:"like_count"`
+	TakenAt         int32     `json:"taken_at"`
+	CreatedAt       time.Time `json:"created_at"`
+	UpdatedAt       time.Time `json:"updated_at"`
+}
+
+type Pgqueue struct {
+	ID              int64         `json:"id"`
+	Kind            int16         `json:"kind"`
+	Payload         []byte        `json:"payload"`
+	ExternalKey     *string       `json:"external_key"`
+	Status          PgqueueStatus `json:"status"`
+	Messages        []string      `json:"messages"`
+	AttemptsLeft    int16         `json:"attempts_left"`
+	AttemptsElapsed int16         `json:"attempts_elapsed"`
+	DelayedTill     time.Time     `json:"delayed_till"`
+	CreatedAt       time.Time     `json:"created_at"`
+	UpdatedAt       time.Time     `json:"updated_at"`
 }
 
 type Target struct {

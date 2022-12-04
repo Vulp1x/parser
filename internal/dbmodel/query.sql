@@ -157,3 +157,13 @@ select (select count(*) from bloggers where bloggers.dataset_id = @dataset_id an
 select *
 from targets
 where dataset_id = @dataset_id;
+
+-- name: SaveMedias :batchone
+insert into medias(pk, id, dataset_id, media_type, code, has_more_comments, caption, width, height, like_count,
+                   taken_at, created_at, updated_at)
+values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, now(), now())
+ON CONFLICT (pk, dataset_id) DO UPDATE SET has_more_comments=excluded.has_more_comments,
+                                           caption=excluded.caption,
+                                           like_count=excluded.like_count,
+                                           updated_at=now()
+RETURNING *;

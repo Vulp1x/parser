@@ -13,10 +13,14 @@ import (
 
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
 	"github.com/inst-api/parser/internal/config"
+	"github.com/inst-api/parser/internal/mw"
 	"github.com/inst-api/parser/internal/postgres"
 	"github.com/inst-api/parser/internal/service"
 	"github.com/inst-api/parser/internal/store/datasets"
+	"github.com/inst-api/parser/internal/workers"
 	"github.com/inst-api/parser/pkg/logger"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
@@ -60,7 +64,19 @@ func main() {
 		logger.Fatalf(ctx, "Failed to connect to transaction's database: %v", err)
 	}
 
-	datasetsStore := datasets.NewStore(5*time.Second, dbTXFunc, txFunc, conf.Instagrapi.Hostname)
+	conn, err := grpc.DialContext(
+		ctx,
+		conf.Listen.InstaProxyURL,
+		grpc.WithUnaryInterceptor(mw.UnaryClientLog()),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+	if err != nil {
+		logger.Fatalf(ctx, "failed to connect to parser: %v", err)
+	}
+
+	queue := workers.NewQueuue(ctx, dbTXFunc(ctx), dbTXFunc, conn)
+
+	datasetsStore := datasets.NewStore(5*time.Second, dbTXFunc, txFunc, conf.Instagrapi.Hostname, queue)
 	// botsStore := bots.NewStore(dbTXFunc, txFunc)
 	//
 	// Initialize the services.
