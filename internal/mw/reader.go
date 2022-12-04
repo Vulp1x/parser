@@ -45,7 +45,7 @@ func ReadIDPath() func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
 			id, err := uuid.Parse(chi.URLParam(r, "id"))
 			if err != nil {
-				BadRequest(w, r, "failed to parse id: %v", err)
+				BadRequest(w, r, "failed to parser id: %v", err)
 
 				return
 			}

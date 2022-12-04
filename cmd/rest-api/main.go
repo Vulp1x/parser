@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"net/url"
 	"os"
 	"os/signal"
 	"sync"
@@ -16,7 +15,6 @@ import (
 	"github.com/inst-api/parser/internal/config"
 	"github.com/inst-api/parser/internal/postgres"
 	"github.com/inst-api/parser/internal/service"
-	"github.com/inst-api/parser/internal/store/bots"
 	"github.com/inst-api/parser/internal/store/datasets"
 	"github.com/inst-api/parser/pkg/logger"
 )
@@ -40,7 +38,7 @@ func main() {
 
 	err := conf.ParseConfiguration(configMode)
 	if err != nil {
-		log.Fatal("Failed to parse configuration: ", err)
+		log.Fatal("Failed to parser configuration: ", err)
 	}
 
 	err = logger.InitLogger(conf.Logger)
@@ -63,10 +61,10 @@ func main() {
 	}
 
 	datasetsStore := datasets.NewStore(5*time.Second, dbTXFunc, txFunc, conf.Instagrapi.Hostname)
-	botsStore := bots.NewStore(dbTXFunc, txFunc)
-
+	// botsStore := bots.NewStore(dbTXFunc, txFunc)
+	//
 	// Initialize the services.
-	adminServiceSvc := service.NewAdminService(botsStore)
+	// adminServiceSvc := service.NewAdminService(botsStore)
 
 	// Initialize the services.
 	datasetsService := service.NewDatasetsService(conf.Security, datasetsStore)
@@ -88,7 +86,7 @@ func main() {
 
 	var wg sync.WaitGroup
 
-	wg.Add(2)
+	wg.Add(1)
 
 	// Start the servers and send errors (if any) to the error channel.
 	go handleHTTPServer(
@@ -101,14 +99,14 @@ func main() {
 		*debugFlag,
 	)
 
-	go handleGRPCServer(
-		ctx,
-		&url.URL{Host: fmt.Sprintf("%s:%s", conf.Listen.BindIP, conf.Listen.GRPCPort)},
-		adminServiceSvc,
-		&wg,
-		errc,
-		*debugFlag,
-	)
+	// go handleGRPCServer(
+	// 	ctx,
+	// 	&url.URL{Host: fmt.Sprintf("%s:%s", conf.Listen.BindIP, conf.Listen.GRPCPort)},
+	// 	adminServiceSvc,
+	// 	&wg,
+	// 	errc,
+	// 	*debugFlag,
+	// )
 
 	// Wait for signal.
 	logger.Infof(ctx, "exiting from main: (%v)", <-errc)

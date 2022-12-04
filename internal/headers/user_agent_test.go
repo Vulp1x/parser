@@ -94,7 +94,7 @@ xQIDAQAB
 	block, _ := pem.Decode(pubKey)
 	rsaKey, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
-		t.Errorf("failed to parse key: %v", err)
+		t.Errorf("failed to parser key: %v", err)
 	}
 
 	fmt.Printf("%#+v\n", rsaKey)

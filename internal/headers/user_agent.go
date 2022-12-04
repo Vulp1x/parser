@@ -41,7 +41,7 @@ func NewDeviceSettings(userAgent string) (DeviceSettings, error) {
 
 	androidVersion, err := strconv.ParseInt(matches[2], 10, 32)
 	if err != nil {
-		return DeviceSettings{}, fmt.Errorf("failed to parse android version from '%s': %v", matches[2], err)
+		return DeviceSettings{}, fmt.Errorf("failed to parser android version from '%s': %v", matches[2], err)
 	}
 
 	return DeviceSettings{

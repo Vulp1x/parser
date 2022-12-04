@@ -169,7 +169,7 @@ func (s Service) parseAndSaveTargets(
 
 		users, err = s.cli.ParseUsers(ctx, bot.SessionID, blogger.UserID, dataset)
 		if err != nil {
-			logger.Errorf(ctx, "failed to parse users: %v", err)
+			logger.Errorf(ctx, "failed to parser users: %v", err)
 
 			if errors.Is(err, instagrapi.ErrBotIsBlocked) {
 				err = q.BlockBot(ctx, bot.ID)

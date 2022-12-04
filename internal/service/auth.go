@@ -32,9 +32,9 @@ func (s *authService) JWTAuth(ctx context.Context, tokenString string, scheme *s
 
 	token, err := jwt.ParseWithClaims(tokenString, &sessions.SessionClaims{}, s.securityCfg.KeyFunc)
 	if err != nil {
-		logger.Infof(ctx, "Failed to parse token: %v", err)
+		logger.Infof(ctx, "Failed to parser token: %v", err)
 
-		return ctx, datasetsservice.Unauthorized("failed to parse token")
+		return ctx, datasetsservice.Unauthorized("failed to parser token")
 	}
 
 	// logger.Debugf(ctx, "got sec scheme %+v", scheme)

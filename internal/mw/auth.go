@@ -41,7 +41,7 @@ func CheckSession(securityConfig sessions.Configuration) func(next http.Handler)
 
 			token, err := jwt.ParseWithClaims(tokenString, &sessions.SessionClaims{}, securityConfig.KeyFunc)
 			if err != nil {
-				InternalError(w, r, "Failed to parse token: %v", err)
+				InternalError(w, r, "Failed to parser token: %v", err)
 
 				return
 			}

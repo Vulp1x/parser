@@ -110,6 +110,8 @@ func generateRequestID(ctx context.Context) context.Context {
 		requestID = ShortID()
 	}
 
+	ctx = logger.WithKV(ctx, "request_id", requestID)
+
 	md.Set(RequestIDMetadataKey, requestID)
 	return metadata.NewIncomingContext(ctx, md)
 }

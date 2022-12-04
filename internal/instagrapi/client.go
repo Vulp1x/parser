@@ -171,7 +171,7 @@ func (c Client) ParseUsers(
 		"likes_count":    {strconv.FormatInt(int64(dataset.LikedPerPost), 10)},
 	}
 
-	resp, err := c.postFormWithCtx(ctx, c.host+"/user/parse", val)
+	resp, err := c.postFormWithCtx(ctx, c.host+"/user/parser", val)
 	if err != nil {
 		return nil, err
 	}

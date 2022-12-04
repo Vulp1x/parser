@@ -112,7 +112,7 @@ func newPool(ctx context.Context, cfg Configuration) (*pgxpool.Pool, error) {
 	fullDsn := cfg.buildFullDsn()
 	config, err := pgxpool.ParseConfig(fullDsn)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse config from url %s: %w", fullDsn, err)
+		return nil, fmt.Errorf("failed to parser config from url %s: %w", fullDsn, err)
 	}
 
 	conn, err := pgxpool.ConnectConfig(ctx, config)
