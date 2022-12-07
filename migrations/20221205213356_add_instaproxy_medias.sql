@@ -3,7 +3,7 @@
 
 CREATE TABLE medias
 (
-    pk                bigint primary key,
+    pk                bigint                                 not null,
     id                text                                   not null,
     dataset_id        uuid references datasets               not null,
     media_type        integer                                not null,
@@ -17,7 +17,7 @@ CREATE TABLE medias
 
     created_at        timestamp with time zone DEFAULT now() NOT NULL,
     updated_at        timestamp with time zone DEFAULT now() NOT NULL,
-    unique (pk, dataset_id)
+    primary key (pk, dataset_id)
 );
 
 

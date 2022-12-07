@@ -104,7 +104,6 @@ func (u InstUser) ToUpdateParams(id uuid.UUID, isCorrect bool) dbmodel.UpdateBlo
 		FollowersCount:         int64(u.FollowerCount),
 		ParsedAt:               &parsedAt,
 		IsCorrect:              isCorrect,
-		Parsed:                 true,
 		IsPrivate:              u.IsPrivate,
 		IsVerified:             u.IsVerified,
 		IsBusiness:             u.IsBusiness,
@@ -122,7 +121,6 @@ type InstUsers []InstUser
 
 func (u InstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.SaveBloggersParams {
 	params := make([]dbmodel.SaveBloggersParams, len(u))
-	parsedAt := time.Now()
 
 	for i, user := range u {
 		params[i] = dbmodel.SaveBloggersParams{
@@ -131,9 +129,6 @@ func (u InstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.SaveBlogg
 			UserID:                 user.Pk,
 			FollowersCount:         int64(user.FollowerCount),
 			FollowingsCount:        int32(user.FollowingCount),
-			IsInitial:              false,
-			ParsedAt:               &parsedAt,
-			Parsed:                 true,
 			IsPrivate:              user.IsPrivate,
 			IsVerified:             user.IsVerified,
 			IsBusiness:             user.IsBusiness,
@@ -154,7 +149,6 @@ func (u InstUserShort) ToUpdateParams(id uuid.UUID, isCorrect bool) dbmodel.Upda
 		UserID:     u.Pk,
 		ParsedAt:   &parsedAt,
 		IsCorrect:  isCorrect,
-		Parsed:     true,
 		IsPrivate:  u.IsPrivate,
 		IsVerified: u.IsVerified,
 		ID:         id,
@@ -165,26 +159,20 @@ type ShortInstUsers []InstUserShort
 
 func (su ShortInstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.SaveBloggersParams {
 	params := make([]dbmodel.SaveBloggersParams, len(su))
-	parsedAt := time.Now()
-
 	for i, user := range su {
 		params[i] = dbmodel.SaveBloggersParams{
 			DatasetID:  datasetID,
 			Username:   user.Username,
 			UserID:     user.Pk,
-			IsInitial:  false,
-			ParsedAt:   &parsedAt,
-			Parsed:     true,
 			IsPrivate:  user.IsPrivate,
 			IsVerified: user.IsVerified,
-			Status:     dbmodel.SimilarBloggersFoundBloggerStatus,
 		}
 	}
 
 	return params
 }
 
-func (su ShortInstUsers) ToSaveTargetsParams(datasetID uuid.UUID) dbmodel.SaveTargetUsersParams {
+func (su ShortInstUsers) ToSaveTargetsParams(mediaPk int64, datasetID uuid.UUID) dbmodel.SaveTargetUsersParams {
 	var usernames = make([]string, len(su))
 	var fullNames = make([]string, len(su))
 	var userIDs = make([]int64, len(su))
@@ -205,6 +193,7 @@ func (su ShortInstUsers) ToSaveTargetsParams(datasetID uuid.UUID) dbmodel.SaveTa
 		FullNames:  fullNames,
 		IsPrivate:  isPrivates,
 		IsVerified: isVerified,
+		MediaPk:    mediaPk,
 		DatasetID:  datasetID,
 	}
 }

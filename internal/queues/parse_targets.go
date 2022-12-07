@@ -202,11 +202,11 @@ func (s Service) parseAndSaveTargets(
 		uniqueUsers := getUniqueusers(users)
 		logger.Infof(ctx, "got %d unique users from %d parsed", len(uniqueUsers), len(users))
 
-		count, err = q.SaveTargetUsers(ctx, uniqueUsers.ToSaveTargetsParams(datasetID))
-		if err != nil {
-			logger.Errorf(ctx, "failed to save targets from blogger: %v", err)
-			continue
-		}
+		// count, err = q.SaveTargetUsers(ctx, uniqueUsers.ToSaveTargetsParams(datasetID))
+		// if err != nil {
+		// 	logger.Errorf(ctx, "failed to save targets from blogger: %v", err)
+		// 	continue
+		// }
 
 		err = q.MarkBloggerAsParsed(ctx, blogger.ID)
 		if err != nil {

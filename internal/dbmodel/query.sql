@@ -1,3 +1,6 @@
+-- name: SelectNow :one
+select now()::timestamp with time zone;
+
 -- name: SaveBots :execrows
 insert into bots (username, session_id, proxy, is_blocked)
     (select unnest(sqlc.arg(usernames)::text[]),
@@ -7,12 +10,13 @@ insert into bots (username, session_id, proxy, is_blocked)
 ON CONFLICT (session_id) DO NOTHING;
 
 -- name: SaveTargetUsers :execrows
-insert into targets (username, user_id, full_name, is_private, is_verified, dataset_id)
+insert into targets (username, user_id, full_name, is_private, is_verified, media_pk, dataset_id)
     (select unnest(sqlc.arg(usernames)::text[]),
             unnest(sqlc.arg(user_ids)::bigint[]),
             unnest(sqlc.arg(full_names)::text[]),
             unnest(sqlc.arg(is_private)::bool[]),
             unnest(sqlc.arg(is_verified)::bool[]),
+            @media_pk,
             @dataset_id)
 ON CONFLICT (user_id, dataset_id) DO UPDATE set updated_at  = now(),
                                                 username    = excluded.username,
@@ -107,16 +111,18 @@ set status     = @status,
     updated_at = now()
 where id = @id;
 
--- name: SaveBloggers :copyfrom
+-- name: SaveBloggers :batchexec
 insert into bloggers (dataset_id, username, user_id, followers_count, is_initial, parsed_at,
-                      parsed, is_private, is_verified, is_business, followings_count, contact_phone_number,
+                      is_private, is_verified, is_business, followings_count, contact_phone_number,
                       public_phone_number, public_phone_country_code, city_name, public_email, status)
-values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17);
+values ($1, $2, $3, $4, false, now(), $5, $6, $7, $8, $9, $10, $11, $12, $13, 'info_saved')
+ON CONFLICT (username, dataset_id) DO UPDATE SET parsed_at       = excluded.parsed_at,
+                                                followers_count = excluded.followers_count,
+                                                followings_count= excluded.followings_count;
 
 -- name: SetBloggerIsParsed :exec
 update bloggers
-set parsed     = true,
-    is_correct = @is_correct,
+set is_correct = @is_correct,
     parsed_at  = now()
 where id = @id;
 
@@ -125,7 +131,6 @@ update bloggers
 set user_id                   = @user_id,
     followers_count           = @followers_count,
     parsed_at                 = @parsed_at,
-    parsed                    = @parsed,
     is_correct                = @is_correct,
     is_private                = @is_private,
     is_verified               = @is_verified,
@@ -135,7 +140,8 @@ set user_id                   = @user_id,
     public_phone_number       = @public_phone_number,
     public_phone_country_code = @public_phone_country_code,
     city_name                 = @city_name,
-    public_email              = @public_email
+    public_email              = @public_email,
+    status                    = 'info_saved'
 where id = @id;
 
 -- name: MarkBloggerAsParsed :exec
@@ -145,13 +151,13 @@ where id = @id;
 
 -- name: MarkBloggerAsSimilarAccountsFound :exec
 update bloggers
-set status = 2 -- TargetsParsedBloggerStatus
+set status = 'info_saved'
 where id = @id;
 
 -- name: GetParsingProgress :one
 select (select count(*) from bloggers where bloggers.dataset_id = @dataset_id and status = 3) as parsed_bloggers_count,
        (select count(*) from bloggers where bloggers.dataset_id = @dataset_id)                as total_bloggers,
-       (select count(*) from targets where targets.dataset_id = @dataset_id)                  as targets_saved_coun;
+       (select count(*) from targets where dataset_id = @dataset_id)                          as targets_saved_coun;
 
 -- name: FindTargetsForDataset :many
 select *
@@ -167,3 +173,14 @@ ON CONFLICT (pk, dataset_id) DO UPDATE SET has_more_comments=excluded.has_more_c
                                            like_count=excluded.like_count,
                                            updated_at=now()
 RETURNING *;
+
+-- name: FindNotReadyBloggers :many
+select *
+from bloggers
+where status = 'new'
+  and dataset_id = @dataset_id;
+
+-- name: FindMediaByID :one
+select *
+from medias
+where id = @id;

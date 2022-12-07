@@ -13,6 +13,7 @@ import (
 
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
 	"github.com/inst-api/parser/internal/config"
+	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/mw"
 	"github.com/inst-api/parser/internal/postgres"
 	"github.com/inst-api/parser/internal/service"
@@ -63,6 +64,9 @@ func main() {
 	if err != nil {
 		logger.Fatalf(ctx, "Failed to connect to transaction's database: %v", err)
 	}
+
+	now, _ := dbmodel.New(dbTXFunc(ctx)).SelectNow(ctx)
+	logger.Infof(ctx, "db now: %s", now)
 
 	conn, err := grpc.DialContext(
 		ctx,

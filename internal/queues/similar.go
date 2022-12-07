@@ -216,11 +216,15 @@ func (s Service) findAndSaveSimilarBloggers(ctx context.Context, datasetID uuid.
 			}
 		}
 
-		count, err = q.SaveBloggers(ctx, users.ToSaveBloggersParmas(datasetID))
-		if err != nil {
-			nonBlockingWriteError(ctx, errc, fmt.Errorf("failed to save parsed bloggers from blogger  (%s): %v", bot.ID, err))
-			continue
-		}
+		saveBloggersBatch := q.SaveBloggers(ctx, users.ToSaveBloggersParmas(datasetID))
+		saveBloggersBatch.Exec(func(j int, err error) {
+			if err != nil {
+				nonBlockingWriteError(ctx, errc, fmt.Errorf("failed to save %d parsed blogger from blogger  (%s): %v", j, blogger.Username, err))
+				return
+			}
+
+			count++
+		})
 
 		totalCount += count
 

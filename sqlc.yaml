@@ -14,9 +14,9 @@ overrides:
   - column: "datasets.status"
     go_type:
       type: "datasetStatus"
-  - column: "bloggers.status"
-    go_type:
-      type: "bloggerStatus"
+#  - column: "bloggers.status"
+#    go_type:
+#      type: "bloggerStatus"
 #      import: "github.com/inst-api/parser/internal/headers"
 #
   - column: "bots.proxy"

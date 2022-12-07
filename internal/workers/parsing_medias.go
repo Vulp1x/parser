@@ -62,8 +62,15 @@ func (p *ParseMediasHandler) HandleTask(ctx context.Context, task pgqueue.Task) 
 
 	batch := q.SaveMedias(ctx, domainMedias.ToSaveMediasParams())
 	batch.QueryRow(func(i int, m dbmodel.Media, err error) {
+		if i >= len(domainMedias) {
+			err = batch.Close()
+			if err != nil {
+				logger.Errorf(ctx, "failed to close saving medias batch: ")
+			}
+		}
+
 		if err != nil {
-			logger.Errorf(ctx, "failed to save media %d '%s': %v", i+1, domainMedias[i].Pk, err)
+			logger.Errorf(ctx, "failed to save media %d '%s': %v", i+1, domainMedias[i].ID, err)
 			return
 		}
 

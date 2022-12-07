@@ -31,6 +31,20 @@ COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 
 
 --
+-- Name: blogger_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.blogger_status AS ENUM (
+    'new',
+    'info_saved',
+    'medias_found',
+    'all_medias_parsed',
+    'done',
+    'invalid'
+);
+
+
+--
 -- Name: pgqueue_status; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -59,7 +73,6 @@ CREATE TABLE public.bloggers (
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     parsed_at timestamp without time zone,
     updated_at timestamp without time zone,
-    parsed boolean DEFAULT false NOT NULL,
     is_correct boolean DEFAULT false NOT NULL,
     is_private boolean DEFAULT false NOT NULL,
     is_verified boolean DEFAULT false NOT NULL,
@@ -70,7 +83,7 @@ CREATE TABLE public.bloggers (
     public_phone_country_code text,
     city_name text,
     public_email text,
-    status smallint DEFAULT 0 NOT NULL
+    status public.blogger_status DEFAULT 'new'::public.blogger_status NOT NULL
 );
 
 
@@ -191,7 +204,6 @@ ALTER SEQUENCE public.pgqueue_id_seq OWNED BY public.pgqueue.id;
 
 CREATE TABLE public.targets (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
-    dataset_id uuid NOT NULL,
     username text NOT NULL,
     user_id bigint NOT NULL,
     status smallint DEFAULT 0 NOT NULL,
@@ -199,7 +211,9 @@ CREATE TABLE public.targets (
     updated_at timestamp without time zone,
     is_private boolean DEFAULT false NOT NULL,
     is_verified boolean DEFAULT false NOT NULL,
-    full_name text DEFAULT ''::text NOT NULL
+    full_name text DEFAULT ''::text NOT NULL,
+    media_pk bigint NOT NULL,
+    dataset_id uuid NOT NULL
 );
 
 
@@ -243,19 +257,11 @@ ALTER TABLE ONLY public.datasets
 
 
 --
--- Name: medias medias_pk_dataset_id_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.medias
-    ADD CONSTRAINT medias_pk_dataset_id_key UNIQUE (pk, dataset_id);
-
-
---
 -- Name: medias medias_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.medias
-    ADD CONSTRAINT medias_pkey PRIMARY KEY (pk);
+    ADD CONSTRAINT medias_pkey PRIMARY KEY (pk, dataset_id);
 
 
 --
@@ -310,10 +316,17 @@ CREATE INDEX pgqueue_terminal_tasks_idx ON public.pgqueue USING btree (kind, upd
 
 
 --
--- Name: target_users_uniq_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: targets_uniq_user_per_dataset; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX target_users_uniq_idx ON public.targets USING btree (dataset_id, user_id);
+CREATE UNIQUE INDEX targets_uniq_user_per_dataset ON public.targets USING btree (user_id, dataset_id);
+
+
+--
+-- Name: uniq_bloggers_per_dataset; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uniq_bloggers_per_dataset ON public.bloggers USING btree (username, dataset_id);
 
 
 --
@@ -333,11 +346,11 @@ ALTER TABLE ONLY public.medias
 
 
 --
--- Name: targets targets_dataset_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: targets medias_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.targets
-    ADD CONSTRAINT targets_dataset_id_fkey FOREIGN KEY (dataset_id) REFERENCES public.datasets(id);
+    ADD CONSTRAINT medias_fk FOREIGN KEY (media_pk, dataset_id) REFERENCES public.medias(pk, dataset_id);
 
 
 --

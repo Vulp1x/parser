@@ -65,12 +65,19 @@ func (s *SimilarBloggersHandler) HandleTask(ctx context.Context, task pgqueue.Ta
 
 	domainparsedBloggers := domain.ShortUsersFromProto(similarBloggersResp.SimilarBloggers)
 
-	count, err := q.SaveBloggers(ctx, domainparsedBloggers.ToSaveBloggersParmas(datasetID))
-	if err != nil {
-		return fmt.Errorf("failed to save parsed bloggers from blogger  (%s): %v", blogger.ID, err)
-	}
+	var savedBloggersCount int
 
-	logger.Infof(ctx, "saved %d bloggers from initial blogger '%s'", count, blogger.Username)
+	saveBloggersBatch := q.SaveBloggers(ctx, domainparsedBloggers.ToSaveBloggersParmas(datasetID))
+	saveBloggersBatch.Exec(func(j int, err error) {
+		if err != nil {
+			logger.Errorf(ctx, "failed to save %d parsed blogger from blogger (%s): %v", j, blogger.Username, err)
+			return
+		}
+
+		savedBloggersCount++
+	})
+
+	logger.Infof(ctx, "saved %d/%d bloggers from initial blogger '%s'", savedBloggersCount, len(domainparsedBloggers), blogger.Username)
 
 	err = q.MarkBloggerAsSimilarAccountsFound(ctx, blogger.ID)
 	if err != nil {

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/inst-api/parser/internal/dbmodel"
@@ -23,9 +24,6 @@ var ErrNoBlogers = errors.New("no initial bloggers")
 
 // ErrNoReadyBots не смогли найти таску
 var ErrNoReadyBots = errors.New("all bots are blocked")
-
-// Количество ботов, которые будут задействованы для одного датасета
-const botsPerDataset = 5
 
 func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error) {
 	tx, err := s.txf(ctx)
@@ -88,6 +86,15 @@ func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (d
 	err = s.queue.PushTasksTx(ctx, tx, tasks)
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to push tasks to queue: %v", err)
+	}
+
+	err = s.queue.PushTaskTx(ctx, tx, pgqueue.Task{
+		Kind:        workers.TransitToSimilarFoundTaskKind,
+		Payload:     workers.EmptyPayload,
+		ExternalKey: datasetID.String(),
+	}, pgqueue.WithDelay(30*time.Second))
+	if err != nil {
+		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to push TransitToSimilarFound task to queue: %v", err)
 	}
 
 	err = tx.Commit(ctx)

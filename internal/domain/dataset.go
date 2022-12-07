@@ -54,6 +54,17 @@ func (b DatasetWithBloggers) ToBloggersProto() []*datasetsservice.Blogger {
 	return bloggers
 }
 
+// Usernames возвращает usernames блогеров
+func (b DatasetWithBloggers) Usernames() []string {
+	var usernames = make([]string, len(b.Bloggers))
+
+	for i, blogger := range b.Bloggers {
+		usernames[i] = blogger.Username
+	}
+
+	return usernames
+}
+
 func (b DatasetWithBloggers) IsReadyForParsing() bool {
 	return b.Dataset.Status == dbmodel.ReadyForParsingDatasetStatus
 }

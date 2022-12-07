@@ -58,11 +58,10 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 
 	logger.Infof(ctx, "adding tasks for %d bloggers", len(bloggers))
 
-	emptyPayload := []byte("{}")
 	tasks := make([]pgqueue.Task, len(bloggers))
 	for i, blogger := range bloggers {
 		tasks[i] = pgqueue.Task{
-			Kind: workers.ParseBloggersMediaTaskKind, ExternalKey: fmt.Sprintf("%s::%s", datasetID, blogger.Username), Payload: emptyPayload,
+			Kind: workers.ParseBloggersMediaTaskKind, ExternalKey: fmt.Sprintf("%s::%s", datasetID, blogger.Username), Payload: workers.EmptyPayload,
 		}
 	}
 
