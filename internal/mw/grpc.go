@@ -8,7 +8,6 @@ import (
 
 	"github.com/golang/protobuf/proto"
 	"github.com/inst-api/parser/pkg/logger"
-	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
@@ -141,7 +140,7 @@ func GenerateRequestID(ctx context.Context) context.Context {
 		requestID = ShortID()
 	}
 
-	ctx = logger.WithKV(ctx, "request_id", requestID)
+	ctx = logger.WithKV(ctx, "trace_id", requestID)
 
 	md.Set(RequestIDMetadataKey, requestID)
 	return metadata.NewIncomingContext(ctx, md)
