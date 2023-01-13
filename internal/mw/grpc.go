@@ -8,6 +8,7 @@ import (
 
 	"github.com/golang/protobuf/proto"
 	"github.com/inst-api/parser/pkg/logger"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
