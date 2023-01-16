@@ -9,6 +9,7 @@ package server
 
 import (
 	"context"
+	"mime/multipart"
 	"net/http"
 
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
@@ -28,6 +29,7 @@ type Server struct {
 	GetParsingProgress http.Handler
 	DownloadTargets    http.Handler
 	ListDatasets       http.Handler
+	UploadFiles        http.Handler
 }
 
 // MountPoint holds information about the mounted endpoints.
@@ -40,6 +42,10 @@ type MountPoint struct {
 	// mounted handler.
 	Pattern string
 }
+
+// DatasetsServiceUploadFilesDecoderFunc is the type to decode multipart
+// request for the "datasets_service" service "upload files" endpoint.
+type DatasetsServiceUploadFilesDecoderFunc func(*multipart.Reader, **datasetsservice.UploadFilesPayload) error
 
 // New instantiates HTTP handlers for all the datasets_service service
 // endpoints using the provided encoder and decoder. The handlers are mounted
@@ -54,6 +60,7 @@ func New(
 	encoder func(context.Context, http.ResponseWriter) goahttp.Encoder,
 	errhandler func(context.Context, http.ResponseWriter, error),
 	formatter func(ctx context.Context, err error) goahttp.Statuser,
+	datasetsServiceUploadFilesDecoderFn DatasetsServiceUploadFilesDecoderFunc,
 ) *Server {
 	return &Server{
 		Mounts: []*MountPoint{
@@ -66,6 +73,7 @@ func New(
 			{"GetParsingProgress", "GET", "/api/datasets/{dataset_id}/parsing_progress/"},
 			{"DownloadTargets", "GET", "/api/datasets/{dataset_id}/download/"},
 			{"ListDatasets", "GET", "/api/datasets/"},
+			{"UploadFiles", "POST", "/api/datasets/{dataset_id}/upload/"},
 		},
 		CreateDatasetDraft: NewCreateDatasetDraftHandler(e.CreateDatasetDraft, mux, decoder, encoder, errhandler, formatter),
 		UpdateDataset:      NewUpdateDatasetHandler(e.UpdateDataset, mux, decoder, encoder, errhandler, formatter),
@@ -76,6 +84,7 @@ func New(
 		GetParsingProgress: NewGetParsingProgressHandler(e.GetParsingProgress, mux, decoder, encoder, errhandler, formatter),
 		DownloadTargets:    NewDownloadTargetsHandler(e.DownloadTargets, mux, decoder, encoder, errhandler, formatter),
 		ListDatasets:       NewListDatasetsHandler(e.ListDatasets, mux, decoder, encoder, errhandler, formatter),
+		UploadFiles:        NewUploadFilesHandler(e.UploadFiles, mux, NewDatasetsServiceUploadFilesDecoder(mux, datasetsServiceUploadFilesDecoderFn), encoder, errhandler, formatter),
 	}
 }
 
@@ -93,6 +102,7 @@ func (s *Server) Use(m func(http.Handler) http.Handler) {
 	s.GetParsingProgress = m(s.GetParsingProgress)
 	s.DownloadTargets = m(s.DownloadTargets)
 	s.ListDatasets = m(s.ListDatasets)
+	s.UploadFiles = m(s.UploadFiles)
 }
 
 // MethodNames returns the methods served.
@@ -109,6 +119,7 @@ func Mount(mux goahttp.Muxer, h *Server) {
 	MountGetParsingProgressHandler(mux, h.GetParsingProgress)
 	MountDownloadTargetsHandler(mux, h.DownloadTargets)
 	MountListDatasetsHandler(mux, h.ListDatasets)
+	MountUploadFilesHandler(mux, h.UploadFiles)
 }
 
 // Mount configures the mux to serve the datasets_service endpoints.
@@ -556,6 +567,57 @@ func NewListDatasetsHandler(
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
 		ctx = context.WithValue(ctx, goa.MethodKey, "list datasets")
+		ctx = context.WithValue(ctx, goa.ServiceKey, "datasets_service")
+		payload, err := decodeRequest(r)
+		if err != nil {
+			if err := encodeError(ctx, w, err); err != nil {
+				errhandler(ctx, w, err)
+			}
+			return
+		}
+		res, err := endpoint(ctx, payload)
+		if err != nil {
+			if err := encodeError(ctx, w, err); err != nil {
+				errhandler(ctx, w, err)
+			}
+			return
+		}
+		if err := encodeResponse(ctx, w, res); err != nil {
+			errhandler(ctx, w, err)
+		}
+	})
+}
+
+// MountUploadFilesHandler configures the mux to serve the "datasets_service"
+// service "upload files" endpoint.
+func MountUploadFilesHandler(mux goahttp.Muxer, h http.Handler) {
+	f, ok := h.(http.HandlerFunc)
+	if !ok {
+		f = func(w http.ResponseWriter, r *http.Request) {
+			h.ServeHTTP(w, r)
+		}
+	}
+	mux.Handle("POST", "/api/datasets/{dataset_id}/upload/", f)
+}
+
+// NewUploadFilesHandler creates a HTTP handler which loads the HTTP request
+// and calls the "datasets_service" service "upload files" endpoint.
+func NewUploadFilesHandler(
+	endpoint goa.Endpoint,
+	mux goahttp.Muxer,
+	decoder func(*http.Request) goahttp.Decoder,
+	encoder func(context.Context, http.ResponseWriter) goahttp.Encoder,
+	errhandler func(context.Context, http.ResponseWriter, error),
+	formatter func(ctx context.Context, err error) goahttp.Statuser,
+) http.Handler {
+	var (
+		decodeRequest  = DecodeUploadFilesRequest(mux, decoder)
+		encodeResponse = EncodeUploadFilesResponse(encoder)
+		encodeError    = EncodeUploadFilesError(encoder, formatter)
+	)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
+		ctx = context.WithValue(ctx, goa.MethodKey, "upload files")
 		ctx = context.WithValue(ctx, goa.ServiceKey, "datasets_service")
 		payload, err := decodeRequest(r)
 		if err != nil {

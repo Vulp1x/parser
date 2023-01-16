@@ -27,178 +27,171 @@ paths:
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
                     id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
                   - bloggers:
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
                     id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
+                  - bloggers:
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
+                  - bloggers:
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
               example:
                 - bloggers:
                     - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                       id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
+                      user_id: 7841262851821967225
+                      username: Voluptas nam dolores nam animi.
                     - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                       id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
+                      user_id: 7841262851821967225
+                      username: Voluptas nam dolores nam animi.
                     - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                       id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                  commented_per_post: 1560090709
+                      user_id: 7841262851821967225
+                      username: Voluptas nam dolores nam animi.
+                  commented_per_post: 398851288
                   id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                  liked_per_post: 1255315638
-                  phone_code: 1683991675
-                  posts_per_blogger: 502810878
-                  status: 5
-                  title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                  liked_per_post: 2135488280
+                  phone_code: 773530664
+                  posts_per_blogger: 1763480890
+                  status: 3
+                  title: Sunt autem inventore.
                 - bloggers:
                     - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                       id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
+                      user_id: 7841262851821967225
+                      username: Voluptas nam dolores nam animi.
                     - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                       id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
+                      user_id: 7841262851821967225
+                      username: Voluptas nam dolores nam animi.
                     - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                       id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                  commented_per_post: 1560090709
+                      user_id: 7841262851821967225
+                      username: Voluptas nam dolores nam animi.
+                  commented_per_post: 398851288
                   id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                  liked_per_post: 1255315638
-                  phone_code: 1683991675
-                  posts_per_blogger: 502810878
-                  status: 5
-                  title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                  liked_per_post: 2135488280
+                  phone_code: 773530664
+                  posts_per_blogger: 1763480890
+                  status: 3
+                  title: Sunt autem inventore.
                 - bloggers:
                     - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                       id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
+                      user_id: 7841262851821967225
+                      username: Voluptas nam dolores nam animi.
                     - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                       id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
+                      user_id: 7841262851821967225
+                      username: Voluptas nam dolores nam animi.
                     - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                       id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                       is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                  commented_per_post: 1560090709
+                      user_id: 7841262851821967225
+                      username: Voluptas nam dolores nam animi.
+                  commented_per_post: 398851288
                   id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                  liked_per_post: 1255315638
-                  phone_code: 1683991675
-                  posts_per_blogger: 502810878
-                  status: 5
-                  title: Sed nisi fugiat aperiam cumque aperiam inventore.
-                - bloggers:
-                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                    - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                      id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                      is_initial: true
-                      user_id: 2572324569112881771
-                      username: Qui illo est voluptas.
-                  commented_per_post: 1560090709
-                  id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                  liked_per_post: 1255315638
-                  phone_code: 1683991675
-                  posts_per_blogger: 502810878
-                  status: 5
-                  title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                  liked_per_post: 2135488280
+                  phone_code: 773530664
+                  posts_per_blogger: 1763480890
+                  status: 3
+                  title: Sunt autem inventore.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Debitis numquam et.
+                example: Laudantium dicta temporibus debitis.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -212,58 +205,48 @@ paths:
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
                     id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
                   - bloggers:
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
                     id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
         "404":
           description: 'dataset not found: Not Found response.'
           content:
@@ -277,58 +260,94 @@ paths:
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
                     id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
                   - bloggers:
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
                     id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
+                  - bloggers:
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
+                  - bloggers:
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
+                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
+                        is_initial: true
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
+                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
         "500":
           description: 'internal error: Internal Server Error response.'
           content:
@@ -342,114 +361,71 @@ paths:
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
                     id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
                   - bloggers:
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
                     id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
                   - bloggers:
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
                       - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
                         id: 7D80331A-7620-D09D-7CCB-2EF87B797732
                         is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
+                        user_id: 7841262851821967225
+                        username: Voluptas nam dolores nam animi.
+                    commented_per_post: 398851288
                     id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
-                  - bloggers:
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                      - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
-                        id: 7D80331A-7620-D09D-7CCB-2EF87B797732
-                        is_initial: true
-                        user_id: 2572324569112881771
-                        username: Qui illo est voluptas.
-                    commented_per_post: 1560090709
-                    id: 1265498D-5A84-134A-1C7A-ED5B4B92788E
-                    liked_per_post: 1255315638
-                    phone_code: 1683991675
-                    posts_per_blogger: 502810878
-                    status: 5
-                    title: Sed nisi fugiat aperiam cumque aperiam inventore.
+                    liked_per_post: 2135488280
+                    phone_code: 773530664
+                    posts_per_blogger: 1763480890
+                    status: 3
+                    title: Sunt autem inventore.
       security:
         - jwt_header_Authorization:
             - driver
@@ -469,8 +445,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Incidunt consectetur laudantium dicta temporibus debitis.
-          example: Et harum eveniet velit sit nostrum.
+            example: Ea neque eaque ipsum error velit aut.
+          example: Nihil enim eum et expedita porro.
       responses:
         "200":
           description: OK response.
@@ -482,33 +458,33 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
-                commented_per_post: 1726253401
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
+                commented_per_post: 2119083680
                 id: 5E3B665E-1239-9C12-9643-FFC1E6C04697
-                liked_per_post: 1876719409
-                phone_code: 1073646888
-                posts_per_blogger: 1393594603
-                status: 4
-                title: Voluptatem accusantium.
+                liked_per_post: 1437917746
+                phone_code: 244603653
+                posts_per_blogger: 1322567409
+                status: 6
+                title: Deleniti quis et iusto ipsum.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Iure quaerat.
+                example: Quam exercitationem laboriosam sed.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -527,7 +503,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Impedit nam quos.
+                example: Ipsa autem sequi excepturi alias sint.
       security:
         - jwt_header_Authorization:
             - driver
@@ -548,8 +524,8 @@ paths:
           schema:
             type: string
             description: id задачи, которую хотим обновить
-            example: Ipsa autem sequi excepturi alias sint.
-          example: Mollitia similique ea consequuntur molestias.
+            example: Similique voluptatem.
+          example: Excepturi repudiandae.
       requestBody:
         required: true
         content:
@@ -557,14 +533,15 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateDatasetRequestBody'
             example:
-              commented_per_post: 15567808001698839024
-              liked_per_post: 14418834690314570323
+              commented_per_post: 8546564017108235096
+              liked_per_post: 12632290026805089049
               original_accounts:
-                - In asperiores nam aliquid ut corrupti.
-                - Non facilis ut ab voluptatem.
+                - Iste molestiae dolores.
+                - Asperiores ullam.
+                - Vel ut ut.
               phone_code: 7
-              posts_per_blogger: 3789565731213049679
-              title: Sint ut quo corrupti ut quis aut.
+              posts_per_blogger: 223248658542347005
+              title: Tenetur quo aliquid.
       responses:
         "200":
           description: OK response.
@@ -576,28 +553,38 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
-                commented_per_post: 181857768
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
+                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
+                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
+                commented_per_post: 472492725
                 id: 2C91774A-6D4A-67B6-DC43-6AED849DACC1
-                liked_per_post: 1021177678
-                phone_code: 1170328523
-                posts_per_blogger: 2131860742
+                liked_per_post: 2107065635
+                phone_code: 1891594141
+                posts_per_blogger: 1598446903
                 status: 2
-                title: Maiores molestiae eius repellat est totam quod.
+                title: Est quas quisquam omnis.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Error harum placeat qui repudiandae voluptate.
+                example: Facere eos nisi aspernatur dolorem quam soluta.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -616,7 +603,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Officia sed consequatur in optio nobis.
+                example: Hic voluptatem eius incidunt et architecto.
       security:
         - jwt_header_Authorization:
             - driver
@@ -638,7 +625,7 @@ paths:
             type: integer
             description: 1- только user_id, 2- только username, 3 - и то и другое
             default: 3
-            example: 3
+            example: 1
             enum:
               - 1
               - 2
@@ -651,8 +638,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Debitis natus nobis nihil inventore vel.
-          example: Rerum tenetur quis voluptas enim sed voluptas.
+            example: Ut quia beatae.
+          example: Voluptas adipisci consequatur.
       responses:
         "200":
           description: OK response.
@@ -662,21 +649,22 @@ paths:
                 type: array
                 items:
                   type: string
-                  example: Assumenda porro.
+                  example: Commodi aut saepe dolores.
                 example:
-                  - Qui reprehenderit voluptatem non.
-                  - Consequatur saepe facere consectetur esse inventore.
-                  - Soluta doloremque eligendi minima est voluptatum sunt.
+                  - Quam laborum eaque dolorem aliquid atque.
+                  - Iure quibusdam ex aut exercitationem rerum laborum.
+                  - Accusamus aut voluptate.
               example:
-                - Fugiat non.
-                - Culpa et excepturi et.
+                - Ut sed recusandae delectus.
+                - Hic blanditiis autem id voluptas.
+                - Sed deserunt sit dolorem rerum illo.
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Pariatur dolorum officia quidem.
+                example: Veritatis incidunt ad molestiae voluptatem facilis.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -685,12 +673,10 @@ paths:
                 type: array
                 items:
                   type: string
-                  example: In id ut ut fuga.
+                  example: Aut distinctio.
                 example:
-                  - Accusantium voluptas aliquam sed ratione.
-                  - Repudiandae laborum.
-                  - Non quia est ipsam numquam.
-                  - Autem exercitationem voluptatem eum incidunt.
+                  - Qui sed.
+                  - Omnis temporibus.
         "404":
           description: 'dataset not found: Not Found response.'
           content:
@@ -699,19 +685,17 @@ paths:
                 type: array
                 items:
                   type: string
-                  example: Vel voluptatum porro odit optio.
+                  example: Sed quas.
                 example:
-                  - Ad sunt non aliquid excepturi et.
-                  - Debitis exercitationem.
-                  - Temporibus dolore officia iusto nemo ut eligendi.
-                  - Repellendus voluptatem occaecati et.
+                  - Aut rerum qui nihil sunt pariatur sit.
+                  - Autem laboriosam cum et sed impedit.
         "500":
           description: 'internal error: Internal Server Error response.'
           content:
             application/json:
               schema:
                 type: string
-                example: In ut atque tenetur eum non minima.
+                example: Optio tempore nobis est.
       security:
         - jwt_header_Authorization:
             - driver
@@ -731,8 +715,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Omnis temporibus.
-          example: Sed et illo delectus et dolores itaque.
+            example: Omnis distinctio quia aliquam aut.
+          example: Aspernatur consequatur.
       responses:
         "200":
           description: OK response.
@@ -741,8 +725,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ParseDatasetOKResponseBody'
               example:
-                dataset_id: Itaque rerum nihil pariatur.
-                status: 2
+                dataset_id: Velit suscipit modi quis debitis consequatur.
+                status: 3
         "400":
           description: 'bad request: Bad Request response.'
           content:
@@ -767,7 +751,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Qui rerum dignissimos vero.
+                example: Expedita qui et facere facilis.
       security:
         - jwt_header_Authorization:
             - driver
@@ -787,8 +771,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Expedita laborum accusantium molestiae unde ipsa dolorum.
-          example: Quis quia.
+            example: Ea culpa non placeat.
+          example: Rerum vel hic.
       responses:
         "200":
           description: OK response.
@@ -797,16 +781,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ParsingProgress'
               example:
-                bloggers_parsed: 1265508000540751745
-                done: false
-                targets_saved: 973117445122348917
+                bloggers_parsed: 6071700822392183202
+                done: true
+                targets_saved: 6688591064667193193
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Quia aperiam.
+                example: Non consequatur nobis aliquid est.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -825,7 +809,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Ducimus numquam.
+                example: Omnis aut eos et iure temporibus culpa.
       security:
         - jwt_header_Authorization:
             - driver
@@ -845,8 +829,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Exercitationem rerum laborum nisi accusamus aut voluptate.
-          example: Sed quas.
+            example: Maxime labore velit laudantium vel beatae nostrum.
+          example: Distinctio ea iusto blanditiis qui autem enim.
       responses:
         "200":
           description: OK response.
@@ -858,35 +842,30 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
-                  - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-                    id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
                 done: false
-                filtered_bloggers: 2764139812473841055
-                initial_bloggers: 4075323195520432569
-                new_bloggers: 8273693387475534630
+                filtered_bloggers: 5094998298611537006
+                initial_bloggers: 2191323416370260655
+                new_bloggers: 5949864707192974345
         "400":
           description: 'bad request: Bad Request response.'
           content:
             application/json:
               schema:
                 type: string
-                example: Tempora ex.
+                example: Aliquid eaque.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -905,7 +884,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: In possimus earum veritatis facilis consequuntur consectetur.
+                example: Similique esse animi enim maiores tenetur cumque.
       security:
         - jwt_header_Authorization:
             - driver
@@ -925,8 +904,8 @@ paths:
           schema:
             type: string
             description: id задачи
-            example: Iure temporibus culpa blanditiis eveniet.
-          example: Autem excepturi.
+            example: Molestias eum sit optio.
+          example: Similique aut in voluptas ut.
       responses:
         "200":
           description: OK response.
@@ -938,26 +917,26 @@ paths:
                 bloggers:
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
                   - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
                     id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-                    is_initial: true
-                    user_id: 1265436064177614974
-                    username: Ut occaecati corrupti corporis.
-                commented_per_post: 1902880739
+                    is_initial: false
+                    user_id: 5248616438366142420
+                    username: Ea deleniti a quia voluptas delectus odio.
+                commented_per_post: 1325318818
                 id: 773F4E7F-A748-DF6D-4355-233071D2534A
-                liked_per_post: 1871599110
-                phone_code: 2067100096
-                posts_per_blogger: 2108634862
+                liked_per_post: 1534745324
+                phone_code: 444591305
+                posts_per_blogger: 643576451
                 status: 6
-                title: Aut perferendis.
+                title: Qui deserunt modi sed.
         "400":
           description: 'bad request: Bad Request response.'
           content:
@@ -982,7 +961,111 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Necessitatibus aut molestias consequuntur nihil qui.
+                example: Placeat minus ea atque.
+      security:
+        - jwt_header_Authorization:
+            - driver
+            - admin
+  /api/datasets/{dataset_id}/upload/:
+    post:
+      tags:
+        - datasets_service
+      summary: upload files datasets_service
+      description: загрузить файл с ботами, прокси
+      operationId: datasets_service#upload files
+      parameters:
+        - name: dataset_id
+          in: path
+          description: id задачи, в которую загружаем пользователей/прокси
+          required: true
+          schema:
+            type: string
+            description: id задачи, в которую загружаем пользователей/прокси
+            example: Ut et dolorem aliquid omnis rerum animi.
+          example: Dolores qui.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadFilesRequestBody'
+            example:
+              bots:
+                - line_number: 9167031750239981107
+                  record:
+                    - Quia ad.
+                    - Excepturi saepe qui et voluptates facere.
+                    - Beatae omnis.
+                - line_number: 9167031750239981107
+                  record:
+                    - Quia ad.
+                    - Excepturi saepe qui et voluptates facere.
+                    - Beatae omnis.
+                - line_number: 9167031750239981107
+                  record:
+                    - Quia ad.
+                    - Excepturi saepe qui et voluptates facere.
+                    - Beatae omnis.
+              bots_filename: Est est.
+              proxies:
+                - line_number: 6640866908895053401
+                  record:
+                    - Animi iusto eaque incidunt.
+                    - Et natus et et repudiandae labore.
+                    - Eius voluptatibus.
+                - line_number: 6640866908895053401
+                  record:
+                    - Animi iusto eaque incidunt.
+                    - Et natus et et repudiandae labore.
+                    - Eius voluptatibus.
+              proxies_filename: Et iusto excepturi fugit.
+      responses:
+        "200":
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadFilesOKResponseBody'
+              example:
+                upload_errors:
+                  - input: Qui et quo eveniet consequatur.
+                    line: 9156935434262392603
+                    reason: Eaque aliquam et tempore.
+                    type: 1
+                  - input: Qui et quo eveniet consequatur.
+                    line: 9156935434262392603
+                    reason: Eaque aliquam et tempore.
+                    type: 1
+                  - input: Qui et quo eveniet consequatur.
+                    line: 9156935434262392603
+                    reason: Eaque aliquam et tempore.
+                    type: 1
+        "400":
+          description: 'bad request: Bad Request response.'
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Molestias et.
+        "401":
+          description: 'unauthorized: Unauthorized response.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadFilesOKResponseBody'
+        "404":
+          description: 'dataset not found: Not Found response.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadFilesOKResponseBody'
+        "500":
+          description: 'internal error: Internal Server Error response.'
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Natus fugit veritatis harum.
       security:
         - jwt_header_Authorization:
             - driver
@@ -1011,7 +1094,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Dolores necessitatibus.
+                example: Quia enim.
         "401":
           description: 'unauthorized: Unauthorized response.'
           content:
@@ -1036,7 +1119,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Rerum dicta laudantium.
+                example: Sed quisquam quo et sint aperiam.
       security:
         - jwt_header_Authorization:
             - driver
@@ -1062,24 +1145,52 @@ components:
         user_id:
           type: integer
           description: user_id в инстаграме, -1 если неизвестен
-          example: 6705712902264220160
+          example: 3780903778051873605
           format: int64
         username:
           type: string
           description: имя аккаунта в инстаграме
-          example: Aperiam vitae quibusdam placeat.
+          example: Illum qui rerum dignissimos vero dicta.
       example:
         dataset_id: 45442A02-3FD6-C827-BA11-864B7D92257A
         id: BD3BFBE7-02F2-99D7-D026-8BD77E75C122
-        is_initial: false
-        user_id: 4431628959513378131
-        username: Eveniet labore quis ipsa dolores.
+        is_initial: true
+        user_id: 3495094051324160528
+        username: Hic repellendus voluptatem.
       required:
         - id
         - dataset_id
         - username
         - is_initial
         - user_id
+    BotAccountRecord:
+      type: object
+      properties:
+        line_number:
+          type: integer
+          description: номер строки в исходном файле
+          example: 723904619022076335
+          format: int64
+        record:
+          type: array
+          items:
+            type: string
+            example: Blanditiis mollitia et.
+          example:
+            - Expedita laborum accusantium molestiae unde ipsa dolorum.
+            - Quis quia.
+            - Molestiae praesentium aut mollitia dicta.
+          minItems: 4
+          maxItems: 4
+      example:
+        line_number: 6764186586551989136
+        record:
+          - Id voluptas.
+          - Quae optio consequuntur cupiditate quia saepe repellat.
+          - Est quae sit debitis natus nobis.
+      required:
+        - record
+        - line_number
     Dataset:
       type: object
       properties:
@@ -1090,18 +1201,23 @@ components:
           example:
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 1265436064177614974
-              username: Ut occaecati corrupti corporis.
+              is_initial: false
+              user_id: 5248616438366142420
+              username: Ea deleniti a quia voluptas delectus odio.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 1265436064177614974
-              username: Ut occaecati corrupti corporis.
+              is_initial: false
+              user_id: 5248616438366142420
+              username: Ea deleniti a quia voluptas delectus odio.
+            - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
+              id: 74C53540-E974-ABFF-2565-6BF99F9017B2
+              is_initial: false
+              user_id: 5248616438366142420
+              username: Ea deleniti a quia voluptas delectus odio.
         commented_per_post:
           type: integer
           description: сколько прокоментировааших для каждого поста брать
-          example: 1635493274
+          example: 1742207291
           format: int32
         id:
           type: string
@@ -1110,17 +1226,17 @@ components:
         liked_per_post:
           type: integer
           description: сколько лайкнувших для каждого поста брать
-          example: 683424312
+          example: 919226176
           format: int32
         phone_code:
           type: integer
           description: является ли блоггер изначально в датасете или появился при парсинге
-          example: 464626166
+          example: 1779221693
           format: int32
         posts_per_blogger:
           type: integer
           description: имена аккаунтов, для которых ищем похожих
-          example: 1554282523
+          example: 588144765
           format: int32
         status:
           type: integer
@@ -1135,31 +1251,31 @@ components:
         title:
           type: string
           description: название задачи
-          example: Perferendis quia ea sit.
+          example: Qui incidunt.
       example:
         bloggers:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 1265436064177614974
-            username: Ut occaecati corrupti corporis.
+            is_initial: false
+            user_id: 5248616438366142420
+            username: Ea deleniti a quia voluptas delectus odio.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 1265436064177614974
-            username: Ut occaecati corrupti corporis.
+            is_initial: false
+            user_id: 5248616438366142420
+            username: Ea deleniti a quia voluptas delectus odio.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 1265436064177614974
-            username: Ut occaecati corrupti corporis.
-        commented_per_post: 1944974440
+            is_initial: false
+            user_id: 5248616438366142420
+            username: Ea deleniti a quia voluptas delectus odio.
+        commented_per_post: 586058645
         id: 2E7D48F1-CD94-6874-B6D8-717D4A8FD873
-        liked_per_post: 318305094
-        phone_code: 324878483
-        posts_per_blogger: 666561007
+        liked_per_post: 1797076734
+        phone_code: 1567374748
+        posts_per_blogger: 1091953292
         status: 6
-        title: Commodi enim.
+        title: Placeat aut amet sed fugit.
       required:
         - id
         - bloggers
@@ -1179,24 +1295,24 @@ components:
           example:
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 1265436064177614974
-              username: Ut occaecati corrupti corporis.
+              is_initial: false
+              user_id: 5248616438366142420
+              username: Ea deleniti a quia voluptas delectus odio.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 1265436064177614974
-              username: Ut occaecati corrupti corporis.
+              is_initial: false
+              user_id: 5248616438366142420
+              username: Ea deleniti a quia voluptas delectus odio.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 1265436064177614974
-              username: Ut occaecati corrupti corporis.
+              is_initial: false
+              user_id: 5248616438366142420
+              username: Ea deleniti a quia voluptas delectus odio.
             - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
               id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-              is_initial: true
-              user_id: 1265436064177614974
-              username: Ut occaecati corrupti corporis.
+              is_initial: false
+              user_id: 5248616438366142420
+              username: Ea deleniti a quia voluptas delectus odio.
         done:
           type: boolean
           description: закончена ли задача
@@ -1204,44 +1320,39 @@ components:
         filtered_bloggers:
           type: integer
           description: количество блогеров, которые проходят проверку по коду региона
-          example: 1774304129048828521
+          example: 8412296584423844909
           format: int64
         initial_bloggers:
           type: integer
           description: количество блогеров, которые были изначально
-          example: 8770340245856471306
+          example: 7344993019847515752
           format: int64
         new_bloggers:
           type: integer
           description: количество блогеров, которых нашли
-          example: 8134536142870109612
+          example: 230978143805155776
           format: int64
       example:
         bloggers:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 1265436064177614974
-            username: Ut occaecati corrupti corporis.
+            is_initial: false
+            user_id: 5248616438366142420
+            username: Ea deleniti a quia voluptas delectus odio.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 1265436064177614974
-            username: Ut occaecati corrupti corporis.
+            is_initial: false
+            user_id: 5248616438366142420
+            username: Ea deleniti a quia voluptas delectus odio.
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
             id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 1265436064177614974
-            username: Ut occaecati corrupti corporis.
-          - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
-            id: 74C53540-E974-ABFF-2565-6BF99F9017B2
-            is_initial: true
-            user_id: 1265436064177614974
-            username: Ut occaecati corrupti corporis.
+            is_initial: false
+            user_id: 5248616438366142420
+            username: Ea deleniti a quia voluptas delectus odio.
         done: false
-        filtered_bloggers: 7482723337987129630
-        initial_bloggers: 2526062532557512501
-        new_bloggers: 3948046366238159043
+        filtered_bloggers: 4867819810020009037
+        initial_bloggers: 2571916509707000848
+        new_bloggers: 6300387306505007877
       required:
         - bloggers
         - initial_bloggers
@@ -1254,10 +1365,10 @@ components:
         dataset_id:
           type: string
           description: id задачи
-          example: A aut dignissimos aut ipsam ad.
+          example: Quod ut atque ut rerum repellendus.
         status:
           type: integer
-          example: 2
+          example: 4
           enum:
             - 1
             - 2
@@ -1266,8 +1377,8 @@ components:
             - 5
             - 6
       example:
-        dataset_id: Quis porro.
-        status: 4
+        dataset_id: Tempore sequi recusandae impedit.
+        status: 5
       required:
         - dataset_id
         - status
@@ -1277,21 +1388,21 @@ components:
         bloggers_parsed:
           type: integer
           description: количество блогеров, у которых спарсили пользователей
-          example: 6522026854403480876
+          example: 9171534025655890980
           format: int64
         done:
           type: boolean
           description: закончен ли парсинг блогеров
-          example: false
+          example: true
         targets_saved:
           type: integer
           description: количество сохраненных доноров
-          example: 7986427872269794357
+          example: 4679289715905044866
           format: int64
       example:
-        bloggers_parsed: 1180612210340427226
+        bloggers_parsed: 2831568755783196923
         done: true
-        targets_saved: 295340124773807551
+        targets_saved: 9141181806481220177
       required:
         - bloggers_parsed
         - targets_saved
@@ -1302,21 +1413,20 @@ components:
         commented_per_post:
           type: integer
           description: сколько прокоментировааших для каждого поста брать
-          example: 5673086758089991336
+          example: 3288752044486647885
         liked_per_post:
           type: integer
           description: сколько лайкнувших для каждого поста брать
-          example: 4031812775812334357
+          example: 5874726778370046298
         original_accounts:
           type: array
           items:
             type: string
-            example: Repudiandae repellendus aliquid rem atque.
+            example: Ea incidunt possimus autem possimus dolores.
           description: имена аккаунтов, для которых ищем похожих
           example:
-            - Cumque corporis aliquam est.
-            - Quaerat repudiandae pariatur beatae possimus dignissimos optio.
-            - Sed eaque a.
+            - Est dolore est eaque beatae.
+            - Vitae sequi veritatis enim porro illum vel.
         phone_code:
           type: integer
           description: код региона, по которому будем сортировать
@@ -1326,21 +1436,185 @@ components:
         posts_per_blogger:
           type: integer
           description: имена аккаунтов, для которых ищем похожих
-          example: 12336549804949401488
+          example: 7757279681104069803
         title:
           type: string
           description: название задачи
-          example: Nihil similique ratione numquam quod.
+          example: Dolores aut architecto enim.
       example:
-        commented_per_post: 2419055019979436660
-        liked_per_post: 4860468425783070672
+        commented_per_post: 3511860830613246029
+        liked_per_post: 11741113490046651257
         original_accounts:
-          - Explicabo qui odit.
-          - Et dolores quos qui quisquam aspernatur quia.
-          - Aut voluptatem quasi eaque voluptatibus.
+          - Aspernatur excepturi qui ea fugiat et excepturi.
+          - Iste commodi enim quo quo sit et.
         phone_code: 7
-        posts_per_blogger: 4523872262516744433
-        title: Totam aspernatur suscipit.
+        posts_per_blogger: 17550649312555852902
+        title: Error doloremque.
+    UploadError:
+      type: object
+      properties:
+        input:
+          type: string
+          description: номер порта
+          example: Sit vel ex et.
+        line:
+          type: integer
+          example: 7966329078793459913
+          format: int64
+        reason:
+          type: string
+          example: Est tempora quam in.
+        type:
+          type: integer
+          description: |2-
+             1 - список ботов
+                2 - список прокси
+                3 - список получателей рекламы
+          example: 1
+          enum:
+            - 1
+            - 2
+            - 3
+      example:
+        input: Veritatis nostrum numquam est praesentium.
+        line: 9009390402796463595
+        reason: Numquam quasi.
+        type: 3
+      required:
+        - type
+        - line
+        - input
+        - reason
+    UploadFilesOKResponseBody:
+      type: object
+      properties:
+        upload_errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/UploadError'
+          description: ошибки, которые возникли при загрузке файлов
+          example:
+            - input: Qui et quo eveniet consequatur.
+              line: 9156935434262392603
+              reason: Eaque aliquam et tempore.
+              type: 1
+            - input: Qui et quo eveniet consequatur.
+              line: 9156935434262392603
+              reason: Eaque aliquam et tempore.
+              type: 1
+      example:
+        upload_errors:
+          - input: Qui et quo eveniet consequatur.
+            line: 9156935434262392603
+            reason: Eaque aliquam et tempore.
+            type: 1
+          - input: Qui et quo eveniet consequatur.
+            line: 9156935434262392603
+            reason: Eaque aliquam et tempore.
+            type: 1
+      required:
+        - upload_errors
+    UploadFilesRequestBody:
+      type: object
+      properties:
+        bots:
+          type: array
+          items:
+            $ref: '#/components/schemas/BotAccountRecord'
+          description: список ботов
+          example:
+            - line_number: 9167031750239981107
+              record:
+                - Quia ad.
+                - Excepturi saepe qui et voluptates facere.
+                - Beatae omnis.
+            - line_number: 9167031750239981107
+              record:
+                - Quia ad.
+                - Excepturi saepe qui et voluptates facere.
+                - Beatae omnis.
+            - line_number: 9167031750239981107
+              record:
+                - Quia ad.
+                - Excepturi saepe qui et voluptates facere.
+                - Beatae omnis.
+        bots_filename:
+          type: string
+          example: Quis incidunt quas sint tempore eos.
+        proxies:
+          type: array
+          items:
+            $ref: '#/components/schemas/BotAccountRecord'
+          description: список проксей для использования
+          example:
+            - line_number: 6640866908895053401
+              record:
+                - Animi iusto eaque incidunt.
+                - Et natus et et repudiandae labore.
+                - Eius voluptatibus.
+            - line_number: 6640866908895053401
+              record:
+                - Animi iusto eaque incidunt.
+                - Et natus et et repudiandae labore.
+                - Eius voluptatibus.
+            - line_number: 6640866908895053401
+              record:
+                - Animi iusto eaque incidunt.
+                - Et natus et et repudiandae labore.
+                - Eius voluptatibus.
+            - line_number: 6640866908895053401
+              record:
+                - Animi iusto eaque incidunt.
+                - Et natus et et repudiandae labore.
+                - Eius voluptatibus.
+        proxies_filename:
+          type: string
+          example: Tempora corrupti natus.
+      example:
+        bots:
+          - line_number: 9167031750239981107
+            record:
+              - Quia ad.
+              - Excepturi saepe qui et voluptates facere.
+              - Beatae omnis.
+          - line_number: 9167031750239981107
+            record:
+              - Quia ad.
+              - Excepturi saepe qui et voluptates facere.
+              - Beatae omnis.
+          - line_number: 9167031750239981107
+            record:
+              - Quia ad.
+              - Excepturi saepe qui et voluptates facere.
+              - Beatae omnis.
+          - line_number: 9167031750239981107
+            record:
+              - Quia ad.
+              - Excepturi saepe qui et voluptates facere.
+              - Beatae omnis.
+        bots_filename: Iure fugiat non totam culpa et.
+        proxies:
+          - line_number: 6640866908895053401
+            record:
+              - Animi iusto eaque incidunt.
+              - Et natus et et repudiandae labore.
+              - Eius voluptatibus.
+          - line_number: 6640866908895053401
+            record:
+              - Animi iusto eaque incidunt.
+              - Et natus et et repudiandae labore.
+              - Eius voluptatibus.
+          - line_number: 6640866908895053401
+            record:
+              - Animi iusto eaque incidunt.
+              - Et natus et et repudiandae labore.
+              - Eius voluptatibus.
+        proxies_filename: Rerum tenetur quis voluptas enim sed voluptas.
+      required:
+        - bots
+        - proxies
+        - proxies_filename
+        - bots_filename
   securitySchemes:
     jwt_header_Authorization:
       type: http

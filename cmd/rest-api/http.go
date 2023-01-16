@@ -13,6 +13,7 @@ import (
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
 	datasetsservicesvr "github.com/inst-api/parser/gen/http/datasets_service/server"
 	"github.com/inst-api/parser/internal/mw"
+	"github.com/inst-api/parser/internal/service/multipart"
 	"github.com/inst-api/parser/pkg/logger"
 	goahttp "goa.design/goa/v3/http"
 	httpmdlwr "goa.design/goa/v3/http/middleware"
@@ -60,7 +61,7 @@ func handleHTTPServer(
 	)
 	{
 		eh := errorHandler()
-		datasetsServiceServer = datasetsservicesvr.New(datasetsServiceEndpoints, mux, dec, enc, eh, nil)
+		datasetsServiceServer = datasetsservicesvr.New(datasetsServiceEndpoints, mux, dec, enc, eh, nil, multipart.DatasetsServiceUploadFilesDecoderFunc)
 
 		datasetsServiceServer.Use(mw.RequestLoggerWithDebug(mux, debug))
 		datasetsServiceServer.Use(httpmdlwr.RequestID())

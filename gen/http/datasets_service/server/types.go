@@ -29,6 +29,17 @@ type UpdateDatasetRequestBody struct {
 	Title *string `form:"title,omitempty" json:"title,omitempty" xml:"title,omitempty"`
 }
 
+// UploadFilesRequestBody is the type of the "datasets_service" service "upload
+// files" endpoint HTTP request body.
+type UploadFilesRequestBody struct {
+	ProxiesFilename *string `json:"proxies_filename"`
+	BotsFilename    *string `json:"bots_filename"`
+	// список ботов
+	Bots []*BotAccountRecordRequestBody `form:"bots,omitempty" json:"bots,omitempty" xml:"bots,omitempty"`
+	// список проксей для использования
+	Proxies []*ProxyRecordRequestBody `form:"proxies,omitempty" json:"proxies,omitempty" xml:"proxies,omitempty"`
+}
+
 // UpdateDatasetOKResponseBody is the type of the "datasets_service" service
 // "update dataset" endpoint HTTP response body.
 type UpdateDatasetOKResponseBody struct {
@@ -121,6 +132,13 @@ type GetParsingProgressOKResponseBody struct {
 // datasets" endpoint HTTP response body.
 type ListDatasetsResponseBody []*DatasetResponse
 
+// UploadFilesOKResponseBody is the type of the "datasets_service" service
+// "upload files" endpoint HTTP response body.
+type UploadFilesOKResponseBody struct {
+	// ошибки, которые возникли при загрузке файлов
+	UploadErrors []*UploadErrorResponseBody `json:"upload_errors"`
+}
+
 // BloggerResponseBody is used to define fields on response body types.
 type BloggerResponseBody struct {
 	ID string `form:"id" json:"id" xml:"id"`
@@ -162,6 +180,32 @@ type BloggerResponse struct {
 	DatasetID string `json:"dataset_id"`
 	// является ли блоггер изначально в датасете или появился при парсинге
 	IsInitial bool `json:"is_initial"`
+}
+
+// UploadErrorResponseBody is used to define fields on response body types.
+type UploadErrorResponseBody struct {
+	// 1 - список ботов
+	// 2 - список прокси
+	// 3 - список получателей рекламы
+	Type int `form:"type" json:"type" xml:"type"`
+	Line int `form:"line" json:"line" xml:"line"`
+	// номер порта
+	Input  string `form:"input" json:"input" xml:"input"`
+	Reason string `form:"reason" json:"reason" xml:"reason"`
+}
+
+// BotAccountRecordRequestBody is used to define fields on request body types.
+type BotAccountRecordRequestBody struct {
+	Record []string `form:"record,omitempty" json:"record,omitempty" xml:"record,omitempty"`
+	// номер строки в исходном файле
+	LineNumber *int `json:"line_number"`
+}
+
+// ProxyRecordRequestBody is used to define fields on request body types.
+type ProxyRecordRequestBody struct {
+	Record []string `form:"record,omitempty" json:"record,omitempty" xml:"record,omitempty"`
+	// номер строки в исходном файле
+	LineNumber *int `json:"line_number"`
 }
 
 // NewUpdateDatasetOKResponseBody builds the HTTP response body from the result
@@ -277,6 +321,19 @@ func NewListDatasetsResponseBody(res []*datasetsservice.Dataset) ListDatasetsRes
 	return body
 }
 
+// NewUploadFilesOKResponseBody builds the HTTP response body from the result
+// of the "upload files" endpoint of the "datasets_service" service.
+func NewUploadFilesOKResponseBody(res *datasetsservice.UploadFilesResult) *UploadFilesOKResponseBody {
+	body := &UploadFilesOKResponseBody{}
+	if res.UploadErrors != nil {
+		body.UploadErrors = make([]*UploadErrorResponseBody, len(res.UploadErrors))
+		for i, val := range res.UploadErrors {
+			body.UploadErrors[i] = marshalDatasetsserviceUploadErrorToUploadErrorResponseBody(val)
+		}
+	}
+	return body
+}
+
 // NewCreateDatasetDraftPayload builds a datasets_service service create
 // dataset draft endpoint payload.
 func NewCreateDatasetDraftPayload(token string) *datasetsservice.CreateDatasetDraftPayload {
@@ -378,6 +435,27 @@ func NewListDatasetsPayload(token string) *datasetsservice.ListDatasetsPayload {
 	return v
 }
 
+// NewUploadFilesPayload builds a datasets_service service upload files
+// endpoint payload.
+func NewUploadFilesPayload(body *UploadFilesRequestBody, datasetID string, token string) *datasetsservice.UploadFilesPayload {
+	v := &datasetsservice.UploadFilesPayload{
+		ProxiesFilename: *body.ProxiesFilename,
+		BotsFilename:    *body.BotsFilename,
+	}
+	v.Bots = make([]*datasetsservice.BotAccountRecord, len(body.Bots))
+	for i, val := range body.Bots {
+		v.Bots[i] = unmarshalBotAccountRecordRequestBodyToDatasetsserviceBotAccountRecord(val)
+	}
+	v.Proxies = make([]*datasetsservice.ProxyRecord, len(body.Proxies))
+	for i, val := range body.Proxies {
+		v.Proxies[i] = unmarshalProxyRecordRequestBodyToDatasetsserviceProxyRecord(val)
+	}
+	v.DatasetID = datasetID
+	v.Token = token
+
+	return v
+}
+
 // ValidateUpdateDatasetRequestBody runs the validations defined on Update
 // DatasetRequestBody
 func ValidateUpdateDatasetRequestBody(body *UpdateDatasetRequestBody) (err error) {
@@ -390,6 +468,74 @@ func ValidateUpdateDatasetRequestBody(body *UpdateDatasetRequestBody) (err error
 		if *body.PhoneCode > 1000 {
 			err = goa.MergeErrors(err, goa.InvalidRangeError("body.phone_code", *body.PhoneCode, 1000, false))
 		}
+	}
+	return
+}
+
+// ValidateUploadFilesRequestBody runs the validations defined on Upload
+// FilesRequestBody
+func ValidateUploadFilesRequestBody(body *UploadFilesRequestBody) (err error) {
+	if body.Bots == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("bots", "body"))
+	}
+	if body.Proxies == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("proxies", "body"))
+	}
+	if body.ProxiesFilename == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("proxies_filename", "body"))
+	}
+	if body.BotsFilename == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("bots_filename", "body"))
+	}
+	for _, e := range body.Bots {
+		if e != nil {
+			if err2 := ValidateBotAccountRecordRequestBody(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	for _, e := range body.Proxies {
+		if e != nil {
+			if err2 := ValidateProxyRecordRequestBody(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateBotAccountRecordRequestBody runs the validations defined on
+// BotAccountRecordRequestBody
+func ValidateBotAccountRecordRequestBody(body *BotAccountRecordRequestBody) (err error) {
+	if body.Record == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("record", "body"))
+	}
+	if body.LineNumber == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("line_number", "body"))
+	}
+	if len(body.Record) < 4 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError("body.record", body.Record, len(body.Record), 4, true))
+	}
+	if len(body.Record) > 4 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError("body.record", body.Record, len(body.Record), 4, false))
+	}
+	return
+}
+
+// ValidateProxyRecordRequestBody runs the validations defined on
+// ProxyRecordRequestBody
+func ValidateProxyRecordRequestBody(body *ProxyRecordRequestBody) (err error) {
+	if body.Record == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("record", "body"))
+	}
+	if body.LineNumber == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("line_number", "body"))
+	}
+	if len(body.Record) < 4 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError("body.record", body.Record, len(body.Record), 4, true))
+	}
+	if len(body.Record) > 4 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError("body.record", body.Record, len(body.Record), 4, false))
 	}
 	return
 }

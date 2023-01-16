@@ -328,4 +328,52 @@ var _ = Service("datasets_service", func() {
 			Response(StatusInternalServerError)
 		})
 	})
+
+	Method("upload files", func() {
+		Description("загрузить файл с ботами, прокси")
+
+		Security(JWTAuth)
+
+		Payload(func() {
+			Token("token", String, func() {
+				Description("JWT used for authentication")
+			})
+
+			Attribute("dataset_id", String, func() {
+				Description("id задачи, в которую загружаем пользователей/прокси")
+				Meta("struct:tag:json", "dataset_id")
+			})
+
+			Attribute("proxies_filename", String, func() {
+				Meta("struct:tag:json", "proxies_filename")
+			})
+
+			Attribute("bots_filename", String, func() {
+				Meta("struct:tag:json", "bots_filename")
+			})
+
+			Attribute("bots", ArrayOf(BotAccountRecord), "список ботов")
+			Attribute("proxies", ArrayOf(ProxyRecord), "список проксей для использования")
+
+			Required("token", "dataset_id", "bots", "proxies", "proxies_filename", "bots_filename")
+		})
+
+		Result(func() {
+			Attribute("upload_errors", ArrayOf(UploadError), func() {
+				Description("ошибки, которые возникли при загрузке файлов")
+				Meta("struct:tag:json", "upload_errors")
+			})
+
+			Required("upload_errors")
+		})
+
+		HTTP(func() {
+			POST("/api/datasets/{dataset_id}/upload/")
+			MultipartRequest()
+			// Use Authorization header to provide basic auth value.
+			Response(StatusOK)
+			Response(StatusNotFound)
+			Response(StatusUnauthorized)
+		})
+	})
 })

@@ -55,3 +55,8 @@ func DownloadTargetsDatasetsServicePath(datasetID string) string {
 func ListDatasetsDatasetsServicePath() string {
 	return "/api/datasets/"
 }
+
+// UploadFilesDatasetsServicePath returns the URL path to the datasets_service service upload files HTTP endpoint.
+func UploadFilesDatasetsServicePath(datasetID string) string {
+	return fmt.Sprintf("/api/datasets/%v/upload/", datasetID)
+}

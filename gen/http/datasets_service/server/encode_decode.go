@@ -853,6 +853,120 @@ func EncodeListDatasetsError(encoder func(context.Context, http.ResponseWriter) 
 	}
 }
 
+// EncodeUploadFilesResponse returns an encoder for responses returned by the
+// datasets_service upload files endpoint.
+func EncodeUploadFilesResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
+	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
+		res, _ := v.(*datasetsservice.UploadFilesResult)
+		enc := encoder(ctx, w)
+		body := NewUploadFilesOKResponseBody(res)
+		w.WriteHeader(http.StatusOK)
+		return enc.Encode(body)
+	}
+}
+
+// DecodeUploadFilesRequest returns a decoder for requests sent to the
+// datasets_service upload files endpoint.
+func DecodeUploadFilesRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
+	return func(r *http.Request) (interface{}, error) {
+		var payload *datasetsservice.UploadFilesPayload
+		if err := decoder(r).Decode(&payload); err != nil {
+			return nil, goa.DecodePayloadError(err.Error())
+		}
+		if strings.Contains(payload.Token, " ") {
+			// Remove authorization scheme prefix (e.g. "Bearer")
+			cred := strings.SplitN(payload.Token, " ", 2)[1]
+			payload.Token = cred
+		}
+
+		return payload, nil
+	}
+}
+
+// NewDatasetsServiceUploadFilesDecoder returns a decoder to decode the
+// multipart request for the "datasets_service" service "upload files" endpoint.
+func NewDatasetsServiceUploadFilesDecoder(mux goahttp.Muxer, datasetsServiceUploadFilesDecoderFn DatasetsServiceUploadFilesDecoderFunc) func(r *http.Request) goahttp.Decoder {
+	return func(r *http.Request) goahttp.Decoder {
+		return goahttp.EncodingFunc(func(v interface{}) error {
+			mr, merr := r.MultipartReader()
+			if merr != nil {
+				return merr
+			}
+			p := v.(**datasetsservice.UploadFilesPayload)
+			if err := datasetsServiceUploadFilesDecoderFn(mr, p); err != nil {
+				return err
+			}
+
+			var (
+				datasetID string
+				token     string
+				err       error
+
+				params = mux.Vars(r)
+			)
+			datasetID = params["dataset_id"]
+			token = r.Header.Get("Authorization")
+			if token == "" {
+				err = goa.MergeErrors(err, goa.MissingFieldError("Authorization", "header"))
+			}
+			if err != nil {
+				return err
+			}
+			(*p).DatasetID = datasetID
+			(*p).Token = token
+			return nil
+		})
+	}
+}
+
+// EncodeUploadFilesError returns an encoder for errors returned by the upload
+// files datasets_service endpoint.
+func EncodeUploadFilesError(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder, formatter func(ctx context.Context, err error) goahttp.Statuser) func(context.Context, http.ResponseWriter, error) error {
+	encodeError := goahttp.ErrorEncoder(encoder, formatter)
+	return func(ctx context.Context, w http.ResponseWriter, v error) error {
+		var en goa.GoaErrorNamer
+		if !errors.As(v, &en) {
+			return encodeError(ctx, w, v)
+		}
+		switch en.GoaErrorName() {
+		case "bad request":
+			var res datasetsservice.BadRequest
+			errors.As(v, &res)
+			enc := encoder(ctx, w)
+			body := res
+			w.Header().Set("goa-error", res.GoaErrorName())
+			w.WriteHeader(http.StatusBadRequest)
+			return enc.Encode(body)
+		case "dataset not found":
+			var res datasetsservice.DatasetNotFound
+			errors.As(v, &res)
+			enc := encoder(ctx, w)
+			body := res
+			w.Header().Set("goa-error", res.GoaErrorName())
+			w.WriteHeader(http.StatusNotFound)
+			return enc.Encode(body)
+		case "internal error":
+			var res datasetsservice.InternalError
+			errors.As(v, &res)
+			enc := encoder(ctx, w)
+			body := res
+			w.Header().Set("goa-error", res.GoaErrorName())
+			w.WriteHeader(http.StatusInternalServerError)
+			return enc.Encode(body)
+		case "unauthorized":
+			var res datasetsservice.Unauthorized
+			errors.As(v, &res)
+			enc := encoder(ctx, w)
+			body := res
+			w.Header().Set("goa-error", res.GoaErrorName())
+			w.WriteHeader(http.StatusUnauthorized)
+			return enc.Encode(body)
+		default:
+			return encodeError(ctx, w, v)
+		}
+	}
+}
+
 // marshalDatasetsserviceBloggerToBloggerResponseBody builds a value of type
 // *BloggerResponseBody from a value of type *datasetsservice.Blogger.
 func marshalDatasetsserviceBloggerToBloggerResponseBody(v *datasetsservice.Blogger) *BloggerResponseBody {
@@ -898,6 +1012,50 @@ func marshalDatasetsserviceBloggerToBloggerResponse(v *datasetsservice.Blogger) 
 		UserID:    v.UserID,
 		DatasetID: v.DatasetID,
 		IsInitial: v.IsInitial,
+	}
+
+	return res
+}
+
+// unmarshalBotAccountRecordRequestBodyToDatasetsserviceBotAccountRecord builds
+// a value of type *datasetsservice.BotAccountRecord from a value of type
+// *BotAccountRecordRequestBody.
+func unmarshalBotAccountRecordRequestBodyToDatasetsserviceBotAccountRecord(v *BotAccountRecordRequestBody) *datasetsservice.BotAccountRecord {
+	res := &datasetsservice.BotAccountRecord{
+		LineNumber: *v.LineNumber,
+	}
+	res.Record = make([]string, len(v.Record))
+	for i, val := range v.Record {
+		res.Record[i] = val
+	}
+
+	return res
+}
+
+// unmarshalProxyRecordRequestBodyToDatasetsserviceProxyRecord builds a value
+// of type *datasetsservice.ProxyRecord from a value of type
+// *ProxyRecordRequestBody.
+func unmarshalProxyRecordRequestBodyToDatasetsserviceProxyRecord(v *ProxyRecordRequestBody) *datasetsservice.ProxyRecord {
+	res := &datasetsservice.ProxyRecord{
+		LineNumber: *v.LineNumber,
+	}
+	res.Record = make([]string, len(v.Record))
+	for i, val := range v.Record {
+		res.Record[i] = val
+	}
+
+	return res
+}
+
+// marshalDatasetsserviceUploadErrorToUploadErrorResponseBody builds a value of
+// type *UploadErrorResponseBody from a value of type
+// *datasetsservice.UploadError.
+func marshalDatasetsserviceUploadErrorToUploadErrorResponseBody(v *datasetsservice.UploadError) *UploadErrorResponseBody {
+	res := &UploadErrorResponseBody{
+		Type:   v.Type,
+		Line:   v.Line,
+		Input:  v.Input,
+		Reason: v.Reason,
 	}
 
 	return res

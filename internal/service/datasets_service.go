@@ -32,6 +32,11 @@ type datasetsServicesrvc struct {
 	store datasetsStore
 }
 
+func (s *datasetsServicesrvc) UploadFiles(ctx context.Context, p *datasetsservice.UploadFilesPayload) (*datasetsservice.UploadFilesResult, error) {
+	logger.Infof(ctx, "got upload files for dataset %s", p.DatasetID)
+	return &datasetsservice.UploadFilesResult{}, nil
+}
+
 // NewDatasetsService returns the datasets_service service implementation.
 func NewDatasetsService(cfg sessions.Configuration, store datasetsStore) datasetsservice.Service {
 	return &datasetsServicesrvc{

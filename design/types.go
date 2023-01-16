@@ -158,3 +158,43 @@ var Proxy = Type("Proxy", func() {
 
 	Required("host", "port", "login", "pass")
 })
+
+// BotAccountRecord defines set of bot's fields and line in input file
+var BotAccountRecord = Type("BotAccountRecord", func() {
+	Attribute("record", ArrayOf(String), func() {
+		MinLength(4)
+		MaxLength(4)
+	})
+	Attribute("line_number", Int, "номер строки в исходном файле", func() {
+		Meta("struct:tag:json", "line_number")
+	})
+	Required("record", "line_number")
+})
+
+// ProxyRecord описывает пользователя, которому будет показана реклама
+var ProxyRecord = Type("ProxyRecord", func() {
+	Attribute("record", ArrayOf(String), func() {
+		MinLength(4)
+		MaxLength(4)
+	})
+	Attribute("line_number", Int, "номер строки в исходном файле", func() {
+		Meta("struct:tag:json", "line_number")
+	})
+	Required("record", "line_number")
+})
+
+// UploadError описывает ошибку при чтении файлов
+var UploadError = Type("UploadError", func() {
+	Attribute("type", Int, "тип файла, в котором была ошибка", func() {
+		Enum(1, 2, 3)
+		Description(` 1 - список ботов
+    2 - список прокси
+    3 - список получателей рекламы`)
+	})
+	Attribute("line", Int)
+	Attribute("input", String, "номер порта")
+
+	Attribute("reason", String)
+
+	Required("type", "line", "input", "reason")
+})

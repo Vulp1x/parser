@@ -25,6 +25,7 @@ type Endpoints struct {
 	GetParsingProgress goa.Endpoint
 	DownloadTargets    goa.Endpoint
 	ListDatasets       goa.Endpoint
+	UploadFiles        goa.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "datasets_service" service with
@@ -42,6 +43,7 @@ func NewEndpoints(s Service) *Endpoints {
 		GetParsingProgress: NewGetParsingProgressEndpoint(s, a.JWTAuth),
 		DownloadTargets:    NewDownloadTargetsEndpoint(s, a.JWTAuth),
 		ListDatasets:       NewListDatasetsEndpoint(s, a.JWTAuth),
+		UploadFiles:        NewUploadFilesEndpoint(s, a.JWTAuth),
 	}
 }
 
@@ -57,6 +59,7 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.GetParsingProgress = m(e.GetParsingProgress)
 	e.DownloadTargets = m(e.DownloadTargets)
 	e.ListDatasets = m(e.ListDatasets)
+	e.UploadFiles = m(e.UploadFiles)
 }
 
 // NewCreateDatasetDraftEndpoint returns an endpoint function that calls the
@@ -227,5 +230,24 @@ func NewListDatasetsEndpoint(s Service, authJWTFn security.AuthJWTFunc) goa.Endp
 			return nil, err
 		}
 		return s.ListDatasets(ctx, p)
+	}
+}
+
+// NewUploadFilesEndpoint returns an endpoint function that calls the method
+// "upload files" of service "datasets_service".
+func NewUploadFilesEndpoint(s Service, authJWTFn security.AuthJWTFunc) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*UploadFilesPayload)
+		var err error
+		sc := security.JWTScheme{
+			Name:           "jwt",
+			Scopes:         []string{"driver", "admin"},
+			RequiredScopes: []string{},
+		}
+		ctx, err = authJWTFn(ctx, p.Token, &sc)
+		if err != nil {
+			return nil, err
+		}
+		return s.UploadFiles(ctx, p)
 	}
 }

@@ -37,6 +37,8 @@ type Service interface {
 	DownloadTargets(context.Context, *DownloadTargetsPayload) (res []string, err error)
 	// получить все задачи для текущего пользователя
 	ListDatasets(context.Context, *ListDatasetsPayload) (res []*Dataset, err error)
+	// загрузить файл с ботами, прокси
+	UploadFiles(context.Context, *UploadFilesPayload) (res *UploadFilesResult, err error)
 }
 
 // Auther defines the authorization functions to be implemented by the service.
@@ -53,7 +55,7 @@ const ServiceName = "datasets_service"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [9]string{"create dataset draft", "update dataset", "find similar", "get progress", "parse dataset", "get dataset", "get parsing progress", "download targets", "list datasets"}
+var MethodNames = [10]string{"create dataset draft", "update dataset", "find similar", "get progress", "parse dataset", "get dataset", "get parsing progress", "download targets", "list datasets", "upload files"}
 
 type Blogger struct {
 	ID string
@@ -65,6 +67,12 @@ type Blogger struct {
 	DatasetID string `json:"dataset_id"`
 	// является ли блоггер изначально в датасете или появился при парсинге
 	IsInitial bool `json:"is_initial"`
+}
+
+type BotAccountRecord struct {
+	Record []string
+	// номер строки в исходном файле
+	LineNumber int `json:"line_number"`
 }
 
 // CreateDatasetDraftPayload is the payload type of the datasets_service
@@ -197,6 +205,12 @@ type ParsingProgress struct {
 	Done bool
 }
 
+type ProxyRecord struct {
+	Record []string
+	// номер строки в исходном файле
+	LineNumber int `json:"line_number"`
+}
+
 // UpdateDatasetPayload is the payload type of the datasets_service service
 // update dataset method.
 type UpdateDatasetPayload struct {
@@ -216,6 +230,39 @@ type UpdateDatasetPayload struct {
 	PhoneCode *int32 `json:"phone_code"`
 	// название задачи
 	Title *string
+}
+
+type UploadError struct {
+	// 1 - список ботов
+	// 2 - список прокси
+	// 3 - список получателей рекламы
+	Type int
+	Line int
+	// номер порта
+	Input  string
+	Reason string
+}
+
+// UploadFilesPayload is the payload type of the datasets_service service
+// upload files method.
+type UploadFilesPayload struct {
+	// JWT used for authentication
+	Token string
+	// id задачи, в которую загружаем пользователей/прокси
+	DatasetID       string `json:"dataset_id"`
+	ProxiesFilename string `json:"proxies_filename"`
+	BotsFilename    string `json:"bots_filename"`
+	// список ботов
+	Bots []*BotAccountRecord
+	// список проксей для использования
+	Proxies []*ProxyRecord
+}
+
+// UploadFilesResult is the result type of the datasets_service service upload
+// files method.
+type UploadFilesResult struct {
+	// ошибки, которые возникли при загрузке файлов
+	UploadErrors []*UploadError `json:"upload_errors"`
 }
 
 // Invalid request
