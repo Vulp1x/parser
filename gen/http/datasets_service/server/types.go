@@ -12,6 +12,12 @@ import (
 	goa "goa.design/goa/v3/pkg"
 )
 
+// CreateDatasetDraftRequestBody is the type of the "datasets_service" service
+// "create dataset draft" endpoint HTTP request body.
+type CreateDatasetDraftRequestBody struct {
+	Type *int `form:"type,omitempty" json:"type,omitempty" xml:"type,omitempty"`
+}
+
 // UpdateDatasetRequestBody is the type of the "datasets_service" service
 // "update dataset" endpoint HTTP request body.
 type UpdateDatasetRequestBody struct {
@@ -56,6 +62,7 @@ type UpdateDatasetOKResponseBody struct {
 	// является ли блоггер изначально в датасете или появился при парсинге
 	PhoneCode *int32                 `json:"phone_code"`
 	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Type      int                    `form:"type" json:"type" xml:"type"`
 }
 
 // FindSimilarOKResponseBody is the type of the "datasets_service" service
@@ -74,6 +81,7 @@ type FindSimilarOKResponseBody struct {
 	// является ли блоггер изначально в датасете или появился при парсинге
 	PhoneCode *int32                 `json:"phone_code"`
 	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Type      int                    `form:"type" json:"type" xml:"type"`
 }
 
 // GetProgressOKResponseBody is the type of the "datasets_service" service "get
@@ -115,6 +123,7 @@ type GetDatasetOKResponseBody struct {
 	// является ли блоггер изначально в датасете или появился при парсинге
 	PhoneCode *int32                 `json:"phone_code"`
 	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Type      int                    `form:"type" json:"type" xml:"type"`
 }
 
 // GetParsingProgressOKResponseBody is the type of the "datasets_service"
@@ -167,6 +176,7 @@ type DatasetResponse struct {
 	// является ли блоггер изначально в датасете или появился при парсинге
 	PhoneCode *int32             `json:"phone_code"`
 	Bloggers  []*BloggerResponse `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Type      int                `form:"type" json:"type" xml:"type"`
 }
 
 // BloggerResponse is used to define fields on response body types.
@@ -219,6 +229,7 @@ func NewUpdateDatasetOKResponseBody(res *datasetsservice.Dataset) *UpdateDataset
 		LikedPerPost:     res.LikedPerPost,
 		CommentedPerPost: res.CommentedPerPost,
 		PhoneCode:        res.PhoneCode,
+		Type:             int(res.Type),
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -240,6 +251,7 @@ func NewFindSimilarOKResponseBody(res *datasetsservice.Dataset) *FindSimilarOKRe
 		LikedPerPost:     res.LikedPerPost,
 		CommentedPerPost: res.CommentedPerPost,
 		PhoneCode:        res.PhoneCode,
+		Type:             int(res.Type),
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -289,6 +301,7 @@ func NewGetDatasetOKResponseBody(res *datasetsservice.Dataset) *GetDatasetOKResp
 		LikedPerPost:     res.LikedPerPost,
 		CommentedPerPost: res.CommentedPerPost,
 		PhoneCode:        res.PhoneCode,
+		Type:             int(res.Type),
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -336,8 +349,10 @@ func NewUploadFilesOKResponseBody(res *datasetsservice.UploadFilesResult) *Uploa
 
 // NewCreateDatasetDraftPayload builds a datasets_service service create
 // dataset draft endpoint payload.
-func NewCreateDatasetDraftPayload(token string) *datasetsservice.CreateDatasetDraftPayload {
-	v := &datasetsservice.CreateDatasetDraftPayload{}
+func NewCreateDatasetDraftPayload(body *CreateDatasetDraftRequestBody, token string) *datasetsservice.CreateDatasetDraftPayload {
+	v := &datasetsservice.CreateDatasetDraftPayload{
+		Type: datasetsservice.DatasetType(*body.Type),
+	}
 	v.Token = token
 
 	return v
@@ -454,6 +469,20 @@ func NewUploadFilesPayload(body *UploadFilesRequestBody, datasetID string, token
 	v.Token = token
 
 	return v
+}
+
+// ValidateCreateDatasetDraftRequestBody runs the validations defined on Create
+// Dataset DraftRequestBody
+func ValidateCreateDatasetDraftRequestBody(body *CreateDatasetDraftRequestBody) (err error) {
+	if body.Type == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("type", "body"))
+	}
+	if body.Type != nil {
+		if !(*body.Type == 1 || *body.Type == 2 || *body.Type == 3 || *body.Type == 4 || *body.Type == 5 || *body.Type == 6) {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.type", *body.Type, []interface{}{1, 2, 3, 4, 5, 6}))
+		}
+	}
+	return
 }
 
 // ValidateUpdateDatasetRequestBody runs the validations defined on Update

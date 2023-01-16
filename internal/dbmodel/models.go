@@ -58,6 +58,49 @@ func (ns NullBloggerStatus) Value() (driver.Value, error) {
 	return ns.BloggerStatus, nil
 }
 
+type DatasetType string
+
+const (
+	DatasetTypeFollowers        DatasetType = "followers"
+	DatasetTypePhoneNumbers     DatasetType = "phone_numbers"
+	DatasetTypeLikesAndComments DatasetType = "likes_and_comments"
+)
+
+func (e *DatasetType) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = DatasetType(s)
+	case string:
+		*e = DatasetType(s)
+	default:
+		return fmt.Errorf("unsupported scan type for DatasetType: %T", src)
+	}
+	return nil
+}
+
+type NullDatasetType struct {
+	DatasetType DatasetType
+	Valid       bool // Valid is true if DatasetType is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullDatasetType) Scan(value interface{}) error {
+	if value == nil {
+		ns.DatasetType, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.DatasetType.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullDatasetType) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return ns.DatasetType, nil
+}
+
 type PgqueueStatus string
 
 const (
@@ -152,6 +195,7 @@ type Dataset struct {
 	PostsPerBlogger  int32         `json:"posts_per_blogger"`
 	LikedPerPost     int32         `json:"liked_per_post"`
 	CommentedPerPost int32         `json:"commented_per_post"`
+	Type             DatasetType   `json:"type"`
 }
 
 type Media struct {

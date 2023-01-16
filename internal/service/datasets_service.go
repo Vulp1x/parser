@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
+	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/domain"
 	"github.com/inst-api/parser/internal/sessions"
 	"github.com/inst-api/parser/internal/store/datasets"
@@ -15,7 +16,7 @@ import (
 )
 
 type datasetsStore interface {
-	CreateDraftDataset(ctx context.Context, userID uuid.UUID) (uuid.UUID, error)
+	CreateDraftDataset(ctx context.Context, userID uuid.UUID, datasetType dbmodel.DatasetType) (uuid.UUID, error)
 	GetDataset(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
 	UpdateDataset(ctx context.Context, datasetID uuid.UUID, originalAccounts []string, opts ...datasets.UpdateOption) (domain.DatasetWithBloggers, error)
 	List(ctx context.Context, managerID uuid.UUID) (domain.Datasets, error)
@@ -66,7 +67,13 @@ func (s *datasetsServicesrvc) CreateDatasetDraft(ctx context.Context, p *dataset
 		return "", internalErr(err)
 	}
 
-	taskID, err := s.store.CreateDraftDataset(ctx, userID)
+	dbType, ok := datasetTypesToDBType[p.Type]
+	if !ok {
+		logger.Errorf(ctx, "invalid dataset type %d: failed to find it in %v", p.Type, datasetTypesToDBType)
+		return "", datasetsservice.BadRequest(fmt.Sprintf("unexpected dataset type %d", p.Type))
+	}
+
+	taskID, err := s.store.CreateDraftDataset(ctx, userID, dbType)
 	if err != nil {
 		return "", internalErr(err)
 	}

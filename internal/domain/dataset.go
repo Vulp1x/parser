@@ -35,6 +35,7 @@ func (b DatasetWithBloggers) ToProto() *datasetsservice.Dataset {
 		PostsPerBlogger:  b.Dataset.PostsPerBlogger,
 		LikedPerPost:     b.Dataset.LikedPerPost,
 		CommentedPerPost: b.Dataset.CommentedPerPost,
+		Type:             datasetDBTypesToProtoType[b.Dataset.Type],
 	}
 }
 
@@ -83,6 +84,7 @@ func (d Datasets) ToProto() []*datasetsservice.Dataset {
 			LikedPerPost:     dataset.LikedPerPost,
 			CommentedPerPost: dataset.CommentedPerPost,
 			PhoneCode:        dataset.PhoneCode,
+			Type:             datasetDBTypesToProtoType[dataset.Type],
 		}
 	}
 
@@ -90,3 +92,9 @@ func (d Datasets) ToProto() []*datasetsservice.Dataset {
 }
 
 type Dataset dbmodel.Dataset
+
+var datasetDBTypesToProtoType = map[dbmodel.DatasetType]datasetsservice.DatasetType{
+	dbmodel.DatasetTypeFollowers:        1,
+	dbmodel.DatasetTypePhoneNumbers:     2,
+	dbmodel.DatasetTypeLikesAndComments: 3,
+}

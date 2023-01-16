@@ -37,8 +37,23 @@ func EncodeCreateDatasetDraftResponse(encoder func(context.Context, http.Respons
 func DecodeCreateDatasetDraftRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
+			body CreateDatasetDraftRequestBody
+			err  error
+		)
+		err = decoder(r).Decode(&body)
+		if err != nil {
+			if err == io.EOF {
+				return nil, goa.MissingPayloadError()
+			}
+			return nil, goa.DecodePayloadError(err.Error())
+		}
+		err = ValidateCreateDatasetDraftRequestBody(&body)
+		if err != nil {
+			return nil, err
+		}
+
+		var (
 			token string
-			err   error
 		)
 		token = r.Header.Get("Authorization")
 		if token == "" {
@@ -47,7 +62,7 @@ func DecodeCreateDatasetDraftRequest(mux goahttp.Muxer, decoder func(*http.Reque
 		if err != nil {
 			return nil, err
 		}
-		payload := NewCreateDatasetDraftPayload(token)
+		payload := NewCreateDatasetDraftPayload(&body, token)
 		if strings.Contains(payload.Token, " ") {
 			// Remove authorization scheme prefix (e.g. "Bearer")
 			cred := strings.SplitN(payload.Token, " ", 2)[1]
@@ -992,6 +1007,7 @@ func marshalDatasetsserviceDatasetToDatasetResponse(v *datasetsservice.Dataset) 
 		LikedPerPost:     v.LikedPerPost,
 		CommentedPerPost: v.CommentedPerPost,
 		PhoneCode:        v.PhoneCode,
+		Type:             int(v.Type),
 	}
 	if v.Bloggers != nil {
 		res.Bloggers = make([]*BloggerResponse, len(v.Bloggers))

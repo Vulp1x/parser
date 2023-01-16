@@ -45,6 +45,17 @@ CREATE TYPE public.blogger_status AS ENUM (
 
 
 --
+-- Name: dataset_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.dataset_type AS ENUM (
+    'followers',
+    'phone_numbers',
+    'likes_and_comments'
+);
+
+
+--
 -- Name: pgqueue_status; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -121,7 +132,8 @@ CREATE TABLE public.datasets (
     deleted_at timestamp with time zone,
     posts_per_blogger integer DEFAULT 0 NOT NULL,
     liked_per_post integer DEFAULT 0 NOT NULL,
-    commented_per_post integer DEFAULT 0 NOT NULL
+    commented_per_post integer DEFAULT 0 NOT NULL,
+    type public.dataset_type DEFAULT 'likes_and_comments'::public.dataset_type NOT NULL
 );
 
 

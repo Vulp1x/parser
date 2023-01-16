@@ -41,7 +41,9 @@ var _ = Service("datasets_service", func() {
 				Description("JWT used for authentication")
 			})
 
-			Required("token")
+			Token("type", DatasetType)
+
+			Required("token", "type")
 		})
 
 		Result(String, func() {

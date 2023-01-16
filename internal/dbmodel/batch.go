@@ -19,8 +19,8 @@ insert into bloggers (dataset_id, username, user_id, followers_count, is_initial
                       public_phone_number, public_phone_country_code, city_name, public_email, status)
 values ($1, $2, $3, $4, false, now(), $5, $6, $7, $8, $9, $10, $11, $12, $13, 'info_saved')
 ON CONFLICT (username, dataset_id) DO UPDATE SET parsed_at       = excluded.parsed_at,
-                                                followers_count = excluded.followers_count,
-                                                followings_count= excluded.followings_count
+                                                 followers_count = excluded.followers_count,
+                                                 followings_count= excluded.followings_count
 `
 
 type SaveBloggersBatchResults struct {

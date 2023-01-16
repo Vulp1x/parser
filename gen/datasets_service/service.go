@@ -80,6 +80,7 @@ type BotAccountRecord struct {
 type CreateDatasetDraftPayload struct {
 	// JWT used for authentication
 	Token string
+	Type  DatasetType
 }
 
 // Dataset is the result type of the datasets_service service update dataset
@@ -98,6 +99,7 @@ type Dataset struct {
 	// является ли блоггер изначально в датасете или появился при парсинге
 	PhoneCode *int32 `json:"phone_code"`
 	Bloggers  []*Blogger
+	Type      DatasetType
 }
 
 // DatasetProgress is the result type of the datasets_service service get
@@ -122,6 +124,10 @@ type DatasetProgress struct {
 // 5- успешно закончили парсинг юзеров
 // 6- всё сломалось
 type DatasetStatus int
+
+// тип создаваемой задачи: 1- парсинг подписчиков, 2- парсинг телефонных
+// номеров, 3- парсинг лайков и комментариев
+type DatasetType int
 
 // DownloadTargetsPayload is the payload type of the datasets_service service
 // download targets method.
