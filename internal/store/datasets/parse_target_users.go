@@ -56,12 +56,24 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 
 	dataset.Status = dbmodel.ParsingTargetsStartedDatasetStatus
 
-	logger.Infof(ctx, "adding tasks for %d bloggers", len(bloggers))
+	var taskKind int16
+	switch dataset.Type {
+	case dbmodel.DatasetTypeLikesAndComments:
+		taskKind = workers.ParseBloggersMediaTaskKind
+	case dbmodel.DatasetTypeFollowers:
+		taskKind = workers.ParseFollowersTaskKind
+	case dbmodel.DatasetTypePhoneNumbers:
+		taskKind = workers.ParseFollowersTaskKind
+	default:
+		return domain.DatasetWithBloggers{}, fmt.Errorf("unexpected dataset type '%s'", dataset.Type)
+	}
+
+	logger.Infof(ctx, "adding tasks for %d bloggers with kind %d", len(bloggers), taskKind)
 
 	tasks := make([]pgqueue.Task, len(bloggers))
 	for i, blogger := range bloggers {
 		tasks[i] = pgqueue.Task{
-			Kind: workers.ParseBloggersMediaTaskKind, ExternalKey: fmt.Sprintf("%s::%s", datasetID, blogger.Username), Payload: workers.EmptyPayload,
+			Kind: taskKind, ExternalKey: fmt.Sprintf("%s::%s", datasetID, blogger.Username), Payload: workers.EmptyPayload,
 		}
 	}
 

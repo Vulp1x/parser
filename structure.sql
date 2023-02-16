@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.5 (Homebrew)
--- Dumped by pg_dump version 14.5
+-- Dumped from database version 14.6 (Homebrew)
+-- Dumped by pg_dump version 15.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -15,6 +15,13 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
 
 --
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
@@ -85,16 +92,9 @@ CREATE TABLE public.bloggers (
     parsed_at timestamp without time zone,
     updated_at timestamp without time zone,
     is_correct boolean DEFAULT false NOT NULL,
+    status public.blogger_status DEFAULT 'new'::public.blogger_status NOT NULL,
     is_private boolean DEFAULT false NOT NULL,
-    is_verified boolean DEFAULT false NOT NULL,
-    is_business boolean DEFAULT false NOT NULL,
-    followings_count integer DEFAULT '-1'::integer NOT NULL,
-    contact_phone_number text,
-    public_phone_number text,
-    public_phone_country_code text,
-    city_name text,
-    public_email text,
-    status public.blogger_status DEFAULT 'new'::public.blogger_status NOT NULL
+    is_verified boolean DEFAULT false NOT NULL
 );
 
 
@@ -133,7 +133,42 @@ CREATE TABLE public.datasets (
     posts_per_blogger integer DEFAULT 0 NOT NULL,
     liked_per_post integer DEFAULT 0 NOT NULL,
     commented_per_post integer DEFAULT 0 NOT NULL,
-    type public.dataset_type DEFAULT 'likes_and_comments'::public.dataset_type NOT NULL
+    type public.dataset_type DEFAULT 'likes_and_comments'::public.dataset_type NOT NULL,
+    followers_count integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- Name: full_targets; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.full_targets (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    dataset_id uuid NOT NULL,
+    parsed_at timestamp without time zone DEFAULT now() NOT NULL,
+    username text NOT NULL,
+    inst_pk bigint NOT NULL,
+    full_name text NOT NULL,
+    is_private boolean NOT NULL,
+    is_verified boolean NOT NULL,
+    is_business boolean NOT NULL,
+    is_potential_business boolean NOT NULL,
+    has_anonymous_profile_picture boolean NOT NULL,
+    biography text NOT NULL,
+    external_url text NOT NULL,
+    media_count integer NOT NULL,
+    follower_count integer NOT NULL,
+    following_count integer NOT NULL,
+    category text NOT NULL,
+    city_name text NOT NULL,
+    contact_phone_number text NOT NULL,
+    latitude double precision NOT NULL,
+    longitude double precision NOT NULL,
+    public_email text NOT NULL,
+    public_phone_country_code text NOT NULL,
+    public_phone_number text NOT NULL,
+    bio_links jsonb NOT NULL,
+    whatsapp_number text NOT NULL
 );
 
 
@@ -269,6 +304,14 @@ ALTER TABLE ONLY public.datasets
 
 
 --
+-- Name: full_targets full_targets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.full_targets
+    ADD CONSTRAINT full_targets_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: medias medias_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -297,6 +340,13 @@ ALTER TABLE ONLY public.targets
 --
 
 CREATE UNIQUE INDEX bots_session_id_idx ON public.bots USING btree (session_id);
+
+
+--
+-- Name: full_targets_uniq_user_per_dataset; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX full_targets_uniq_user_per_dataset ON public.full_targets USING btree (inst_pk, dataset_id);
 
 
 --
@@ -347,6 +397,14 @@ CREATE UNIQUE INDEX uniq_bloggers_per_dataset ON public.bloggers USING btree (us
 
 ALTER TABLE ONLY public.bloggers
     ADD CONSTRAINT bloggers_dataset_id_fkey FOREIGN KEY (dataset_id) REFERENCES public.datasets(id);
+
+
+--
+-- Name: full_targets full_targets_dataset_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.full_targets
+    ADD CONSTRAINT full_targets_dataset_id_fkey FOREIGN KEY (dataset_id) REFERENCES public.datasets(id);
 
 
 --

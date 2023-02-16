@@ -69,7 +69,7 @@ func (q *Queries) DeleteBloggersPerDataset(ctx context.Context, datasetID uuid.U
 }
 
 const findBloggersForDataset = `-- name: FindBloggersForDataset :many
-select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email, status
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, status, is_private, is_verified
 from bloggers
 where dataset_id = $1
 `
@@ -94,16 +94,9 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 			&i.ParsedAt,
 			&i.UpdatedAt,
 			&i.IsCorrect,
+			&i.Status,
 			&i.IsPrivate,
 			&i.IsVerified,
-			&i.IsBusiness,
-			&i.FollowingsCount,
-			&i.ContactPhoneNumber,
-			&i.PublicPhoneNumber,
-			&i.PublicPhoneCountryCode,
-			&i.CityName,
-			&i.PublicEmail,
-			&i.Status,
 		); err != nil {
 			return nil, err
 		}
@@ -116,7 +109,7 @@ func (q *Queries) FindBloggersForDataset(ctx context.Context, datasetID uuid.UUI
 }
 
 const findBloggersForParsing = `-- name: FindBloggersForParsing :many
-select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email, status
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, status, is_private, is_verified
 from bloggers
 where dataset_id = $1
 `
@@ -141,16 +134,121 @@ func (q *Queries) FindBloggersForParsing(ctx context.Context, datasetID uuid.UUI
 			&i.ParsedAt,
 			&i.UpdatedAt,
 			&i.IsCorrect,
+			&i.Status,
+			&i.IsPrivate,
+			&i.IsVerified,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const findFullTargets = `-- name: FindFullTargets :many
+select id, dataset_id, parsed_at, username, inst_pk, full_name, is_private, is_verified, is_business, is_potential_business, has_anonymous_profile_picture, biography, external_url, media_count, follower_count, following_count, category, city_name, contact_phone_number, latitude, longitude, public_email, public_phone_country_code, public_phone_number, bio_links, whatsapp_number
+from full_targets
+where dataset_id = $1
+`
+
+func (q *Queries) FindFullTargets(ctx context.Context, datasetID uuid.UUID) ([]FullTarget, error) {
+	rows, err := q.db.Query(ctx, findFullTargets, datasetID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []FullTarget
+	for rows.Next() {
+		var i FullTarget
+		if err := rows.Scan(
+			&i.ID,
+			&i.DatasetID,
+			&i.ParsedAt,
+			&i.Username,
+			&i.InstPk,
+			&i.FullName,
 			&i.IsPrivate,
 			&i.IsVerified,
 			&i.IsBusiness,
-			&i.FollowingsCount,
-			&i.ContactPhoneNumber,
-			&i.PublicPhoneNumber,
-			&i.PublicPhoneCountryCode,
+			&i.IsPotentialBusiness,
+			&i.HasAnonymousProfilePicture,
+			&i.Biography,
+			&i.ExternalUrl,
+			&i.MediaCount,
+			&i.FollowerCount,
+			&i.FollowingCount,
+			&i.Category,
 			&i.CityName,
+			&i.ContactPhoneNumber,
+			&i.Latitude,
+			&i.Longitude,
 			&i.PublicEmail,
-			&i.Status,
+			&i.PublicPhoneCountryCode,
+			&i.PublicPhoneNumber,
+			&i.BioLinks,
+			&i.WhatsappNumber,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const findFullTargetsWithCode = `-- name: FindFullTargetsWithCode :many
+select id, dataset_id, parsed_at, username, inst_pk, full_name, is_private, is_verified, is_business, is_potential_business, has_anonymous_profile_picture, biography, external_url, media_count, follower_count, following_count, category, city_name, contact_phone_number, latitude, longitude, public_email, public_phone_country_code, public_phone_number, bio_links, whatsapp_number
+from full_targets
+where dataset_id = $1
+  and public_phone_country_code = $2
+`
+
+type FindFullTargetsWithCodeParams struct {
+	DatasetID              uuid.UUID `json:"dataset_id"`
+	PublicPhoneCountryCode string    `json:"public_phone_country_code"`
+}
+
+func (q *Queries) FindFullTargetsWithCode(ctx context.Context, arg FindFullTargetsWithCodeParams) ([]FullTarget, error) {
+	rows, err := q.db.Query(ctx, findFullTargetsWithCode, arg.DatasetID, arg.PublicPhoneCountryCode)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []FullTarget
+	for rows.Next() {
+		var i FullTarget
+		if err := rows.Scan(
+			&i.ID,
+			&i.DatasetID,
+			&i.ParsedAt,
+			&i.Username,
+			&i.InstPk,
+			&i.FullName,
+			&i.IsPrivate,
+			&i.IsVerified,
+			&i.IsBusiness,
+			&i.IsPotentialBusiness,
+			&i.HasAnonymousProfilePicture,
+			&i.Biography,
+			&i.ExternalUrl,
+			&i.MediaCount,
+			&i.FollowerCount,
+			&i.FollowingCount,
+			&i.Category,
+			&i.CityName,
+			&i.ContactPhoneNumber,
+			&i.Latitude,
+			&i.Longitude,
+			&i.PublicEmail,
+			&i.PublicPhoneCountryCode,
+			&i.PublicPhoneNumber,
+			&i.BioLinks,
+			&i.WhatsappNumber,
 		); err != nil {
 			return nil, err
 		}
@@ -163,7 +261,7 @@ func (q *Queries) FindBloggersForParsing(ctx context.Context, datasetID uuid.UUI
 }
 
 const findInitialBloggersForDataset = `-- name: FindInitialBloggersForDataset :many
-select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email, status
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, status, is_private, is_verified
 from bloggers
 where dataset_id = $1
   AND is_initial = true
@@ -189,16 +287,9 @@ func (q *Queries) FindInitialBloggersForDataset(ctx context.Context, datasetID u
 			&i.ParsedAt,
 			&i.UpdatedAt,
 			&i.IsCorrect,
+			&i.Status,
 			&i.IsPrivate,
 			&i.IsVerified,
-			&i.IsBusiness,
-			&i.FollowingsCount,
-			&i.ContactPhoneNumber,
-			&i.PublicPhoneNumber,
-			&i.PublicPhoneCountryCode,
-			&i.CityName,
-			&i.PublicEmail,
-			&i.Status,
 		); err != nil {
 			return nil, err
 		}
@@ -238,7 +329,7 @@ func (q *Queries) FindMediaByID(ctx context.Context, id string) (Media, error) {
 }
 
 const findNotReadyBloggers = `-- name: FindNotReadyBloggers :many
-select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, is_private, is_verified, is_business, followings_count, contact_phone_number, public_phone_number, public_phone_country_code, city_name, public_email, status
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, status, is_private, is_verified
 from bloggers
 where status = 'new'
   and dataset_id = $1
@@ -264,16 +355,9 @@ func (q *Queries) FindNotReadyBloggers(ctx context.Context, datasetID uuid.UUID)
 			&i.ParsedAt,
 			&i.UpdatedAt,
 			&i.IsCorrect,
+			&i.Status,
 			&i.IsPrivate,
 			&i.IsVerified,
-			&i.IsBusiness,
-			&i.FollowingsCount,
-			&i.ContactPhoneNumber,
-			&i.PublicPhoneNumber,
-			&i.PublicPhoneCountryCode,
-			&i.CityName,
-			&i.PublicEmail,
-			&i.Status,
 		); err != nil {
 			return nil, err
 		}
@@ -324,7 +408,7 @@ func (q *Queries) FindTargetsForDataset(ctx context.Context, datasetID uuid.UUID
 }
 
 const findUserDatasets = `-- name: FindUserDatasets :many
-select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post, type
+select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post, type, followers_count
 from datasets
 where manager_id = $1
 `
@@ -353,6 +437,7 @@ func (q *Queries) FindUserDatasets(ctx context.Context, managerID uuid.UUID) ([]
 			&i.LikedPerPost,
 			&i.CommentedPerPost,
 			&i.Type,
+			&i.FollowersCount,
 		); err != nil {
 			return nil, err
 		}
@@ -365,7 +450,7 @@ func (q *Queries) FindUserDatasets(ctx context.Context, managerID uuid.UUID) ([]
 }
 
 const getDatasetByID = `-- name: GetDatasetByID :one
-select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post, type
+select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post, type, followers_count
 from datasets
 where id = $1
 `
@@ -388,14 +473,18 @@ func (q *Queries) GetDatasetByID(ctx context.Context, id uuid.UUID) (Dataset, er
 		&i.LikedPerPost,
 		&i.CommentedPerPost,
 		&i.Type,
+		&i.FollowersCount,
 	)
 	return i, err
 }
 
 const getParsingProgress = `-- name: GetParsingProgress :one
-select (select count(*) from bloggers where bloggers.dataset_id = $1 and status = 3) as parsed_bloggers_count,
-       (select count(*) from bloggers where bloggers.dataset_id = $1)                as total_bloggers,
-       (select count(*) from targets where dataset_id = $1)                          as targets_saved_coun
+select (select count(*)
+        from bloggers
+        where bloggers.dataset_id = $1
+          and status = 'medias_found')                                         as parsed_bloggers_count,
+       (select count(*) from bloggers where bloggers.dataset_id = $1) as total_bloggers,
+       (select count(*) from targets where dataset_id = $1)           as targets_saved_coun
 `
 
 type GetParsingProgressRow struct {
@@ -507,6 +596,97 @@ func (q *Queries) SaveBots(ctx context.Context, arg SaveBotsParams) (int64, erro
 	return result.RowsAffected(), nil
 }
 
+const saveFakeMedia = `-- name: SaveFakeMedia :exec
+insert into medias(pk, id, dataset_id, media_type, code, has_more_comments, caption, width, height, like_count,
+                   taken_at, created_at, updated_at)
+values ($1, $1::text, $2, -1, '', false, $3, 0, 0, -1, now(), now(), now())
+ON CONFLICT (pk, dataset_id) DO UPDATE SET has_more_comments=excluded.has_more_comments,
+                                           caption=excluded.caption,
+                                           like_count=excluded.like_count,
+                                           updated_at=now()
+`
+
+type SaveFakeMediaParams struct {
+	Pk        int64     `json:"pk"`
+	DatasetID uuid.UUID `json:"dataset_id"`
+	Caption   string    `json:"caption"`
+}
+
+func (q *Queries) SaveFakeMedia(ctx context.Context, arg SaveFakeMediaParams) error {
+	_, err := q.db.Exec(ctx, saveFakeMedia, arg.Pk, arg.DatasetID, arg.Caption)
+	return err
+}
+
+const saveFullTarget = `-- name: SaveFullTarget :exec
+insert into full_targets(dataset_id, username, inst_pk, full_name, is_private, is_verified, is_business,
+                         is_potential_business, has_anonymous_profile_picture, biography, external_url, media_count,
+                         follower_count, following_count, category, city_name, contact_phone_number, latitude,
+                         longitude, public_email, public_phone_country_code, public_phone_number, bio_links,
+                         whatsapp_number)
+VALUES ($1, $2, $3, $4, $5, $6, $7,
+        $8, $9, $10, $11, $12,
+        $13, $14, $15, $16, $17, $18,
+        $19, $20, $21, $22, $23,
+        $24)
+`
+
+type SaveFullTargetParams struct {
+	DatasetID                  uuid.UUID `json:"dataset_id"`
+	Username                   string    `json:"username"`
+	InstPk                     int64     `json:"inst_pk"`
+	FullName                   string    `json:"full_name"`
+	IsPrivate                  bool      `json:"is_private"`
+	IsVerified                 bool      `json:"is_verified"`
+	IsBusiness                 bool      `json:"is_business"`
+	IsPotentialBusiness        bool      `json:"is_potential_business"`
+	HasAnonymousProfilePicture bool      `json:"has_anonymous_profile_picture"`
+	Biography                  string    `json:"biography"`
+	ExternalUrl                string    `json:"external_url"`
+	MediaCount                 int32     `json:"media_count"`
+	FollowerCount              int32     `json:"follower_count"`
+	FollowingCount             int32     `json:"following_count"`
+	Category                   string    `json:"category"`
+	CityName                   string    `json:"city_name"`
+	ContactPhoneNumber         string    `json:"contact_phone_number"`
+	Latitude                   float64   `json:"latitude"`
+	Longitude                  float64   `json:"longitude"`
+	PublicEmail                string    `json:"public_email"`
+	PublicPhoneCountryCode     string    `json:"public_phone_country_code"`
+	PublicPhoneNumber          string    `json:"public_phone_number"`
+	BioLinks                   string    `json:"bio_links"`
+	WhatsappNumber             string    `json:"whatsapp_number"`
+}
+
+func (q *Queries) SaveFullTarget(ctx context.Context, arg SaveFullTargetParams) error {
+	_, err := q.db.Exec(ctx, saveFullTarget,
+		arg.DatasetID,
+		arg.Username,
+		arg.InstPk,
+		arg.FullName,
+		arg.IsPrivate,
+		arg.IsVerified,
+		arg.IsBusiness,
+		arg.IsPotentialBusiness,
+		arg.HasAnonymousProfilePicture,
+		arg.Biography,
+		arg.ExternalUrl,
+		arg.MediaCount,
+		arg.FollowerCount,
+		arg.FollowingCount,
+		arg.Category,
+		arg.CityName,
+		arg.ContactPhoneNumber,
+		arg.Latitude,
+		arg.Longitude,
+		arg.PublicEmail,
+		arg.PublicPhoneCountryCode,
+		arg.PublicPhoneNumber,
+		arg.BioLinks,
+		arg.WhatsappNumber,
+	)
+	return err
+}
+
 const saveTargetUsers = `-- name: SaveTargetUsers :execrows
 insert into targets (username, user_id, full_name, is_private, is_verified, media_pk, dataset_id)
     (select unnest($1::text[]),
@@ -591,55 +771,31 @@ func (q *Queries) UnlockBot(ctx context.Context, id uuid.UUID) error {
 
 const updateBlogger = `-- name: UpdateBlogger :exec
 update bloggers
-set user_id                   = $1,
-    followers_count           = $2,
-    parsed_at                 = $3,
-    is_correct                = $4,
-    is_private                = $5,
-    is_verified               = $6,
-    is_business               = $7,
-    followings_count          = $8,
-    contact_phone_number      = $9,
-    public_phone_number       = $10,
-    public_phone_country_code = $11,
-    city_name                 = $12,
-    public_email              = $13,
-    status                    = 'info_saved'
-where id = $14
+set user_id     = $1,
+    parsed_at   = $2,
+    is_correct  = $3,
+    is_private  = $4,
+    is_verified = $5,
+    status      = 'info_saved'
+where id = $6
 `
 
 type UpdateBloggerParams struct {
-	UserID                 int64      `json:"user_id"`
-	FollowersCount         int64      `json:"followers_count"`
-	ParsedAt               *time.Time `json:"parsed_at"`
-	IsCorrect              bool       `json:"is_correct"`
-	IsPrivate              bool       `json:"is_private"`
-	IsVerified             bool       `json:"is_verified"`
-	IsBusiness             bool       `json:"is_business"`
-	FollowingsCount        int32      `json:"followings_count"`
-	ContactPhoneNumber     *string    `json:"contact_phone_number"`
-	PublicPhoneNumber      *string    `json:"public_phone_number"`
-	PublicPhoneCountryCode *string    `json:"public_phone_country_code"`
-	CityName               *string    `json:"city_name"`
-	PublicEmail            *string    `json:"public_email"`
-	ID                     uuid.UUID  `json:"id"`
+	UserID     int64      `json:"user_id"`
+	ParsedAt   *time.Time `json:"parsed_at"`
+	IsCorrect  bool       `json:"is_correct"`
+	IsPrivate  bool       `json:"is_private"`
+	IsVerified bool       `json:"is_verified"`
+	ID         uuid.UUID  `json:"id"`
 }
 
 func (q *Queries) UpdateBlogger(ctx context.Context, arg UpdateBloggerParams) error {
 	_, err := q.db.Exec(ctx, updateBlogger,
 		arg.UserID,
-		arg.FollowersCount,
 		arg.ParsedAt,
 		arg.IsCorrect,
 		arg.IsPrivate,
 		arg.IsVerified,
-		arg.IsBusiness,
-		arg.FollowingsCount,
-		arg.ContactPhoneNumber,
-		arg.PublicPhoneNumber,
-		arg.PublicPhoneCountryCode,
-		arg.CityName,
-		arg.PublicEmail,
 		arg.ID,
 	)
 	return err
@@ -654,7 +810,7 @@ set phone_code         = $1,
     commented_per_post = $5,
     updated_at         = now()
 where id = $6
-returning id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post, type
+returning id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post, type, followers_count
 `
 
 type UpdateDatasetParams struct {
@@ -691,6 +847,7 @@ func (q *Queries) UpdateDataset(ctx context.Context, arg UpdateDatasetParams) (D
 		&i.LikedPerPost,
 		&i.CommentedPerPost,
 		&i.Type,
+		&i.FollowersCount,
 	)
 	return i, err
 }

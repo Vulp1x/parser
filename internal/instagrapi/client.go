@@ -62,7 +62,7 @@ func (c *Client) CheckBot(ctx context.Context, sessionID string) error {
 }
 
 // FindSimilarBloggers находит похожих блогеров, первый аккаунт - блогер, для которого искали похожих
-func (c Client) FindSimilarBloggers(ctx context.Context, sessionID, bloggerUserName string) (domain.InstUsers, error) {
+func (c Client) FindSimilarBloggers(ctx context.Context, sessionID, bloggerUserName string) (domain.FullUsers, error) {
 	startedAt := time.Now()
 	val := map[string][]string{"sessionid": {sessionID}, "username": {bloggerUserName}}
 
@@ -89,7 +89,7 @@ func (c Client) FindSimilarBloggers(ctx context.Context, sessionID, bloggerUserN
 		return nil, fmt.Errorf("got %d response code, expected 200", resp.StatusCode)
 	}
 
-	var users []domain.InstUser
+	var users []domain.FullUser
 	err = json.Unmarshal(respBytes, &users)
 	if err != nil {
 		return nil, fmt.Errorf("failed to unmarshal users: %v", err)

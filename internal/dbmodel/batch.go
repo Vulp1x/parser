@@ -14,13 +14,9 @@ import (
 )
 
 const saveBloggers = `-- name: SaveBloggers :batchexec
-insert into bloggers (dataset_id, username, user_id, followers_count, is_initial, parsed_at,
-                      is_private, is_verified, is_business, followings_count, contact_phone_number,
-                      public_phone_number, public_phone_country_code, city_name, public_email, status)
-values ($1, $2, $3, $4, false, now(), $5, $6, $7, $8, $9, $10, $11, $12, $13, 'info_saved')
-ON CONFLICT (username, dataset_id) DO UPDATE SET parsed_at       = excluded.parsed_at,
-                                                 followers_count = excluded.followers_count,
-                                                 followings_count= excluded.followings_count
+insert into bloggers (dataset_id, username, user_id, is_initial, parsed_at, is_private, is_verified, status)
+values ($1, $2, $3, false, now(), $4, $5, 'info_saved')
+ON CONFLICT (username, dataset_id) DO UPDATE SET parsed_at = excluded.parsed_at
 `
 
 type SaveBloggersBatchResults struct {
@@ -30,19 +26,11 @@ type SaveBloggersBatchResults struct {
 }
 
 type SaveBloggersParams struct {
-	DatasetID              uuid.UUID `json:"dataset_id"`
-	Username               string    `json:"username"`
-	UserID                 int64     `json:"user_id"`
-	FollowersCount         int64     `json:"followers_count"`
-	IsPrivate              bool      `json:"is_private"`
-	IsVerified             bool      `json:"is_verified"`
-	IsBusiness             bool      `json:"is_business"`
-	FollowingsCount        int32     `json:"followings_count"`
-	ContactPhoneNumber     *string   `json:"contact_phone_number"`
-	PublicPhoneNumber      *string   `json:"public_phone_number"`
-	PublicPhoneCountryCode *string   `json:"public_phone_country_code"`
-	CityName               *string   `json:"city_name"`
-	PublicEmail            *string   `json:"public_email"`
+	DatasetID  uuid.UUID `json:"dataset_id"`
+	Username   string    `json:"username"`
+	UserID     int64     `json:"user_id"`
+	IsPrivate  bool      `json:"is_private"`
+	IsVerified bool      `json:"is_verified"`
 }
 
 func (q *Queries) SaveBloggers(ctx context.Context, arg []SaveBloggersParams) *SaveBloggersBatchResults {
@@ -52,16 +40,8 @@ func (q *Queries) SaveBloggers(ctx context.Context, arg []SaveBloggersParams) *S
 			a.DatasetID,
 			a.Username,
 			a.UserID,
-			a.FollowersCount,
 			a.IsPrivate,
 			a.IsVerified,
-			a.IsBusiness,
-			a.FollowingsCount,
-			a.ContactPhoneNumber,
-			a.PublicPhoneNumber,
-			a.PublicPhoneCountryCode,
-			a.CityName,
-			a.PublicEmail,
 		}
 		batch.Queue(saveBloggers, vals...)
 	}

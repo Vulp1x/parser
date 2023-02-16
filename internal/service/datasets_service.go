@@ -23,7 +23,7 @@ type datasetsStore interface {
 	FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
 	ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (domain.DatasetWithBloggers, error)
 	ParsingProgress(ctx context.Context, datasetID uuid.UUID) (domain.ParsingProgress, error)
-	DownloadTargets(ctx context.Context, datasetID uuid.UUID) (domain.Targets, error)
+	DownloadTargets(ctx context.Context, datasetID uuid.UUID, format int) ([]string, error)
 }
 
 // datasets_service service example implementation.
@@ -255,11 +255,11 @@ func (s *datasetsServicesrvc) GetProgress(ctx context.Context, p *datasetsservic
 			newBloggersCount++
 		}
 
-		if dataset.Dataset.PhoneCode != nil &&
-			blogger.PublicPhoneCountryCode != nil &&
-			fmt.Sprintf("%d", dataset.Dataset.PhoneCode) == *blogger.PublicPhoneCountryCode {
-			filteredBloggersCount++
-		}
+		// if dataset.Dataset.PhoneCode != nil &&
+		// 	blogger.PublicPhoneCountryCode != nil &&
+		// 	fmt.Sprintf("%d", dataset.Dataset.PhoneCode) == *blogger.PublicPhoneCountryCode {
+		// 	filteredBloggersCount++
+		// }
 	}
 
 	return &datasetsservice.DatasetProgress{
@@ -304,7 +304,7 @@ func (s *datasetsServicesrvc) DownloadTargets(ctx context.Context, p *datasetsse
 		return nil, datasetsservice.BadRequest(err.Error())
 	}
 
-	targets, err := s.store.DownloadTargets(ctx, datasetID)
+	formattedTargets, err := s.store.DownloadTargets(ctx, datasetID, p.Format)
 	if err != nil {
 		logger.Errorf(ctx, "failed to find download targets: %v", err)
 		if errors.Is(err, datasets.ErrDatasetNotFound) {
@@ -314,7 +314,7 @@ func (s *datasetsServicesrvc) DownloadTargets(ctx context.Context, p *datasetsse
 		return nil, internalErr(err)
 	}
 
-	return targets.ToProto(p.Format), nil
+	return formattedTargets, nil
 }
 
 func internalErr(err error) datasetsservice.InternalError {

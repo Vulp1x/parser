@@ -147,26 +147,19 @@ func (ns NullPgqueueStatus) Value() (driver.Value, error) {
 }
 
 type Blogger struct {
-	ID                     uuid.UUID     `json:"id"`
-	DatasetID              uuid.UUID     `json:"dataset_id"`
-	Username               string        `json:"username"`
-	UserID                 int64         `json:"user_id"`
-	FollowersCount         int64         `json:"followers_count"`
-	IsInitial              bool          `json:"is_initial"`
-	CreatedAt              time.Time     `json:"created_at"`
-	ParsedAt               *time.Time    `json:"parsed_at"`
-	UpdatedAt              *time.Time    `json:"updated_at"`
-	IsCorrect              bool          `json:"is_correct"`
-	IsPrivate              bool          `json:"is_private"`
-	IsVerified             bool          `json:"is_verified"`
-	IsBusiness             bool          `json:"is_business"`
-	FollowingsCount        int32         `json:"followings_count"`
-	ContactPhoneNumber     *string       `json:"contact_phone_number"`
-	PublicPhoneNumber      *string       `json:"public_phone_number"`
-	PublicPhoneCountryCode *string       `json:"public_phone_country_code"`
-	CityName               *string       `json:"city_name"`
-	PublicEmail            *string       `json:"public_email"`
-	Status                 BloggerStatus `json:"status"`
+	ID             uuid.UUID     `json:"id"`
+	DatasetID      uuid.UUID     `json:"dataset_id"`
+	Username       string        `json:"username"`
+	UserID         int64         `json:"user_id"`
+	FollowersCount int64         `json:"followers_count"`
+	IsInitial      bool          `json:"is_initial"`
+	CreatedAt      time.Time     `json:"created_at"`
+	ParsedAt       *time.Time    `json:"parsed_at"`
+	UpdatedAt      *time.Time    `json:"updated_at"`
+	IsCorrect      bool          `json:"is_correct"`
+	Status         BloggerStatus `json:"status"`
+	IsPrivate      bool          `json:"is_private"`
+	IsVerified     bool          `json:"is_verified"`
 }
 
 type Bot struct {
@@ -196,6 +189,36 @@ type Dataset struct {
 	LikedPerPost     int32         `json:"liked_per_post"`
 	CommentedPerPost int32         `json:"commented_per_post"`
 	Type             DatasetType   `json:"type"`
+	FollowersCount   int32         `json:"followers_count"`
+}
+
+type FullTarget struct {
+	ID                         uuid.UUID `json:"id"`
+	DatasetID                  uuid.UUID `json:"dataset_id"`
+	ParsedAt                   time.Time `json:"parsed_at"`
+	Username                   string    `json:"username"`
+	InstPk                     int64     `json:"inst_pk"`
+	FullName                   string    `json:"full_name"`
+	IsPrivate                  bool      `json:"is_private"`
+	IsVerified                 bool      `json:"is_verified"`
+	IsBusiness                 bool      `json:"is_business"`
+	IsPotentialBusiness        bool      `json:"is_potential_business"`
+	HasAnonymousProfilePicture bool      `json:"has_anonymous_profile_picture"`
+	Biography                  string    `json:"biography"`
+	ExternalUrl                string    `json:"external_url"`
+	MediaCount                 int32     `json:"media_count"`
+	FollowerCount              int32     `json:"follower_count"`
+	FollowingCount             int32     `json:"following_count"`
+	Category                   string    `json:"category"`
+	CityName                   string    `json:"city_name"`
+	ContactPhoneNumber         string    `json:"contact_phone_number"`
+	Latitude                   float64   `json:"latitude"`
+	Longitude                  float64   `json:"longitude"`
+	PublicEmail                string    `json:"public_email"`
+	PublicPhoneCountryCode     string    `json:"public_phone_country_code"`
+	PublicPhoneNumber          string    `json:"public_phone_number"`
+	BioLinks                   string    `json:"bio_links"`
+	WhatsappNumber             string    `json:"whatsapp_number"`
 }
 
 type Media struct {

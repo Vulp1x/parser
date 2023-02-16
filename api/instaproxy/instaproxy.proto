@@ -5,17 +5,90 @@ import "google/protobuf/any.proto";
 option go_package = "github.com/inst-api/parser/internal/pb/instaproxy;instaproxy";
 
 service InstaProxy {
+  // parser:
   // сохраняем ботов
   rpc SaveBots (SaveBotsRequest) returns (SaveBotsResponse);
 
   rpc FindSimilarBloggers (SimilarBloggersRequest) returns (SimilarBloggersResponse);
 
   rpc ParseMedia(ParseMediaRequest) returns (ParseMediaResponse);
+  rpc ParseFollowers(ParseFollowersRequest) returns (ParsingResponse);
+  rpc GetFullUser(GetUserRequest) returns (FullUser);
+
 
   // получить список медиа для блогера
   rpc GetBloggerMedias(GetBloggerMediasRequest) returns (GetBloggerMediasResponse);
+
+  //  poster:
+
+  // выложить пост с фотографией
+  rpc PostPicture(PostPictureRequest) returns (PostPictureResponse);
+
+  rpc UpdatePicture(UpdatePostRequest) returns (UpdatePostResponse);
+
+  // перед тем как менять фотки возможно стоит открывать профиль?
+  rpc OpenProfile (OpenProfileRequest) returns (OpenProfileResponse);
+
+  rpc FollowUsers(FollowUsersRequest) returns (FollowUsersResponse);
 }
 
+message ParseFollowersRequest{
+  string user_name = 1;
+  //  количество подписчиков, которое необходимо спарсить
+  int32 followers_count = 2;
+}
+
+message ParsingResponse {
+  repeated UserShort targets = 1;
+  FullUser blogger = 2;
+}
+
+message OpenProfileRequest{
+  int64 bot_id = 1 ;
+}
+message  OpenProfileResponse {
+  repeated Media medias = 1;
+  UserSuperShort user = 2;
+}
+
+message FollowUsersRequest{
+  repeated string usernames = 1;
+  int64 bot_id = 2;
+}
+
+message FollowUsersResponse{
+  int32  succeeded_count = 1;
+}
+
+message PostPictureRequest{
+  bytes photo = 1;
+  // идентификатор бота
+  int64 user_id = 2;
+  string  caption = 3;
+  repeated int64 user_tags = 4;
+  optional Proxy cheap_proxy = 5;
+  int32 update_photo_delay_seconds = 6;
+}
+message PostPictureResponse{
+  // "id": "3026763766533203939_57291273439",
+  string media_id = 1;
+  // "pk": "3026763766533203939",
+  int64  media_pk = 2;
+}
+
+message UpdatePostRequest{
+  // идентификатор бота
+  int64 user_id = 1;
+  string  caption = 2;
+  repeated int64 user_tags = 3;
+  int64 media_pk = 4;
+  int32 feed_position = 5;
+}
+message UpdatePostResponse{
+}
+message GetUserRequest {
+  string username = 1;
+}
 
 message GetBloggerMediasRequest {
   string username = 1;
@@ -32,7 +105,7 @@ message ParseMediaRequest {
   int32 likes_count = 3;
 }
 
-message ParseMediaResponse {
+message  ParseMediaResponse {
   repeated UserShort targets = 1;
 }
 
@@ -195,7 +268,7 @@ message SaveBotsResponse {
 }
 
 message FullUser {
-  message Bio_links {
+  message BioLink {
     uint64 link_id = 1;
     string url = 2;
     string lynx_url = 3;
@@ -210,24 +283,23 @@ message FullUser {
   string username = 2;
   string full_name = 3;
   bool is_private = 4;
-  string pk_id = 5;
-  string profile_pic_url = 6;
-  string profile_pic_id = 7;
-  bool is_verified = 8;
-  bool has_anonymous_profile_picture = 9;
-  uint32 media_count = 10;
-  uint32 follower_count = 11;
-  uint32 following_count = 12;
-  string biography = 16;
-  string external_url = 17;
-  string external_lynx_url = 18;
-  uint32 total_igtv_videos = 22;
-  uint32 usertags_count = 26;
-  bool is_interest_account = 33;
-  bool has_chaining = 34;
-  uint32 mutual_followers_count = 35;
-  string profile_context = 36;
-  bool is_business = 41;
-  uint32 account_type = 43;
-  repeated Bio_links bio_links = 47;
+  bool is_verified = 5;
+  bool is_business = 6;
+  bool is_potential_business = 7;
+  bool has_anonymous_profile_picture = 8;
+  string biography = 9;
+  string external_url = 10;
+  int32 media_count = 11;
+  int32 follower_count = 12;
+  int32 following_count = 13;
+  string category = 14;
+  string city_name = 15;
+  string contact_phone_number = 16;
+  double latitude = 17;
+  double longitude = 18;
+  string public_email = 19;
+  string public_phone_country_code = 20;
+  string  public_phone_number = 21;
+  repeated BioLink bio_links = 22;
+  string whatsapp_number = 23;
 }

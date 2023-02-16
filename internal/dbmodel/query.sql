@@ -112,13 +112,9 @@ set status     = @status,
 where id = @id;
 
 -- name: SaveBloggers :batchexec
-insert into bloggers (dataset_id, username, user_id, followers_count, is_initial, parsed_at,
-                      is_private, is_verified, is_business, followings_count, contact_phone_number,
-                      public_phone_number, public_phone_country_code, city_name, public_email, status)
-values ($1, $2, $3, $4, false, now(), $5, $6, $7, $8, $9, $10, $11, $12, $13, 'info_saved')
-ON CONFLICT (username, dataset_id) DO UPDATE SET parsed_at       = excluded.parsed_at,
-                                                 followers_count = excluded.followers_count,
-                                                 followings_count= excluded.followings_count;
+insert into bloggers (dataset_id, username, user_id, is_initial, parsed_at, is_private, is_verified, status)
+values ($1, $2, $3, false, now(), $4, $5, 'info_saved')
+ON CONFLICT (username, dataset_id) DO UPDATE SET parsed_at = excluded.parsed_at;
 
 -- name: SetBloggerIsParsed :exec
 update bloggers
@@ -128,20 +124,12 @@ where id = @id;
 
 -- name: UpdateBlogger :exec
 update bloggers
-set user_id                   = @user_id,
-    followers_count           = @followers_count,
-    parsed_at                 = @parsed_at,
-    is_correct                = @is_correct,
-    is_private                = @is_private,
-    is_verified               = @is_verified,
-    is_business               = @is_business,
-    followings_count          = @followings_count,
-    contact_phone_number      = @contact_phone_number,
-    public_phone_number       = @public_phone_number,
-    public_phone_country_code = @public_phone_country_code,
-    city_name                 = @city_name,
-    public_email              = @public_email,
-    status                    = 'info_saved'
+set user_id     = @user_id,
+    parsed_at   = @parsed_at,
+    is_correct  = @is_correct,
+    is_private  = @is_private,
+    is_verified = @is_verified,
+    status      = 'info_saved'
 where id = @id;
 
 -- name: MarkBloggerAsParsed :exec
@@ -155,9 +143,12 @@ set status = 'info_saved'
 where id = @id;
 
 -- name: GetParsingProgress :one
-select (select count(*) from bloggers where bloggers.dataset_id = @dataset_id and status = 3) as parsed_bloggers_count,
-       (select count(*) from bloggers where bloggers.dataset_id = @dataset_id)                as total_bloggers,
-       (select count(*) from targets where dataset_id = @dataset_id)                          as targets_saved_coun;
+select (select count(*)
+        from bloggers
+        where bloggers.dataset_id = @dataset_id
+          and status = 'medias_found')                                         as parsed_bloggers_count,
+       (select count(*) from bloggers where bloggers.dataset_id = @dataset_id) as total_bloggers,
+       (select count(*) from targets where dataset_id = @dataset_id)           as targets_saved_coun;
 
 -- name: FindTargetsForDataset :many
 select *
@@ -174,6 +165,15 @@ ON CONFLICT (pk, dataset_id) DO UPDATE SET has_more_comments=excluded.has_more_c
                                            updated_at=now()
 RETURNING *;
 
+-- name: SaveFakeMedia :exec
+insert into medias(pk, id, dataset_id, media_type, code, has_more_comments, caption, width, height, like_count,
+                   taken_at, created_at, updated_at)
+values ($1, $1::text, $2, -1, '', false, $3, 0, 0, -1, now(), now(), now())
+ON CONFLICT (pk, dataset_id) DO UPDATE SET has_more_comments=excluded.has_more_comments,
+                                           caption=excluded.caption,
+                                           like_count=excluded.like_count,
+                                           updated_at=now();
+
 -- name: FindNotReadyBloggers :many
 select *
 from bloggers
@@ -184,3 +184,26 @@ where status = 'new'
 select *
 from medias
 where id = @id;
+
+-- name: SaveFullTarget :exec
+insert into full_targets(dataset_id, username, inst_pk, full_name, is_private, is_verified, is_business,
+                         is_potential_business, has_anonymous_profile_picture, biography, external_url, media_count,
+                         follower_count, following_count, category, city_name, contact_phone_number, latitude,
+                         longitude, public_email, public_phone_country_code, public_phone_number, bio_links,
+                         whatsapp_number)
+VALUES (@dataset_id, @username, @inst_pk, @full_name, @is_private, @is_verified, @is_business,
+        @is_potential_business, @has_anonymous_profile_picture, @biography, @external_url, @media_count,
+        @follower_count, @following_count, @category, @city_name, @contact_phone_number, @latitude,
+        @longitude, @public_email, @public_phone_country_code, @public_phone_number, @bio_links,
+        @whatsapp_number);
+
+-- name: FindFullTargetsWithCode :many
+select *
+from full_targets
+where dataset_id = @dataset_id
+  and public_phone_country_code = @public_phone_country_code;
+
+-- name: FindFullTargets :many
+select *
+from full_targets
+where dataset_id = @dataset_id;

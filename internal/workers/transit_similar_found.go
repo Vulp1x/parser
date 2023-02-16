@@ -7,14 +7,13 @@ import (
 	"github.com/google/uuid"
 	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/domain"
-	"github.com/inst-api/parser/internal/pb/instaproxy"
 	"github.com/inst-api/parser/pkg/logger"
 	"github.com/inst-api/parser/pkg/pgqueue"
 )
 
 type TransitToSimilarFoundHandler struct {
 	dbTxF dbmodel.DBTXFunc
-	cli   instaproxy.InstaProxyClient
+	queue *pgqueue.Queue
 }
 
 func (h *TransitToSimilarFoundHandler) HandleTask(ctx context.Context, task pgqueue.Task) error {
@@ -33,6 +32,11 @@ func (h *TransitToSimilarFoundHandler) HandleTask(ctx context.Context, task pgqu
 	}
 
 	if len(notReadyBloggers) != 0 {
+		if err = h.queue.RetryTasks(ctx, FindSimilarBloggersTaskKind, 5, 1000); err != nil {
+			return fmt.Errorf("failed to retry tasks for dataset %s with %d not ready bloggers: %v: %v", datasetID,
+				len(notReadyBloggers), domain.DatasetWithBloggers{Bloggers: notReadyBloggers}.Usernames(), err)
+		}
+
 		return fmt.Errorf("dataset %s still has %d not ready bloggers: %v", datasetID,
 			len(notReadyBloggers), domain.DatasetWithBloggers{Bloggers: notReadyBloggers}.Usernames())
 	}

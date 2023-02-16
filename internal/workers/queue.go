@@ -17,6 +17,8 @@ const (
 	ParseBloggersMediaTaskKind    = 2
 	ParseUsersFromMediaTaskKind   = 3
 	TransitToSimilarFoundTaskKind = 4
+	ParseFollowersTaskKind        = 5
+	ParseFullUsersTaskKind        = 6
 )
 
 var EmptyPayload = []byte(`{"empty":true}`)
@@ -31,7 +33,7 @@ func NewQueuue(ctx context.Context, executor executor.Executor, txFunc dbmodel.D
 		MaxAttempts:          10,
 		AttemptTimeout:       40 * time.Second,
 		MaxTaskErrorMessages: 10,
-		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 20*time.Second),
+		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 5*time.Second),
 		TerminalTasksTTL:     pgqueue.NewConstProvider(1000 * time.Hour),
 		Loop: pgqueue.LoopOptions{
 			JanitorPeriod: pgqueue.NewConstProvider(15 * time.Hour),
@@ -69,14 +71,44 @@ func NewQueuue(ctx context.Context, executor executor.Executor, txFunc dbmodel.D
 		},
 	})
 
+	// парсим комментаторов из конкретного поста у блоггера
+	queue.RegisterKind(ParseFollowersTaskKind, &ParseFollowersHandler{dbTxF: txFunc, cli: instaproxy.NewInstaProxyClient(conn)}, pgqueue.KindOptions{
+		Name:                 "parse-followers",
+		WorkerCount:          pgqueue.NewConstProvider(int16(1)),
+		MaxAttempts:          10,
+		AttemptTimeout:       40 * time.Second,
+		MaxTaskErrorMessages: 10,
+		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 15*time.Second),
+		TerminalTasksTTL:     pgqueue.NewConstProvider(1000 * time.Hour),
+		Loop: pgqueue.LoopOptions{
+			JanitorPeriod: pgqueue.NewConstProvider(15 * time.Hour),
+			FetcherPeriod: pgqueue.NewConstProvider(3 * time.Second),
+		},
+	})
+
+	// парсим комментаторов из конкретного поста у блоггера
+	queue.RegisterKind(ParseFullUsersTaskKind, &ParseUsersFromMediaHandler{dbTxF: txFunc, cli: instaproxy.NewInstaProxyClient(conn)}, pgqueue.KindOptions{
+		Name:                 "parse-full-users",
+		WorkerCount:          pgqueue.NewConstProvider(int16(1)),
+		MaxAttempts:          10,
+		AttemptTimeout:       40 * time.Second,
+		MaxTaskErrorMessages: 10,
+		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 15*time.Second),
+		TerminalTasksTTL:     pgqueue.NewConstProvider(1000 * time.Hour),
+		Loop: pgqueue.LoopOptions{
+			JanitorPeriod: pgqueue.NewConstProvider(15 * time.Hour),
+			FetcherPeriod: pgqueue.NewConstProvider(3 * time.Second),
+		},
+	})
+
 	// переводим датасет в статус парсинг закончен после того, как все блогеры распаршены
-	queue.RegisterKind(TransitToSimilarFoundTaskKind, &TransitToSimilarFoundHandler{dbTxF: txFunc}, pgqueue.KindOptions{
+	queue.RegisterKind(TransitToSimilarFoundTaskKind, &TransitToSimilarFoundHandler{dbTxF: txFunc, queue: queue}, pgqueue.KindOptions{
 		Name:                 "similar-found",
 		WorkerCount:          pgqueue.NewConstProvider(int16(5)),
-		MaxAttempts:          10,
+		MaxAttempts:          100,
 		AttemptTimeout:       20 * time.Second,
 		MaxTaskErrorMessages: 10,
-		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 20*time.Second),
+		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 50*time.Second),
 		TerminalTasksTTL:     pgqueue.NewConstProvider(1000 * time.Hour),
 		Loop: pgqueue.LoopOptions{
 			JanitorPeriod: pgqueue.NewConstProvider(15 * time.Hour),

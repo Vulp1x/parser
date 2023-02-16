@@ -1,6 +1,9 @@
 package domain
 
 import (
+	"bytes"
+	"encoding/json"
+	"strconv"
 	"time"
 
 	"github.com/google/uuid"
@@ -8,37 +11,17 @@ import (
 	"github.com/inst-api/parser/internal/pb/instaproxy"
 )
 
-type InstUser struct {
-	Pk                       int64       `json:"pk"`
-	Username                 string      `json:"username"`
-	FullName                 string      `json:"full_name"`
-	IsPrivate                bool        `json:"is_private"`
-	ProfilePicUrl            string      `json:"profile_pic_url"`
-	IsVerified               bool        `json:"is_verified"`
-	MediaCount               int         `json:"media_count"`
-	FollowerCount            int         `json:"follower_count"`
-	FollowingCount           int         `json:"following_count"`
-	Biography                string      `json:"biography"`
-	ExternalUrl              *string     `json:"external_url"`
-	AccountType              *int        `json:"account_type"`
-	IsBusiness               bool        `json:"is_business"`
-	PublicEmail              *string     `json:"public_email"`
-	ContactPhoneNumber       *string     `json:"contact_phone_number"`
-	PublicPhoneCountryCode   *string     `json:"public_phone_country_code"`
-	PublicPhoneNumber        *string     `json:"public_phone_number"`
-	BusinessContactMethod    string      `json:"business_contact_method"`
-	BusinessCategoryName     string      `json:"business_category_name"`
-	CategoryName             interface{} `json:"category_name"`
-	Category                 interface{} `json:"category"`
-	AddressStreet            interface{} `json:"address_street"`
-	CityId                   interface{} `json:"city_id"`
-	CityName                 *string     `json:"city_name"`
-	Latitude                 interface{} `json:"latitude"`
-	Longitude                interface{} `json:"longitude"`
-	Zip                      string      `json:"zip"`
-	InstagramLocationId      interface{} `json:"instagram_location_id"`
-	InteropMessagingUserFbid interface{} `json:"interop_messaging_user_fbid"`
+type BioLink struct {
+	LinkId                          int64  `json:"link_id"`
+	Url                             string `json:"url"`
+	LynxUrl                         string `json:"lynx_url"`
+	LinkType                        string `json:"link_type"`
+	Title                           string `json:"title"`
+	GroupId                         int    `json:"group_id"`
+	OpenExternalUrlWithInAppBrowser bool   `json:"open_external_url_with_in_app_browser"`
 }
+
+type FullUser dbmodel.FullTarget
 
 type InstUserShort struct {
 	Pk              int64         `json:"pk"`
@@ -51,30 +34,45 @@ type InstUserShort struct {
 	Stories         []interface{} `json:"stories"`
 }
 
-func FullUserFromProto(protoUser *instaproxy.FullUser) *InstUser {
-	u := &InstUser{}
+func FullUserFromProto(protoUser *instaproxy.FullUser) *FullUser {
 	if protoUser == nil {
-		return u
+		return &FullUser{}
 	}
 
-	u.Pk = protoUser.Pk
-	u.Username = protoUser.Username
-	u.FullName = protoUser.FullName
-	u.IsPrivate = protoUser.IsPrivate
-	u.ProfilePicUrl = protoUser.ProfilePicUrl
-	u.IsVerified = protoUser.IsVerified
-	u.MediaCount = int(protoUser.MediaCount)
-	u.FollowerCount = int(protoUser.FollowerCount)
-	u.FollowingCount = int(protoUser.FollowingCount)
-	u.Biography = protoUser.Biography
-	u.ExternalUrl = &protoUser.ExternalUrl
-	u.IsBusiness = protoUser.IsBusiness
-	// u.PublicEmail  =
-	// u.ContactPhoneNumber =
-	// u.PublicPhoneCountryCode  =
-	// u.PublicPhoneNumber       =
+	user := &FullUser{
+		ID:                         uuid.UUID{},
+		DatasetID:                  uuid.UUID{},
+		ParsedAt:                   time.Time{},
+		Username:                   protoUser.Username,
+		InstPk:                     protoUser.Pk,
+		FullName:                   protoUser.FullName,
+		IsPrivate:                  protoUser.IsPrivate,
+		IsVerified:                 protoUser.IsVerified,
+		IsBusiness:                 protoUser.IsBusiness,
+		IsPotentialBusiness:        protoUser.IsPotentialBusiness,
+		HasAnonymousProfilePicture: protoUser.HasAnonymousProfilePicture,
+		Biography:                  protoUser.Biography,
+		ExternalUrl:                protoUser.ExternalUrl,
+		MediaCount:                 protoUser.MediaCount,
+		FollowerCount:              protoUser.FollowerCount,
+		FollowingCount:             protoUser.FollowingCount,
+		Category:                   protoUser.Category,
+		CityName:                   protoUser.CityName,
+		ContactPhoneNumber:         protoUser.ContactPhoneNumber,
+		Latitude:                   protoUser.Latitude,
+		Longitude:                  protoUser.Longitude,
+		PublicEmail:                protoUser.PublicEmail,
+		PublicPhoneCountryCode:     protoUser.PublicPhoneCountryCode,
+		PublicPhoneNumber:          protoUser.PublicPhoneNumber,
+		WhatsappNumber:             protoUser.WhatsappNumber,
+	}
 
-	return u
+	if len(protoUser.BioLinks) != 0 {
+		bioLonksBytes, _ := json.Marshal(protoUser.BioLinks)
+		user.BioLinks = string(bioLonksBytes)
+	}
+
+	return user
 }
 
 func ShortUsersFromProto(users []*instaproxy.UserShort) ShortInstUsers {
@@ -97,50 +95,67 @@ func ShortUsersFromProto(users []*instaproxy.UserShort) ShortInstUsers {
 	return domainUsers
 }
 
-func (u InstUser) ToUpdateParams(id uuid.UUID, isCorrect bool) dbmodel.UpdateBloggerParams {
+func (u FullUser) ToUpdateParams(id uuid.UUID) dbmodel.UpdateBloggerParams {
 	parsedAt := time.Now()
 	return dbmodel.UpdateBloggerParams{
-		UserID:                 u.Pk,
-		FollowersCount:         int64(u.FollowerCount),
-		ParsedAt:               &parsedAt,
-		IsCorrect:              isCorrect,
-		IsPrivate:              u.IsPrivate,
-		IsVerified:             u.IsVerified,
-		IsBusiness:             u.IsBusiness,
-		FollowingsCount:        int32(u.FollowingCount),
-		ContactPhoneNumber:     u.ContactPhoneNumber,
-		PublicPhoneNumber:      u.PublicPhoneNumber,
-		PublicPhoneCountryCode: u.PublicPhoneCountryCode,
-		CityName:               u.CityName,
-		PublicEmail:            u.PublicEmail,
-		ID:                     id,
+		UserID:    u.InstPk,
+		ParsedAt:  &parsedAt,
+		IsCorrect: true,
+		ID:        id,
 	}
 }
 
-type InstUsers []InstUser
+type FullUsers []FullUser
 
-func (u InstUsers) ToSaveBloggersParmas(datasetID uuid.UUID) []dbmodel.SaveBloggersParams {
-	params := make([]dbmodel.SaveBloggersParams, len(u))
+func (u FullUser) ToSaveFullTargetParams(datasetID uuid.UUID) dbmodel.SaveFullTargetParams {
 
-	for i, user := range u {
-		params[i] = dbmodel.SaveBloggersParams{
-			DatasetID:              datasetID,
-			Username:               user.Username,
-			UserID:                 user.Pk,
-			FollowersCount:         int64(user.FollowerCount),
-			FollowingsCount:        int32(user.FollowingCount),
-			IsPrivate:              user.IsPrivate,
-			IsVerified:             user.IsVerified,
-			IsBusiness:             user.IsBusiness,
-			ContactPhoneNumber:     user.ContactPhoneNumber,
-			PublicPhoneNumber:      user.PublicPhoneNumber,
-			PublicPhoneCountryCode: user.PublicPhoneCountryCode,
-			CityName:               user.CityName,
-			PublicEmail:            user.PublicEmail,
-		}
+	return dbmodel.SaveFullTargetParams{
+		DatasetID:                  datasetID,
+		Username:                   u.Username,
+		InstPk:                     u.InstPk,
+		FullName:                   u.FullName,
+		IsPrivate:                  u.IsPrivate,
+		IsVerified:                 u.IsVerified,
+		IsBusiness:                 u.IsBusiness,
+		IsPotentialBusiness:        u.IsPotentialBusiness,
+		HasAnonymousProfilePicture: u.HasAnonymousProfilePicture,
+		Biography:                  u.Biography,
+		ExternalUrl:                u.ExternalUrl,
+		MediaCount:                 u.MediaCount,
+		FollowerCount:              u.FollowerCount,
+		FollowingCount:             u.FollowingCount,
+		Category:                   u.Category,
+		CityName:                   u.CityName,
+		ContactPhoneNumber:         u.ContactPhoneNumber,
+		Latitude:                   u.Latitude,
+		Longitude:                  u.Longitude,
+		PublicEmail:                u.PublicEmail,
+		PublicPhoneCountryCode:     u.PublicPhoneCountryCode,
+		PublicPhoneNumber:          u.PublicPhoneNumber,
+		BioLinks:                   u.BioLinks,
+		WhatsappNumber:             u.WhatsappNumber,
+	}
+}
+
+func (u FullUser) Format(format int) string {
+	b := bytes.Buffer{}
+	switch format {
+	case 1:
+		b.WriteString(strconv.FormatInt(u.InstPk, 10))
+	case 2:
+		b.WriteString(u.Username)
+	case 3:
+
+		b.WriteString(u.Username)
+		b.WriteByte(',')
+		b.WriteString(strconv.FormatInt(u.InstPk, 10))
+	default:
+		return ""
 	}
 
-	return params
+	b.WriteByte(',')
+	b.WriteString(u.ContactPhoneNumber)
+	return b.String()
 }
 
 func (u InstUserShort) ToUpdateParams(id uuid.UUID, isCorrect bool) dbmodel.UpdateBloggerParams {
@@ -197,3 +212,6 @@ func (su ShortInstUsers) ToSaveTargetsParams(mediaPk int64, datasetID uuid.UUID)
 		DatasetID:  datasetID,
 	}
 }
+
+// Ptr возвращает указать на переданное значение
+func Ptr[T any](val T) *T { return &val }

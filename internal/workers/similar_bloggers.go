@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/inst-api/parser/internal/dbmodel"
@@ -58,9 +59,23 @@ func (s *SimilarBloggersHandler) HandleTask(ctx context.Context, task pgqueue.Ta
 		return fmt.Errorf("failed to find similar bloggers: %v", err)
 	}
 
-	err = q.UpdateBlogger(ctx, domain.FullUserFromProto(similarBloggersResp.InitialBlogger).ToUpdateParams(blogger.ID, true))
+	initialBlogger := similarBloggersResp.GetInitialBlogger()
+	err = q.UpdateBlogger(ctx, dbmodel.UpdateBloggerParams{
+		UserID:     initialBlogger.Pk,
+		ParsedAt:   domain.Ptr(time.Now()),
+		IsCorrect:  true,
+		IsPrivate:  initialBlogger.IsPrivate,
+		IsVerified: initialBlogger.IsVerified,
+		ID:         blogger.ID,
+	})
 	if err != nil {
 		return fmt.Errorf("failed to update initial blogger (%s): %v", blogger.ID, err)
+	}
+
+	fullTargetParams := domain.FullUserFromProto(initialBlogger).ToSaveFullTargetParams(datasetID)
+	err = q.SaveFullTarget(ctx, fullTargetParams)
+	if err != nil {
+		return fmt.Errorf("failed to save full user: %v with params %v", err, fullTargetParams)
 	}
 
 	domainparsedBloggers := domain.ShortUsersFromProto(similarBloggersResp.SimilarBloggers)

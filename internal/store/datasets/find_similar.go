@@ -92,7 +92,7 @@ func (s *Store) FindSimilarBloggers(ctx context.Context, datasetID uuid.UUID) (d
 		Kind:        workers.TransitToSimilarFoundTaskKind,
 		Payload:     workers.EmptyPayload,
 		ExternalKey: datasetID.String(),
-	}, pgqueue.WithDelay(30*time.Second))
+	}, pgqueue.WithDelay(time.Duration(len(initialBloggers))*time.Second))
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to push TransitToSimilarFound task to queue: %v", err)
 	}
