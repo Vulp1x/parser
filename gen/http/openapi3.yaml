@@ -1138,7 +1138,7 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateDatasetDraftRequestBody'
             example:
-              type: 6
+              type: 3
       responses:
         "200":
           description: OK response.
@@ -1263,9 +1263,6 @@ components:
             - 1
             - 2
             - 3
-            - 4
-            - 5
-            - 6
       example:
         type: 2
       required:
@@ -1333,9 +1330,6 @@ components:
             - 1
             - 2
             - 3
-            - 4
-            - 5
-            - 6
       example:
         bloggers:
           - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1360,7 +1354,7 @@ components:
         posts_per_blogger: 876957093
         status: 3
         title: Quia aliquid.
-        type: 6
+        type: 3
       required:
         - id
         - bloggers

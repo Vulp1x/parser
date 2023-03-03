@@ -26,7 +26,7 @@ var DatasetStatus = Type("DatasetStatus", Int, func() {
 
 // DatasetType описывает тип задачи
 var DatasetType = Type("DatasetType", Int, func() {
-	Enum(1, 2, 3, 4, 5, 6)
+	Enum(1, 2, 3)
 	Description("тип создаваемой задачи: 1- парсинг подписчиков, 2- парсинг телефонных номеров, 3- парсинг лайков и комментариев")
 })
 

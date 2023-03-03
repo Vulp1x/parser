@@ -478,8 +478,8 @@ func ValidateCreateDatasetDraftRequestBody(body *CreateDatasetDraftRequestBody) 
 		err = goa.MergeErrors(err, goa.MissingFieldError("type", "body"))
 	}
 	if body.Type != nil {
-		if !(*body.Type == 1 || *body.Type == 2 || *body.Type == 3 || *body.Type == 4 || *body.Type == 5 || *body.Type == 6) {
-			err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.type", *body.Type, []interface{}{1, 2, 3, 4, 5, 6}))
+		if !(*body.Type == 1 || *body.Type == 2 || *body.Type == 3) {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.type", *body.Type, []interface{}{1, 2, 3}))
 		}
 	}
 	return

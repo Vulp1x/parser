@@ -690,14 +690,11 @@ definitions:
         example: Odio dolore ut iure unde fuga.
       type:
         type: integer
-        example: 5
+        example: 2
         enum:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: 76FB876C-96AC-91E7-BD21-B0C2988DDF65
@@ -717,7 +714,7 @@ definitions:
       posts_per_blogger: 1745728686
       status: 3
       title: Sunt accusamus voluptatem sed velit enim veritatis.
-      type: 4
+      type: 1
     required:
       - id
       - bloggers
@@ -733,14 +730,11 @@ definitions:
     properties:
       type:
         type: integer
-        example: 5
+        example: 2
         enum:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       type: 3
     required:
@@ -814,14 +808,11 @@ definitions:
         example: Eum architecto pariatur architecto earum tempora.
       type:
         type: integer
-        example: 4
+        example: 1
         enum:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -841,7 +832,7 @@ definitions:
       posts_per_blogger: 1033976570
       status: 1
       title: Accusamus reprehenderit aut libero exercitationem quia.
-      type: 5
+      type: 2
     required:
       - id
       - bloggers
@@ -920,14 +911,11 @@ definitions:
         example: Dolorem beatae qui possimus.
       type:
         type: integer
-        example: 4
+        example: 1
         enum:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -957,7 +945,7 @@ definitions:
       posts_per_blogger: 1604605635
       status: 4
       title: At sed explicabo dolores provident nulla totam.
-      type: 4
+      type: 1
     required:
       - id
       - bloggers
@@ -1031,9 +1019,6 @@ definitions:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1058,7 +1043,7 @@ definitions:
       posts_per_blogger: 198199560
       status: 4
       title: Est laborum alias dolor veritatis quia in.
-      type: 6
+      type: 3
     required:
       - id
       - bloggers
@@ -1132,9 +1117,6 @@ definitions:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1238,9 +1220,6 @@ definitions:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1265,7 +1244,7 @@ definitions:
       posts_per_blogger: 1053553676
       status: 4
       title: Voluptatibus voluptate sit eos qui optio possimus.
-      type: 6
+      type: 3
     required:
       - id
       - bloggers
@@ -1344,14 +1323,11 @@ definitions:
         example: Eveniet unde ipsa alias ut.
       type:
         type: integer
-        example: 4
+        example: 1
         enum:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1445,9 +1421,6 @@ definitions:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1477,7 +1450,7 @@ definitions:
       posts_per_blogger: 316370577
       status: 6
       title: Sapiente mollitia quo ipsa.
-      type: 6
+      type: 3
     required:
       - id
       - bloggers
@@ -1938,14 +1911,11 @@ definitions:
         example: Doloremque amet dicta tempore.
       type:
         type: integer
-        example: 4
+        example: 1
         enum:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -1965,7 +1935,7 @@ definitions:
       posts_per_blogger: 1216991598
       status: 2
       title: In ullam dicta temporibus commodi.
-      type: 5
+      type: 2
     required:
       - id
       - bloggers
@@ -2049,9 +2019,6 @@ definitions:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
@@ -2194,9 +2161,6 @@ definitions:
           - 1
           - 2
           - 3
-          - 4
-          - 5
-          - 6
     example:
       bloggers:
         - dataset_id: FB1E8AC6-4FA4-C883-ED5A-54960E88F5FE
