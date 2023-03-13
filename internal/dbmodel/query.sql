@@ -103,7 +103,8 @@ where is_blocked = false;
 -- name: FindUserDatasets :many
 select *
 from datasets
-where manager_id = @manager_id;
+where manager_id = @manager_id
+order by created_at desc;
 
 -- name: UpdateDatasetStatus :exec
 update datasets

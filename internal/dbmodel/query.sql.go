@@ -411,6 +411,7 @@ const findUserDatasets = `-- name: FindUserDatasets :many
 select id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post, type, followers_count
 from datasets
 where manager_id = $1
+order by created_at desc
 `
 
 func (q *Queries) FindUserDatasets(ctx context.Context, managerID uuid.UUID) ([]Dataset, error) {
