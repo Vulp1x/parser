@@ -122,6 +122,7 @@ func (c UpdateConfig) toUpdateParams() dbmodel.UpdateDatasetParams {
 		LikedPerPost:     c.likedPerPost,
 		CommentedPerPost: c.commentedPerPost,
 		ID:               c.datasetID,
+		FollowersCount:   c.followersPerBlogger,
 	}
 }
 
