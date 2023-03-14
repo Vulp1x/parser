@@ -68,6 +68,8 @@ func main() {
 	now, _ := dbmodel.New(dbTXFunc(ctx)).SelectNow(ctx)
 	logger.Infof(ctx, "db now: %s", now)
 
+	logger.Infof(ctx, "connecting to insta-proxy at '%s'", conf.Listen.InstaProxyURL)
+
 	conn, err := grpc.DialContext(
 		ctx,
 		conf.Listen.InstaProxyURL,
