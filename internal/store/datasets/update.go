@@ -94,12 +94,13 @@ func (s Store) insertInitialBloggers(ctx context.Context, q *dbmodel.Queries, da
 }
 
 type UpdateConfig struct {
-	datasetID        uuid.UUID
-	phoneCode        *int32
-	title            string
-	postsPerBlogger  int32
-	likedPerPost     int32
-	commentedPerPost int32
+	datasetID           uuid.UUID
+	phoneCode           *int32
+	title               string
+	postsPerBlogger     int32
+	likedPerPost        int32
+	commentedPerPost    int32
+	followersPerBlogger int32
 }
 
 func toUpdateConfig(dataset dbmodel.Dataset) UpdateConfig {
@@ -160,6 +161,14 @@ func WithUpdateCommentedPerPostOption(commentedPerPost *uint) UpdateOption {
 	return func(config *UpdateConfig) {
 		if commentedPerPost != nil {
 			config.commentedPerPost = int32(*commentedPerPost)
+		}
+	}
+}
+
+func WithUpdateFollowersPerBloggerOption(followersPerBlogger *uint) UpdateOption {
+	return func(config *UpdateConfig) {
+		if followersPerBlogger != nil {
+			config.followersPerBlogger = int32(*followersPerBlogger)
 		}
 	}
 }

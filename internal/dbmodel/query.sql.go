@@ -809,8 +809,9 @@ set phone_code         = $1,
     posts_per_blogger  = $3,
     liked_per_post     = $4,
     commented_per_post = $5,
+    followers_count    = $6,
     updated_at         = now()
-where id = $6
+where id = $7
 returning id, phone_code, status, title, manager_id, created_at, started_at, stopped_at, updated_at, deleted_at, posts_per_blogger, liked_per_post, commented_per_post, type, followers_count
 `
 
@@ -820,6 +821,7 @@ type UpdateDatasetParams struct {
 	PostsPerBlogger  int32     `json:"posts_per_blogger"`
 	LikedPerPost     int32     `json:"liked_per_post"`
 	CommentedPerPost int32     `json:"commented_per_post"`
+	FollowersCount   int32     `json:"followers_count"`
 	ID               uuid.UUID `json:"id"`
 }
 
@@ -830,6 +832,7 @@ func (q *Queries) UpdateDataset(ctx context.Context, arg UpdateDatasetParams) (D
 		arg.PostsPerBlogger,
 		arg.LikedPerPost,
 		arg.CommentedPerPost,
+		arg.FollowersCount,
 		arg.ID,
 	)
 	var i Dataset

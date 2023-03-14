@@ -1000,14 +1000,15 @@ func marshalDatasetsserviceBloggerToBloggerResponseBody(v *datasetsservice.Blogg
 // *DatasetResponse from a value of type *datasetsservice.Dataset.
 func marshalDatasetsserviceDatasetToDatasetResponse(v *datasetsservice.Dataset) *DatasetResponse {
 	res := &DatasetResponse{
-		ID:               v.ID,
-		Status:           int(v.Status),
-		Title:            v.Title,
-		PostsPerBlogger:  v.PostsPerBlogger,
-		LikedPerPost:     v.LikedPerPost,
-		CommentedPerPost: v.CommentedPerPost,
-		PhoneCode:        v.PhoneCode,
-		Type:             int(v.Type),
+		ID:                    v.ID,
+		Status:                int(v.Status),
+		Title:                 v.Title,
+		PostsPerBlogger:       v.PostsPerBlogger,
+		LikedPerPost:          v.LikedPerPost,
+		CommentedPerPost:      v.CommentedPerPost,
+		PhoneCode:             v.PhoneCode,
+		SubscribersPerBlogger: v.SubscribersPerBlogger,
+		Type:                  int(v.Type),
 	}
 	if v.Bloggers != nil {
 		res.Bloggers = make([]*BloggerResponse, len(v.Bloggers))

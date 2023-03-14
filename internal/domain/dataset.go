@@ -28,14 +28,15 @@ func (b DatasetWithBloggers) ToProto() *datasetsservice.Dataset {
 	}
 
 	return &datasetsservice.Dataset{
-		ID:               b.Dataset.ID.String(),
-		Bloggers:         bloggers,
-		Status:           datasetsservice.DatasetStatus(b.Dataset.Status),
-		Title:            b.Dataset.Title,
-		PostsPerBlogger:  b.Dataset.PostsPerBlogger,
-		LikedPerPost:     b.Dataset.LikedPerPost,
-		CommentedPerPost: b.Dataset.CommentedPerPost,
-		Type:             datasetDBTypesToProtoType[b.Dataset.Type],
+		ID:                    b.Dataset.ID.String(),
+		Bloggers:              bloggers,
+		Status:                datasetsservice.DatasetStatus(b.Dataset.Status),
+		Title:                 b.Dataset.Title,
+		PostsPerBlogger:       b.Dataset.PostsPerBlogger,
+		LikedPerPost:          b.Dataset.LikedPerPost,
+		CommentedPerPost:      b.Dataset.CommentedPerPost,
+		Type:                  datasetDBTypesToProtoType[b.Dataset.Type],
+		SubscribersPerBlogger: b.Dataset.FollowersCount,
 	}
 }
 
@@ -77,14 +78,15 @@ func (d Datasets) ToProto() []*datasetsservice.Dataset {
 
 	for i, dataset := range d {
 		protoDatasets[i] = &datasetsservice.Dataset{
-			ID:               dataset.ID.String(),
-			Status:           datasetsservice.DatasetStatus(dataset.Status),
-			Title:            dataset.Title,
-			PostsPerBlogger:  dataset.PostsPerBlogger,
-			LikedPerPost:     dataset.LikedPerPost,
-			CommentedPerPost: dataset.CommentedPerPost,
-			PhoneCode:        dataset.PhoneCode,
-			Type:             datasetDBTypesToProtoType[dataset.Type],
+			ID:                    dataset.ID.String(),
+			Status:                datasetsservice.DatasetStatus(dataset.Status),
+			Title:                 dataset.Title,
+			PostsPerBlogger:       dataset.PostsPerBlogger,
+			LikedPerPost:          dataset.LikedPerPost,
+			CommentedPerPost:      dataset.CommentedPerPost,
+			PhoneCode:             dataset.PhoneCode,
+			Type:                  datasetDBTypesToProtoType[dataset.Type],
+			SubscribersPerBlogger: dataset.FollowersCount,
 		}
 	}
 

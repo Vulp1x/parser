@@ -101,6 +101,7 @@ func (s *datasetsServicesrvc) UpdateDataset(ctx context.Context, p *datasetsserv
 		datasets.WithUpdateLikedPerPostOption(p.LikedPerPost),
 		datasets.WithUpdatePhoneCodeOption(p.PhoneCode),
 		datasets.WithUpdateTitleOption(p.Title),
+		datasets.WithUpdateFollowersPerBloggerOption(p.SubscribersPerBlogger),
 	)
 	if err != nil {
 		logger.Errorf(ctx, "failed to update dataset: %v", err)

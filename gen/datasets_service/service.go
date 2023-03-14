@@ -98,8 +98,10 @@ type Dataset struct {
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
 	PhoneCode *int32 `json:"phone_code"`
-	Bloggers  []*Blogger
-	Type      DatasetType
+	// сколько подписчиков будем парсить у каждого блогера
+	SubscribersPerBlogger int32 `json:"subscribers_per_blogger"`
+	Bloggers              []*Blogger
+	Type                  DatasetType
 }
 
 // DatasetProgress is the result type of the datasets_service service get
@@ -236,6 +238,8 @@ type UpdateDatasetPayload struct {
 	PhoneCode *int32 `json:"phone_code"`
 	// название задачи
 	Title *string
+	// сколько подписчиков для каждого блоггера брать
+	SubscribersPerBlogger *uint `json:"subscribers_per_blogger"`
 }
 
 type UploadError struct {

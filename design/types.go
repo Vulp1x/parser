@@ -87,11 +87,16 @@ var Dataset = Type("Dataset", func() {
 		Meta("struct:tag:json", "phone_code")
 	})
 
+	Attribute("subscribers_per_blogger", Int32, func() {
+		Description("сколько подписчиков будем парсить у каждого блогера")
+		Meta("struct:tag:json", "subscribers_per_blogger")
+	})
+
 	Attribute("bloggers", ArrayOf(Blogger))
 
 	Attribute("type", DatasetType)
 
-	Required("id", "bloggers", "status", "title", "posts_per_blogger", "liked_per_post", "commented_per_post", "type")
+	Required("id", "bloggers", "status", "title", "posts_per_blogger", "liked_per_post", "commented_per_post", "type", "subscribers_per_blogger")
 })
 
 var ParsingProgress = Type("ParsingProgress", func() {

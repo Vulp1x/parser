@@ -41,6 +41,7 @@ set phone_code         = @phone_code,
     posts_per_blogger  = @posts_per_blogger,
     liked_per_post     = @liked_per_post,
     commented_per_post = @commented_per_post,
+    followers_count    = @followers_count,
     updated_at         = now()
 where id = @id
 returning *;

@@ -33,6 +33,8 @@ type UpdateDatasetRequestBody struct {
 	PhoneCode *int32 `json:"phone_code"`
 	// название задачи
 	Title *string `form:"title,omitempty" json:"title,omitempty" xml:"title,omitempty"`
+	// сколько подписчиков для каждого блоггера брать
+	SubscribersPerBlogger *uint `json:"subscribers_per_blogger"`
 }
 
 // UploadFilesRequestBody is the type of the "datasets_service" service "upload
@@ -60,9 +62,11 @@ type UpdateDatasetOKResponseBody struct {
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
-	PhoneCode *int32                 `json:"phone_code"`
-	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
-	Type      int                    `form:"type" json:"type" xml:"type"`
+	PhoneCode *int32 `json:"phone_code"`
+	// сколько подписчиков будем парсить у каждого блогера
+	SubscribersPerBlogger int32                  `json:"subscribers_per_blogger"`
+	Bloggers              []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Type                  int                    `form:"type" json:"type" xml:"type"`
 }
 
 // FindSimilarOKResponseBody is the type of the "datasets_service" service
@@ -79,9 +83,11 @@ type FindSimilarOKResponseBody struct {
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
-	PhoneCode *int32                 `json:"phone_code"`
-	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
-	Type      int                    `form:"type" json:"type" xml:"type"`
+	PhoneCode *int32 `json:"phone_code"`
+	// сколько подписчиков будем парсить у каждого блогера
+	SubscribersPerBlogger int32                  `json:"subscribers_per_blogger"`
+	Bloggers              []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Type                  int                    `form:"type" json:"type" xml:"type"`
 }
 
 // GetProgressOKResponseBody is the type of the "datasets_service" service "get
@@ -121,9 +127,11 @@ type GetDatasetOKResponseBody struct {
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
-	PhoneCode *int32                 `json:"phone_code"`
-	Bloggers  []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
-	Type      int                    `form:"type" json:"type" xml:"type"`
+	PhoneCode *int32 `json:"phone_code"`
+	// сколько подписчиков будем парсить у каждого блогера
+	SubscribersPerBlogger int32                  `json:"subscribers_per_blogger"`
+	Bloggers              []*BloggerResponseBody `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Type                  int                    `form:"type" json:"type" xml:"type"`
 }
 
 // GetParsingProgressOKResponseBody is the type of the "datasets_service"
@@ -174,9 +182,11 @@ type DatasetResponse struct {
 	// сколько прокоментировааших для каждого поста брать
 	CommentedPerPost int32 `json:"commented_per_post"`
 	// является ли блоггер изначально в датасете или появился при парсинге
-	PhoneCode *int32             `json:"phone_code"`
-	Bloggers  []*BloggerResponse `form:"bloggers" json:"bloggers" xml:"bloggers"`
-	Type      int                `form:"type" json:"type" xml:"type"`
+	PhoneCode *int32 `json:"phone_code"`
+	// сколько подписчиков будем парсить у каждого блогера
+	SubscribersPerBlogger int32              `json:"subscribers_per_blogger"`
+	Bloggers              []*BloggerResponse `form:"bloggers" json:"bloggers" xml:"bloggers"`
+	Type                  int                `form:"type" json:"type" xml:"type"`
 }
 
 // BloggerResponse is used to define fields on response body types.
@@ -222,14 +232,15 @@ type ProxyRecordRequestBody struct {
 // of the "update dataset" endpoint of the "datasets_service" service.
 func NewUpdateDatasetOKResponseBody(res *datasetsservice.Dataset) *UpdateDatasetOKResponseBody {
 	body := &UpdateDatasetOKResponseBody{
-		ID:               res.ID,
-		Status:           int(res.Status),
-		Title:            res.Title,
-		PostsPerBlogger:  res.PostsPerBlogger,
-		LikedPerPost:     res.LikedPerPost,
-		CommentedPerPost: res.CommentedPerPost,
-		PhoneCode:        res.PhoneCode,
-		Type:             int(res.Type),
+		ID:                    res.ID,
+		Status:                int(res.Status),
+		Title:                 res.Title,
+		PostsPerBlogger:       res.PostsPerBlogger,
+		LikedPerPost:          res.LikedPerPost,
+		CommentedPerPost:      res.CommentedPerPost,
+		PhoneCode:             res.PhoneCode,
+		SubscribersPerBlogger: res.SubscribersPerBlogger,
+		Type:                  int(res.Type),
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -244,14 +255,15 @@ func NewUpdateDatasetOKResponseBody(res *datasetsservice.Dataset) *UpdateDataset
 // of the "find similar" endpoint of the "datasets_service" service.
 func NewFindSimilarOKResponseBody(res *datasetsservice.Dataset) *FindSimilarOKResponseBody {
 	body := &FindSimilarOKResponseBody{
-		ID:               res.ID,
-		Status:           int(res.Status),
-		Title:            res.Title,
-		PostsPerBlogger:  res.PostsPerBlogger,
-		LikedPerPost:     res.LikedPerPost,
-		CommentedPerPost: res.CommentedPerPost,
-		PhoneCode:        res.PhoneCode,
-		Type:             int(res.Type),
+		ID:                    res.ID,
+		Status:                int(res.Status),
+		Title:                 res.Title,
+		PostsPerBlogger:       res.PostsPerBlogger,
+		LikedPerPost:          res.LikedPerPost,
+		CommentedPerPost:      res.CommentedPerPost,
+		PhoneCode:             res.PhoneCode,
+		SubscribersPerBlogger: res.SubscribersPerBlogger,
+		Type:                  int(res.Type),
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -294,14 +306,15 @@ func NewParseDatasetOKResponseBody(res *datasetsservice.ParseDatasetResult) *Par
 // the "get dataset" endpoint of the "datasets_service" service.
 func NewGetDatasetOKResponseBody(res *datasetsservice.Dataset) *GetDatasetOKResponseBody {
 	body := &GetDatasetOKResponseBody{
-		ID:               res.ID,
-		Status:           int(res.Status),
-		Title:            res.Title,
-		PostsPerBlogger:  res.PostsPerBlogger,
-		LikedPerPost:     res.LikedPerPost,
-		CommentedPerPost: res.CommentedPerPost,
-		PhoneCode:        res.PhoneCode,
-		Type:             int(res.Type),
+		ID:                    res.ID,
+		Status:                int(res.Status),
+		Title:                 res.Title,
+		PostsPerBlogger:       res.PostsPerBlogger,
+		LikedPerPost:          res.LikedPerPost,
+		CommentedPerPost:      res.CommentedPerPost,
+		PhoneCode:             res.PhoneCode,
+		SubscribersPerBlogger: res.SubscribersPerBlogger,
+		Type:                  int(res.Type),
 	}
 	if res.Bloggers != nil {
 		body.Bloggers = make([]*BloggerResponseBody, len(res.Bloggers))
@@ -362,11 +375,12 @@ func NewCreateDatasetDraftPayload(body *CreateDatasetDraftRequestBody, token str
 // endpoint payload.
 func NewUpdateDatasetPayload(body *UpdateDatasetRequestBody, datasetID string, token string) *datasetsservice.UpdateDatasetPayload {
 	v := &datasetsservice.UpdateDatasetPayload{
-		PostsPerBlogger:  body.PostsPerBlogger,
-		LikedPerPost:     body.LikedPerPost,
-		CommentedPerPost: body.CommentedPerPost,
-		PhoneCode:        body.PhoneCode,
-		Title:            body.Title,
+		PostsPerBlogger:       body.PostsPerBlogger,
+		LikedPerPost:          body.LikedPerPost,
+		CommentedPerPost:      body.CommentedPerPost,
+		PhoneCode:             body.PhoneCode,
+		Title:                 body.Title,
+		SubscribersPerBlogger: body.SubscribersPerBlogger,
 	}
 	if body.OriginalAccounts != nil {
 		v.OriginalAccounts = make([]string, len(body.OriginalAccounts))

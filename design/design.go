@@ -108,6 +108,11 @@ var _ = Service("datasets_service", func() {
 				Description("название задачи")
 			})
 
+			Attribute("subscribers_per_blogger", UInt, func() {
+				Description("сколько подписчиков для каждого блоггера брать")
+				Meta("struct:tag:json", "subscribers_per_blogger")
+			})
+
 			Required("token", "dataset_id")
 		})
 

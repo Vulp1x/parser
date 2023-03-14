@@ -10,10 +10,10 @@ services:
     volumes:
       - ./tmp:/root/tmp
     networks:
-      - poster_ompnw
+      - postgres_ompnw
 
 
 networks:
-  poster_ompnw:
+  postgres_ompnw:
     driver: bridge
     external: true
