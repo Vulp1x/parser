@@ -216,8 +216,6 @@ message Bot {
   // имя аккаунта в инстаграме
   string username = 2;
   string password = 3;
-  // количество блогеров, которые проходят проверку по коду региона
-  string session_id = 4;
   // прокси для бота
   Proxy proxy = 5;
   BotSettings settings = 6;
@@ -242,7 +240,8 @@ message BotSettings {
     string shbid = 2 ;
     string shbts = 3;
     string xmid = 4;
-    string android_id = 5;
+    string www_claim = 5;
+    string android_id = 10;
     string device_id = 6;
     string phone_id = 7;
     string advertising_id = 8;

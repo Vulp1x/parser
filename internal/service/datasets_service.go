@@ -9,10 +9,12 @@ import (
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
 	"github.com/inst-api/parser/internal/dbmodel"
 	"github.com/inst-api/parser/internal/domain"
+	"github.com/inst-api/parser/internal/pb/instaproxy"
 	"github.com/inst-api/parser/internal/sessions"
 	"github.com/inst-api/parser/internal/store/datasets"
 	"github.com/inst-api/parser/pkg/logger"
 	"goa.design/goa/v3/security"
+	"google.golang.org/grpc"
 )
 
 type datasetsStore interface {
@@ -31,18 +33,15 @@ type datasetsStore interface {
 type datasetsServicesrvc struct {
 	auth  *authService
 	store datasetsStore
-}
-
-func (s *datasetsServicesrvc) UploadFiles(ctx context.Context, p *datasetsservice.UploadFilesPayload) (*datasetsservice.UploadFilesResult, error) {
-	logger.Infof(ctx, "got upload files for dataset %s", p.DatasetID)
-	return &datasetsservice.UploadFilesResult{}, nil
+	cli   instaproxy.InstaProxyClient
 }
 
 // NewDatasetsService returns the datasets_service service implementation.
-func NewDatasetsService(cfg sessions.Configuration, store datasetsStore) datasetsservice.Service {
+func NewDatasetsService(cfg sessions.Configuration, store datasetsStore, conn *grpc.ClientConn) datasetsservice.Service {
 	return &datasetsServicesrvc{
 		auth:  &authService{securityCfg: cfg},
 		store: store,
+		cli:   instaproxy.NewInstaProxyClient(conn),
 	}
 }
 
@@ -316,6 +315,45 @@ func (s *datasetsServicesrvc) DownloadTargets(ctx context.Context, p *datasetsse
 	}
 
 	return formattedTargets, nil
+}
+
+func (s *datasetsServicesrvc) UploadFiles(ctx context.Context, p *datasetsservice.UploadFilesPayload) (*datasetsservice.UploadFilesResult, error) {
+	logger.Infof(ctx, "got upload files for dataset %s with filenames %s, %s", p.DatasetID, p.BotsFilename, p.ProxiesFilename)
+
+	datasetID, err := uuid.Parse(p.DatasetID)
+	if err != nil {
+		logger.Errorf(ctx, "failed to parse task_id from '%s': %v", p.DatasetID, err)
+		return nil, datasetsservice.BadRequest("bad task_id")
+	}
+
+	ctx = logger.WithKV(ctx, "dataset_id", datasetID.String())
+
+	domainAccounts, uploadErrors := domain.ParseBotAccounts(ctx, p.Bots)
+	previousLen := len(uploadErrors)
+	logger.Infof(ctx, "got %d bots and %d errors from %d inputs", len(domainAccounts), previousLen, len(p.Bots))
+
+	domainProxies := domain.ParseProxies(p.Proxies, uploadErrors)
+	logger.Infof(ctx, "got %d residential proxies and %d errors from %d inputs",
+		len(domainProxies), len(uploadErrors)-previousLen, len(p.Proxies),
+	)
+
+	if len(domainProxies) == 0 {
+		return nil, datasetsservice.BadRequest("got 0 proxies")
+	}
+
+	domainAccounts.AssignProxies(domainProxies)
+
+	resp, err := s.cli.SaveBots(ctx, &instaproxy.SaveBotsRequest{Bots: domainAccounts.Proto()})
+	if err != nil {
+		logger.Errorf(ctx, "failed to save bots in instaproxy: %v", err)
+		return nil, internalErr(err)
+	}
+
+	logger.Infof(ctx, "saved %d bots in instaproxy", resp.BotsSaved)
+
+	return &datasetsservice.UploadFilesResult{
+		UploadErrors: uploadErrors,
+	}, nil
 }
 
 func internalErr(err error) datasetsservice.InternalError {

@@ -23,7 +23,7 @@ func DatasetsServiceUploadFilesDecoderFunc(mr *multipart.Reader, p **datasetsser
 
 	ctx := context.Background()
 
-	for i := 0; i < 4; i++ {
+	for i := 0; i < 2; i++ {
 		part, err := mr.NextPart()
 		if err != nil {
 			return fmt.Errorf("failed to get next part: %v", err)

@@ -89,7 +89,7 @@ func main() {
 	// adminServiceSvc := service.NewAdminService(botsStore)
 
 	// Initialize the services.
-	datasetsService := service.NewDatasetsService(conf.Security, datasetsStore)
+	datasetsService := service.NewDatasetsService(conf.Security, datasetsStore, conn)
 
 	// potentially running in different processes.
 	datasetsEndpoints := datasetsservice.NewEndpoints(datasetsService)

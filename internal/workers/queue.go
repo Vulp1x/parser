@@ -74,11 +74,11 @@ func NewQueuue(ctx context.Context, executor executor.Executor, txFunc dbmodel.D
 	// парсим комментаторов из конкретного поста у блоггера
 	queue.RegisterKind(ParseFollowersTaskKind, &ParseFollowersHandler{dbTxF: txFunc, cli: instaproxy.NewInstaProxyClient(conn)}, pgqueue.KindOptions{
 		Name:                 "parse-followers",
-		WorkerCount:          pgqueue.NewConstProvider(int16(1)),
-		MaxAttempts:          10,
+		WorkerCount:          pgqueue.NewConstProvider(int16(100)),
+		MaxAttempts:          100,
 		AttemptTimeout:       40 * time.Second,
-		MaxTaskErrorMessages: 10,
-		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 15*time.Second),
+		MaxTaskErrorMessages: 20,
+		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 3*time.Second),
 		TerminalTasksTTL:     pgqueue.NewConstProvider(1000 * time.Hour),
 		Loop: pgqueue.LoopOptions{
 			JanitorPeriod: pgqueue.NewConstProvider(15 * time.Hour),
