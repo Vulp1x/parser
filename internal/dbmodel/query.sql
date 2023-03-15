@@ -170,7 +170,7 @@ RETURNING *;
 -- name: SaveFakeMedia :exec
 insert into medias(pk, id, dataset_id, media_type, code, has_more_comments, caption, width, height, like_count,
                    taken_at, created_at, updated_at)
-values ($1, $1::text, $2, -1, '', false, $3, 0, 0, -1, now(), now(), now())
+values ($1, $2, $3, -1, '', false, $4, 0, 0, -1, -1, now(), now())
 ON CONFLICT (pk, dataset_id) DO UPDATE SET has_more_comments=excluded.has_more_comments,
                                            caption=excluded.caption,
                                            like_count=excluded.like_count,
@@ -197,7 +197,8 @@ VALUES (@dataset_id, @username, @inst_pk, @full_name, @is_private, @is_verified,
         @is_potential_business, @has_anonymous_profile_picture, @biography, @external_url, @media_count,
         @follower_count, @following_count, @category, @city_name, @contact_phone_number, @latitude,
         @longitude, @public_email, @public_phone_country_code, @public_phone_number, @bio_links,
-        @whatsapp_number);
+        @whatsapp_number)
+ON CONFLICT (inst_pk, dataset_id) DO NOTHING;
 
 -- name: FindFullTargetsWithCode :many
 select *

@@ -3,6 +3,7 @@ package workers
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -54,12 +55,16 @@ func (h *ParseFollowersHandler) HandleTask(ctx context.Context, task pgqueue.Tas
 	fullTargetParams := domain.FullUserFromProto(targetsResp.Blogger).ToSaveFullTargetParams(datasetID)
 	err = q.SaveFullTarget(ctx, fullTargetParams)
 	if err != nil {
-		return fmt.Errorf("failed to save full user: %v with params %v", err, fullTargetParams)
+		return fmt.Errorf("failed to save full user: %v with params %+v", err, fullTargetParams)
 	}
 
 	err = q.SaveFakeMedia(ctx, dbmodel.SaveFakeMediaParams{
-		Pk: targetsResp.Blogger.Pk, DatasetID: datasetID, Caption: bloggerUsername,
+		Pk: targetsResp.Blogger.Pk, ID: strconv.FormatInt(targetsResp.Blogger.Pk, 10),
+		DatasetID: datasetID, Caption: bloggerUsername,
 	})
+	if err != nil {
+		return fmt.Errorf("failed to save fake media: %v", err)
+	}
 
 	targets := domain.ShortUsersFromProto(targetsResp.GetTargets())
 

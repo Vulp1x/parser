@@ -167,8 +167,8 @@ CREATE TABLE public.full_targets (
     public_email text NOT NULL,
     public_phone_country_code text NOT NULL,
     public_phone_number text NOT NULL,
-    bio_links jsonb NOT NULL,
-    whatsapp_number text NOT NULL
+    whatsapp_number text NOT NULL,
+    bio_links text DEFAULT ''::text NOT NULL
 );
 
 

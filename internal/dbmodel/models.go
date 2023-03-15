@@ -217,8 +217,8 @@ type FullTarget struct {
 	PublicEmail                string    `json:"public_email"`
 	PublicPhoneCountryCode     string    `json:"public_phone_country_code"`
 	PublicPhoneNumber          string    `json:"public_phone_number"`
-	BioLinks                   string    `json:"bio_links"`
 	WhatsappNumber             string    `json:"whatsapp_number"`
+	BioLinks                   string    `json:"bio_links"`
 }
 
 type Media struct {

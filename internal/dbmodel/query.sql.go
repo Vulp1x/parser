@@ -149,7 +149,7 @@ func (q *Queries) FindBloggersForParsing(ctx context.Context, datasetID uuid.UUI
 }
 
 const findFullTargets = `-- name: FindFullTargets :many
-select id, dataset_id, parsed_at, username, inst_pk, full_name, is_private, is_verified, is_business, is_potential_business, has_anonymous_profile_picture, biography, external_url, media_count, follower_count, following_count, category, city_name, contact_phone_number, latitude, longitude, public_email, public_phone_country_code, public_phone_number, bio_links, whatsapp_number
+select id, dataset_id, parsed_at, username, inst_pk, full_name, is_private, is_verified, is_business, is_potential_business, has_anonymous_profile_picture, biography, external_url, media_count, follower_count, following_count, category, city_name, contact_phone_number, latitude, longitude, public_email, public_phone_country_code, public_phone_number, whatsapp_number, bio_links
 from full_targets
 where dataset_id = $1
 `
@@ -188,8 +188,8 @@ func (q *Queries) FindFullTargets(ctx context.Context, datasetID uuid.UUID) ([]F
 			&i.PublicEmail,
 			&i.PublicPhoneCountryCode,
 			&i.PublicPhoneNumber,
-			&i.BioLinks,
 			&i.WhatsappNumber,
+			&i.BioLinks,
 		); err != nil {
 			return nil, err
 		}
@@ -202,7 +202,7 @@ func (q *Queries) FindFullTargets(ctx context.Context, datasetID uuid.UUID) ([]F
 }
 
 const findFullTargetsWithCode = `-- name: FindFullTargetsWithCode :many
-select id, dataset_id, parsed_at, username, inst_pk, full_name, is_private, is_verified, is_business, is_potential_business, has_anonymous_profile_picture, biography, external_url, media_count, follower_count, following_count, category, city_name, contact_phone_number, latitude, longitude, public_email, public_phone_country_code, public_phone_number, bio_links, whatsapp_number
+select id, dataset_id, parsed_at, username, inst_pk, full_name, is_private, is_verified, is_business, is_potential_business, has_anonymous_profile_picture, biography, external_url, media_count, follower_count, following_count, category, city_name, contact_phone_number, latitude, longitude, public_email, public_phone_country_code, public_phone_number, whatsapp_number, bio_links
 from full_targets
 where dataset_id = $1
   and public_phone_country_code = $2
@@ -247,8 +247,8 @@ func (q *Queries) FindFullTargetsWithCode(ctx context.Context, arg FindFullTarge
 			&i.PublicEmail,
 			&i.PublicPhoneCountryCode,
 			&i.PublicPhoneNumber,
-			&i.BioLinks,
 			&i.WhatsappNumber,
+			&i.BioLinks,
 		); err != nil {
 			return nil, err
 		}
@@ -600,7 +600,7 @@ func (q *Queries) SaveBots(ctx context.Context, arg SaveBotsParams) (int64, erro
 const saveFakeMedia = `-- name: SaveFakeMedia :exec
 insert into medias(pk, id, dataset_id, media_type, code, has_more_comments, caption, width, height, like_count,
                    taken_at, created_at, updated_at)
-values ($1, $1::text, $2, -1, '', false, $3, 0, 0, -1, now(), now(), now())
+values ($1, $2, $3, -1, '', false, $4, 0, 0, -1, -1, now(), now())
 ON CONFLICT (pk, dataset_id) DO UPDATE SET has_more_comments=excluded.has_more_comments,
                                            caption=excluded.caption,
                                            like_count=excluded.like_count,
@@ -609,12 +609,18 @@ ON CONFLICT (pk, dataset_id) DO UPDATE SET has_more_comments=excluded.has_more_c
 
 type SaveFakeMediaParams struct {
 	Pk        int64     `json:"pk"`
+	ID        string    `json:"id"`
 	DatasetID uuid.UUID `json:"dataset_id"`
 	Caption   string    `json:"caption"`
 }
 
 func (q *Queries) SaveFakeMedia(ctx context.Context, arg SaveFakeMediaParams) error {
-	_, err := q.db.Exec(ctx, saveFakeMedia, arg.Pk, arg.DatasetID, arg.Caption)
+	_, err := q.db.Exec(ctx, saveFakeMedia,
+		arg.Pk,
+		arg.ID,
+		arg.DatasetID,
+		arg.Caption,
+	)
 	return err
 }
 
@@ -629,6 +635,7 @@ VALUES ($1, $2, $3, $4, $5, $6, $7,
         $13, $14, $15, $16, $17, $18,
         $19, $20, $21, $22, $23,
         $24)
+ON CONFLICT (inst_pk, dataset_id) DO NOTHING
 `
 
 type SaveFullTargetParams struct {
