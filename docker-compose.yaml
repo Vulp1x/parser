@@ -8,7 +8,7 @@ services:
       - "9090:9090" # REST
       - "9091:9091" # GRPC
     volumes:
-      - ./tmp:/root/tmp
+      - tmp_logs:/root/tmp
     networks:
       - postgres_ompnw
 
@@ -17,3 +17,8 @@ networks:
   postgres_ompnw:
     driver: bridge
     external: true
+
+volumes:
+  tmp_logs:
+    name: logs
+    driver: local

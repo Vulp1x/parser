@@ -16,7 +16,7 @@ postgres:
   migration_host: localhost
   migration_port: 5435
   user: postgres
-  password: postgres
+  password: RqEGkWfvq2Lh8BXb
   database: insta_parser
   ssl mode: disable
   migrations dir: migrations

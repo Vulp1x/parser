@@ -32,7 +32,7 @@ func (h *TransitToSimilarFoundHandler) HandleTask(ctx context.Context, task pgqu
 	}
 
 	if len(notReadyBloggers) != 0 {
-		if err = h.queue.RetryTasks(ctx, FindSimilarBloggersTaskKind, 5, 1000); err != nil {
+		if err = h.queue.RetryTasks(ctx, FindSimilarBloggersTaskKind, 10, 1000); err != nil {
 			return fmt.Errorf("failed to retry tasks for dataset %s with %d not ready bloggers: %v: %v", datasetID,
 				len(notReadyBloggers), domain.DatasetWithBloggers{Bloggers: notReadyBloggers}.Usernames(), err)
 		}

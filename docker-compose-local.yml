@@ -11,11 +11,16 @@ services:
     ports:
       - "9090:9090" # REST
     volumes:
-      - ./tmp:/root/tmp
+      - tmp:/root/tmp
     networks:
-      - poster_ompnw
+      - postgres_ompnw
 
 networks:
-  poster_ompnw:
+  postgres_ompnw:
     driver: bridge
     external: true
+
+volumes:
+  tmp:
+    name: logs
+    driver: local
