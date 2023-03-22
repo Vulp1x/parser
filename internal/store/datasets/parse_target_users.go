@@ -61,9 +61,9 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 	case dbmodel.DatasetTypeLikesAndComments:
 		taskKind = workers.ParseBloggersMediaTaskKind
 	case dbmodel.DatasetTypeFollowers:
-		taskKind = workers.ParseFollowersTaskKind
+		taskKind = workers.PrepareParseFollowersTaskKind
 	case dbmodel.DatasetTypePhoneNumbers:
-		taskKind = workers.ParseFollowersTaskKind
+		taskKind = workers.ParseFullUsersTaskKind
 	default:
 		return domain.DatasetWithBloggers{}, fmt.Errorf("unexpected dataset type '%s'", dataset.Type)
 	}

@@ -46,6 +46,4 @@ type Store struct {
 	txf          dbmodel.TxFunc
 	queueService queues.Service
 	queue        *pgqueue.Queue
-
-	// instaClient instagrapiClient
 }

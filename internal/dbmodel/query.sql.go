@@ -38,6 +38,25 @@ func (q *Queries) CountAvailableBots(ctx context.Context) (int64, error) {
 	return count, err
 }
 
+const countParsedTargets = `-- name: CountParsedTargets :one
+select count(*)
+from targets
+where dataset_id = $1
+  AND media_pk = $2
+`
+
+type CountParsedTargetsParams struct {
+	DatasetID uuid.UUID `json:"dataset_id"`
+	MediaPk   int64     `json:"media_pk"`
+}
+
+func (q *Queries) CountParsedTargets(ctx context.Context, arg CountParsedTargetsParams) (int64, error) {
+	row := q.db.QueryRow(ctx, countParsedTargets, arg.DatasetID, arg.MediaPk)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const createDraftDataset = `-- name: CreateDraftDataset :one
 insert into datasets (title, manager_id, type, status, created_at)
 VALUES ($1, $2, $3, 1, now())
@@ -485,19 +504,19 @@ select (select count(*)
         where bloggers.dataset_id = $1
           and status = 'medias_found')                                         as parsed_bloggers_count,
        (select count(*) from bloggers where bloggers.dataset_id = $1) as total_bloggers,
-       (select count(*) from targets where dataset_id = $1)           as targets_saved_coun
+       (select count(*) from targets where dataset_id = $1)           as targets_saved_count
 `
 
 type GetParsingProgressRow struct {
 	ParsedBloggersCount int64 `json:"parsed_bloggers_count"`
 	TotalBloggers       int64 `json:"total_bloggers"`
-	TargetsSavedCoun    int64 `json:"targets_saved_coun"`
+	TargetsSavedCount   int64 `json:"targets_saved_count"`
 }
 
 func (q *Queries) GetParsingProgress(ctx context.Context, datasetID uuid.UUID) (GetParsingProgressRow, error) {
 	row := q.db.QueryRow(ctx, getParsingProgress, datasetID)
 	var i GetParsingProgressRow
-	err := row.Scan(&i.ParsedBloggersCount, &i.TotalBloggers, &i.TargetsSavedCoun)
+	err := row.Scan(&i.ParsedBloggersCount, &i.TotalBloggers, &i.TargetsSavedCount)
 	return i, err
 }
 
@@ -762,6 +781,23 @@ type SetBloggerIsParsedParams struct {
 
 func (q *Queries) SetBloggerIsParsed(ctx context.Context, arg SetBloggerIsParsedParams) error {
 	_, err := q.db.Exec(ctx, setBloggerIsParsed, arg.IsCorrect, arg.ID)
+	return err
+}
+
+const setBloggerStatusToInvalid = `-- name: SetBloggerStatusToInvalid :exec
+update bloggers
+set status = 'invalid'
+where username = $1
+  and dataset_id = $2
+`
+
+type SetBloggerStatusToInvalidParams struct {
+	Username  string    `json:"username"`
+	DatasetID uuid.UUID `json:"dataset_id"`
+}
+
+func (q *Queries) SetBloggerStatusToInvalid(ctx context.Context, arg SetBloggerStatusToInvalidParams) error {
+	_, err := q.db.Exec(ctx, setBloggerStatusToInvalid, arg.Username, arg.DatasetID)
 	return err
 }
 

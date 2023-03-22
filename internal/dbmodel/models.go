@@ -58,6 +58,47 @@ func (ns NullBloggerStatus) Value() (driver.Value, error) {
 	return ns.BloggerStatus, nil
 }
 
+type CursorType string
+
+const (
+	CursorTypeFollowers CursorType = "followers"
+)
+
+func (e *CursorType) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = CursorType(s)
+	case string:
+		*e = CursorType(s)
+	default:
+		return fmt.Errorf("unsupported scan type for CursorType: %T", src)
+	}
+	return nil
+}
+
+type NullCursorType struct {
+	CursorType CursorType
+	Valid      bool // Valid is true if CursorType is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullCursorType) Scan(value interface{}) error {
+	if value == nil {
+		ns.CursorType, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.CursorType.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullCursorType) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return ns.CursorType, nil
+}
+
 type DatasetType string
 
 const (
@@ -190,6 +231,16 @@ type Dataset struct {
 	CommentedPerPost int32         `json:"commented_per_post"`
 	Type             DatasetType   `json:"type"`
 	FollowersCount   int32         `json:"followers_count"`
+}
+
+type FetchCursor struct {
+	ID          uuid.UUID  `json:"id"`
+	InstPk      int64      `json:"inst_pk"`
+	DatasetID   uuid.UUID  `json:"dataset_id"`
+	LockedUntil *time.Time `json:"locked_until"`
+	CreatedAt   time.Time  `json:"created_at"`
+	UpdatedAt   *time.Time `json:"updated_at"`
+	DeletedAt   *time.Time `json:"deleted_at"`
 }
 
 type FullTarget struct {

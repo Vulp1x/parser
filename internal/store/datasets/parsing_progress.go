@@ -29,7 +29,7 @@ func (s Store) ParsingProgress(ctx context.Context, datasetID uuid.UUID) (domain
 
 	return domain.ParsingProgress{
 		BloggersParsed:     int(progress.ParsedBloggersCount),
-		TargetsSaved:       int(progress.TargetsSavedCoun),
+		TargetsSaved:       int(progress.TargetsSavedCount),
 		TotalBloggersCount: int32(progress.TotalBloggers),
 		Done:               dataset.Status == dbmodel.ParsingDoneDatasetStatus,
 	}, nil

@@ -150,7 +150,13 @@ select (select count(*)
         where bloggers.dataset_id = @dataset_id
           and status = 'medias_found')                                         as parsed_bloggers_count,
        (select count(*) from bloggers where bloggers.dataset_id = @dataset_id) as total_bloggers,
-       (select count(*) from targets where dataset_id = @dataset_id)           as targets_saved_coun;
+       (select count(*) from targets where dataset_id = @dataset_id)           as targets_saved_count;
+
+-- name: CountParsedTargets :one
+select count(*)
+from targets
+where dataset_id = @dataset_id
+  AND media_pk = @media_pk;
 
 -- name: FindTargetsForDataset :many
 select *
@@ -210,3 +216,9 @@ where dataset_id = @dataset_id
 select *
 from full_targets
 where dataset_id = @dataset_id;
+
+-- name: SetBloggerStatusToInvalid :exec
+update bloggers
+set status = 'invalid'
+where username = @username
+  and dataset_id = @dataset_id;

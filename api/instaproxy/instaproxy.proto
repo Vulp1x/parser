@@ -33,14 +33,17 @@ service InstaProxy {
 }
 
 message ParseFollowersRequest{
-  string user_name = 1;
-  //  количество подписчиков, которое необходимо спарсить
+  int64 blogger_pk = 1;
+  // количество подписчиков, которое необходимо спарсить
   int32 followers_count = 2;
+  // уникальный идентификатор задачи для которой производим парсинг
+  string source_id = 3;
 }
 
 message ParsingResponse {
   repeated UserShort targets = 1;
-  FullUser blogger = 2;
+  int64 blogger_pk = 2;
+  int64 total_count = 3;
 }
 
 message OpenProfileRequest{

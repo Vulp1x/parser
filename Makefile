@@ -118,6 +118,7 @@ gen:
 	rm -rf ./gen/http/cli
 	rm -rf ./goa*
 	#git restore ./gen/tasks_service/consts.go
+	buf generate
 
 
 .PHONY: migrate-prod

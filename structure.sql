@@ -52,6 +52,15 @@ CREATE TYPE public.blogger_status AS ENUM (
 
 
 --
+-- Name: cursor_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.cursor_type AS ENUM (
+    'followers'
+);
+
+
+--
 -- Name: dataset_type; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -135,6 +144,21 @@ CREATE TABLE public.datasets (
     commented_per_post integer DEFAULT 0 NOT NULL,
     type public.dataset_type DEFAULT 'likes_and_comments'::public.dataset_type NOT NULL,
     followers_count integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- Name: fetch_cursors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.fetch_cursors (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    inst_pk bigint NOT NULL,
+    dataset_id uuid NOT NULL,
+    locked_until timestamp without time zone,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone,
+    deleted_at timestamp without time zone
 );
 
 
@@ -304,6 +328,14 @@ ALTER TABLE ONLY public.datasets
 
 
 --
+-- Name: fetch_cursors fetch_cursors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.fetch_cursors
+    ADD CONSTRAINT fetch_cursors_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: full_targets full_targets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -340,6 +372,13 @@ ALTER TABLE ONLY public.targets
 --
 
 CREATE UNIQUE INDEX bots_session_id_idx ON public.bots USING btree (session_id);
+
+
+--
+-- Name: fetch_cursors_inst_pk_dataset_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX fetch_cursors_inst_pk_dataset_id_idx ON public.fetch_cursors USING btree (inst_pk, dataset_id);
 
 
 --
@@ -397,6 +436,14 @@ CREATE UNIQUE INDEX uniq_bloggers_per_dataset ON public.bloggers USING btree (us
 
 ALTER TABLE ONLY public.bloggers
     ADD CONSTRAINT bloggers_dataset_id_fkey FOREIGN KEY (dataset_id) REFERENCES public.datasets(id);
+
+
+--
+-- Name: fetch_cursors fetch_cursors_dataset_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.fetch_cursors
+    ADD CONSTRAINT fetch_cursors_dataset_id_fkey FOREIGN KEY (dataset_id) REFERENCES public.datasets(id);
 
 
 --

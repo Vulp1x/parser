@@ -19,6 +19,8 @@ const (
 	TransitToSimilarFoundTaskKind = 4
 	ParseFollowersTaskKind        = 5
 	ParseFullUsersTaskKind        = 6
+	// PrepareParseFollowersTaskKind готоваит блогера для парсинга
+	PrepareParseFollowersTaskKind = 7
 )
 
 var EmptyPayload = []byte(`{"empty":true}`)
@@ -71,8 +73,23 @@ func NewQueuue(ctx context.Context, executor executor.Executor, txFunc dbmodel.D
 		},
 	})
 
-	// парсим комментаторов из конкретного поста у блоггера
-	queue.RegisterKind(ParseFollowersTaskKind, &ParseFollowersHandler{dbTxF: txFunc, cli: instaproxy.NewInstaProxyClient(conn)}, pgqueue.KindOptions{
+	// готовим блоггера для парсинга, нужно получать полную информацию по нему и сохранить
+	queue.RegisterKind(PrepareParseFollowersTaskKind, &PrepareParseFollowersHandler{dbTxF: txFunc, queue: queue, cli: instaproxy.NewInstaProxyClient(conn)}, pgqueue.KindOptions{
+		Name:                 "prepare-parsing-followers",
+		WorkerCount:          pgqueue.NewConstProvider(int16(10)),
+		MaxAttempts:          10,
+		AttemptTimeout:       10 * time.Second,
+		MaxTaskErrorMessages: 20,
+		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 3*time.Second),
+		TerminalTasksTTL:     pgqueue.NewConstProvider(1000 * time.Hour),
+		Loop: pgqueue.LoopOptions{
+			JanitorPeriod: pgqueue.NewConstProvider(15 * time.Hour),
+			FetcherPeriod: pgqueue.NewConstProvider(3 * time.Second),
+		},
+	})
+
+	// парсим подписчиков у блоггера
+	queue.RegisterKind(ParseFollowersTaskKind, &ParseFollowersHandler{dbTxF: txFunc, queue: queue, cli: instaproxy.NewInstaProxyClient(conn)}, pgqueue.KindOptions{
 		Name:                 "parse-followers",
 		WorkerCount:          pgqueue.NewConstProvider(int16(100)),
 		MaxAttempts:          100,
