@@ -34,13 +34,13 @@ func (l *StructuredLogger) NewLogEntry(r *http.Request) middleware.LogEntry {
 		scheme = "https"
 	}
 
-	logFields["http_scheme"] = scheme
-	logFields["http_method"] = r.Method
+	logFields["req.http_scheme"] = scheme
+	logFields["req.http_method"] = r.Method
 
-	logFields["remote_addr"] = r.RemoteAddr
-	logFields["user_agent"] = r.UserAgent()
+	logFields["req.remote_addr"] = r.RemoteAddr
+	logFields["req.user_agent"] = r.UserAgent()
 
-	logFields["uri"] = fmt.Sprintf("%s://%s%s", scheme, r.Host, r.RequestURI)
+	logFields["req.uri"] = fmt.Sprintf("%s://%s%s", scheme, r.Host, r.RequestURI)
 
 	entryCtx := logger.WithFields(r.Context(), logFields)
 
@@ -64,8 +64,8 @@ func (l *StructuredLogger) NewLogEntry(r *http.Request) middleware.LogEntry {
 		}
 		sort.Strings(keys)
 
-		logDebugFields["content_length"] = byteCount(r.ContentLength)
-		logDebugFields["headers"] = keys
+		logDebugFields["req.content_length"] = byteCount(r.ContentLength)
+		logDebugFields["req.headers"] = keys
 		if r.ContentLength < 10000 {
 			// Request body
 			b, err := io.ReadAll(r.Body)
@@ -73,7 +73,7 @@ func (l *StructuredLogger) NewLogEntry(r *http.Request) middleware.LogEntry {
 				b = []byte("failed to read body: " + err.Error())
 			}
 
-			logDebugFields["req_body"] = b
+			logDebugFields["req.body"] = b
 			r.Body = io.NopCloser(bytes.NewBuffer(b))
 		}
 
@@ -92,8 +92,8 @@ type StructuredLoggerEntry struct {
 
 func (l *StructuredLoggerEntry) Write(status, bytes int, header http.Header, elapsed time.Duration, extra interface{}) {
 	l.ctx = logger.WithFields(l.ctx, logger.Fields{
-		"resp_status": status, "resp_bytes_length": bytes,
-		"resp_elapsed_ms": float64(elapsed.Nanoseconds()) * float64(time.Nanosecond) / float64(time.Millisecond),
+		"resp.status": status, "resp.bytes_length": bytes,
+		"resp.elapsed_ms": float64(elapsed.Nanoseconds()) * float64(time.Nanosecond) / float64(time.Millisecond),
 	})
 
 	logger.Infof(l.ctx, "request complete")
@@ -115,18 +115,18 @@ type DebugStructuredLoggerEntry struct {
 func (l *DebugStructuredLoggerEntry) Write(status, bytesWriten int, header http.Header, elapsed time.Duration, extra interface{}) {
 
 	fields := logger.Fields{
-		"resp_status": status, "resp_bytes_length": bytesWriten,
-		"resp_elapsed_ms": float64(elapsed.Nanoseconds()) * float64(time.Nanosecond) / float64(time.Millisecond),
+		"resp.status": status, "resp.bytes_length": bytesWriten,
+		"resp.elapsed_ms": float64(elapsed.Nanoseconds()) * float64(time.Nanosecond) / float64(time.Millisecond),
 	}
 
 	ww, ok := extra.(*responseDupper)
 	if ok {
-		fields["resp_elapsed_ms"] = float64(time.Since(ww.startedAt).Nanoseconds()) * float64(time.Nanosecond) / float64(time.Millisecond)
-		fields["resp_headers"] = header
+		fields["resp.elapsed_ms"] = float64(time.Since(ww.startedAt).Nanoseconds()) * float64(time.Nanosecond) / float64(time.Millisecond)
+		fields["resp.headers"] = header
 	}
 
 	if ww.Buffer.Len() < 10000 {
-		fields["resp_body"] = ww.Buffer.String()
+		fields["resp.body"] = ww.Buffer.String()
 	}
 
 	l.ctx = logger.WithFields(l.ctx, fields)
