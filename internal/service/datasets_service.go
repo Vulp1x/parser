@@ -49,7 +49,7 @@ func NewDatasetsService(cfg sessions.Configuration, store datasetsStore, conn *g
 // for the "jwt" security scheme.
 func (s *datasetsServicesrvc) JWTAuth(ctx context.Context, token string, scheme *security.JWTScheme) (context.Context, error) {
 	if s.auth == nil {
-		logger.Error(ctx, "datasets service has nil auther")
+		logger.ErrorKV(ctx, "datasets service has nil auther")
 		return ctx, datasetsservice.Unauthorized("internal error")
 	}
 
@@ -58,7 +58,7 @@ func (s *datasetsServicesrvc) JWTAuth(ctx context.Context, token string, scheme 
 
 // CreateDatasetDraft создать драфт задачи
 func (s *datasetsServicesrvc) CreateDatasetDraft(ctx context.Context, p *datasetsservice.CreateDatasetDraftPayload) (string, error) {
-	logger.Info(ctx, "datasetsService.create dataset draft")
+	logger.InfoKV(ctx, "datasetsService.create dataset draft")
 
 	userID, err := UserIDFromContext(ctx)
 	if err != nil {
@@ -86,11 +86,11 @@ func (s *datasetsServicesrvc) CreateDatasetDraft(ctx context.Context, p *dataset
 // остановить выполнение.
 func (s *datasetsServicesrvc) UpdateDataset(ctx context.Context, p *datasetsservice.UpdateDatasetPayload) (*datasetsservice.Dataset, error) {
 	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
-	logger.Info(ctx, "datasetsService.update dataset")
+	logger.InfoKV(ctx, "datasetsService.update dataset")
 
 	datasetID, err := uuid.Parse(p.DatasetID)
 	if err != nil {
-		logger.Error(ctx, err.Error())
+		logger.ErrorKV(ctx, err.Error())
 		return nil, datasetsservice.BadRequest(err.Error())
 	}
 
@@ -121,7 +121,7 @@ func (s *datasetsServicesrvc) FindSimilar(ctx context.Context, p *datasetsservic
 
 	datasetID, err := uuid.Parse(p.DatasetID)
 	if err != nil {
-		logger.Error(ctx, err.Error())
+		logger.ErrorKV(ctx, err.Error())
 		return nil, datasetsservice.BadRequest(err.Error())
 	}
 
@@ -148,7 +148,7 @@ func (s *datasetsServicesrvc) ParseDataset(ctx context.Context, p *datasetsservi
 
 	datasetID, err := uuid.Parse(p.DatasetID)
 	if err != nil {
-		logger.Error(ctx, err.Error())
+		logger.ErrorKV(ctx, err.Error())
 		return nil, datasetsservice.BadRequest(err.Error())
 	}
 
@@ -174,11 +174,11 @@ func (s *datasetsServicesrvc) ParseDataset(ctx context.Context, p *datasetsservi
 
 func (s *datasetsServicesrvc) GetParsingProgress(ctx context.Context, p *datasetsservice.GetParsingProgressPayload) (*datasetsservice.ParsingProgress, error) {
 	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
-	logger.Debug(ctx, "datasetsService.getParsingProgress")
+	logger.DebugKV(ctx, "datasetsService.getParsingProgress")
 
 	datasetID, err := uuid.Parse(p.DatasetID)
 	if err != nil {
-		logger.Error(ctx, err.Error())
+		logger.ErrorKV(ctx, err.Error())
 		return nil, datasetsservice.BadRequest(err.Error())
 	}
 
@@ -202,11 +202,11 @@ func (s *datasetsServicesrvc) GetParsingProgress(ctx context.Context, p *dataset
 // GetDataset получить задачу по id
 func (s *datasetsServicesrvc) GetDataset(ctx context.Context, p *datasetsservice.GetDatasetPayload) (*datasetsservice.Dataset, error) {
 	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
-	logger.Info(ctx, "datasetsService.get dataset")
+	logger.InfoKV(ctx, "datasetsService.get dataset")
 
 	datasetID, err := uuid.Parse(p.DatasetID)
 	if err != nil {
-		logger.Error(ctx, err.Error())
+		logger.ErrorKV(ctx, err.Error())
 		return nil, datasetsservice.BadRequest(err.Error())
 	}
 
@@ -227,11 +227,11 @@ func (s *datasetsServicesrvc) GetDataset(ctx context.Context, p *datasetsservice
 // GetProgress получить статус выполнения задачи по id
 func (s *datasetsServicesrvc) GetProgress(ctx context.Context, p *datasetsservice.GetProgressPayload) (*datasetsservice.DatasetProgress, error) {
 	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
-	logger.Info(ctx, "datasetsService.get progress")
+	logger.InfoKV(ctx, "datasetsService.get progress")
 
 	datasetID, err := uuid.Parse(p.DatasetID)
 	if err != nil {
-		logger.Error(ctx, err.Error())
+		logger.ErrorKV(ctx, err.Error())
 		return nil, datasetsservice.BadRequest(err.Error())
 	}
 
@@ -273,7 +273,7 @@ func (s *datasetsServicesrvc) GetProgress(ctx context.Context, p *datasetsservic
 
 // ListDatasets получить все задачи для текущего пользователя
 func (s *datasetsServicesrvc) ListDatasets(ctx context.Context, p *datasetsservice.ListDatasetsPayload) ([]*datasetsservice.Dataset, error) {
-	logger.Info(ctx, "datasetsService.list datasets")
+	logger.InfoKV(ctx, "datasetsService.list datasets")
 
 	managerID, err := UserIDFromContext(ctx)
 	if err != nil {
@@ -296,11 +296,11 @@ func (s *datasetsServicesrvc) ListDatasets(ctx context.Context, p *datasetsservi
 
 func (s *datasetsServicesrvc) DownloadTargets(ctx context.Context, p *datasetsservice.DownloadTargetsPayload) ([]string, error) {
 	ctx = logger.WithFields(ctx, logger.Fields{"dataset_id": p.DatasetID})
-	logger.Info(ctx, "datasetsService.get progress")
+	logger.InfoKV(ctx, "datasetsService.get progress")
 
 	datasetID, err := uuid.Parse(p.DatasetID)
 	if err != nil {
-		logger.Error(ctx, err.Error())
+		logger.ErrorKV(ctx, err.Error())
 		return nil, datasetsservice.BadRequest(err.Error())
 	}
 

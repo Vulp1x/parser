@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 	swagger "github.com/go-openapi/runtime/middleware"
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
@@ -15,6 +15,7 @@ import (
 	"github.com/inst-api/parser/internal/mw"
 	"github.com/inst-api/parser/internal/service/multipart"
 	"github.com/inst-api/parser/pkg/logger"
+	"github.com/riandyrn/otelchi"
 	goahttp "goa.design/goa/v3/http"
 	httpmdlwr "goa.design/goa/v3/http/middleware"
 	"goa.design/goa/v3/middleware"
@@ -96,6 +97,11 @@ func handleHTTPServer(
 	// }))
 
 	router.Use(cors.AllowAll().Handler)
+	router.Use(otelchi.Middleware(
+		"chi-parser",
+		// otelchi.WithRequestMethodInSpanName(true),
+		otelchi.WithChiRoutes(router),
+	))
 
 	router.Mount("/", mux)
 

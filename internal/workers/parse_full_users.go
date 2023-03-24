@@ -45,7 +45,7 @@ func (h *ParseFullUsersHandler) HandleTask(ctx context.Context, task pgqueue.Tas
 		return fmt.Errorf("failed to save full user: %v with params %v", err, fullTargetParams)
 	}
 
-	logger.Info(ctx, "saved full target")
+	logger.InfoKV(ctx, "saved full target")
 
 	return nil
 }

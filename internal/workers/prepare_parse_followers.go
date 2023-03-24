@@ -44,7 +44,7 @@ func (h *PrepareParseFollowersHandler) HandleTask(ctx context.Context, task pgqu
 	blogger, err := h.cli.GetFullUser(ctx, &instaproxy.GetUserRequest{Username: taskKey.bloggerUsername})
 	if err != nil {
 		if status.Code(err) == codes.NotFound {
-			logger.Warn(ctx, "blogger not found, going to set invalid status")
+			logger.WarnKV(ctx, "blogger not found, going to set invalid status")
 
 			if err2 := q.SetBloggerStatusToInvalid(ctx, dbmodel.SetBloggerStatusToInvalidParams{
 				Username:  taskKey.bloggerUsername,

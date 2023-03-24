@@ -5,27 +5,33 @@ import (
 	"io"
 	"os"
 
+	"github.com/uptrace/opentelemetry-go-extra/otelzap"
+	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
 var (
 	// global logger instance.
-	global       *zap.SugaredLogger
-	defaultLevel = zap.NewAtomicLevelAt(zap.ErrorLevel)
+	global       *otelzap.SugaredLogger
+	defaultLevel = zap.NewAtomicLevelAt(zap.DebugLevel)
 )
 
 func init() {
-	SetLogger(New(defaultLevel))
+	SetLogger(otelzap.New(
+		New(defaultLevel),
+		otelzap.WithTraceIDField(true),
+		otelzap.WithMinLevel(zapcore.DebugLevel),
+	).Sugar())
 }
 
 // New creates new *zap.SugaredLogger with standard EncoderConfig
 // if lvl == nil, global AtomicLevel will be used
-func New(level zapcore.LevelEnabler, options ...zap.Option) *zap.SugaredLogger {
+func New(level zapcore.LevelEnabler, options ...zap.Option) *zap.Logger {
 	return NewWithSink(level, os.Stdout, options...)
 }
 
-func NewWithSink(level zapcore.LevelEnabler, sink io.Writer, options ...zap.Option) *zap.SugaredLogger {
+func NewWithSink(level zapcore.LevelEnabler, sink io.Writer, options ...zap.Option) *zap.Logger {
 	if level == nil {
 		level = defaultLevel
 	}
@@ -49,7 +55,7 @@ func NewWithSink(level zapcore.LevelEnabler, sink io.Writer, options ...zap.Opti
 			level,
 		),
 		options...,
-	).Sugar()
+	)
 }
 
 // Level returns current global logger level
@@ -63,13 +69,14 @@ func SetLevel(l zapcore.Level) {
 }
 
 // Logger returns current global logger.
-func Logger() *zap.SugaredLogger {
+func Logger() *otelzap.SugaredLogger {
 	return global
 }
 
 // SetLogger sets global used logger. This function is not thread-safe.
-func SetLogger(l *zap.SugaredLogger) {
+func SetLogger(l *otelzap.SugaredLogger) {
 	global = l
+	otelzap.ReplaceGlobals(l.Desugar())
 }
 
 // Below listed all logging functions
@@ -79,60 +86,65 @@ func SetLogger(l *zap.SugaredLogger) {
 // * KV,        e.g. DebugKV() - log key-values, odd args are keys, even – values
 //
 
-func Debug(ctx context.Context, args ...interface{}) {
-	FromContext(ctx).Debug(args...)
+func DebugKV(ctx context.Context, msg string, keysAndValues ...interface{}) {
+	FromContext(ctx).DebugwContext(ctx, msg, keysAndValues...)
 }
 
 func Debugf(ctx context.Context, format string, args ...interface{}) {
-	FromContext(ctx).Debugf(format, args...)
+	traceID := trace.SpanContextFromContext(ctx).TraceID()
+	if traceID.IsValid() {
+		ctx = WithKV(ctx, "trace_id", traceID.String())
+	}
+
+	FromContext(ctx).DebugfContext(ctx, format, args...)
 }
 
-func DebugKV(ctx context.Context, message string, kvs ...interface{}) {
-	FromContext(ctx).Debugw(message, kvs...)
-}
-
-func Info(ctx context.Context, args ...interface{}) {
-	FromContext(ctx).Info(args...)
+func InfoKV(ctx context.Context, msg string, keysAndValues ...interface{}) {
+	FromContext(ctx).InfowContext(ctx, msg, keysAndValues...)
 }
 
 func Infof(ctx context.Context, format string, args ...interface{}) {
-	FromContext(ctx).Infof(format, args...)
-}
+	traceID := trace.SpanContextFromContext(ctx).TraceID()
+	if traceID.IsValid() {
+		ctx = WithKV(ctx, "trace_id", traceID.String())
+	}
 
-func InfoKV(ctx context.Context, message string, kvs ...interface{}) {
-	FromContext(ctx).Infow(message, kvs...)
-}
-
-func Warn(ctx context.Context, args ...interface{}) {
-	FromContext(ctx).Warn(args...)
+	FromContext(ctx).InfofContext(ctx, format, args...)
 }
 
 func Warnf(ctx context.Context, format string, args ...interface{}) {
-	FromContext(ctx).Warnf(format, args...)
+	traceID := trace.SpanContextFromContext(ctx).TraceID()
+	if traceID.IsValid() {
+		ctx = WithKV(ctx, "trace_id", traceID.String())
+	}
+
+	FromContext(ctx).WarnfContext(ctx, format, args...)
 }
 
 func WarnKV(ctx context.Context, message string, kvs ...interface{}) {
-	FromContext(ctx).Warnw(message, kvs...)
-}
-
-func Error(ctx context.Context, args ...interface{}) {
-	FromContext(ctx).Error(args...)
-}
-
-func Errorf(ctx context.Context, format string, args ...interface{}) {
-	FromContext(ctx).Errorf(format, args...)
+	FromContext(ctx).WarnwContext(ctx, message, kvs...)
 }
 
 func ErrorKV(ctx context.Context, message string, kvs ...interface{}) {
-	FromContext(ctx).Errorw(message, kvs...)
+	FromContext(ctx).ErrorwContext(ctx, message, kvs...)
 }
 
-func Fatal(ctx context.Context, args ...interface{}) {
-	FromContext(ctx).Fatal(args...)
+func Errorf(ctx context.Context, format string, args ...interface{}) {
+	traceID := trace.SpanContextFromContext(ctx).TraceID()
+	if traceID.IsValid() {
+		ctx = WithKV(ctx, "trace_id", traceID.String())
+	}
+
+	FromContext(ctx).ErrorfContext(ctx, format, args...)
 }
 
 func Fatalf(ctx context.Context, format string, args ...interface{}) {
-	FromContext(ctx).Fatalf(format, args...)
+	traceID := trace.SpanContextFromContext(ctx).TraceID()
+	if traceID.IsValid() {
+		ctx = WithKV(ctx, "trace_id", traceID.String())
+	}
+
+	FromContext(ctx).FatalfContext(ctx, format, args...)
 }
 
 func FatalKV(ctx context.Context, message string, kvs ...interface{}) {
@@ -144,6 +156,11 @@ func Panic(ctx context.Context, args ...interface{}) {
 }
 
 func Panicf(ctx context.Context, format string, args ...interface{}) {
+	traceID := trace.SpanContextFromContext(ctx).TraceID()
+	if traceID.IsValid() {
+		ctx = WithKV(ctx, "trace_id", traceID.String())
+	}
+
 	FromContext(ctx).Panicf(format, args...)
 }
 

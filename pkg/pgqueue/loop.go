@@ -6,12 +6,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/inst-api/parser/internal/mw"
+	"github.com/inst-api/parser/internal/tracer"
 	"github.com/inst-api/parser/pkg/ctxutil"
 	"github.com/inst-api/parser/pkg/logger"
 	"github.com/inst-api/parser/pkg/pgqueue/internal/db"
 	"github.com/inst-api/parser/pkg/pgqueue/internal/workerpool"
 	"github.com/inst-api/parser/pkg/pgqueue/pkg/status"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/trace"
 )
 
 // loop расширяет Queue логикой по обработке задач.
@@ -140,8 +142,16 @@ func (l loop) runFetcher(ctx context.Context, kind int16, kd kindData) {
 
 func (l loop) wrapTask(parentCtx context.Context, kd kindData, task Task) func() {
 	return func() {
-		ctx := logger.WithKV(ctxutil.Detach(parentCtx), "task_id", task.id)
-		ctx = mw.GenerateRequestID(ctx)
+		ctx, span := tracer.Start(
+			ctxutil.Detach(parentCtx),
+			"pgqueue.task",
+			trace.WithAttributes(
+				attribute.String("external_key", task.ExternalKey),
+				attribute.Int("kind", int(task.Kind)),
+				attribute.Int64("task", task.id),
+			),
+		)
+		defer span.End()
 
 		elapsedTime, executionErr := task.wrapExecution(ctx, kd.handler, kd.opts.AttemptTimeout)
 		collectExecutionResults(kd.opts.Name, elapsedTime, errToStatus(executionErr))

@@ -49,7 +49,7 @@ endif
 
 
 bin-deps:
-	GOBIN=$(LOCAL_BIN) GOPROXY=https://proxy.golang.org go install goa.design/goa/v3/cmd/goa@v3.9.1 && \
+	GOBIN=$(LOCAL_BIN) GOPROXY=https://proxy.golang.org go install goa.design/goa/v3/cmd/goa@latest && \
 	GOBIN=$(LOCAL_BIN) go install github.com/pressly/goose/v3/cmd/goose@v3.7.0 && \
 	GOBIN=$(LOCAL_BIN) go install github.com/kyleconroy/sqlc/cmd/sqlc@v1.16.0 && \
 	GOBIN=$(LOCAL_BIN) go install github.com/goresed/goresed/cmd/goresed@v0.2.3 && \

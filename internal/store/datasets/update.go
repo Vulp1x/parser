@@ -61,7 +61,7 @@ func (s Store) UpdateDataset(ctx context.Context, datasetID uuid.UUID, originalA
 
 func (s Store) insertInitialBloggers(ctx context.Context, q *dbmodel.Queries, datasetID uuid.UUID, originalAccounts []string) error {
 	if len(originalAccounts) == 0 {
-		logger.Info(ctx, "no accounts to insert")
+		logger.InfoKV(ctx, "no accounts to insert")
 		return nil
 	}
 

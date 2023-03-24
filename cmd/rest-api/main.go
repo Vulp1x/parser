@@ -14,12 +14,13 @@ import (
 	datasetsservice "github.com/inst-api/parser/gen/datasets_service"
 	"github.com/inst-api/parser/internal/config"
 	"github.com/inst-api/parser/internal/dbmodel"
-	"github.com/inst-api/parser/internal/mw"
 	"github.com/inst-api/parser/internal/postgres"
 	"github.com/inst-api/parser/internal/service"
 	"github.com/inst-api/parser/internal/store/datasets"
 	"github.com/inst-api/parser/internal/workers"
 	"github.com/inst-api/parser/pkg/logger"
+	"github.com/uptrace/uptrace-go/uptrace"
+	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -39,6 +40,17 @@ func main() {
 
 	conf := &config.Config{}
 
+	ctx, cancel := context.WithCancel(context.Background())
+	uptrace.ConfigureOpentelemetry(
+		// copy your project DSN here or use UPTRACE_DSN env var
+		uptrace.WithDSN("https://LPsACitd1nmu9r2KSfMnig@uptrace.dev/1207"),
+		uptrace.WithServiceName("poster_test"),
+		uptrace.WithDeploymentEnvironment(configMode),
+		uptrace.WithServiceVersion("0.0.1"),
+	)
+	// Send buffered spans and free resources.
+	defer uptrace.Shutdown(ctx)
+
 	fmt.Println(configMode, *debugFlag)
 
 	err := conf.ParseConfiguration(configMode)
@@ -52,8 +64,6 @@ func main() {
 
 		return
 	}
-
-	ctx, cancel := context.WithCancel(context.Background())
 
 	dbTXFunc, err := postgres.NewDBTxFunc(ctx, conf.Postgres)
 	if err != nil {
@@ -73,7 +83,7 @@ func main() {
 	conn, err := grpc.DialContext(
 		ctx,
 		conf.Listen.InstaProxyURL,
-		grpc.WithUnaryInterceptor(mw.UnaryClientLog()),
+		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
@@ -137,5 +147,5 @@ func main() {
 	cancel()
 
 	wg.Wait()
-	logger.Info(ctx, "exited")
+	logger.InfoKV(ctx, "exited")
 }

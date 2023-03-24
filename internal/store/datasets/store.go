@@ -7,7 +7,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/inst-api/parser/internal/dbmodel"
-	"github.com/inst-api/parser/internal/queues"
 	"github.com/inst-api/parser/pkg/pgqueue"
 )
 
@@ -26,24 +25,22 @@ func NewStore(
 
 	return &Store{
 		// tasksChan:   make(chan domain.Task, 10),
-		taskCancels:  make(map[uuid.UUID]func()),
-		pushTimeout:  timeout,
-		dbtxf:        dbtxFunc,
-		txf:          txFunc,
-		taskMu:       &sync.Mutex{},
-		queueService: queues.NewService(instagrapiHost, dbtxFunc),
-		queue:        queue,
+		taskCancels: make(map[uuid.UUID]func()),
+		pushTimeout: timeout,
+		dbtxf:       dbtxFunc,
+		txf:         txFunc,
+		taskMu:      &sync.Mutex{},
+		queue:       queue,
 		// instaClient: instagrapi.NewClient(instagrapiHost),
 	}
 }
 
 type Store struct {
 	// tasksChan   chan domain.Task
-	taskCancels  map[uuid.UUID]func()
-	taskMu       *sync.Mutex
-	pushTimeout  time.Duration
-	dbtxf        dbmodel.DBTXFunc
-	txf          dbmodel.TxFunc
-	queueService queues.Service
-	queue        *pgqueue.Queue
+	taskCancels map[uuid.UUID]func()
+	taskMu      *sync.Mutex
+	pushTimeout time.Duration
+	dbtxf       dbmodel.DBTXFunc
+	txf         dbmodel.TxFunc
+	queue       *pgqueue.Queue
 }
