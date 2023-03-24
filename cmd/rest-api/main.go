@@ -44,7 +44,7 @@ func main() {
 	uptrace.ConfigureOpentelemetry(
 		// copy your project DSN here or use UPTRACE_DSN env var
 		uptrace.WithDSN("https://LPsACitd1nmu9r2KSfMnig@uptrace.dev/1207"),
-		uptrace.WithServiceName("poster_test"),
+		uptrace.WithServiceName("parser"),
 		uptrace.WithDeploymentEnvironment(configMode),
 		uptrace.WithServiceVersion("0.0.1"),
 	)
