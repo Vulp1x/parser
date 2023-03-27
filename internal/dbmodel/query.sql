@@ -136,8 +136,9 @@ where id = @id;
 
 -- name: MarkBloggerAsParsed :exec
 update bloggers
-set status = 3 -- TargetsParsedBloggerStatus
-where id = @id;
+set status = 'done'
+where username = @username
+  and dataset_id = @dataset_id;
 
 -- name: MarkBloggerAsSimilarAccountsFound :exec
 update bloggers
@@ -183,6 +184,12 @@ ON CONFLICT (pk, dataset_id) DO UPDATE SET has_more_comments=excluded.has_more_c
                                            updated_at=now();
 
 -- name: FindNotReadyBloggers :many
+select *
+from bloggers
+where status = 'new'
+  and dataset_id = @dataset_id;
+
+-- name: FindNotParsedBloggers :many
 select *
 from bloggers
 where status = 'new'

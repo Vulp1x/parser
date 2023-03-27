@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/inst-api/parser/internal/dbmodel"
+	"github.com/inst-api/parser/internal/dbtx"
 	"github.com/inst-api/parser/internal/domain"
 	"github.com/inst-api/parser/internal/pb/instaproxy"
 	"github.com/inst-api/parser/pkg/logger"
@@ -39,10 +40,26 @@ func (h *ParseFullUsersHandler) HandleTask(ctx context.Context, task pgqueue.Tas
 		return fmt.Errorf("failed to get full user info from media '%s': %v", bloggerUsername, err)
 	}
 
+	tx, err := h.dbTxF(ctx).Begin(ctx)
+	if err != nil {
+		return fmt.Errorf("failed to begin transaction: %v", err)
+	}
+
+	defer dbtx.RollbackUnlessCommitted(ctx, tx)
+	q = dbmodel.New(tx)
 	fullTargetParams := domain.FullUserFromProto(fullUserResp).ToSaveFullTargetParams(datasetID)
 	err = q.SaveFullTarget(ctx, fullTargetParams)
 	if err != nil {
 		return fmt.Errorf("failed to save full user: %v with params %v", err, fullTargetParams)
+	}
+
+	err = q.MarkBloggerAsParsed(ctx, dbmodel.MarkBloggerAsParsedParams{Username: bloggerUsername, DatasetID: datasetID})
+	if err != nil {
+		return fmt.Errorf("failed to mark blogger as parsed: %v", err)
+	}
+
+	if err = tx.Commit(ctx); err != nil {
+		return fmt.Errorf("failed to commit transaction: %v", err)
 	}
 
 	logger.InfoKV(ctx, "saved full target")

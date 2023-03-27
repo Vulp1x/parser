@@ -347,6 +347,47 @@ func (q *Queries) FindMediaByID(ctx context.Context, id string) (Media, error) {
 	return i, err
 }
 
+const findNotParsedBloggers = `-- name: FindNotParsedBloggers :many
+select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, status, is_private, is_verified
+from bloggers
+where status = 'new'
+  and dataset_id = $1
+`
+
+func (q *Queries) FindNotParsedBloggers(ctx context.Context, datasetID uuid.UUID) ([]Blogger, error) {
+	rows, err := q.db.Query(ctx, findNotParsedBloggers, datasetID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Blogger
+	for rows.Next() {
+		var i Blogger
+		if err := rows.Scan(
+			&i.ID,
+			&i.DatasetID,
+			&i.Username,
+			&i.UserID,
+			&i.FollowersCount,
+			&i.IsInitial,
+			&i.CreatedAt,
+			&i.ParsedAt,
+			&i.UpdatedAt,
+			&i.IsCorrect,
+			&i.Status,
+			&i.IsPrivate,
+			&i.IsVerified,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const findNotReadyBloggers = `-- name: FindNotReadyBloggers :many
 select id, dataset_id, username, user_id, followers_count, is_initial, created_at, parsed_at, updated_at, is_correct, status, is_private, is_verified
 from bloggers
@@ -573,12 +614,18 @@ func (q *Queries) LockAvailableBots(ctx context.Context, limit int32) ([]Bot, er
 
 const markBloggerAsParsed = `-- name: MarkBloggerAsParsed :exec
 update bloggers
-set status = 3 -- TargetsParsedBloggerStatus
-where id = $1
+set status = 'done'
+where username = $1
+  and dataset_id = $2
 `
 
-func (q *Queries) MarkBloggerAsParsed(ctx context.Context, id uuid.UUID) error {
-	_, err := q.db.Exec(ctx, markBloggerAsParsed, id)
+type MarkBloggerAsParsedParams struct {
+	Username  string    `json:"username"`
+	DatasetID uuid.UUID `json:"dataset_id"`
+}
+
+func (q *Queries) MarkBloggerAsParsed(ctx context.Context, arg MarkBloggerAsParsedParams) error {
+	_, err := q.db.Exec(ctx, markBloggerAsParsed, arg.Username, arg.DatasetID)
 	return err
 }
 

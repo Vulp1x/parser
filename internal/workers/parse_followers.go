@@ -90,6 +90,15 @@ func (h *ParseFollowersHandler) savedParsedFollowers(ctx context.Context, datase
 		}
 	}
 
+	q.UpdateBlogger(ctx, dbmodel.UpdateBloggerParams{
+		UserID:     0,
+		ParsedAt:   nil,
+		IsCorrect:  false,
+		IsPrivate:  false,
+		IsVerified: false,
+		ID:         uuid.UUID{},
+	})
+
 	if err = tx.Commit(ctx); err != nil {
 		return fmt.Errorf("failed to commit transaction: %v", err)
 	}

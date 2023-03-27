@@ -2,6 +2,7 @@ package workers
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/inst-api/parser/internal/dbmodel"
@@ -21,6 +22,8 @@ const (
 	ParseFullUsersTaskKind        = 6
 	// PrepareParseFollowersTaskKind готоваит блогера для парсинга
 	PrepareParseFollowersTaskKind = 7
+	// TransitToCompletedTaskKind выставляем конечный статус для датасета
+	TransitToCompletedTaskKind = 8
 )
 
 var EmptyPayload = []byte(`{"empty":true}`)
@@ -133,7 +136,39 @@ func NewQueuue(ctx context.Context, executor executor.Executor, txFunc dbmodel.D
 		},
 	})
 
+	// переводим датасет в статус парсинг закончен после того, как все блогеры распаршены
+	queue.RegisterKind(TransitToCompletedTaskKind, &TransitToTaskCompleteddHandler{dbTxF: txFunc, queue: queue}, pgqueue.KindOptions{
+		Name:                 "all-parsed",
+		WorkerCount:          pgqueue.NewConstProvider(int16(5)),
+		MaxAttempts:          100,
+		AttemptTimeout:       20 * time.Second,
+		MaxTaskErrorMessages: 10,
+		Delayer:              delayer.NewJitterDelayer(delayer.EqualJitter, 50*time.Second),
+		TerminalTasksTTL:     pgqueue.NewConstProvider(1000 * time.Hour),
+		Loop: pgqueue.LoopOptions{
+			JanitorPeriod: pgqueue.NewConstProvider(15 * time.Hour),
+			FetcherPeriod: pgqueue.NewConstProvider(10 * time.Second),
+		},
+	})
+
 	queue.Start()
 
 	return queue
+}
+
+// TaskKindFromDataset по датасету получаем тип задачи для парсинга
+func TaskKindFromDataset(dataset dbmodel.Dataset) int16 {
+	var taskKind int16
+	switch dataset.Type {
+	case dbmodel.DatasetTypeLikesAndComments:
+		taskKind = ParseBloggersMediaTaskKind
+	case dbmodel.DatasetTypeFollowers:
+		taskKind = PrepareParseFollowersTaskKind
+	case dbmodel.DatasetTypePhoneNumbers:
+		taskKind = ParseFullUsersTaskKind
+	default:
+		panic(fmt.Sprintf("unexpected dataset type '%s'", dataset.Type))
+	}
+
+	return taskKind
 }

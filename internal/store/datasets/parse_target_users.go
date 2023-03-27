@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 
 	"github.com/google/uuid"
 	"github.com/inst-api/parser/internal/dbmodel"
@@ -56,17 +57,7 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 
 	dataset.Status = dbmodel.ParsingTargetsStartedDatasetStatus
 
-	var taskKind int16
-	switch dataset.Type {
-	case dbmodel.DatasetTypeLikesAndComments:
-		taskKind = workers.ParseBloggersMediaTaskKind
-	case dbmodel.DatasetTypeFollowers:
-		taskKind = workers.PrepareParseFollowersTaskKind
-	case dbmodel.DatasetTypePhoneNumbers:
-		taskKind = workers.ParseFullUsersTaskKind
-	default:
-		return domain.DatasetWithBloggers{}, fmt.Errorf("unexpected dataset type '%s'", dataset.Type)
-	}
+	taskKind := workers.TaskKindFromDataset(dataset)
 
 	logger.Infof(ctx, "adding tasks for %d bloggers with kind %d", len(bloggers), taskKind)
 
@@ -81,6 +72,12 @@ func (s *Store) ParseTargetUsers(ctx context.Context, datasetID uuid.UUID) (doma
 	if err != nil {
 		return domain.DatasetWithBloggers{}, fmt.Errorf("failed to push tasks to queue: %v", err)
 	}
+
+	err = s.queue.PushTaskTx(ctx, tx, pgqueue.Task{
+		Kind:        workers.TransitToCompletedTaskKind,
+		Payload:     []byte(strconv.Itoa(int(taskKind))),
+		ExternalKey: datasetID.String(),
+	})
 
 	err = tx.Commit(ctx)
 	if err != nil {
